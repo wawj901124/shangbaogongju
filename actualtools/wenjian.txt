@@ -1,0 +1,7 @@
+shangbaoshuju = models.ForeignKey(ShangBaoShuJu, null=True, blank=True, verbose_name=u"依赖的模拟上报数据工具", on_delete=models.PROTECT)
+yinzi_code = models.CharField(max_length=100, default="", verbose_name=u"因子编码")
+yinzi_rtd_up = models.CharField(max_length=100, default="", verbose_name=u"因子数值_上限")
+yinzi_rtd_down = models.CharField(max_length=100, default="", verbose_name=u"因子数值_下限")
+yinzi_rtd_xiaoshuwei = models.CharField(max_length=100, default="1", verbose_name=u"因子数值_小数位数")
+yinzi_rtd_count = models.CharField(max_length=100, default="1", verbose_name=u"因子数值个数")
+yinzi_flag = models.CharField(max_length=100, default="", verbose_name=u"因子标识")

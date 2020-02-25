@@ -1,0 +1,34 @@
+
+
+delimiter $$
+
+create procedure myproc2()
+
+
+begin
+
+declare num int ;
+
+set num = 1 ;
+
+while num <501  do
+
+ insert into `tb_enter`
+(
+  `ID` ,`REGION_CODE` ,`AREA_ID` , `ENTER_NAME` ,  `ENTER_SHORT`,`ENTER_STATE`,`ENTER_USER`, `ENTER_SIZE`,`COOKING_STYLE` , `ENTER_CODE`,`ENTER_USER_TEL`,`YY_USER`,`YY_USER_TEL`,`ENTER_TIME`,`ENTER_TYPE`,
+  `ENTER_SPACE` ,`KITCHEN_COUNT` ,`ENTER_ADDRESS`,`LONGITUDE`,`LATITUDE`, `REMARK` ,`ORG_ID`,`STATION_COUNT`,`CREATE_TIME`,`ENTER_KEY`,`SOCIAL_CODE`,`CREATE_USER`,`QR_CODE` )
+values
+( concat("f614ad6e134a487395f3bd3ff138a", num),'110112','f585711def664efe9b3b042398d1d144', concat("测试企业", num+1),concat("测试企业", num+1),'1','','M','4',concat("test00", num),'','','','','6','','2','',116.75+rand()*0.01,39.85+rand()*0.01,'','','2','2019-08-26 14:12:32','',100000000000000000+num,'','cy1566540752856'
+
+) ;
+
+set num = num + 1 ;
+
+end
+while ;
+
+end$$
+
+
+
+

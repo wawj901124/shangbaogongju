@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block title %}
+    loginandcheck
+{% endblock %}
+{% block action_url %}
+    {% url 'testdatas:login_and_check_id' loginandcheck.id %}
+{% endblock %}
+{% block box_h1_title %}
+    添加数据
+{% endblock %}
+{% block table_data %}
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <label>测试项目:</label>
+            </td>
+            <td>
+                <input id="test_project" name="test_project" type="text" value="{{ loginandcheck.test_project }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试模块:</label>
+            </td>
+            <td>
+                <input id="test_module" name="test_module" type="text" value="{{ loginandcheck.test_module }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试页面:</label>
+            </td>
+            <td>
+                <input id="test_page" name="test_page" type="text" value="{{ loginandcheck.test_page }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>用例优先级:</label>
+            </td>
+            <td>
+                <input type="radio"  name="case_priority"  value="P0" {% if loginandcheck.case_priority == 'P0' %}checked="checked"{% endif %}>冒烟用例
+                <input type="radio"  name="case_priority"  value="P1" {% if loginandcheck.case_priority == 'P1' %}checked="checked"{% endif %}>系统的重要功能用例
+                <input type="radio"  name="case_priority"  value="P2" {% if loginandcheck.case_priority == 'P2' %}checked="checked"{% endif %}>系统的一般功能用例
+                <input type="radio"  name="case_priority"  value="P3" {% if loginandcheck.case_priority == 'P3' %}checked="checked"{% endif %}>极低级别的用例
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试内容的名称:</label>
+            </td>
+            <td>
+                <input id="test_case_title" name="test_case_title" type="text"
+                       value="{{ loginandcheck.test_case_title }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否运行:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_run_case" name="is_run_case"  value="true"  {% if loginandcheck.is_run_case == 1 %} checked="checked"{% endif %}>运行
+                <input type="radio" id="is_run_case" name="is_run_case"  value="false" {% if loginandcheck.is_run_case == 0 %} checked="checked"{% endif %}>不运行
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>登录页的url:</label>
+            </td>
+            <td>
+                <input id="login_url" name="login_url"
+                       type="text" value="{{ loginandcheck.login_url }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否自动输入验证码:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_auto_input_code" name="is_auto_input_code"  value="true"  {% if loginandcheck.is_auto_input_code == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_auto_input_code" name="is_auto_input_code"  value="false" {% if loginandcheck.is_auto_input_code == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>验证码xpath路径:</label>
+            </td>
+            <td>
+                <input id="code_image_xpath" name="code_image_xpath"
+                       type="text" value="{{ loginandcheck.code_image_xpath }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>验证码类型:</label>
+            </td>
+            <td>
+                <input id="code_type" name="code_type"
+                       type="text" value="{{ loginandcheck.code_type }}"/>
+            </td>
+        </tr>
+
+                <tr>
+            <td>
+                <label>验证码输入框查找风格:</label>
+            </td>
+            <td>
+                <input id="code_input_ele_find" name="code_input_ele_find"
+                       type="text" value="{{ loginandcheck.code_input_ele_find }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>验证码输入框查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="code_input_ele_find_value" name="code_input_ele_find_value"
+                       type="text" value="{{ loginandcheck.code_input_ele_find_value }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>登录按钮查找风格:</label>
+            </td>
+            <td>
+                <input id="login_button_ele_find" name="login_button_ele_find"
+                       type="text" value="{{ loginandcheck.login_button_ele_find }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>登录按钮查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="login_button_ele_find_value" name="login_button_ele_find_value"
+                       type="text" value="{{ loginandcheck.login_button_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>点击登录按钮后的延时时长（单位秒）:</label>
+            </td>
+            <td>
+                <input id="click_login_button_delay_time" name="click_login_button_delay_time"
+                       type="text" value="{{ loginandcheck.click_login_button_delay_time }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>用例循环次数:</label>
+            </td>
+            <td>
+                <input id="case_counts" name="case_counts" type="text" value="{{ loginandcheck.case_counts }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>是否附带复制:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=1 {% if is_withRelevance == 1 %} checked="checked"{% endif %}>附带
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=0 {% if is_withRelevance == 0 %} checked="checked"{% endif %}>不附带
+            </td>
+        </tr>
+
+
+    </table>
+{% endblock %}
+{% block box2_a %}
+    <a href='{{ django_server_yuming }}/testdatas/loginandcheck/'>返回数据列表页</a>
+{% endblock %}

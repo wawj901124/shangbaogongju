@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% block title %}
+    newaddandcheck
+{% endblock %}
+{% block action_url %}
+    {% url 'testdatas:new_add_and_check_with_relevance_id' newaddandcheck.id %}
+{% endblock %}
+{% block box_h1_title %}
+    添加数据
+{% endblock %}
+{% block table_data %}
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <label>测试项目:</label>
+            </td>
+            <td>
+                <input id="test_project" name="test_project" type="text" value="{{ newaddandcheck.test_project }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试模块:</label>
+            </td>
+            <td>
+                <input id="test_module" name="test_module" type="text" value="{{ newaddandcheck.test_module }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试页面:</label>
+            </td>
+            <td>
+                <input id="test_page" name="test_page" type="text" value="{{ newaddandcheck.test_page }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>用例优先级:</label>
+            </td>
+            <td>
+                <input type="radio"  name="case_priority"  value="P0" {% if newaddandcheck.case_priority == 'P0' %}checked="checked"{% endif %}>冒烟用例
+                <input type="radio"  name="case_priority"  value="P1" {% if newaddandcheck.case_priority == 'P1' %}checked="checked"{% endif %}>系统的重要功能用例
+                <input type="radio"  name="case_priority"  value="P2" {% if newaddandcheck.case_priority == 'P2' %}checked="checked"{% endif %}>系统的一般功能用例
+                <input type="radio"  name="case_priority"  value="P3" {% if newaddandcheck.case_priority == 'P3' %}checked="checked"{% endif %}>极低级别的用例
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试内容的名称:</label>
+            </td>
+            <td>
+                <input id="test_case_title" name="test_case_title" type="text"
+                       value="{{ newaddandcheck.test_case_title }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否运行:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_run_case" name="is_run_case"  value="true"  {% if newaddandcheck.is_run_case == 1 %} checked="checked"{% endif %}>运行
+                <input type="radio" id="is_run_case" name="is_run_case"  value="false" {% if newaddandcheck.is_run_case == 0 %} checked="checked"{% endif %}>不运行
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>确定按钮查找风格:</label>
+            </td>
+            <td>
+                <input id="confirm_ele_find" name="confirm_ele_find"
+                       type="text" value="{{ newaddandcheck.confirm_ele_find }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>确定按钮查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="confirm_ele_find_value" name="confirm_ele_find_value"
+                       type="text" value="{{ newaddandcheck.confirm_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>点击确定按钮后的延时时长（单位秒）:</label>
+            </td>
+            <td>
+                <input id="click_confirm_delay_time" name="click_confirm_delay_time"
+                       type="text" value="{{ newaddandcheck.click_confirm_delay_time }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否点击取消按钮:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_click_cancel" name="is_click_cancel"  value="true" {% if newaddandcheck.is_click_cancel == 1 %} checked="checked"{% endif %}>点击取消按钮
+                <input type="radio" id="is_click_cancel" name="is_click_cancel"  value="false" {% if newaddandcheck.is_click_cancel == 0 %} checked="checked"{% endif %}>点击确定按钮
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>取消按钮查找风格:</label>
+            </td>
+            <td>
+                <input id="cancel_ele_find" name="cancel_ele_find"
+                       type="text" value="{{ newaddandcheck.cancel_ele_find }}"/>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <label>取消按钮查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="cancel_ele_find_value" name="cancel_ele_find_value"
+                       type="text" value="{{ newaddandcheck.cancel_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否添加成功:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_submit_success" name="is_submit_success"  value="true" {% if newaddandcheck.is_submit_success == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_submit_success" name="is_submit_success"  value="false" {% if newaddandcheck.is_submit_success  == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否单页面:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_signel_page" name="is_signel_page"  value="true"  {% if newaddandcheck.is_signel_page == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_signel_page" name="is_signel_page"  value="false"  {% if newaddandcheck.is_signel_page == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+         <tr>
+            <td>
+                <label>页数层xpath路径值:</label>
+            </td>
+            <td>
+                <input id="page_number_xpath" name="page_number_xpath"
+                       type="text" value="{{ newaddandcheck.page_number_xpath }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>结果表格查找风格:</label>
+            </td>
+            <td>
+                <input id="result_table_ele_find" name="result_table_ele_find"
+                       type="text" value="{{ newaddandcheck.result_table_ele_find }}"/>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <label>结果表格查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="result_table_ele_find_value" name="result_table_ele_find_value"
+                       type="text" value="{{ newaddandcheck.result_table_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>结果表格总列数:</label>
+            </td>
+            <td>
+                <input id="table_colnum_counts" name="table_colnum_counts" type="text" value="{{ newaddandcheck.table_colnum_counts }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>用例循环次数:</label>
+            </td>
+            <td>
+                <input id="case_counts" name="case_counts" type="text" value="{{ newaddandcheck.case_counts }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>依赖的点击场景的用例:</label>
+            </td>
+            <td>
+                <select id="depend_click_case" name="depend_click_case">
+                    <option value=""
+                            {% if newaddandcheck.depend_click_case_id == None %}
+                                selected="selected"
+                            {% endif %}>
+                            ---请选择
+                    </option>
+                    {%for cab in clickandback_all%}
+                        <option
+                                value={{cab.id}}
+                                        {% if cab.id == newaddandcheck.depend_click_case_id%}
+                                            selected="selected"
+                                        {% endif %}>
+                            [{{ cab.test_project }}]-[{{ cab.test_module }}]-[{{ cab.test_page }}]_{{cab.test_case_title }}]
+                        </option>
+                    {%endfor%}
+
+                </select>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否附带复制:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=1 {% if is_withRelevance == 1 %} checked="checked"{% endif %}>附带
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=0 {% if is_withRelevance == 0 %} checked="checked"{% endif %}>不附带
+            </td>
+        </tr>
+
+
+    </table>
+{% endblock %}
+{% block box2_a %}
+    <a href='{{ django_server_yuming }}/testdatas/newaddandcheck/'>返回数据列表页</a>
+{% endblock %}

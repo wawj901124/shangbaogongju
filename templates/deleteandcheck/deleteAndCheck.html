@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+{% block title %}
+    deleteandcheck
+{% endblock %}
+{% block action_url %}
+    {% url 'testdatas:delete_and_check_id' deleteandcheck.id %}
+{% endblock %}
+{% block box_h1_title %}
+    添加数据
+{% endblock %}
+{% block table_data %}
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <label>测试项目:</label>
+            </td>
+            <td>
+                <input id="test_project" name="test_project" type="text" value="{{ deleteandcheck.test_project }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试模块:</label>
+            </td>
+            <td>
+                <input id="test_module" name="test_module" type="text" value="{{ deleteandcheck.test_module }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试页面:</label>
+            </td>
+            <td>
+                <input id="test_page" name="test_page" type="text" value="{{ deleteandcheck.test_page }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试内容的名称:</label>
+            </td>
+            <td>
+                <input id="test_case_title" name="test_case_title" type="text"
+                       value="{{ deleteandcheck.test_case_title }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否运行:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_run_case" name="is_run_case"  value="true"  {% if deleteandcheck.is_run_case == 1 %} checked="checked"{% endif %}>运行
+                <input type="radio" id="is_run_case" name="is_run_case"  value="false" {% if deleteandcheck.is_run_case == 0 %} checked="checked"{% endif %}>不运行
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>被删除元素查找风格:</label>
+            </td>
+            <td>
+                <input id="delete_ele_find" name="delete_ele_find"
+                       type="text" value="{{ deleteandcheck.delete_ele_find }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>被删除元素查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="delete_ele_find_value" name="delete_ele_find_value"
+                       type="text" value="{{ deleteandcheck.delete_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>删除按钮查找风格:</label>
+            </td>
+            <td>
+                <input id="delete_button_find" name="delete_button_find"
+                       type="text" value="{{ deleteandcheck.delete_button_find }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>删除按钮查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="delete_button_find_value" name="delete_button_find_value"
+                       type="text" value="{{ deleteandcheck.delete_button_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>确定按钮查找风格:</label>
+            </td>
+            <td>
+                <input id="confirm_ele_find" name="confirm_ele_find"
+                       type="text" value="{{ deleteandcheck.confirm_ele_find }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>确定按钮查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="confirm_ele_find_value" name="confirm_ele_find_value"
+                       type="text" value="{{ deleteandcheck.confirm_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>点击确定按钮后的延时时长（单位秒）:</label>
+            </td>
+            <td>
+                <input id="click_confirm_delay_time" name="click_confirm_delay_time"
+                       type="text" value="{{ deleteandcheck.click_confirm_delay_time }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否点击取消按钮:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_click_cancel" name="is_click_cancel"  value="true" {% if deleteandcheck.is_click_cancel == 1 %} checked="checked"{% endif %}>点击取消按钮
+                <input type="radio" id="is_click_cancel" name="is_click_cancel"  value="false" {% if deleteandcheck.is_click_cancel == 0 %} checked="checked"{% endif %}>点击确定按钮
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>取消按钮查找风格:</label>
+            </td>
+            <td>
+                <input id="cancel_ele_find" name="cancel_ele_find"
+                       type="text" value="{{ deleteandcheck.cancel_ele_find }}"/>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <label>取消按钮查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="cancel_ele_find_value" name="cancel_ele_find_value"
+                       type="text" value="{{ deleteandcheck.cancel_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否删除成功:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_submit_success" name="is_submit_success"  value="true" {% if deleteandcheck.is_submit_success == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_submit_success" name="is_submit_success"  value="false" {% if deleteandcheck.is_submit_success  == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>删除成功弹框中的某个元素查找风格:</label>
+            </td>
+            <td>
+                <input id="popup_ele_find" name="popup_ele_find"
+                       type="text" value="{{ deleteandcheck.popup_ele_find }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>删除成功弹框中的某个元素查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="popup_ele_find_value" name="popup_ele_find_value"
+                       type="text" value="{{ deleteandcheck.popup_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>删除成功弹框中的某个元素文本信息内容:</label>
+            </td>
+            <td>
+                <input id="popup_text" name="popup_text"
+                       type="text" value="{{ deleteandcheck.popup_text }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>是否单页面:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_signel_page" name="is_signel_page"  value="true"  {% if deleteandcheck.is_signel_page == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_signel_page" name="is_signel_page"  value="false"  {% if deleteandcheck.is_signel_page == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+         <tr>
+            <td>
+                <label>页数层xpath路径值:</label>
+            </td>
+            <td>
+                <input id="page_number_xpath" name="page_number_xpath"
+                       type="text" value="{{ deleteandcheck.page_number_xpath }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>结果表格查找风格:</label>
+            </td>
+            <td>
+                <input id="result_table_ele_find" name="result_table_ele_find"
+                       type="text" value="{{ deleteandcheck.result_table_ele_find }}"/>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <label>结果表格查找风格的确切值:</label>
+            </td>
+            <td>
+                <input id="result_table_ele_find_value" name="result_table_ele_find_value"
+                       type="text" value="{{ deleteandcheck.result_table_ele_find_value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>结果表格总列数:</label>
+            </td>
+            <td>
+                <input id="table_colnum_counts" name="table_colnum_counts" type="text" value="{{ deleteandcheck.table_colnum_counts }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>用例循环次数:</label>
+            </td>
+            <td>
+                <input id="case_counts" name="case_counts" type="text" value="{{ deleteandcheck.case_counts }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>依赖的点击场景的用例:</label>
+            </td>
+            <td>
+                <select id="depend_click_case" name="depend_click_case">
+                    <option value=""
+                            {% if deleteandcheck.depend_click_case_id == None %}
+                                selected="selected"
+                            {% endif %}>
+                            ---请选择
+                    </option>
+                    {%for cab in clickandback_all%}
+                        <option
+                                value={{cab.id}}
+                                        {% if cab.id == deleteandcheck.depend_click_case_id%}
+                                            selected="selected"
+                                        {% endif %}>
+                            [{{ cab.test_project }}]-[{{ cab.test_module }}]-[{{ cab.test_page }}]_{{cab.test_case_title }}]
+                        </option>
+                    {%endfor%}
+
+                </select>
+
+            </td>
+
+        </tr>
+
+    </table>
+{% endblock %}
+{% block box2_a %}
+    <a href='{{ django_server_yuming }}/testdatas/deleteandcheck/'>返回数据列表页</a>
+{% endblock %}

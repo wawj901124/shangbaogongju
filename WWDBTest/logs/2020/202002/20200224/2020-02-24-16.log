@@ -1,0 +1,73 @@
+Time:2020-02-24 16:02:29,669; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:
+成功连接数据库:127.0.0.1_wanwen
+ 
+Time:2020-02-24 16:02:29,673; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:成功创建执行SQL语句的光标对象
+ 
+Time:2020-02-24 16:02:29,676; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	执行的sql语句：
+		
+                        SELECT * FROM auth_permission ORDER BY id DESC LIMIT 5
+                        
+ 
+Time:2020-02-24 16:02:29,714; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	查询的是auth_permission表中的所有字段（筛选条件是字段等于的结果）的值，查询到的结果是：
+ 
+Time:2020-02-24 16:02:29,720; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	执行的sql语句：
+		
+          SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'wanwen' AND TABLE_NAME = 'auth_permission'
+        
+ 
+Time:2020-02-24 16:02:29,729; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	查询的是wanwen库中auth_permission表的表头：
+ 
+Time:2020-02-24 16:02:29,736; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		id 
+Time:2020-02-24 16:02:29,742; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		name 
+Time:2020-02-24 16:02:29,749; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		content_type_id 
+Time:2020-02-24 16:02:29,756; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		codename 
+Time:2020-02-24 16:05:38,922; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:
+成功连接数据库:127.0.0.1_wanwen
+ 
+Time:2020-02-24 16:05:38,932; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:成功创建执行SQL语句的光标对象
+ 
+Time:2020-02-24 16:05:38,938; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	执行的sql语句：
+		
+                        SELECT * FROM auth_permission ORDER BY id DESC LIMIT 5
+                        
+ 
+Time:2020-02-24 16:05:38,949; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	查询的是auth_permission表中的所有字段（筛选条件是字段等于的结果）的值，查询到的结果是：
+ 
+Time:2020-02-24 16:05:38,956; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	执行的sql语句：
+		
+          SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'wanwen' AND TABLE_NAME = 'auth_permission'
+        
+ 
+Time:2020-02-24 16:05:38,964; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	查询的是wanwen库中auth_permission表的表头：
+ 
+Time:2020-02-24 16:05:38,970; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		id 
+Time:2020-02-24 16:05:38,977; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		name 
+Time:2020-02-24 16:05:38,983; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		content_type_id 
+Time:2020-02-24 16:05:38,990; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		codename 
+Time:2020-02-24 16:06:25,517; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:
+数据库192.168.100.198_testconn连接失败，失败原因：
+	(2003, "Can't connect to MySQL server on '192.168.100.198' (timed out)")
+ 
+Time:2020-02-24 16:07:15,228; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:
+成功连接数据库:127.0.0.1_wanwen
+ 
+Time:2020-02-24 16:07:15,234; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:成功创建执行SQL语句的光标对象
+ 
+Time:2020-02-24 16:07:15,238; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	执行的sql语句：
+		
+                        SELECT * FROM auth_permission ORDER BY id DESC LIMIT 1
+                        
+ 
+Time:2020-02-24 16:07:15,248; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	查询的是auth_permission表中的所有字段（筛选条件是字段等于的结果）的值，查询到的结果是：
+ 
+Time:2020-02-24 16:07:15,255; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	执行的sql语句：
+		
+          SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'wanwen' AND TABLE_NAME = 'auth_permission'
+        
+ 
+Time:2020-02-24 16:07:15,265; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	查询的是wanwen库中auth_permission表的表头：
+ 
+Time:2020-02-24 16:07:15,270; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		id 
+Time:2020-02-24 16:07:15,274; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		name 
+Time:2020-02-24 16:07:15,277; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		content_type_id 
+Time:2020-02-24 16:07:15,279; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:		codename 

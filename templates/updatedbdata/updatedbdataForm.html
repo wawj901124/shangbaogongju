@@ -1,0 +1,220 @@
+{% extends 'updatedbdata/updatedbdata.html' %}
+{% block title %}
+    updatedbdataform
+{% endblock %}
+{% block action_url %}
+    {% url 'testupdatadb:test_up_data_db_id' updatedbdata.id %}
+{% endblock %}
+{% block box_h1_title %}
+    添加数据出错页
+{% endblock %}
+{% block table_data %}
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <label>测试项目:</label>
+            </td>
+            <td>
+                <input id="test_project" name="test_project" type="text" value="{{ updatedbdataform.test_project.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试模块:</label>
+            </td>
+            <td>
+                <input id="test_module" name="test_module" type="text" value="{{ updatedbdataform.test_module.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试页面:</label>
+            </td>
+            <td>
+                <input id="test_page" name="test_page" type="text" value="{{ updatedbdataform.test_page.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试内容的名称:</label>
+            </td>
+            <td>
+                <input id="test_case_title" name="test_case_title" type="text"
+                       value="{{ updatedbdataform.test_case_title.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否运行:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_run_case" name="is_run_case"  value=1 {% if updatedbdataform.is_run_case.value == 1 %} checked="checked"{% endif %}>运行
+                <input type="radio" id="is_run_case" name="is_run_case"  value=0 {% if updatedbdataform.is_run_case.value == 0 %} checked="checked"{% endif %}>不运行
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库IP:</label>
+            </td>
+            <td>
+                <input id="db_host" name="db_host"
+                       type="text" value="{{ updatedbdataform.db_host.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库端口:</label>
+            </td>
+            <td>
+                <input id="db_port" name="db_port"
+                       type="text" value="{{ updatedbdataform.db_port.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库用户名:</label>
+            </td>
+            <td>
+                <input id="db_user" name="db_user"
+                       type="text" value="{{ updatedbdataform.db_user.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库密码:</label>
+            </td>
+            <td>
+                <input id="db_password" name="db_password"
+                       type="text" value="{{ updatedbdataform.db_password.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库库名:</label>
+            </td>
+            <td>
+                <input id="db_database" name="db_database"
+                       type="text" value="{{ updatedbdataform.db_database.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库编码格式:</label>
+            </td>
+            <td>
+                <input id="db_charset" name="db_charset"
+                       type="text" value="{{ updatedbdataform.db_charset.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库中的表:</label>
+            </td>
+            <td>
+                <input id="db_biao" name="db_biao"
+                       type="text" value="{{ updatedbdataform.db_biao.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库中的表的字段名:</label>
+            </td>
+            <td>
+                <input id="db_ziduan" name="db_ziduan"
+                       type="text" value="{{ updatedbdataform.db_ziduan.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库中的表的字段替换前的值:</label>
+            </td>
+            <td>
+                <input id="db_xiugaiqiandezhi" name="db_xiugaiqiandezhi"
+                       type="text" value="{{ updatedbdataform.db_xiugaiqiandezhi.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据库中的表的字段替换后的值:</label>
+            </td>
+            <td>
+                <input id="db_xiugaihoudezhi" name="db_xiugaihoudezhi"
+                       type="text" value="{{ updatedbdataform.db_xiugaihoudezhi.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>where条件字段名:</label>
+            </td>
+            <td>
+                <input id="db_tiaojianziduan" name="db_tiaojianziduan"
+                       type="text" value="{{ updatedbdataform.db_tiaojianziduan.value }}"/>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <label>where条件字段值:</label>
+            </td>
+            <td>
+                <input id="db_tiaojianzhi" name="db_tiaojianzhi"
+                       type="text" value="{{ updatedbdataform.db_tiaojianzhi.value }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>用例循环次数:</label>
+            </td>
+            <td>
+                <input id="case_counts" name="case_counts" type="text" value="{{ updatedbdataform.case_counts.value }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>依赖的前置用例:</label>
+            </td>
+            <td>
+                <select id="depend_case" name="depend_case">
+                    <option value=""
+                            {% if updatedbdataform.depend_case_id == None %}
+                                selected="selected"
+                            {% endif %}>
+                            ---请选择
+                    </option>
+                    {%for cab in updatedbdata_all%}
+                        <option
+                                value={{cab.id}}
+                                        {% if cab.id == updatedbdataform.depend_case_id%}
+                                            selected="selected"
+                                        {% endif %}>
+                            [{{ cab.test_project }}]-[{{ cab.test_module }}]-[{{ cab.test_page }}]_{{cab.test_case_title }}
+                        </option>
+                    {%endfor%}
+
+                </select>
+
+            </td>
+
+        </tr>
+
+    </table>
+{% endblock %}

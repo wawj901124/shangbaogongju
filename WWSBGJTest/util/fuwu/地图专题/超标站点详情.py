@@ -1,0 +1,202 @@
+import pymysql
+
+conn_dcloud_base = pymysql.connect(host="192.168.8.205", port=3306, user="root", password="admin123!@#qwe",
+                       database="dcloud_base", charset="utf8")
+conn_dcloud_data = pymysql.connect(host="192.168.8.205", port=3306, user="root", password="admin123!@#qwe",
+                       database="dcloud_data", charset="utf8")
+
+cursor_dcloud_base = conn_dcloud_base.cursor()
+
+cursor_dcloud_data = conn_dcloud_data.cursor()
+
+
+def connectDcloudBaseMyDBAndSelect(sql):
+    cursor_dcloud_base.execute(sql)
+    # 数据库提交命令
+    # self.conn.commit()  # 执行update操作时需要写这个，否则就会更新不成功
+    rs = cursor_dcloud_base.fetchall()  # 获取执行sql后的结果
+    # for r in rs:
+    #     # print(r)
+    #     mn_id = r[0]
+    #     break
+    # print(mn_id)
+    return rs
+
+def connectDcloudDataMyDBAndSelect(sql):
+    cursor_dcloud_data.execute(sql)
+    # 数据库提交命令
+    # self.conn.commit()  # 执行update操作时需要写这个，否则就会更新不成功
+    rs = cursor_dcloud_data.fetchall()  # 获取执行sql后的结果
+    # for r in rs:
+    #     # print(r)
+    #     mn_id = r[0]
+    #     break
+    # print(mn_id)
+    return rs
+
+
+
+
+#根据支干/断面名称查询水质类别
+#支干/断面名称
+# zhigan_name = "昌平区测试设备1号"
+zhigan_name ="支干/断面名称202001010119210000000000000000"
+zhigan_id = "f11ca149004c4520a7645742610a5ec3"
+#根据支干/断面查询tb_station表获取对应数据的
+mysql_yuju = """
+        SELECT * FROM tb_station WHERE NAME='%s'
+        """% zhigan_name
+
+mysql_yuju_id = """
+        SELECT * FROM tb_station WHERE ID='%s'
+        """% zhigan_id
+# cursor_dcloud_base.execute(mysql_yuju)
+# # 数据库提交命令
+# # self.conn.commit()  # 执行update操作时需要写这个，否则就会更新不成功
+# rs = cursor_dcloud_base.fetchall()  # 获取执行sql后的结果
+# for r in rs:
+#     # print(r)
+#     mn_id = r[0]
+#     break
+
+# tbStation = connectDcloudBaseMyDBAndSelect(mysql_yuju)[0]
+tbStation = connectDcloudBaseMyDBAndSelect(mysql_yuju_id)[0]
+# print(tbStation)
+print("ID:%s" % tbStation[0])
+print("AREA_ID（所属省ID）:%s" % tbStation[1])
+print("CITY_ID（所属流域ID）:%s" % tbStation[2])
+print("MCUSN（MN号）:%s" % tbStation[3])
+print("NAME(支干/断面):%s" % tbStation[4])
+print("UPLOAD_INTERVAL:%s" % tbStation[5])
+print("ADDRESS（站点地址）:%s" % tbStation[6])
+
+print("STANDARD_ID:%s" % tbStation[7])
+print("STANDARD_FILE_NAME（执行标准）:%s" % tbStation[8])
+print("STANDARD_FILE_RUL（执行标准URL路径）:%s" % tbStation[9])
+print("STANDARD_FILE_NEW_NAME:%s" % tbStation[10])
+print("OPERTOR（联系人）:%s" % tbStation[11])
+print("TELEPHONE（联系方式）:%s" % tbStation[12])
+print("file_id（站点图片ID）:%s" % tbStation[13])
+
+print("remarks（备注）:%s" % tbStation[14])
+print("CREATETIME:%s" % tbStation[15])
+print("LONGITUDE:%s" % tbStation[16])
+print("LATITUDE:%s" % tbStation[17])
+
+mn_id = tbStation[0]
+area_id = tbStation[1]
+cityid = tbStation[2]
+
+fileid = tbStation[13]
+
+#根据所属省ID查询所属省域名称
+mysql_yuju = """
+        SELECT AREA_NAME FROM tb_area WHERE ID='%s'
+        """% area_id
+
+areaname = connectDcloudBaseMyDBAndSelect(mysql_yuju)[0]
+print("CITY_NAME（所属省名称）:%s" % areaname)
+
+
+
+#根据所属流域ID查询所属流域名称
+mysql_yuju = """
+        SELECT CITY_NAME FROM tb_city WHERE ID='%s'
+        """% cityid
+
+cityname = connectDcloudBaseMyDBAndSelect(mysql_yuju)[0]
+print("CITY_NAME（所属流域名称）:%s" % cityname)
+
+
+#根据支干/断面的ID查询td_station_state表获取对应STATION_ID为mn_id数据的 WATER_TYPE字段
+mysql_yuju = """
+        SELECT * FROM td_station_state WHERE STATION_ID='%s' ORDER BY ID ASC
+        """ % mn_id
+# cursor_dcloud_base.execute(mysql_yuju)
+# # 数据库提交命令
+# # self.conn.commit()  # 执行update操作时需要写这个，否则就会更新不成功
+# rs = cursor_dcloud_base.fetchall()  # 获取执行sql后的结果
+# for r in rs:
+#     # print(r)
+#     mn_id = r[0]
+#     break
+tdstationstate = connectDcloudBaseMyDBAndSelect(mysql_yuju)[0]
+print(tdstationstate)
+water_type = tdstationstate[5]
+offline_time = tdstationstate[3]
+print(water_type)
+
+
+#根据站点ID查询td_real_upload中的数据（实时数据）
+mysql_yuju = """
+        SELECT * FROM td_real_update WHERE STATION_ID='%s'
+        """% mn_id
+# cursor_dcloud_base.execute(mysql_yuju)
+# # 数据库提交命令
+# # self.conn.commit()  # 执行update操作时需要写这个，否则就会更新不成功
+# rs = cursor_dcloud_base.fetchall()  # 获取执行sql后的结果
+# for r in rs:
+#     # print(r)
+#     mn_id = r[0]
+#     break
+
+yinzi_list = connectDcloudBaseMyDBAndSelect(mysql_yuju)
+yinzi_jieguo_list = []
+for yinzi in yinzi_list:
+    # print(yinzi)
+    yinzi_shujushijian = yinzi[2]
+    yinzi_chaobiaoshijian =yinzi[3]
+    yinzi_code = yinzi[4]
+    yinzi_value = yinzi[5]
+
+    # print(yinzi_code)
+    #根据因子code查询tb_factor得到因子名称
+    mysql_yuju = """
+            SELECT * FROM tb_factor WHERE FACTOR_CODE='%s'
+            """ % yinzi_code
+    tbfactor = connectDcloudBaseMyDBAndSelect(mysql_yuju)[0]
+    # print(tbfactor)
+    yinzi_name = tbfactor[2]
+    # print(yinzi_name)
+    yinzi_shangxian  = tbfactor[9]
+    yinzi_xiaxian  = tbfactor[10]
+    # # print(yinzi_value)
+    print("%s:%s 上限:%s,下限:%s,超标时间:%s" % (yinzi_name,yinzi_value,yinzi_shangxian,yinzi_xiaxian,yinzi_chaobiaoshijian))
+
+
+#超标限值
+
+
+print("--------------------------------------------------------------")
+print("支干/断面对应的省：%s"% areaname)
+print("支干/断面对应的流域：%s"% cityname)
+print("支干/断面对应的支干/断面：%s"% tbStation[4])
+print("支干/断面对应的最后在线时间：%s"% offline_time)
+print("--------------------------------------------------------------")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
