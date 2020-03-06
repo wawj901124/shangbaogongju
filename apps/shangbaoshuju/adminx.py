@@ -8,23 +8,23 @@ from .models import StoreSBShuJu
 class ShangBaoShuJuAdmin(object):
     ziduan = ['id','test_project','test_module',
               'test_page','test_case_title',
-              'test_start_time','forcount',
+              'forcount',
 
 
               'add_time','update_time']
 
     list_display =['test_project','test_module',
                    'test_page',
-                   'test_case_title','test_start_time',
+                   'test_case_title',
                    'forcount',
 
 
 
                    'add_time','update_time']#定义显示的字段
     search_fields =  ['test_project','test_module',
-                   'test_case_title','test_start_time',]   #定义搜索字段
+                   'test_case_title',]   #定义搜索字段
     list_filter =  ['test_project','test_module',
-                   'test_case_title','test_start_time',] #定义筛选的字段
+                   'test_case_title',] #定义筛选的字段
     model_icon = 'fa fa-bars '  # 定义图标显示
     ordering = ['-add_time']  # 添加默认排序规则显示排序，根据添加时间倒序排序
     # readonly_fields = ziduan  # 设置某些字段为只为可读  #设置了readonly_fields，再设置exclude，exclude对该字段无效，
@@ -66,7 +66,6 @@ class ShangBaoShuJuAdmin(object):
             new_sbsj.test_module = qs_one.test_module
             new_sbsj.test_page = qs_one.test_page
             new_sbsj.test_case_title = qs_one.test_case_title
-            new_sbsj.test_start_time = qs_one.test_start_time
             new_sbsj.forcount = qs_one.forcount
             new_sbsj.time_delay = qs_one.time_delay
             new_sbsj.is_check_crc = qs_one.is_check_crc

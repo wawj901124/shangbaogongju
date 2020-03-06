@@ -250,6 +250,7 @@ class ShangBaoYinZi(object):
                 shuju_count = shujuyinzi.yinzi_rtd_count
 
                 yinzi_rtd_list = self.makeonetiaoshuju(shuju_down,shuju_up,shuju_xiaoshuweishu,shuju_count)
+                #生成单因子数据
                 one_yinzi = "%s-Rtd=%s,%s-Flag=%s;" % (
                     shujuyinzi.yinzi_code, yinzi_rtd_list[0], shujuyinzi.yinzi_code, shujuyinzi.yinzi_flag)
                 yinzi_list.append(one_yinzi)

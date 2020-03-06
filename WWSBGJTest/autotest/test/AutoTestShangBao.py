@@ -10,7 +10,6 @@ import socket
 import sys
 import time
 
-
 from WWSBGJTest.util.getTimeStr import GetTimeStr
 from WWSBGJTest.util.shangBaoGongju import TongXinXieYi
 from depend.shangbaogongjudepend.shangbaoyinzi import ShangBaoYinZi,shangbaoyinzi
@@ -62,8 +61,11 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
                             shujuduan_mn,shujuduan_flag,is_check_crc,
                             shujuduan_cp_datatime_type,sbyzid,
                             forcount, time_delay, mn_counts,actual_data_sql_id,
-                            dele_ziduan):
+                            dele_ziduan,actual_data_count,actual_data_delay_time,
+                            tcp_host,tcp_post):
+        actual_data_count_int = int(actual_data_count)
         #获取因子串
+        #第一次上报数据
         sbyz = ShangBaoYinZi()
         yinzi_list = sbyz.shangbaoyinzi(sbyzid)
         CPyinzi = ''.join(yinzi_list)
@@ -73,6 +75,7 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
                             MN=shujuduan_mn,Flag=shujuduan_flag,invert=is_check_crc,
                             CPtime=shujuduan_cp_datatime_type,CPyinzi=CPyinzi)
 
+
         shangbaoshuju = txxy.shujuMain()
         print("上报数据：")
         print(shangbaoshuju)
@@ -80,7 +83,7 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
         # tcp上报数据
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(("192.168.8.205", 57001))
+            s.connect((str(tcp_host),int(tcp_post)))
             senddata = shangbaoshuju  # 上报数据
             s.send(senddata)  # 进行上报
             reposedata = s.recv(1024)  # 获取返回值
@@ -129,6 +132,84 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
             else:
                 print("因子参数为无")
 
+            print("等待%s秒" % time_delay)
+            time.sleep(int(time_delay))
+
+            #进行第二次或者更多次数据上报
+            if actual_data_count_int > 1:
+                for i in range(1,actual_data_count_int):
+                    sbyz_for = ShangBaoYinZi()
+                    yinzi_list_for = sbyz_for.shangbaoyinzi(sbyzid)
+                    CPyinzi_for = ''.join(yinzi_list_for)
+                    print(CPyinzi_for)
+                    # CPyinzi ="w01001-Rtd=63.0, w01001-Flag=N; w01003-Rtd =63.0,w01003-Flag=N;"
+                    txxy = TongXinXieYi(ST=shujuduan_st, CN=shujuduan_cn, PW=shujuduan_pw,
+                                        MN=shujuduan_mn, Flag=shujuduan_flag, invert=is_check_crc,
+                                        CPtime=shujuduan_cp_datatime_type, CPyinzi=CPyinzi_for)
+
+                    shangbaoshuju_for = txxy.shujuMain()
+                    print("第%s次上报数据："% str(i+1))
+                    print(shangbaoshuju_for)
+
+                    # tcp上报数据
+                    try:
+                        s_for = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                        s_for.connect((str(tcp_host),int(tcp_post)))
+                        senddata_for = shangbaoshuju_for  # 上报数据
+                        s_for.send(senddata_for)  # 进行上报
+                        reposedata_for = s_for.recv(1024)  # 获取返回值
+                        s_for.close()
+                    except  Exception as e_for:
+                        reposedata_for = e_for
+
+                    # 存储上报的因子，源数据及返回结果,多数据上报时不用，设备数小于10时，保存数据库，测试流程时用，超过10个设备，数据不进行数据库保存
+                    if mn_counts < 10:
+                        from shangbaoshuju.models import StoreSBShuJu
+                        ssbsj = StoreSBShuJu()
+                        ssbsj.shujuduan_mn = shujuduan_mn
+                        ssbsj.sb_yinzi = CPyinzi_for
+                        ssbsj.sb_shuju = shangbaoshuju_for
+                        ssbsj.sb_ret = reposedata_for
+                        ssbsj.save()
+
+                        # 后续数据对比
+                        # 获取输入因子值为字典
+                        # 将因子list遍历并输入成字典
+                        yinzi_list_len_for = len(yinzi_list_for)
+                        pre_yinzi_dict_for = {}
+                        if yinzi_list_len_for > 0:
+                            for i in range(yinzi_list_len_for):
+                                yinzi_list_one_list_for = yinzi_list_for[i].split(",")
+                                yinzi_list_one_list_len_for = len(yinzi_list_one_list_for)
+                                if yinzi_list_one_list_len_for > 1:
+                                    # 将最后一项的分号去掉
+                                    yinzi_list_one_list_for[yinzi_list_one_list_len_for - 1] = yinzi_list_one_list_for[
+                                        yinzi_list_one_list_len_for - 1].strip(";")
+
+                                    # 将所有项的中的字母转为小写
+                                    for i in range(yinzi_list_one_list_len_for):
+                                        yinzi_list_one_list_for[i] = yinzi_list_one_list_for[i].lower()
+                                    print("因子一项列表数据：")
+                                    print(yinzi_list_one_list_for)
+
+                                    # 将每一项转化为字典保存
+                                    for i in range(yinzi_list_one_list_len_for):
+                                        yinzi_list_one_list_dict_list_for = yinzi_list_one_list_for[i].split("=")
+                                        dict_key_for = yinzi_list_one_list_dict_list_for[0]
+                                        dick_value_for = yinzi_list_one_list_dict_list_for[1]
+                                        pre_yinzi_dict_for[dict_key_for] = dick_value_for
+
+                                else:
+                                    print("因子参数为无")
+                        else:
+                            print("因子参数为无")
+                            print("等待%s秒" % time_delay)
+                            time.sleep(int(time_delay))
+
+            #循环终止
+
+
+
             print("预期因子字典")
             print(pre_yinzi_dict)
             print(type(pre_yinzi_dict))
@@ -137,6 +218,12 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
             print("预期因子字典按照键排序后的字典列表")
             print(pre_yinzi_dict_order_list)
             print(type(pre_yinzi_dict_order_list))
+
+            #从上报数据到数据库录入数据预估耗时
+            if actual_data_count_int > 0:
+                for i in range(0,actual_data_count_int):
+                    print("等待%s秒" % actual_data_delay_time)
+                    time.sleep(int(actual_data_delay_time))
 
             # 通过数据库获取上传的因子
             # 获取目标数据库中上传的因子数值：
@@ -188,10 +275,6 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
 
         # 存储上报的因子，源数据及返回结果,多数据上报时不用，设备数小于10时，保存数据库，测试流程时用，超过10个设备，数据不进行数据库保存
 
-        print("等待%s秒" % time_delay)
-        time.sleep(int(time_delay))
-
-
 
     # def test001(self):
     #     print("第一条测试用例")
@@ -202,13 +285,17 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
                             shujuduan_mn,shujuduan_flag,is_check_crc,
                             shujuduan_cp_datatime_type,sbyzid,
                             forcount, time_delay, mn_counts,
-                    actual_data_sql_id,dele_ziduan):
+                    actual_data_sql_id,dele_ziduan,
+                    actual_data_count,actual_data_delay_time,
+                    tcp_host,tcp_post):
 
         def func(self):
             self.defineshangbaoshuju(shujuduan_st,shujuduan_cn,shujuduan_pw,
                             shujuduan_mn,shujuduan_flag,is_check_crc,
                             shujuduan_cp_datatime_type,sbyzid,
-                            forcount, time_delay, mn_counts,actual_data_sql_id,dele_ziduan)
+                            forcount, time_delay, mn_counts,actual_data_sql_id,dele_ziduan,
+                                     actual_data_count,actual_data_delay_time,
+                                     tcp_host,tcp_post)
         return func
 
 def __generateTestCases():
@@ -345,11 +432,15 @@ def __generateTestCases():
                 args.append(shangbaoshujutestcase.is_check_crc)
                 args.append(shangbaoshujutestcase.shujuduan_cp_datatime_type)
                 args.append(shangbaoshujutestcase.id)
-                args.append(forcount_i)
+                args.append(i)
                 args.append(shangbaoshujutestcase.time_delay)
                 args.append(shujuduan_mn_list_len)
                 args.append(shangbaoshujutestcase.actual_data_sql_id)
                 args.append(shangbaoshujutestcase.dele_zidian)
+                args.append(shangbaoshujutestcase.actual_data_count)
+                args.append(shangbaoshujutestcase.actual_data_delay_time)
+                args.append(shangbaoshujutestcase.tcp_host)
+                args.append(shangbaoshujutestcase.tcp_post)
                 setattr(TestShangBaoShuJuClass,
                         'test_func_%s%s_%s-%s_%s-%s' % ("caseid",shangbaoshujutestcaseid,shujuduan_mn_list[j - 1],shujuduan_mn_j,"count",forcount_i),
                         TestShangBaoShuJuClass.getTestFunc(*args))  # 通过setattr自动为TestCase类添加成员方法，方法以“test_func_”开头
