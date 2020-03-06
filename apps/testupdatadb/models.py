@@ -45,7 +45,7 @@ class UpdateDbData(models.Model):#继承django的Model模块
 
     db_paixuziduan =models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"排序字段名")
     is_daoxu = models.BooleanField(default=True,verbose_name=u"是否倒序")
-    db_qianjiwei = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"获取前几行数据")
+    db_qianjiwei = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"获取前几条数据")
 
     case_counts = models.IntegerField(default="1",verbose_name="用例循环次数",help_text=u"用例循环次数，请填写数字，"
                                                                    u"例如：1、2、3")
