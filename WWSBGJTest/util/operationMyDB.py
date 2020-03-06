@@ -67,7 +67,7 @@ class OperationMyDB(object):
             self.db_database = db_database
 
         if db_charset == None:
-            self.db_charset = 'utf8'
+            self.db_charset = ''
         else:
             self.db_charset = db_charset
 
