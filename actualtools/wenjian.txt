@@ -1,7 +1,23 @@
-shangbaoshuju = models.ForeignKey(ShangBaoShuJu, null=True, blank=True, verbose_name=u"依赖的模拟上报数据工具", on_delete=models.PROTECT)
-yinzi_code = models.CharField(max_length=100, default="", verbose_name=u"因子编码")
-yinzi_rtd_up = models.CharField(max_length=100, default="", verbose_name=u"因子数值_上限")
-yinzi_rtd_down = models.CharField(max_length=100, default="", verbose_name=u"因子数值_下限")
-yinzi_rtd_xiaoshuwei = models.CharField(max_length=100, default="1", verbose_name=u"因子数值_小数位数")
-yinzi_rtd_count = models.CharField(max_length=100, default="1", verbose_name=u"因子数值个数")
-yinzi_flag = models.CharField(max_length=100, default="", verbose_name=u"因子标识")
+test_project = models.CharField(max_length=100, default="", verbose_name=u"测试项目")
+test_module = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"测试模块")
+test_page = models.CharField(max_length=100, default="", verbose_name=u"测试页面")
+case_priority = models.CharField(max_length=10,null=True, blank=True,
+test_case_title = models.CharField(max_length=200, default="", verbose_name=u"测试内容的名称")
+is_run_case = models.BooleanField(default=True,verbose_name=u"是否运行")
+depend_case = models.ForeignKey('self', default="", null=True, blank=True,
+db_host = models.CharField(max_length=100, default="192.168.100.198",null=True, blank=True, verbose_name=u"数据库IP")
+db_port = models.CharField(max_length=100, default="3306",null=True, blank=True, verbose_name=u"数据库端口")
+db_user = models.CharField(max_length=100, default="lepus_user",null=True, blank=True, verbose_name=u"数据库用户名")
+db_password = models.CharField(max_length=100, default="123456",null=True, blank=True, verbose_name=u"数据库密码")
+db_database = models.CharField(max_length=100, default="testconn",null=True, blank=True, verbose_name=u"数据库库名")
+db_charset = models.CharField(max_length=100, default="utf8",null=True, blank=True, verbose_name=u"数据库编码格式")
+db_biao= models.CharField(max_length=1000, default="testdatas_clickandback",null=True, blank=True, verbose_name=u"数据库中的表",
+db_ziduan= models.CharField(max_length=1000, default="current_page_click_ele_find_value",null=True, blank=True, verbose_name=u"数据库中的表的字段名",
+db_xiugaiqiandezhi= models.CharField(max_length=1000, default="/html/body/",null=True, blank=True, verbose_name=u"数据库中的表的字段替换前的值")
+db_xiugaihoudezhi= models.CharField(max_length=1000, default="修改后的油烟餐饮",null=True, blank=True, verbose_name=u"数据库中的表的字段替换后的值")
+db_tiaojianziduan= models.CharField(max_length=100, default="id",null=True, blank=True, verbose_name=u"where条件字段名",
+db_tiaojianzhi = models.CharField(max_length=1000, default="10",null=True, blank=True, verbose_name=u"where条件字段值",
+db_paixuziduan =models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"排序字段名")
+is_daoxu = models.BooleanField(default=True,verbose_name=u"是否倒序")
+db_qianjiwei = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"获取前几行数据")
+case_counts = models.IntegerField(default="1",verbose_name="用例循环次数",help_text=u"用例循环次数，请填写数字，"

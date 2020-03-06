@@ -51,6 +51,53 @@ class UpdateDbDataXadmin(object):
     # 设置是否加入导入插件
     import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
 
+    #批量复制
+    def patch_copy(self,request,querset):  #此处的querset为选中的数据
+        querset = querset.order_by('id')  #按照id顺序排序
+        for qs_one in querset:
+            #新建实体并复制选中的内容
+            new_udd = UpdateDbData()
+            new_udd.test_project = qs_one.test_project
+            new_udd.test_module = qs_one.test_module
+            new_udd.test_page = qs_one.test_page
+            new_udd.case_priority = qs_one.case_priority
+            new_udd.test_case_title = qs_one.test_case_title
+            new_udd.is_run_case = qs_one.is_run_case
+            new_udd.depend_case_id = qs_one.depend_case_id
+            new_udd.db_host = qs_one.db_host
+            new_udd.db_port = qs_one.db_port
+            new_udd.db_user = qs_one.db_user
+            new_udd.db_password = qs_one.db_password
+            new_udd.db_database = qs_one.db_database
+            new_udd.db_charset = qs_one.db_charset
+            new_udd.db_biao = qs_one.db_biao
+            new_udd.db_ziduan = qs_one.db_ziduan
+            new_udd.db_xiugaiqiandezhi = qs_one.db_xiugaiqiandezhi
+            new_udd.db_xiugaihoudezhi = qs_one.db_xiugaihoudezhi
+            new_udd.db_tiaojianziduan = qs_one.db_tiaojianziduan
+            new_udd.db_tiaojianzhi = qs_one.db_tiaojianzhi
+            new_udd.db_paixuziduan = qs_one.db_paixuziduan
+            new_udd.is_daoxu = qs_one.is_daoxu
+            new_udd.db_qianjiwei = qs_one.db_qianjiwei
+            new_udd.case_counts = qs_one.case_counts
+
+            if self.request.user.is_superuser:  # 超级用户则不保存user
+                pass
+            else: #否则保存user为当前用户
+                new_udd.write_user = self.request.user
+            new_udd.save()      #保存数据
+
+    #批量删除
+    def patch_delete(self,request,querset):
+        for qs_one in querset:
+            qs_one.depend_case_id = ""
+            #再删除本体
+            qs_one.delete()
+
+    patch_copy.short_description = "批量复制"
+    patch_delete.short_description = "批量删除"
+    actions=[patch_copy,patch_delete,]
+
     #重载get_context方法，只显示本用户添加的用例
     def get_context(self):
         context = super(UpdateDbDataXadmin, self).get_context()   #调用父类

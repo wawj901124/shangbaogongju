@@ -57,6 +57,7 @@ class ShangBaoShuJuAdmin(object):
     inlines = [ShuJuYinZiInline, ]
 
     #批量处理命令
+    #批量复制
     def patch_copy(self,request,querset):  #此处的querset为选中的数据
         querset = querset.order_by('id')  #按照id顺序排序
         for qs_one in querset:
