@@ -1,7 +1,7 @@
 import datetime
 import os
 
-from WWTest.util.myLogs import MyLogs
+from WWSBGJTest.util.myLogs import MyLogs
 
 
 class GetTimeStr:
