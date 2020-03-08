@@ -3,7 +3,7 @@ import pymysql
 from datetime import datetime,timedelta
 from dateutil.relativedelta import relativedelta
 
-from WWDBTest.util.myLogs import MyLogs   #导入日志
+from WWSBGJTest.util.myLogs import MyLogs   #导入日志
 
 
 class GetBeforeTime():
