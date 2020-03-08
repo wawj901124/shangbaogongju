@@ -1,4 +1,5 @@
 import xadmin
+from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
 
 from .models import ShangBaoShuJu,ShuJuYinZi
 from .models import StoreSBShuJu
@@ -136,6 +137,7 @@ class ShangBaoShuJuAdmin(object):
 
     patch_copy.short_description = "批量复制"
     patch_delete.short_description = "批量删除"
+
     actions=[patch_copy,patch_delete,]
 
 

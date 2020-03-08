@@ -49,7 +49,7 @@ class ShangBaoShuJu(models.Model):
     actual_data_delay_time = models.CharField(max_length=100, default="60", verbose_name=u"上报数据到数据库录入数据预估耗时（单位：秒）")
 
     tcp_host = models.CharField(max_length=100, default="192.168.8.205", verbose_name=u"tcp主机IP")
-    tcp_post = models.CharField(max_length=100, default="57001", verbose_name=u"tcp主机端口号")
+    tcp_port = models.CharField(max_length=100, default="57001", verbose_name=u"tcp主机端口号")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
@@ -68,8 +68,8 @@ class ShangBaoShuJu(models.Model):
 class ShuJuYinZi(models.Model):
     shangbaoshuju = models.ForeignKey(ShangBaoShuJu, null=True, blank=True, verbose_name=u"依赖的模拟上报数据工具", on_delete=models.PROTECT)
     yinzi_code = models.CharField(max_length=100, default="", verbose_name=u"因子编码")
-    yinzi_rtd_up = models.CharField(max_length=100, default="", verbose_name=u"因子数值_上限")
     yinzi_rtd_down = models.CharField(max_length=100, default="", verbose_name=u"因子数值_下限")
+    yinzi_rtd_up = models.CharField(max_length=100, default="", verbose_name=u"因子数值_上限")
     yinzi_rtd_xiaoshuwei = models.CharField(max_length=100, default="1", verbose_name=u"因子数值_小数位数")
     yinzi_rtd_count = models.CharField(max_length=100, default="1", verbose_name=u"因子数值个数")
 

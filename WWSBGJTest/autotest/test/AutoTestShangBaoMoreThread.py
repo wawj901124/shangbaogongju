@@ -33,7 +33,7 @@ class ShangBaoShuJuThread(Thread):
     def __init__(self,shujuduan_st,shujuduan_cn,shujuduan_pw,
                  shujuduan_mn,shujuduan_flag,is_check_crc,
                  shujuduan_cp_datatime_type,sbyzid,
-                 forcount,time_delay,mn_counts):
+                 forcount,time_delay,mn_counts,tcp_host,tcp_port):
         Thread.__init__(self)
         self.shujuduan_st = shujuduan_st
         self.shujuduan_cn = shujuduan_cn
@@ -46,6 +46,8 @@ class ShangBaoShuJuThread(Thread):
         self.forcount = forcount
         self.time_delay = time_delay
         self.mn_counts = mn_counts
+        self.tcp_host = tcp_host
+        self.tcp_port = tcp_port
         self.mysql_lock = Lock()
 
 
@@ -55,7 +57,10 @@ class ShangBaoShuJuThread(Thread):
     #定义点击返回函数
     def run(self):
         print("开始线程：%s" % self.name)
-        for i in range(0,int(self.forcount)):
+        #使用while一致循环上报
+        while True:
+        # 按照传入次数上报一定次数
+        # for i in range(0,int(self.forcount)):
             #获取因子串
             sbyz = ShangBaoYinZi()
             yinzi_list = sbyz.shangbaoyinzi(self.sbyzid)
@@ -74,7 +79,7 @@ class ShangBaoShuJuThread(Thread):
             #tcp上报数据
             try:
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                s.connect(("192.168.8.205", 57001))
+                s.connect((str(self.tcp_host),int(self.tcp_port)))
                 senddata = shangbaoshuju   #上报数据
                 s.send(senddata)  #进行上报
                 reposedata = s.recv(1024)   #获取返回值
@@ -302,30 +307,32 @@ if __name__ == '__main__':
             args.append(shangbaoshujutestcase.forcount)
             args.append(shangbaoshujutestcase.time_delay)
             args.append(shujuduan_mn_list_len)
+            args.append(shangbaoshujutestcase.tcp_host)
+            args.append(shangbaoshujutestcase.tcp_port)
             args_list.append(args)
 
     print(args_list)
     args_list_len = len(args_list)
 
-    #设置数据库最大连接数
-    import pymysql
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='root')
-    cur = conn.cursor()
-    # 通常，mysql的最大连接数默认是100, 最大可以达到16384。
-    cur.execute(" show variables like '%max_connections%';")
-    for r in cur.fetchall():
-        print(r)
-    cur.execute(" set GLOBAL max_connections = 10000;")
-    for r in cur.fetchall():
-        print(r)
-    cur.execute(" flush privileges;")
-    for r in cur.fetchall():
-        print(r)
-    cur.execute(" show variables like '%max_connections%';")
-    for r in cur.fetchall():
-        print(r)
-    cur.close()
-    conn.close()
+    # #设置数据库最大连接数
+    # import pymysql
+    # conn = pymysql.connect(host='127.0.0.1', port=3306, user='root')
+    # cur = conn.cursor()
+    # # 通常，mysql的最大连接数默认是100, 最大可以达到16384。
+    # cur.execute(" show variables like '%max_connections%';")
+    # for r in cur.fetchall():
+    #     print(r)
+    # cur.execute(" set GLOBAL max_connections = 10000;")
+    # for r in cur.fetchall():
+    #     print(r)
+    # cur.execute(" flush privileges;")
+    # for r in cur.fetchall():
+    #     print(r)
+    # cur.execute(" show variables like '%max_connections%';")
+    # for r in cur.fetchall():
+    #     print(r)
+    # cur.close()
+    # conn.close()
 
     threads = []
     for i in range(0,args_list_len):

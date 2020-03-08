@@ -194,7 +194,12 @@ class ShangBaoYinZi(object):
                     shuju_zs_hou = aut.getDigits(shuju_zhengshuweishu - 1)
                 shuju_zs = zhijian_shouwei + shuju_zs_hou
         elif shuju_up_len == shuju_down_len:
-            shuju_zs = self.dengyushangxiaxianweishu(shuju_down, shuju_down)
+            if shuju_up >= shuju_down:
+                #如果上限值大于等于下限
+                shuju_zs = self.dengyushangxiaxianweishu(shuju_down, shuju_up)
+            else:
+                print("下限值不得大于上限值")
+                shuju_zs = None
         else:
             print("下限位数不得大于上限位数")
             shuju_zs = None

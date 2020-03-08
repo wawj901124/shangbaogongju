@@ -62,7 +62,7 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
                             shujuduan_cp_datatime_type,sbyzid,
                             forcount, time_delay, mn_counts,actual_data_sql_id,
                             dele_ziduan,actual_data_count,actual_data_delay_time,
-                            tcp_host,tcp_post):
+                            tcp_host,tcp_port):
         actual_data_count_int = int(actual_data_count)
         #获取因子串
         #第一次上报数据
@@ -83,7 +83,7 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
         # tcp上报数据
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((str(tcp_host),int(tcp_post)))
+            s.connect((str(tcp_host),int(tcp_port)))
             senddata = shangbaoshuju  # 上报数据
             s.send(senddata)  # 进行上报
             reposedata = s.recv(1024)  # 获取返回值
@@ -154,7 +154,7 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
                     # tcp上报数据
                     try:
                         s_for = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                        s_for.connect((str(tcp_host),int(tcp_post)))
+                        s_for.connect((str(tcp_host),int(tcp_port)))
                         senddata_for = shangbaoshuju_for  # 上报数据
                         s_for.send(senddata_for)  # 进行上报
                         reposedata_for = s_for.recv(1024)  # 获取返回值
@@ -287,7 +287,7 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
                             forcount, time_delay, mn_counts,
                     actual_data_sql_id,dele_ziduan,
                     actual_data_count,actual_data_delay_time,
-                    tcp_host,tcp_post):
+                    tcp_host,tcp_port):
 
         def func(self):
             self.defineshangbaoshuju(shujuduan_st,shujuduan_cn,shujuduan_pw,
@@ -295,7 +295,7 @@ class TestShangBaoShuJuClass(unittest.TestCase):  # 创建测试类
                             shujuduan_cp_datatime_type,sbyzid,
                             forcount, time_delay, mn_counts,actual_data_sql_id,dele_ziduan,
                                      actual_data_count,actual_data_delay_time,
-                                     tcp_host,tcp_post)
+                                     tcp_host,tcp_port)
         return func
 
 def __generateTestCases():
@@ -440,7 +440,7 @@ def __generateTestCases():
                 args.append(shangbaoshujutestcase.actual_data_count)
                 args.append(shangbaoshujutestcase.actual_data_delay_time)
                 args.append(shangbaoshujutestcase.tcp_host)
-                args.append(shangbaoshujutestcase.tcp_post)
+                args.append(shangbaoshujutestcase.tcp_port)
                 setattr(TestShangBaoShuJuClass,
                         'test_func_%s%s_%s-%s_%s-%s' % ("caseid",shangbaoshujutestcaseid,shujuduan_mn_list[j - 1],shujuduan_mn_j,"count",forcount_i),
                         TestShangBaoShuJuClass.getTestFunc(*args))  # 通过setattr自动为TestCase类添加成员方法，方法以“test_func_”开头
