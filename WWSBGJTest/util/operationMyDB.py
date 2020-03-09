@@ -190,6 +190,96 @@ class OperationMyDB(object):
             self.outPutMyLog(r)
         return rs
 
+    def connectMyDBAndSelectAndReturnQuan(self):
+
+        # 定义要执行的SQL语句,ASC正序，DESC倒序
+        #无条件语句
+        if self.db_tiaojianziduan == ""and self.db_tiaojianzhi=="":
+            #无排序
+            print("self.db_paixuziduan")
+            if self.db_paixuziduan == '':
+                sql = """
+                SELECT %s FROM %s 
+                """ % (self.db_ziduan,self.db_biao)
+            #有排序
+            else:
+                #倒序
+                if self.db_paixufangshi:
+                    #无限制个数
+                    if self.db_qianjiwei == '':
+                        sql = """
+                        SELECT %s FROM %s ORDER BY %s DESC 
+                        """ % (self.db_ziduan,self.db_biao,self.db_paixuziduan)
+                    #有限制个数
+                    else:
+                        sql = """
+                        SELECT %s FROM %s ORDER BY %s DESC LIMIT %d
+                        """ % (self.db_ziduan,self.db_biao,self.db_paixuziduan,self.db_qianjiwei)
+                #正序
+                else:
+                    #无限制个数
+                    if self.db_qianjiwei == '':
+                        sql = """
+                        SELECT %s FROM %s ORDER BY %s ASC
+                        """ % (self.db_ziduan,self.db_biao,self.db_paixuziduan)
+                    #有限制个数
+                    else:
+                        sql = """
+                        SELECT %s FROM %s ORDER BY %s ASC LIMIT %d
+                        """ % (self.db_ziduan,self.db_biao,self.db_paixuziduan,self.db_qianjiwei)
+        #有条件语句
+        elif self.db_tiaojianziduan != ""and self.db_tiaojianzhi!="":
+            if self.db_paixuziduan == '':
+                sql = """
+                SELECT %s FROM %s WHERE %s=%s
+                """ % (self.db_ziduan,self.db_biao, self.db_tiaojianziduan, self.db_tiaojianzhi)
+            else:
+                if self.db_paixufangshi:
+                    if self.db_qianjiwei == '':
+                        sql = """
+                        SELECT %s FROM %s WHERE %s=%s ORDER BY %s DESC 
+                        """ % (self.db_ziduan,self.db_biao, self.db_tiaojianziduan, self.db_tiaojianzhi, self.db_paixuziduan)
+                    else:
+                        sql = """
+                        SELECT %s FROM %s WHERE %s=%s ORDER BY %s DESC LIMIT %d
+                        """ % (self.db_ziduan,self.db_biao, self.db_tiaojianziduan, self.db_tiaojianzhi, self.db_paixuziduan,self.db_qianjiwei)
+
+                else:
+                    if self.db_qianjiwei == '':
+                        sql = """
+                        SELECT %s FROM %s WHERE %s=%s ORDER BY %s ASC
+                        """ % (self.db_ziduan,self.db_biao,self.db_tiaojianziduan,self.db_tiaojianzhi,self.db_paixuziduan)
+                    else:
+                        sql = """
+                        SELECT %s FROM %s WHERE %s=%s ORDER BY %s ASC LIMIT %d
+                        """ % (self.db_ziduan,self.db_biao,self.db_tiaojianziduan,self.db_tiaojianzhi,self.db_paixuziduan,self.db_qianjiwei)
+        #条件不全语句
+        else:
+            sql = "没有执行sql语句"
+            print("条件字段与条件值要配对使用，你不能一个用，一个不用，要么都用，要么都不用")
+
+        print("获取表内容开始.......")
+        # 执行SQL语句
+        rs = self.connectMyDBAndExecute(sql)
+        self.outPutMyLog("\t查询的是%s表中的所有字段（筛选条件是字段%s等于%s的结果）的值，查询到的结果是：\n" % (self.db_biao,self.db_tiaojianziduan,self.db_tiaojianzhi))
+        # biaotou_list = self.connectMyDBAndGetBiaotou()
+        #
+        # biao_content_list = []
+        # for r_one in rs:
+        #     biao_content_one_list = []
+        #     for r_one_one in r_one:
+        #         biao_content_one_list.append(r_one_one)
+        #     print("列表一条内容：")
+        #     print(biao_content_one_list)
+        #     biao_content_one_dict = dict(zip(biaotou_list, biao_content_one_list))
+        #     print("列表一条数据内容字典：")
+        #     print(biao_content_one_dict)
+        #     biao_content_list.append(biao_content_one_dict)
+        #
+        # print("列表内容：")
+        # print(biao_content_list)
+        return rs
+
     def connectMyDBAndGetBiaotou(self):
         # 定义要执行的SQL语句
         mysql_biaotou = """

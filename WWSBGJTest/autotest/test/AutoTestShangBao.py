@@ -345,7 +345,7 @@ def __generateTestCases():
                 print("通过SQL语句从数据库中获取nm")
                 opdbarg_list = getNM(shangbaoshujutestcase.mn_sql_id)
                 opdb = OperationMyDB(*opdbarg_list)
-                getmn_result = opdb.connectMyDBAndSelectAndReturn()
+                getmn_result = opdb.connectMyDBAndSelectAndReturnQuan()
                 opdb.closeCursorAndConnect()
                 print("通过数据库获取到的数MN：")
                 print(getmn_result)
