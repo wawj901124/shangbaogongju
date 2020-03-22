@@ -1,3 +1,3 @@
-a = "Data comparison verification"
+a = "software test"
 b = a.upper()
 print(b)
