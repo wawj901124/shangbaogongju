@@ -2,11 +2,17 @@ from WWTest.base.activeBrowser import ActiveBrowser
 from WWAPITest.autotest.config.suijing.globalconfig.globalConfig import gc
 
 class LoginPage(object):
-    login_account_input_xpath = "/html/body/div/div/form/div[1]/input"
-    login_password_input_xpath = "/html/body/div/div/form/div[2]/input[1]"
+    # login_account_input_xpath = "/html/body/div/div/form/div[1]/input"
+    # login_password_input_xpath = "/html/body/div/div/form/div[2]/input[1]"
+    # login_code_xpath = "/html/body/div/div/form/div[3]/img"
+    # login_code_input_xpath = "/html/body/div/div/form/div[3]/input"
+    # login_button_xpath = "/html/body/div/div/form/input[4]"
+
+    login_account_input_xpath = "/html/body/div/form/div/div[2]/div[1]/div/div/input"
+    login_password_input_xpath = "/html/body/div/form/div/div[2]/div[2]/div/div/input"
     login_code_xpath = "/html/body/div/div/form/div[3]/img"
     login_code_input_xpath = "/html/body/div/div/form/div[3]/input"
-    login_button_xpath = "/html/body/div/div/form/input[4]"
+    login_button_xpath = "/html/body/div/form/div/div[2]/button"
 
 
 
@@ -39,12 +45,12 @@ class LoginPageFunction(object):
         # activebroser.delayTime(30000)
         activebroser.findEleAndInputNum(0,"xpath",loginpage.login_account_input_xpath,loginaccount)
         activebroser.findEleAndInputNum(0,"xpath",loginpage.login_password_input_xpath,loginpassword)
-        # code = activebroser.getcodetext(loginpage.login_code_xpath)
-        code = activebroser.getCodeTextByThreeInterfase(loginpage.login_code_xpath)
-        print("code:%s" %code)
-        code = code.lower()   #转为小写
-        print("code:%s" %code)
-        activebroser.findEleAndInputNum(0, "xpath",loginpage.login_code_input_xpath,code)
+        # # code = activebroser.getcodetext(loginpage.login_code_xpath)
+        # code = activebroser.getCodeTextByThreeInterfase(loginpage.login_code_xpath)
+        # print("code:%s" %code)
+        # code = code.lower()   #转为小写
+        # print("code:%s" %code)
+        # activebroser.findEleAndInputNum(0, "xpath",loginpage.login_code_input_xpath,code)
         activebroser.findEleAndClick(0,"xpath",loginpage.login_button_xpath)
         activebroser.delayTime(5)
         if not self.isExistLoginButton(activebroser):   #如果登录按钮不存在，则进行cookies写入文件

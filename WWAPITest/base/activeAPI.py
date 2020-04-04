@@ -23,7 +23,7 @@ from PIL import ImageEnhance  #导入ImageEnhance
 import pytesseract   #导入pytesseract
 from selenium.webdriver.support.select import Select   #导入Select
 from selenium.webdriver.common.action_chains import ActionChains   #导入ActionChains
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 
 ##------------------------导入自定义的包-----------------------------------------
 from WWTest.util.getTimeStr import GetTimeStr   #导入获取时间串函数

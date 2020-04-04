@@ -23,7 +23,7 @@ from PIL import ImageEnhance  #导入ImageEnhance
 import pytesseract   #导入pytesseract
 from selenium.webdriver.support.select import Select   #导入Select
 from selenium.webdriver.common.action_chains import ActionChains   #导入ActionChains
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 
 ##------------------------导入自定义的包-----------------------------------------
 from WWTest.util.getTimeStr import GetTimeStr   #导入获取时间串函数
@@ -39,8 +39,8 @@ class  ActiveBrowser(object):
         # self.driver = self.getChromeDriver()
         # self.driver = self.getIeDriver()
         if driver==None:
-            self.driver = self.getChromeDriver()
-            # self.driver = self.getFirefoxDriver()
+            # self.driver = self.getChromeDriver()
+            self.driver = self.getFirefoxDriver()
         elif driver == 'firefox':
             self.driver = self.getFirefoxDriver()
         elif driver == 'chrome':
@@ -62,12 +62,12 @@ class  ActiveBrowser(object):
         # profile_path = r'/root/firefox/'
         # # 加载配置数据
         # profile = webdriver.FirefoxProfile(profile_path)
-        # firefoxdriver = webdriver.Firefox()
+        firefoxdriver = webdriver.Firefox()
         # firefoxdriver = webdriver.Firefox(firefox_options=fire_options)  # 需要把驱动所在路径配置到系统环境变量里
-        path = r"%s/driver/geckodriver" % str(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) ) # 配置驱动路径
-        print("path:%s"%path)
+        # path = r"%s/driver/geckodriver" % str(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) ) # 配置驱动路径
+        # print("path:%s"%path)
         # firefoxdriver = webdriver.Firefox(firefox_profile=fire_options,executable_path=path)
-        firefoxdriver = webdriver.Firefox(executable_path=path)
+        # firefoxdriver = webdriver.Firefox(executable_path=path)
         firefoxdriver.maximize_window()   #窗口最大化
         return  firefoxdriver
 

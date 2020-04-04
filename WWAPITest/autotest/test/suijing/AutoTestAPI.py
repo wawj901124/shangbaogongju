@@ -116,7 +116,7 @@ class TestAPIClass(unittest.TestCase):  # 创建测试类
         requestreport.save()
 
         #如果登录存在响应结果中则自动化登录获取cookies
-        if "登录" in res.text:
+        if "注销" not in res.text:
             lpf.login()
 
 
@@ -149,8 +149,7 @@ class TestAPIClass(unittest.TestCase):  # 创建测试类
 def __generateTestCases():
     from testapidatas.models import ApiRequestData
 
-    apirequestdatatestcase_all = ApiRequestData.objects.filter(is_run_case=True).\
-        filter(test_project="环境空气质量在线监测云平台").order_by('id')
+    apirequestdatatestcase_all = ApiRequestData.objects.filter(id=1).order_by('id')
 
     for apirequestdatatestcase in apirequestdatatestcase_all:
         forcount = apirequestdatatestcase.case_counts
