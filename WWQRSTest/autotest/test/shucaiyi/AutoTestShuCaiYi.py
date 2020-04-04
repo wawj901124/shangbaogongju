@@ -25,7 +25,7 @@ from WWTest.autotest.config.wanwei.depend.radioAndReelectionLabel import RadioAn
 from WWTest.autotest.config.wanwei.depend.iframeBodyInputText import iframebodyinputtext
 
 
-class TestNewAddClass(unittest.TestCase):  # 创建测试类
+class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
     @classmethod  # 类方法，只执行一次，但必须要加注解@classmethod,且名字固定为setUpClass
     def setUpClass(cls):
@@ -282,10 +282,10 @@ def __generateTestCases():
             args.append(newaddandchecktestcase.result_table_ele_find_value)
             args.append(newaddandchecktestcase.table_colnum_counts)
 
-            setattr(TestNewAddClass,
+            setattr(TestShuCaiYiClass,
                     'test_func_%s_%s_%s' % (
                     newaddandchecktestcaseid, newaddandchecktestcase.test_case_title, forcount_i),
-                    TestNewAddClass.getTestFunc(*args))  # 通过setattr自动为TestCase类添加成员方法，方法以“test_func_”开头
+                    TestShuCaiYiClass.getTestFunc(*args))  # 通过setattr自动为TestCase类添加成员方法，方法以“test_func_”开头
 
 
 __generateTestCases()
