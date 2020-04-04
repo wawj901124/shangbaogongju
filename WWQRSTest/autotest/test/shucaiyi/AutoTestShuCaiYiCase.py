@@ -57,6 +57,14 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
         self.activebrowser.closeBrowse()
         pass
 
+    def test_00000(self):
+        #登录,查看登录后是否重启，测试看门狗
+        pass
+
+    def test_00001(self):
+
+        pass
+
     def definedepend(self, dependid):
         clickandbackdepend.clickandbackdepend(self.activebrowser, dependid)
 
