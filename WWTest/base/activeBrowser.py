@@ -10,6 +10,7 @@ from wanwenyc.settings import MEDIA_ROOT    #导入Settings中配置的MEDIA_ROO
 #------------------------导入系统包-----------------------------------------
 import time   #导入时间
 import os
+import sys
 import traceback
 import json
 # import win32gui
@@ -79,12 +80,24 @@ class  ActiveBrowser(object):
 
     #使用谷歌浏览器
     def getChromeDriver(self):
+
+        print(sys.getdefaultencoding())  # 系统默认编码
+
+
+
         #开启谷歌浏览器访问端口
         #1.将chrome的安装路径配置到环境变量中
         #2.在cmd中输入：chrome.exe --remote-debugging-port=9222 --user-data-dir="D:\Users\Administrator\PycharmProjects\wanwenyc\driver"，按回车键打开谷歌浏览器
             #其中--remote-debugging-port中的值，可以指定任何打开的端口
             #--user-data-dir标记，指定创建新Chrome配置文件的目录，它是为了保存在单独的配置文件中启动chrome,不会污染你的默认配置文件
         #3.在参数中设置chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222") #连接之前打开的浏览器
+        # chromd_exe_dir = r"C:\Program Files (x86)\Google\Chrome\Application"
+        # my_data_dir = r"%s/driver/chromedatadir/"% str(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) )  #配置驱动路径
+        # self.createdir(my_data_dir)
+        # # cmdorder = r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe --remote-debugging-port=9222 --user-data-dir="+'"%s"' %my_data_dir
+        # cmdorder = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+        # print(cmdorder)
+        # os.popen(cmdorder)
 
         chrome_options = webdriver.ChromeOptions()   #为驱动加入无界面配置
 
@@ -95,7 +108,8 @@ class  ActiveBrowser(object):
         chrome_options.add_argument("--start-fullscreen")  #全屏启动
         #chrome_options.add_argument("--window-size=4000,1600")  #专门应对无头浏览器中不能最大化屏幕的方案
         chrome_options.add_argument("--window-size=1920,1050")  # 专门应对无头浏览器中不能最大化屏幕的方案
-        chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222")   #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
+        # chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222")   #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
+        chrome_options.debugger_address="127.0.0.1:9222" #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
         # chrome_options.add_argument('--disable-dev-shm-usage') #不加载图片, 提升速度
         # chrome_options.add_argument('blink-settings=imagesEnabled=false')
         # chrome_options.add_argument('--disable-gpu') # 谷歌文档提到需要加上这个属性来规避bug
