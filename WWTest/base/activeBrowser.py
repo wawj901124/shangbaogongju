@@ -17,6 +17,8 @@ import json
 
 #------------------------导入第三方包-----------------------------------------
 from selenium import webdriver   #导入驱动
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from PIL import Image   #导入Image
 from PIL import ImageEnhance  #导入ImageEnhance
@@ -39,8 +41,8 @@ class  ActiveBrowser(object):
         # self.driver = self.getChromeDriver()
         # self.driver = self.getIeDriver()
         if driver==None:
-            # self.driver = self.getChromeDriver()
-            self.driver = self.getFirefoxDriver()
+            self.driver = self.getChromeDriver()
+            # self.driver = self.getFirefoxDriver()
         elif driver == 'firefox':
             self.driver = self.getFirefoxDriver()
         elif driver == 'chrome':
@@ -55,8 +57,10 @@ class  ActiveBrowser(object):
     def getFirefoxDriver(self):
         # binary = FirefoxBinary(r'D:\Program Files (x86)\Mozilla Firefox\firefox.exe')
         # firefoxdriver = webdriver.Firefox(firefox_binary=binary)
-        fire_options = webdriver.FirefoxOptions()   #为驱动加入无界面配置
-        fire_options.add_argument('--headless')   #为驱动加入无界面配置
+        # fire_options = webdriver.FirefoxOptions()   #为驱动加入无界面配置
+        # fire_options.add_argument('--headless')   #为驱动加入无界面配置
+        # fire_options.debuggerAddress="127.0.0.1:12306"
+
         # 配置文件路径
         # profile_path = r'/usr/lib64/firefox/'
         # profile_path = r'/root/firefox/'
@@ -75,6 +79,13 @@ class  ActiveBrowser(object):
 
     #使用谷歌浏览器
     def getChromeDriver(self):
+        #开启谷歌浏览器访问端口
+        #1.将chrome的安装路径配置到环境变量中
+        #2.在cmd中输入：chrome.exe --remote-debugging-port=9222 --user-data-dir="D:\Users\Administrator\PycharmProjects\wanwenyc\driver"，按回车键打开谷歌浏览器
+            #其中--remote-debugging-port中的值，可以指定任何打开的端口
+            #--user-data-dir标记，指定创建新Chrome配置文件的目录，它是为了保存在单独的配置文件中启动chrome,不会污染你的默认配置文件
+        #3.在参数中设置chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222") #连接之前打开的浏览器
+
         chrome_options = webdriver.ChromeOptions()   #为驱动加入无界面配置
 
         chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
@@ -84,7 +95,7 @@ class  ActiveBrowser(object):
         chrome_options.add_argument("--start-fullscreen")  #全屏启动
         #chrome_options.add_argument("--window-size=4000,1600")  #专门应对无头浏览器中不能最大化屏幕的方案
         chrome_options.add_argument("--window-size=1920,1050")  # 专门应对无头浏览器中不能最大化屏幕的方案
-
+        chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222")   #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
         # chrome_options.add_argument('--disable-dev-shm-usage') #不加载图片, 提升速度
         # chrome_options.add_argument('blink-settings=imagesEnabled=false')
         # chrome_options.add_argument('--disable-gpu') # 谷歌文档提到需要加上这个属性来规避bug
@@ -1492,17 +1503,21 @@ class  ActiveBrowser(object):
 
 if __name__ == "__main__":
     #驱动下载地址：https://www.cnblogs.com/yhleng/p/8056120.html
+    activeweb = ActiveBrowser()  # 实例化
+    # activeweb.quDiaoInputStyle("1")
+    url = "http://www.baidu.com"
+    activeweb.getUrl(url)
 
-    for i in range(0,10):
-        activeweb = ActiveBrowser() #实例化
-        # activeweb.quDiaoInputStyle("1")
-        url = "http://111.207.18.22:22044/#/login"
-        activeweb.getUrl(url)
-        # account = "/html/body/div[2]/div/div/div[2]/div/form/div[1]/input"
-        # password = "/html/body/div[2]/div/div/div[2]/div/form/div[2]/input"
-        loginbutton = "/html/body/div[1]/div/div[3]/div[1]/div/form/div[4]/div/button"
-        # activeweb.findElementByXpathAndInput(account, '17090177294')
-        # activeweb.findElementByXpathAndInput(password, '900805')
-        activeweb.findEleAndClickWithAlert(0,"xpath",loginbutton)
-        # activeweb.delayTime(3)
-        continue
+    # for i in range(0,10):
+    #     activeweb = ActiveBrowser() #实例化
+    #     # activeweb.quDiaoInputStyle("1")
+    #     url = "http://111.207.18.22:22044/#/login"
+    #     activeweb.getUrl(url)
+    #     # account = "/html/body/div[2]/div/div/div[2]/div/form/div[1]/input"
+    #     # password = "/html/body/div[2]/div/div/div[2]/div/form/div[2]/input"
+    #     loginbutton = "/html/body/div[1]/div/div[3]/div[1]/div/form/div[4]/div/button"
+    #     # activeweb.findElementByXpathAndInput(account, '17090177294')
+    #     # activeweb.findElementByXpathAndInput(password, '900805')
+    #     activeweb.findEleAndClickWithAlert(0,"xpath",loginbutton)
+    #     # activeweb.delayTime(3)
+    #     continue
