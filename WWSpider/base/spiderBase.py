@@ -65,30 +65,38 @@ class SpiderBase(object):
 
 
 if __name__ == "__main__":
-    url = "http://fpie1.com/#/play-details/78"
-    sb = SpiderBase(weburl=url)
-    #打开网址
-    sb.get_web_url()
-    #获取视频链接
-    video_url = sb.get_video_url()
-    #获取下载地址
-    down_load = sb.get_down_load()
-    #获取封面图
-    front_cover_img = sb.get_front_cover_img()
+    error_url_list=[]
+    for i in range(78,79):
+        try:
+            url = "http://fpie1.com/#/play-details/%s"% i
+            sb = SpiderBase(weburl=url)
+            #打开网址
+            sb.get_web_url()
+            #获取视频链接
+            video_url = sb.get_video_url()
+            #获取下载地址
+            down_load = sb.get_down_load()
+            #获取封面图
+            front_cover_img = sb.get_front_cover_img()
 
-    from spiderdata.models import SpiderDate
+            from spiderdata.models import SpiderDate
 
-    spiderdata = SpiderDate()
-    spiderdata.splider_url = url
-    spiderdata.front_cover_img = front_cover_img
-    spiderdata.video = video_url
-    spiderdata.down_load = down_load
-    is_exist_url_count = SpiderDate.objects.filter(splider_url=url).count()
-    print(is_exist_url_count)
-    if is_exist_url_count>0:
-        spiderdata.save()
-    else:
-        print("已经爬取过网站：%s" % url)
+            spiderdata = SpiderDate()
+            spiderdata.splider_url = url
+            spiderdata.front_cover_img = front_cover_img
+            spiderdata.video = video_url
+            spiderdata.down_load = down_load
+            is_exist_url_count = SpiderDate.objects.filter(splider_url=url).count()
+            print(is_exist_url_count)
+            if is_exist_url_count==0:
+                spiderdata.save()
+            else:
+                print("已经爬取过网站：%s" % url)
+        except:
+            error_url_list.append(url)
+
+    print("失败网址：")
+    print(error_url_list)
 
 
 
