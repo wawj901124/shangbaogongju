@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'dependallshow.apps.DependallshowConfig',#注册dependallshow
     'testupdatadb.apps.TestupdatadbConfig',#注册testupdatadb
     'shangbaoshuju.apps.ShangbaoshujuConfig', #注册shangbaoshuju
+    'spiderdata.apps.SpiderdataConfig',  # 注册spiderdata
 ]
 
 MIDDLEWARE = [

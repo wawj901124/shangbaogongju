@@ -97,6 +97,12 @@ class TestAPIClass(unittest.TestCase):  # 创建测试类
         else:  #进行get请求
            res = self.activeapi.define_Get(url=url,url_params=data,headers=headers,cookies=cookies)
 
+
+        #打印接口响应的text
+        print("-----------------------------------------------")
+        print(res.text)
+        print("-----------------------------------------------")
+
         #保存请求结果
         from reportdatas.models import RequestReport
         requestreport = RequestReport()
