@@ -193,5 +193,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]   #将static加入python�
 MEDIA_URL = '/media/'   #配置上传文件跟目录
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    #MEDIA_ROOT只能设置一个，根目录,把media与根目录BASE_DIR连接起来
 
-DJANGO_SERVER_YUMING = "http://192.168.100.198:8000"   #配置服务域名，用于某些页面跳转配置，此处定义便于统一管理
+DJANGO_SERVER_YUMING = "http://192.168.0.11:8000"   #配置服务域名，用于某些页面跳转配置，此处定义便于统一管理
 

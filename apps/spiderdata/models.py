@@ -9,10 +9,13 @@ User = get_user_model()  #get_user_model() 函数直接返回User类，找的是
 
 # Create your models here.
 class SpiderDate(models.Model):
+    splider_url = models.CharField(max_length=1500, default="",null=True, blank=True,verbose_name=u"爬取数据URL")  #unique=True,表示设置此字段为主键，唯一
     splider_title = models.CharField(max_length=100, default="爬取数据",null=True, blank=True, verbose_name=u"数据标题")
-    img_height = models.CharField(max_length=100, default=75, verbose_name=u"封面图高度")
-    img_width = models.CharField(max_length=100, default=75, verbose_name=u"封面图宽度")
-    front_cover_img = models.ImageField(upload_to="report/%Y%m/screenshots/" , null=True, blank=True,verbose_name=u"封面图片", height_field='img_height',width_field='img_width')
+    img_height = models.CharField(max_length=100, default=75,null=True, blank=True, verbose_name=u"封面图高度")
+    img_width = models.CharField(max_length=100, default=75, null=True, blank=True,verbose_name=u"封面图宽度")
+    # front_cover_img = models.ImageField(upload_to="report/%Y%m/screenshots/" , null=True, blank=True,verbose_name=u"封面图片", height_field='img_height',width_field='img_width',max_length=2000)
+    front_cover_img = models.CharField(max_length=1500, null=True, blank=True,verbose_name=u"封面图片")
+
     video = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"视频连接")
     down_load = models.CharField(max_length=1500, default="", null=True, blank=True,verbose_name=u"下载连接")
 
@@ -25,7 +28,7 @@ class SpiderDate(models.Model):
 
     def image_data(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
-        return mark_safe("<a href='{}'> <img src='{}' style='width:75px;height:75px;'/></a>".format(self.front_cover_img.url,self.front_cover_img.url))
+        return mark_safe("<a href='{}'> <img src='{}' style='width:75px;height:75px;'/></a>".format(self.front_cover_img,self.front_cover_img))
         # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
 
     image_data.short_description = u"封面图片"   #为go_to函数名个名字

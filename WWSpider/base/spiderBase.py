@@ -1,4 +1,10 @@
-
+import unittest
+# ----------------------------------------------------------------------
+import os, django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wanwenyc.settings")
+django.setup()
+# ----------------------------------------------------------------------
+#独运行某一个py文件时会出现如下错误：django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.，以上内容可以解决此问题,加载django中的App
 
 from WWTest.base.activeBrowser import ActiveBrowser
 
@@ -48,13 +54,12 @@ class SpiderBase(object):
         imageend = self.ab.saveSpiderImage()
         with open(imageend, 'wb') as f:
             f.write(image_content)
-        print("封面图：%s" % imageend)
+        imageend_list = imageend.split("media")
+        from wanwenyc.settings import DJANGO_SERVER_YUMING
+        image_xpath = "%s/media%s"%(DJANGO_SERVER_YUMING,imageend_list[1])
+        print("封面图：%s" % image_xpath)
 
-        #将封面图地址修改为数据库可识别的地址
-        imageend_list_two = imageend.split("media")[1]
-        imgae_sql_path ="/media%s"%imageend_list_two
-        print("入库地址：%s"% imgae_sql_path)
-        return imgae_sql_path
+        return image_xpath
 
 
 
@@ -71,6 +76,20 @@ if __name__ == "__main__":
     #获取封面图
     front_cover_img = sb.get_front_cover_img()
 
-    
+    from spiderdata.models import SpiderDate
+
+    spiderdata = SpiderDate()
+    spiderdata.splider_url = url
+    spiderdata.front_cover_img = front_cover_img
+    spiderdata.video = video_url
+    spiderdata.down_load = down_load
+    is_exist_url_count = SpiderDate.objects.filter(splider_url=url).count()
+    print(is_exist_url_count)
+    if is_exist_url_count>0:
+        spiderdata.save()
+    else:
+        print("已经爬取过网站：%s" % url)
+
+
 
 
