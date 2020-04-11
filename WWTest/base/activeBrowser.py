@@ -371,8 +371,8 @@ class  ActiveBrowser(object):
                 self.outPutErrorMyLog("元素的查找方式不再八类（id、name、class_name、tag_name、"
                                       "link_text、partial_link_text、css_selector、xpath）之中，"
                                       "请输入正确的查找方式.")
-            self.driver.execute_script("arguments[0].scrollIntoView();", ele)  # 拖动到可见的元素去，影响截取特定区域的截图，不影响整个页面截图
-            self.driver.execute_script("arguments[0].setAttribute('style',arguments[1]);", ele,"background:green;border:2px solid red")   #高亮显示操作的元素
+            # self.driver.execute_script("arguments[0].scrollIntoView();", ele)  # 拖动到可见的元素去，影响截取特定区域的截图，不影响整个页面截图
+            # self.driver.execute_script("arguments[0].setAttribute('style',arguments[1]);", ele,"background:green;border:2px solid red")   #高亮显示操作的元素
         except Exception as e:
             self.outPutMyLog("问题描述：%s" % e)
             self.getScreenshotNormal()
@@ -1202,6 +1202,20 @@ class  ActiveBrowser(object):
         self.outPutErrorMyLog(pathaboutmysql)  #打印截图路径，供报告截图使用
         self.outPutErrorMyLog("*****")
         return path
+
+    #获取爬虫图片并保存
+    def saveSpiderImage(self):
+        tStr = self.getTimeStr()   #获取当前时间串
+        currentny = self.getTimeStrNY()   #获取当前时间的年月
+        firedir = r'%s/media/report/%s/screenshots/' % (os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),currentny)
+        self.createdir(firedir)
+        path = '%s/screenpicture_%s.png' % (firedir,tStr)
+        pathaboutmysql = r'media\report\%s\screenshots\screenpicture_%s.png'%(currentny,tStr)
+        self.outPutErrorMyLog("*****")
+        self.outPutErrorMyLog(pathaboutmysql)  #打印截图路径，供报告截图使用
+        self.outPutErrorMyLog("*****")
+        return path
+
 
 
 

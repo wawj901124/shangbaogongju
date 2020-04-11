@@ -1,24 +1,9 @@
-# import requests
-# import json
-#
-# url = "http://fpie1.com/#/play-details/78"
-# rese = requests.get(url)
-# retext = rese.text
-# print(retext)
-# html = json.loads(retext)
-# print(html)
-# from requests_html import HTMLSession
-#
-# session = HTMLSession()
-#
-# rese = session.get(url)
-# retext = rese.text
-# print(retext)
-# print(rese.links)
 url = "http://fpie1.com/#/play-details/78"
 
 from WWTest.base.activeBrowser import ActiveBrowser
 
+
+class SpiderBase
 ab = ActiveBrowser()
 ab.getUrl(url)
 ab.delayTime(2)

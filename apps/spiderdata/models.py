@@ -12,7 +12,7 @@ class SpiderDate(models.Model):
     splider_title = models.CharField(max_length=100, default="爬取数据",null=True, blank=True, verbose_name=u"数据标题")
     img_height = models.CharField(max_length=100, default=75, verbose_name=u"封面图高度")
     img_width = models.CharField(max_length=100, default=75, verbose_name=u"封面图宽度")
-    front_cover_img = models.ImageField(upload_to="report/%Y%m" , null=True, blank=True,verbose_name=u"封面图片", height_field='img_height',width_field='img_width')
+    front_cover_img = models.ImageField(upload_to="report/%Y%m/screenshots/" , null=True, blank=True,verbose_name=u"封面图片", height_field='img_height',width_field='img_width')
     video = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"视频连接")
     down_load = models.CharField(max_length=1500, default="", null=True, blank=True,verbose_name=u"下载连接")
 
