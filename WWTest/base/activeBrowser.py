@@ -1209,7 +1209,7 @@ class  ActiveBrowser(object):
         currentny = self.getTimeStrNY()   #获取当前时间的年月
         firedir = r'%s/media/report/%s/screenshots/' % (os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),currentny)
         self.createdir(firedir)
-        path = '%s/screenpicture_%s.png' % (firedir,tStr)
+        path = '%sscreenpicture_%s.png' % (firedir,tStr)
         pathaboutmysql = r'media\report\%s\screenshots\screenpicture_%s.png'%(currentny,tStr)
         self.outPutErrorMyLog("*****")
         self.outPutErrorMyLog(pathaboutmysql)  #打印截图路径，供报告截图使用
