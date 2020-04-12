@@ -79,14 +79,14 @@ if __name__ == "__main__":
             #获取封面图
             front_cover_img = sb.get_front_cover_img()
 
-            from spiderdata.models import SpiderDate
+            from spiderdata.models import SpiderData
 
-            spiderdata = SpiderDate()
+            spiderdata = SpiderData()
             spiderdata.splider_url = url
             spiderdata.front_cover_img = front_cover_img
             spiderdata.video = video_url
             spiderdata.down_load = down_load
-            is_exist_url_count = SpiderDate.objects.filter(splider_url=url).count()
+            is_exist_url_count = SpiderData.objects.filter(splider_url=url).count()
             print(is_exist_url_count)
             if is_exist_url_count==0:
                 spiderdata.save()

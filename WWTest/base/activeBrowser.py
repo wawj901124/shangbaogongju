@@ -27,6 +27,7 @@ import pytesseract   #导入pytesseract
 from selenium.webdriver.support.select import Select   #导入Select
 from selenium.webdriver.common.action_chains import ActionChains   #导入ActionChains
 # from bs4 import BeautifulSoup
+from selenium.webdriver.support.wait import WebDriverWait
 
 ##------------------------导入自定义的包-----------------------------------------
 from WWTest.util.getTimeStr import GetTimeStr   #导入获取时间串函数
@@ -101,7 +102,7 @@ class  ActiveBrowser(object):
 
         chrome_options = webdriver.ChromeOptions()   #为驱动加入无界面配置
 
-        chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
+        # chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
         chrome_options.add_argument('--no-sandbox')  #“–no - sandbox”参数是让Chrome在root权限下跑
         chrome_options.add_argument("--kiosk") #全屏启动
         chrome_options.add_argument("--start-maximized")  #全屏启动
@@ -109,7 +110,7 @@ class  ActiveBrowser(object):
         #chrome_options.add_argument("--window-size=4000,1600")  #专门应对无头浏览器中不能最大化屏幕的方案
         chrome_options.add_argument("--window-size=1920,1050")  # 专门应对无头浏览器中不能最大化屏幕的方案
         # chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222")   #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
-        chrome_options.debugger_address="127.0.0.1:9222" #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
+        ## chrome_options.debugger_address="127.0.0.1:9222" #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
         # chrome_options.add_argument('--disable-dev-shm-usage') #不加载图片, 提升速度
         # chrome_options.add_argument('blink-settings=imagesEnabled=false')
         # chrome_options.add_argument('--disable-gpu') # 谷歌文档提到需要加上这个属性来规避bug
@@ -126,7 +127,9 @@ class  ActiveBrowser(object):
         # chromedriver = webdriver.Chrome(executable_path=path)
         # chromedriver = webdriver.Chrome(executable_path=path)
         chromedriver.maximize_window()   #窗口最大化
-        self.delayTime(5)
+        # self.delayTime(5)
+        chromedriver.implicitly_wait(1)#设置隐形等待时间为1秒
+        self.outPutMyLog("隐形等待1秒")
         return  chromedriver
 
 
@@ -148,7 +151,13 @@ class  ActiveBrowser(object):
         return  operadriver
 
 
-
+    #显性等待函数
+    def showWait(self,findstyle,findstylevalue):
+        if str(findstyle) == "xpath":
+            self.outPutMyLog("进入显性等待...")
+            #设置查询十秒，每隔0.5秒查询一次，10秒查询不到则报超时
+            WebDriverWait(self.driver,10,0.5).until(self.driver.find_element_by_xpath(findstylevalue),"等待10秒没有查找到元素")
+            self.outPutMyLog("找到元素")
     def outPutMyLog(self,context):
         mylog = MyLogs(context)
         mylog.runMyLog()

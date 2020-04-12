@@ -10,22 +10,30 @@ from requests_html import HTMLSession
 
 from WWTest.util.getTimeStr import GetTimeStr   #导入获取时间串函数
 from WWSpider.util.handleTxt import HandleTxt
+from WWTest.base.activeBrowser import ActiveBrowser
 
 
 
 class SpiderBase(object):
     def __init__(self,weburl):
-        self.ab = HTMLSession()
+        self.hs = HTMLSession()
         self.web_url = weburl
         self.response = self.get_web_url()
         self.timeStr = GetTimeStr()
+        # self.ab = ActiveBrowser()
 
     #进入URL
     def get_web_url(self):
-        response = self.ab.get(url=self.web_url)
+        # headers = {
+        #     'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+        # }
+        response = self.hs.get(url=self.web_url)
         # response.html.render()  #使用render函数加载js
         result = self.get_obj_full_text(response)
         return response
+
+    def get_web_url_reponse_text(self):
+        return self.get_obj_full_text(self.response)
 
     def get_image(self):
         response = self.response
@@ -83,7 +91,7 @@ class SpiderBase(object):
         imageend_list = imageend.split("media")
         from wanwenyc.settings import DJANGO_SERVER_YUMING
         image_xpath = "%s/media%s"%(DJANGO_SERVER_YUMING,imageend_list[1])
-        print("封面图：%s" % image_xpath)
+        print("转化成的本地图：%s" % image_xpath)
         return image_xpath
 
     #获取封面图片
@@ -93,7 +101,7 @@ class SpiderBase(object):
         print(front_cover_img_url)
         import requests
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
+            # 'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
             'Remote Address': '104.26.1.213:443',
             'Referrer Policy': 'no-referrer-when-downgrade',
         }
@@ -118,7 +126,7 @@ class SpiderBase(object):
 
     def get_obj_full_text(self,inputObj):
         obj_full_text = inputObj.text
-        print(obj_full_text)
+        # print(obj_full_text)
         return obj_full_text
 
     #获取编号
@@ -228,30 +236,93 @@ class SpiderBase(object):
         print(genre_and_start_list)
         return genre_and_start_list
 
+    #正则匹配获取变量中的内容
+    def get_re_content(self,pipei,content):
+        import  re
+        pipei_from_content = re.findall(pipei,content)
+        print(pipei_from_content)
+        return pipei_from_content
+
+
+    def get_gid_and_uc_and_img(self):
+
+        respose_text = self.get_obj_full_text(self.response)
+        # print(respose_text)
+        gid_and_uc_and_img_list = []
+        gid_re = self.get_re_content(pipei=".*var.*gid.*=.*;",content=respose_text)
+        gid = gid_re[0].split("=")[1].strip(" ").strip(";")
+        gid_and_uc_and_img_list.append(gid)
+        # print(gid)
+        uc_re = self.get_re_content(pipei=".*var.*uc.*=.*;",content=respose_text)
+        uc = uc_re[0].split("=")[1].strip(" ").strip(";")
+        # print(uc)
+        gid_and_uc_and_img_list.append(uc)
+        img_re = self.get_re_content(pipei=".*var.*img.*=.*;",content=respose_text)
+        img = img_re[0].split("=")[1].strip(" ").strip(";").strip("'")
+        # print(img)
+        gid_and_uc_and_img_list.append(img)
+        print(gid_and_uc_and_img_list)
+        return gid_and_uc_and_img_list
+
+
 
     #获取下载地址链接
     def get_down_load(self):
-        # 使用xpath的方法获取类名为col-md-3 info的div标签下的所有P标签的span标签下的a标签元素集合
-        down_loads = self.response.html.xpath("//div[@class='movie']")
-        for one in down_loads:
-            one_text = self.get_obj_full_text(one)
-            print(one_text)
-            # one_href = one.attrs["href"]
-            # print(one_href)
-        # print(down_load)
-        # return down_load
-
-
-
-
+        #使用ajax请求获取链接地址
+        gid_and_uc_and_img_list = self.get_gid_and_uc_and_img()
+        ajax_url = "https://www.busdmm.one/ajax/uncledatoolsbyajax.php?gid=%s&lang=zh&img=%s&uc=%s&floor=236" %(gid_and_uc_and_img_list[0],gid_and_uc_and_img_list[2],gid_and_uc_and_img_list[1])
+        headers = {
+            # 'x-requested-with': 'XMLHttpRequest',  #这个说明是ajax请求，没有这个，也会识别
+            # 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+            'referer': '%s' % self.web_url,  # 此处要根据来源网址做出相应，没有就不会获取到相应内容
+        }
+        myresponse = self.hs.get(ajax_url, headers=headers)
+        # print(myresponse.status_code)
+        # print(myresponse.content)
+        # print(myresponse.text)
+        links_list = myresponse.html.absolute_links  #获取所有链接的绝对路径
+        for i in links_list:
+            print(i)
+        return links_list
 
 
 if __name__ == "__main__":
     # yuming_list = ["https://www.javbus.com","https://www.busdmm.one","https://www.dmmbus.zone","https://www.seedmm.one"]
     # pre_number = ["HUNT","HUNTA","MKMP","YMDD","NASH","ZMEN","UMSO","MDTM","MDBK","BAZX","NASH","BAZX","BOKD","XRW","BNJC"]
 
-    url = "https://www.busdmm.one/MIAA-261"
+    url = "https://www.busdmm.one/HUNT-002"
+
     sb = SpiderBase(url)
+    #获取封面图路径
+    front_cover_img_local_xpath = sb.get_front_cover_img()
+    print("获取封面图路径:")
+    print(front_cover_img_local_xpath)
+    #获取编号
+    prenum_text = sb.get_prenum()
+    print("编号:")
+    print(prenum_text)
+    #获取导演，制作商，发行商
+    direcotr_and_studio_and_label_list = sb.get_direcotr_and_studio_and_label()
+    print("导演，制作商，发行商:")
+    print(direcotr_and_studio_and_label_list)
+    #获取类别和演员
+    genres_and_stars_list = sb.get_genres_and_stars()
+    print("类别和演员:")
+    print(genres_and_stars_list)
+    #获取演员和头像
+    star_and_photo_list = sb.get_star_and_photo()
+    print("演员和头像:")
+    print(star_and_photo_list)
+
+
+    #进行ajax异步请求获取下载链接
+    sb2 = SpiderBase(url)
+    #获取下载链接
+    down_load_list = sb2.get_down_load()
+    print("下载链接:")
+    print(down_load_list)
+
+
     # sb.get_front_cover_img()
     # sb.get_prenum()
     # direcotr_and_studio_and_label_list = sb.get_direcotr_and_studio_and_label()
@@ -269,8 +340,9 @@ if __name__ == "__main__":
     # sb.get_down_load()
     # genre_list = sb.get_genre()
     # print(genre_list)
-    star_and_photo_list = sb.get_star_and_photo()
-    print(star_and_photo_list)
+    # star_and_photo_list = sb.get_star_and_photo()
+    # print(star_and_photo_list)
+    # sb.get_down_load()
 
 
     # url = "https://www.busdmm.one"

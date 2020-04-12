@@ -1,11 +1,11 @@
 import xadmin
 from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
 
-from .models import SpiderDate
+from .models import SpiderData
 
 
 
-class SpiderDateAdmin(object):
+class SpiderDataAdmin(object):
     # def preview(self,obj):
     #     from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
     #     return mark_safe("<a href='{}'>大图</a>".format(obj.front_cover_img.url))
@@ -46,10 +46,19 @@ class SpiderDateAdmin(object):
     #                    "order": ('id',)},
     # }
 
+    #设置内联
+    class ShuJuYinZiInline(object):
+        model = ShuJuYinZi
+        exclude = ["add_time","update_time","write_user"]
+        extra = 1
+        style = 'tab'    #以标签形式展示
+
+    inlines = [ShuJuYinZiInline, ]
+
 
 
     def queryset(self):   #重载queryset方法，用来做到不同的admin取出的数据不同
-        qs = super(SpiderDateAdmin, self).queryset()   #调用父类
+        qs = super(SpiderDataAdmin, self).queryset()   #调用父类
         if self.request.user.is_superuser:   #超级用户可查看所有数据
             return qs
         else:
@@ -58,4 +67,4 @@ class SpiderDateAdmin(object):
 
 
 
-xadmin.site.register(SpiderDate, SpiderDateAdmin) #在xadmin中注册SpiderDate
+xadmin.site.register(SpiderData, SpiderDataAdmin) #在xadmin中注册SpiderDate
