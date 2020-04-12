@@ -13,7 +13,7 @@ class GlobalConfig(object):
     TEST_WEB_YUMING = "http://127.0.0.1:8000"
     TEST_LOGIN_ACCOUNT = "bobby2"
     TEST_LOGIN_PASSWORD = "admin123"
-    TEST_REQUESTS_YU_MING = "http://fpie1.com/#"
+    TEST_REQUESTS_YU_MING = "http://127.0.0.l/#"
 
     COOKIE_FILE_NAME = "splitlogincookie.json"
 
