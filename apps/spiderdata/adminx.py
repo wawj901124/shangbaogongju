@@ -1,7 +1,7 @@
 import xadmin
 from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
 
-from .models import SpiderData
+from .models import SpiderData,SpiderDownLoad,SpiderVideo
 
 
 
@@ -47,13 +47,20 @@ class SpiderDataAdmin(object):
     # }
 
     #设置内联
-    class ShuJuYinZiInline(object):
-        model = ShuJuYinZi
+    class SpiderVideoInline(object):
+        model = SpiderVideo
         exclude = ["add_time","update_time","write_user"]
         extra = 1
         style = 'tab'    #以标签形式展示
 
-    inlines = [ShuJuYinZiInline, ]
+    #设置内联
+    class SpiderDownLoadInline(object):
+        model = SpiderDownLoad
+        exclude = ["add_time","update_time","write_user"]
+        extra = 1
+        style = 'tab'    #以标签形式展示
+
+    inlines = [SpiderVideoInline,SpiderDownLoadInline ]
 
 
 

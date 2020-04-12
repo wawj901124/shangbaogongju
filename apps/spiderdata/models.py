@@ -17,6 +17,13 @@ class SpiderGenre(models.Model):
     update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
 
+    class Meta:
+        verbose_name = u"类别"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.genre
+
 #演员
 class SpiderStar(models.Model):
     star =models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"演员")
@@ -28,6 +35,13 @@ class SpiderStar(models.Model):
     update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
 
+    class Meta:
+        verbose_name = u"演员"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.star
+
 #发行商
 class SpiderLabel(models.Model):
     label = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"发行商")
@@ -37,6 +51,13 @@ class SpiderLabel(models.Model):
                                     verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
     update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"发行商"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.label
 
 #制作商
 class SpiderStudio(models.Model):
@@ -48,6 +69,13 @@ class SpiderStudio(models.Model):
     update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
 
+    class Meta:
+        verbose_name = u"制作商"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.studio
+
 #导演
 class SpiderDirector(models.Model):
     director = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"导演")
@@ -58,21 +86,28 @@ class SpiderDirector(models.Model):
     update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
 
+    class Meta:
+        verbose_name = u"导演"
+        verbose_name_plural=verbose_name
 
-# Create your models here.
+    def __str__(self):
+        return self.director
+
+# 爬取数据
 class SpiderData(models.Model):
     splider_url = models.CharField(max_length=1500, default="",null=True, blank=True,verbose_name=u"爬取数据URL")  #unique=True,表示设置此字段为主键，唯一
     splider_title = models.CharField(max_length=1000, default="爬取数据",null=True, blank=True, verbose_name=u"数据标题")
-    img_height = models.CharField(max_length=100, default=75,null=True, blank=True, verbose_name=u"封面图高度")
-    img_width = models.CharField(max_length=100, default=75, null=True, blank=True,verbose_name=u"封面图宽度")
+    # img_height = models.CharField(max_length=100, default=75,null=True, blank=True, verbose_name=u"封面图高度")
+    # img_width = models.CharField(max_length=100, default=75, null=True, blank=True,verbose_name=u"封面图宽度")
     # front_cover_img = models.ImageField(upload_to="report/%Y%m/screenshots/" , null=True, blank=True,verbose_name=u"封面图片", height_field='img_height',width_field='img_width',max_length=2000)
     front_cover_img = models.CharField(max_length=1500, null=True, blank=True,verbose_name=u"封面图片")
 
-    genre = models.ManyToManyField(SpiderGenre,related_name='genre',default="",null=True, blank=True,verbose_name=u"类别")
-    star = models.ManyToManyField(SpiderStar,related_name='star',default="",null=True, blank=True,verbose_name=u"演员")
-    label = models.ManyToManyField(SpiderLabel,related_name='label',default="",null=True, blank=True,verbose_name=u"发行商")
-    studio = models.ManyToManyField(SpiderStudio,related_name='studio',default="",null=True, blank=True,verbose_name=u"制作商")
-    director = models.ManyToManyField(SpiderDirector,related_name='director',default="",null=True, blank=True,verbose_name=u"导演")
+    #对于ManyToManyField，没有null参数，如果加上会报警告如：spiderdata.SpiderData.genre: (fields.W340) null has no effect on ManyToManyField.
+    genre = models.ManyToManyField(SpiderGenre,default="", blank=True,verbose_name=u"类别")
+    star = models.ManyToManyField(SpiderStar,default="",blank=True,verbose_name=u"演员")
+    label = models.ManyToManyField(SpiderLabel,default="",blank=True,verbose_name=u"发行商")
+    studio = models.ManyToManyField(SpiderStudio,default="",blank=True,verbose_name=u"制作商")
+    director = models.ManyToManyField(SpiderDirector,default="",blank=True,verbose_name=u"导演")
 
     prenum = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"编号")
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
@@ -122,6 +157,12 @@ class SpiderDownLoad(models.Model):
     update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
 
+    class Meta:
+        verbose_name = u"下载链接"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.down_load
 
 #视频链接，关联作品
 class SpiderVideo(models.Model):
@@ -133,3 +174,10 @@ class SpiderVideo(models.Model):
                                     verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
     update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"视频链接"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.video

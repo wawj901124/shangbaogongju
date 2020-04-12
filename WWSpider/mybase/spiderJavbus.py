@@ -20,7 +20,7 @@ class SpiderBase(object):
         self.web_url = weburl
         self.response = self.get_web_url()
         self.timeStr = GetTimeStr()
-        # self.ab = ActiveBrowser()
+
 
     #进入URL
     def get_web_url(self):
