@@ -10,7 +10,7 @@ User = get_user_model()  #get_user_model() 函数直接返回User类，找的是
 # Create your models here.
 class SpiderDate(models.Model):
     splider_url = models.CharField(max_length=1500, default="",null=True, blank=True,verbose_name=u"爬取数据URL")  #unique=True,表示设置此字段为主键，唯一
-    splider_title = models.CharField(max_length=100, default="爬取数据",null=True, blank=True, verbose_name=u"数据标题")
+    splider_title = models.CharField(max_length=1000, default="爬取数据",null=True, blank=True, verbose_name=u"数据标题")
     img_height = models.CharField(max_length=100, default=75,null=True, blank=True, verbose_name=u"封面图高度")
     img_width = models.CharField(max_length=100, default=75, null=True, blank=True,verbose_name=u"封面图宽度")
     # front_cover_img = models.ImageField(upload_to="report/%Y%m/screenshots/" , null=True, blank=True,verbose_name=u"封面图片", height_field='img_height',width_field='img_width',max_length=2000)
@@ -19,6 +19,12 @@ class SpiderDate(models.Model):
     video = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"视频连接")
     down_load = models.CharField(max_length=1500, default="", null=True, blank=True,verbose_name=u"下载连接")
 
+    genre = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"类别")
+    star = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"演员")
+    label = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"发行商")
+    studio = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"制作商")
+    director = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"导演")
+    prenum = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"编号")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,

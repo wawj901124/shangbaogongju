@@ -1,10 +1,12 @@
 f=open("wenjian.txt","r",encoding="utf8")
 #查看多少行
 # print(len(f.read().split("\n")))
+
 qianzui = "new_udd."
 houzui = "qs_one."
 for i in f:
-    gong = i.split(":")[0]
+    gong = i.split(" ")[0]
+    print("%s"%(gong,))
     # gong = gong.strip()
     # print("%s%s=%s%s"% (qianzui,gong,houzui,gong))
 #     gong_list = gong.split(" ")
@@ -13,12 +15,12 @@ for i in f:
 #         gong = "_".join(gong_list)
 #     # gong = gong.strip()
 #     # gong = gong.split(" ")
-    gong = """
-%s(){ 
-        ss -an|grep "^tcp" |grep "%s"|wc -l   #使用ss命令获取以tcp开头的内容且包含LISTEN 的行数
-}
-    """ % (gong,gong)
-    print("%s" % gong)
+#     gong = """
+# %s(){
+#         ss -an|grep "^tcp" |grep "%s"|wc -l   #使用ss命令获取以tcp开头的内容且包含LISTEN 的行数
+# }
+#     """ % (gong,gong)
+#     print("%s" % gong)
 
 
 
