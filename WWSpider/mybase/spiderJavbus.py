@@ -66,6 +66,26 @@ class SpiderBase(object):
         path = '%sscreenpicture_%s.png' % (firedir,tStr)
         return path
 
+    #把第三方地址的图片转化为本地图片
+    def get_image_from_imgsrc(self,imgsrc):
+        import requests
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
+            'Remote Address': '104.26.1.213:443',
+            'Referrer Policy': 'no-referrer-when-downgrade',
+        }
+        imagewe = requests.get(url=imgsrc, headers=headers)
+        image_content = imagewe.content
+        print(image_content)
+        imageend = self.saveSpiderImage()
+        with open(imageend, 'wb') as f:
+            f.write(image_content)
+        imageend_list = imageend.split("media")
+        from wanwenyc.settings import DJANGO_SERVER_YUMING
+        image_xpath = "%s/media%s"%(DJANGO_SERVER_YUMING,imageend_list[1])
+        print("封面图：%s" % image_xpath)
+        return image_xpath
+
     #获取封面图片
     def get_front_cover_img(self):
         front_cover_img = self.get_image()
@@ -161,23 +181,19 @@ class SpiderBase(object):
     #获取演员和演员头像
     def get_star_and_photo(self):
         # 使用xpath的方法获取类名为col-md-3 info的div标签下的所有P标签的span标签下的a标签下的img元素集合
-        starts = self.response.html.xpath("//div[@id='avatar-waterfall']/a/div/img")
-        start_list = []
-        for one in starts:
+        star_and_photos = self.response.html.xpath("//div[@id='avatar-waterfall']/a/div/img")
+        star_and_photo_list = []
+        for one in star_and_photos:
+            star_and_photo_one_list = []
             one_text = one.attrs["title"]
             print(one_text)
+            star_and_photo_one_list.append(one_text)
             one_href = one.attrs["src"]
-            print(one_href)
-            # mynowdir = str(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            # print("当前路径：%s" % mynowdir)
-            # base_dir = '%s/mybase/SJB/SPIDERURL'%mynowdir
-            # self.createdir(base_dir)
-            #
-            # ht = HandleTxt("%s/ONEWEBURL_STAR.txt"%base_dir)
-            # ht.add_content(one_href)   #添加到演员列表
-            # start_list.append(one_text)
-
-        # return star_list
+            local_image_url = self.get_image_from_imgsrc(one_href)
+            print(local_image_url)
+            star_and_photo_one_list.append(local_image_url)
+            star_and_photo_list.append(star_and_photo_one_list)
+        return star_and_photo_list
 
     #获取类别和演员
     def get_genres_and_stars(self):
@@ -253,7 +269,8 @@ if __name__ == "__main__":
     # sb.get_down_load()
     # genre_list = sb.get_genre()
     # print(genre_list)
-    sb.get_star_and_photo()
+    star_and_photo_list = sb.get_star_and_photo()
+    print(star_and_photo_list)
 
 
     # url = "https://www.busdmm.one"
