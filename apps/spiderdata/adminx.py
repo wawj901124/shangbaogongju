@@ -19,7 +19,7 @@ class SpiderDataAdmin(object):
 
               'add_time','update_time']
 
-    list_display =['id','image_data','video_link',
+    list_display =['id','back_image_data','video_link',
                    'down_load_link',
                    # 'preview',
                    'add_time','update_time']#定义显示的字段
