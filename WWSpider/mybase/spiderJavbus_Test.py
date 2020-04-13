@@ -382,7 +382,8 @@ class SpiderBase(object):
         # print(long_time_re_list_two)
         long_time_re_list_three = str(long_time_re_list_two).split(">")[1]
         # print(long_time_re_list_three)
-        long_time = long_time_re_list_three.strip(" ")
+        long_time_re_four = long_time_re_list_three.strip(" ")
+        long_time = long_time_re_four.split("分")[0]
         print(long_time)
         return long_time
 
