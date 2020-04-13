@@ -445,6 +445,15 @@ class SpiderBase(object):
             links_list = ['errorlist']
         return links_list
 
+    #处理失败网址
+    def handle_fail_web_url(self,fail_url):
+        mynowdir = str(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        print("当前路径：%s" % mynowdir)
+        base_dir = '%s/mybase/SJB/SPIDERURL' % mynowdir
+        self.createdir(base_dir)
+        ht = HandleTxt("%s/FAIL_WEB_URL.txt" % base_dir)
+        ht.add_content(fail_url)
+
 
 if __name__ == "__main__":
     # yuming_list = ["https://www.javbus.com","https://www.busdmm.one","https://www.dmmbus.zone","https://www.seedmm.one"]

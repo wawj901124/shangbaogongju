@@ -453,12 +453,22 @@ class SpiderBase(object):
             links_list = ['errorlist']
         return links_list
 
+    #处理失败网址
+    def handle_fail_web_url(self,fail_url):
+        mynowdir = str(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        print("当前路径：%s" % mynowdir)
+        base_dir = '%s/mybase/SJB/SPIDERURL' % mynowdir
+        self.createdir(base_dir)
+        ht = HandleTxt("%s/FAIL_WEB_URL.txt" % base_dir)
+        ht.add_content(fail_url)
+
 class RunSpiderBase(object):
     def __init__(self,yuming,prenum,range_num_down,range_num_up):
         self.yu_ming = yuming   #网址域名
         self.prenum = prenum    #编号基础内容
         self.range_num_down = int(range_num_down)   #编号之编号下限
         self.range_num_up = int(range_num_up)  # 编号之编号上限
+
 
     def run(self):
         error_url_list = []
@@ -478,8 +488,8 @@ class RunSpiderBase(object):
             if is_exist_url_count != 0:
                 print("已经爬取过网站：%s" % url)
             else:
+                sb = SpiderBase(url)
                 try:
-                    sb = SpiderBase(url)
                     # 获取标题
                     splider_title = sb.get_splider_title()
                     print("标题：")
@@ -748,6 +758,8 @@ class RunSpiderBase(object):
                 except Exception as e:
                     print("报错：%s" % e)
                     error_url_list.append(url)
+                    sb.handle_fail_web_url(url)
+
 
         print("失败网址：")
         print(error_url_list)
