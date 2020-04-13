@@ -101,6 +101,24 @@ class SpiderDirector(models.Model):
     def __str__(self):
         return self.director
 
+
+#系列
+class SpiderSeries(models.Model):
+    series = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"系列")
+    series_url = models.CharField(max_length=1500, default="", null=True, blank=True,verbose_name=u"系列外部链接")
+    write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"系列"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.series
+
 # 爬取数据
 class SpiderData(models.Model):
     splider_url = models.CharField(max_length=1500, default="",null=True, blank=True,verbose_name=u"爬取数据URL")  #unique=True,表示设置此字段为主键，唯一
@@ -110,6 +128,7 @@ class SpiderData(models.Model):
     back_front_cover_img = models.ImageField(upload_to="" , null=True, blank=True,verbose_name=u"补传封面图片", height_field='img_height',width_field='img_width',max_length=2000)
     front_cover_img = models.CharField(max_length=1500, null=True, blank=True,verbose_name=u"封面图片")
     prenum = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"编号")
+    long_time = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"时长（分钟）")
 
     #对于ManyToManyField，没有null参数，如果加上会报警告如：spiderdata.SpiderData.genre: (fields.W340) null has no effect on ManyToManyField.
     genre = models.ManyToManyField(SpiderGenre,default="", blank=True,verbose_name=u"类别")
@@ -117,6 +136,7 @@ class SpiderData(models.Model):
     label = models.ManyToManyField(SpiderLabel,default="",blank=True,verbose_name=u"发行商")
     studio = models.ManyToManyField(SpiderStudio,default="",blank=True,verbose_name=u"制作商")
     director = models.ManyToManyField(SpiderDirector,default="",blank=True,verbose_name=u"导演")
+    series = models.ManyToManyField(SpiderSeries,default="",blank=True,verbose_name=u"系列")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,

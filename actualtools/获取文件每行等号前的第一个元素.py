@@ -7,10 +7,13 @@ houzui = "qs_one."
 for i in f:
 
     gong = """
+for %s_one_list in %s_all_list:
+    %s_save = %s_one_list[0]
     sd_%s_list = Spider%s.objects.filter(%s=%s_save)
     for sd_%s in sd_%s_list:
-        spiderdata.%s.add(sd_%s)
-    """%(i,i,i,i,i,i,i,i)
+        spiderdata_manytomany.%s.add(sd_%s)
+    print("保存发行商")
+    """%(i,i,i,i,i,i,i,i,i,i,i,i)
     print("%s"%(gong,))
 
     # gong = gong.strip()
