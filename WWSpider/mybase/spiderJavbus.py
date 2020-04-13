@@ -83,7 +83,14 @@ class SpiderBase(object):
             'Remote Address': '104.26.1.213:443',
             'Referrer Policy': 'no-referrer-when-downgrade',
         }
-        imagewe = requests.get(url=imgsrc, headers=headers)
+        for i in range(1,6):
+            try:
+                imagewe = requests.get(url=imgsrc,headers=headers,timeout=5,verify=False)
+                break
+            except Exception as e:
+                print("获取远程图片（头像）请求超时异常：%s" % e)
+                print("第%s次请求超时..."% i)
+                continue
         image_content = imagewe.content
         print(image_content)
         imageend = self.saveSpiderImage()
@@ -106,7 +113,15 @@ class SpiderBase(object):
             'Remote Address': '104.26.1.213:443',
             'Referrer Policy': 'no-referrer-when-downgrade',
         }
-        imagewe = requests.get(url=front_cover_img_url, headers=headers)
+        for i in range(1,6):
+            try:
+                imagewe = requests.get(url=front_cover_img_url, headers=headers,timeout=5,verify=False)
+                break
+            except Exception as e:
+                print("获取封面图请求超时异常：%s" % e)
+                print("第%s次请求超时..."% i)
+                continue
+
         image_content = imagewe.content
         print(image_content)
         imageend = self.saveSpiderImage()
@@ -295,7 +310,14 @@ class SpiderBase(object):
             # 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
             'referer': '%s' % self.web_url,  # 此处要根据来源网址做出相应，没有就不会获取到相应内容
         }
-        myresponse = self.hs.get(ajax_url, headers=headers)
+        for i in range(1,6):
+            try:
+                myresponse = self.hs.get(ajax_url, headers=headers,timeout=5,verify=False)
+                break
+            except Exception as e:
+                print("获取下载链接请求超时异常：%s" % e)
+                print("第%s次请求超时..."% i)
+                continue
         # print(myresponse.status_code)
         # print(myresponse.content)
         # print(myresponse.text)
@@ -452,27 +474,37 @@ if __name__ == "__main__":
                 #保存除下载链接外的数据
                 #保存数据到数据库
                 spiderdata = SpiderData()
+                print("实例化数据库")
                 #保存url
                 spiderdata.splider_url = url
+                print("保存url")
                 #保存title
                 spiderdata.splider_title = splider_title
+                print("保存title")
                 #保存封面图
                 spiderdata.front_cover_img = front_cover_img_local_xpath
+                print("保存封面图")
                 #保存编号
                 spiderdata.prenum = prenum
+                print("保存编号")
                 #保存导演，制作商，发行商
                 #保存导演
+                print("director_save:")
+                print(director_save)
                 sd_director_list = SpiderDirector.objects.filter(director=director_save)
                 for sd_director in sd_director_list:
                     spiderdata.director.add(sd_director)
+                print("保存导演")
                 #保存制作商
                 sd_studio_list = SpiderStudio.objects.filter(studio=studio_save)
                 for sd_studio in sd_studio_list:
                     spiderdata.studio.add(sd_studio)
+                print("保存制作商")
                 # 保存发行商
                 sd_label_list = SpiderLabel.objects.filter(label=label_save)
                 for sd_label in sd_label_list:
                     spiderdata.label.add(sd_label)
+                print("保存发行商")
 
                 #保存类别
                 for genre_one_list in genres_and_stars_list[0]:
@@ -481,6 +513,7 @@ if __name__ == "__main__":
                     sd_genre_list = SpiderGenre.objects.filter(genre=genre_save)
                     for sd_genre in sd_genre_list:
                         spiderdata.genre.add(sd_genre)
+                print("保存类别")
 
                 #保存演员
                 for star_one_list in genres_and_stars_list[1]:
@@ -489,6 +522,7 @@ if __name__ == "__main__":
                     sd_star_list = SpiderStar.objects.filter(star=star_save)
                     for sd_star in sd_star_list:
                         spiderdata.star.add(sd_star)
+                print("保存演员")
 
                 spiderdata.save()
 
