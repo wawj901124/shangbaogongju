@@ -28,6 +28,7 @@ class SpiderBase(object):
         #     'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
         # }
         response = self.hs.get(url=self.web_url)
+        print("进入网址：%s" % self.web_url)
         # response.html.render()  #使用render函数加载js
         result = self.get_obj_full_text(response)
         return response
@@ -101,7 +102,7 @@ class SpiderBase(object):
         print(front_cover_img_url)
         import requests
         headers = {
-            # 'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
             'Remote Address': '104.26.1.213:443',
             'Referrer Policy': 'no-referrer-when-downgrade',
         }
@@ -143,9 +144,11 @@ class SpiderBase(object):
         # 使用xpath的方法获取类名为col-md-3 info的div标签下的所有P标签的a标签元素集合
         direcotr_and_studio_and_label_eles = self.response.html.xpath("//div[@class='col-md-3 info']/p/a")
         direcotr_and_studio_and_label_list = []
+        direcotr_list = []
+        studio_list = []
+        label_list = []
         for one in direcotr_and_studio_and_label_eles:
             one_text = self.get_obj_full_text(one)
-            direcotr_and_studio_and_label_list.append(one_text)  #添加元素的text到列表中
             #将对应网址写入文件中
             one_href = one.attrs["href"]
             mynowdir = str(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -155,12 +158,21 @@ class SpiderBase(object):
             if "director" in one_href:
                 ht = HandleTxt("%s/ONEWEBURL_DIRECTOR.txt"%base_dir)
                 ht.add_content(one_href)
+                direcotr_list.append(one_text)
+                direcotr_list.append(one_href)
+                direcotr_and_studio_and_label_list.append(direcotr_list)
             elif "studio" in one_href:
                 ht = HandleTxt("%s/ONEWEBURL_STUDIO.txt"%base_dir)
                 ht.add_content(one_href)
+                studio_list.append(one_text)
+                studio_list.append(one_href)
+                direcotr_and_studio_and_label_list.append(studio_list)
             elif "label" in one_href:
                 ht = HandleTxt("%s/ONEWEBURL_LABEL.txt"%base_dir)
                 ht.add_content(one_href)
+                label_list.append(one_text)
+                label_list.append(one_href)
+                direcotr_and_studio_and_label_list.append(label_list)
             else:
                 ht = HandleTxt("%s/ONEWEBURL.txt"%base_dir)
                 ht.add_content(one_href)
@@ -222,11 +234,18 @@ class SpiderBase(object):
             if "genre" in one_href:
                 ht = HandleTxt("%s/ONEWEBURL_GENRE.txt"%base_dir)
                 ht.add_content(one_href)
-                genre_list.append(one_text)  #添加到类别列表
+                genre_list_one = []
+                genre_list_one.append(one_text)
+                genre_list_one.append(one_href)
+                genre_list.append(genre_list_one)  #添加到类别列表
+
             elif "star" in one_href:
                 ht = HandleTxt("%s/ONEWEBURL_STAR.txt"%base_dir)
                 ht.add_content(one_href)   #添加到演员列表
-                start_list.append(one_text)
+                star_list_one = []
+                star_list_one.append(one_text)
+                star_list_one.append(one_href)
+                start_list.append(star_list_one)
             else:
                 ht = HandleTxt("%s/ONEWEBURL.txt"%base_dir)
                 ht.add_content(one_href)
@@ -290,94 +309,177 @@ if __name__ == "__main__":
     # yuming_list = ["https://www.javbus.com","https://www.busdmm.one","https://www.dmmbus.zone","https://www.seedmm.one"]
     # pre_number = ["HUNT","HUNTA","MKMP","YMDD","NASH","ZMEN","UMSO","MDTM","MDBK","BAZX","NASH","BAZX","BOKD","XRW","BNJC"]
 
-    url = "https://www.busdmm.one/HUNT-002"
 
-    sb = SpiderBase(url)
-    #获取封面图路径
-    front_cover_img_local_xpath = sb.get_front_cover_img()
-    print("获取封面图路径:")
-    print(front_cover_img_local_xpath)
-    #获取编号
-    prenum_text = sb.get_prenum()
-    print("编号:")
-    print(prenum_text)
-    #获取导演，制作商，发行商
-    direcotr_and_studio_and_label_list = sb.get_direcotr_and_studio_and_label()
-    print("导演，制作商，发行商:")
-    print(direcotr_and_studio_and_label_list)
-    #获取类别和演员
-    genres_and_stars_list = sb.get_genres_and_stars()
-    print("类别和演员:")
-    print(genres_and_stars_list)
-    #获取演员和头像
-    star_and_photo_list = sb.get_star_and_photo()
-    print("演员和头像:")
-    print(star_and_photo_list)
+    yuming = "https://www.busdmm.one"
+    error_url_list=[]
+    for i in range(1,200):
+        if len(str(i)) == 1:
+            fcount_i = '00%s' % i
+        elif len(str(i)) == 2:
+            fcount_i = '0%s' % i
+        else:
+            fcount_i = i
 
+        url = "https://www.busdmm.one/HUNT-%s" % fcount_i
 
-    #进行ajax异步请求获取下载链接
-    sb2 = SpiderBase(url)
-    #获取下载链接
-    down_load_list = sb2.get_down_load()
-    print("下载链接:")
-    print(down_load_list)
+        from spiderdata.models import SpiderData
+        is_exist_url_count = SpiderData.objects.filter(splider_url=url).count()
+        print(is_exist_url_count)
+        if is_exist_url_count != 0:
+            print("已经爬取过网站：%s" % url)
+        else:
+            try:
+                sb = SpiderBase(url)
+                #获取标题
+                splider_title = sb.get_splider_title()
+                print("标题：")
+                print(splider_title)
+                # 获取封面图路径
+                front_cover_img_local_xpath = sb.get_front_cover_img()
+                print("封面图路径：")
+                print(front_cover_img_local_xpath)
+                # 获取编号
+                prenum = sb.get_prenum()
+                print("编号：")
+                print(prenum)
+                # 获取导演，制作商，发行商
+                direcotr_and_studio_and_label_list = sb.get_direcotr_and_studio_and_label()
+                print("导演，制作商，发行商：")
+                print(direcotr_and_studio_and_label_list)
+                # 获取类别和演员
+                genres_and_stars_list = sb.get_genres_and_stars()
+                print("类别和演员：")
+                print(genres_and_stars_list)
+                # 获取演员和头像
+                star_and_photo_list = sb.get_star_and_photo()
+                print("演员和头像:")
+                print(star_and_photo_list)
 
+                # 进行ajax异步请求获取下载链接
+                sb2 = SpiderBase(url)
+                # 获取下载链接
+                down_load_list = sb2.get_down_load()
+                print("下载链接:")
+                print(down_load_list)
 
-    # sb.get_front_cover_img()
-    # sb.get_prenum()
-    # direcotr_and_studio_and_label_list = sb.get_direcotr_and_studio_and_label()
-    # director = direcotr_and_studio_and_label_list[0]
-    # print(director)
-    # studio = direcotr_and_studio_and_label_list[1]
-    # print(studio)
-    # label = direcotr_and_studio_and_label_list[1]
-    # print(label)
-    # genres_and_stars_list = sb.get_genres_and_stars()
-    # genre_list = genres_and_stars_list[0]
-    # print(genre_list)
-    # star_list = genres_and_stars_list[1]
-    # print(star_list)
-    # sb.get_down_load()
-    # genre_list = sb.get_genre()
-    # print(genre_list)
-    # star_and_photo_list = sb.get_star_and_photo()
-    # print(star_and_photo_list)
-    # sb.get_down_load()
+                #保存数据前，先保存导演，制作商，发行商：
+                # #保存导演
+                #------------------------------------------------------------------------------
+                from spiderdata.models import SpiderDirector
+                director_save = direcotr_and_studio_and_label_list[0][0]
+                is_exist_director_count = SpiderDirector.objects.filter(director=director_save).count()
+                if is_exist_director_count != 0:
+                    print("导演[%s]已经存在" % director_save)
+                else:
+                    spiderdirector = SpiderDirector()
+                    spiderdirector.director = director_save
+                    spiderdirector.director_url = direcotr_and_studio_and_label_list[0][1]
+                    spiderdirector.save()
+                    print("已经成功保存导演【%s】到相应数据库中" % director_save)
 
+                #保存制作商
+                # ------------------------------------------------------------------------------
+                from spiderdata.models import SpiderStudio
+                studio_save = direcotr_and_studio_and_label_list[1][0]
+                is_exist_studio_count = SpiderStudio.objects.filter(studio=studio_save).count()
+                if is_exist_studio_count != 0:
+                    print("制作商[%s]已经存在"%studio_save)
+                else:
+                    spiderstudio = SpiderStudio()
+                    spiderstudio.studio = studio_save
+                    spiderstudio.studio_url = direcotr_and_studio_and_label_list[1][1]
+                    spiderstudio.save()
+                    print("已经成功保存制作商【%s】到相应数据库中"%studio_save)
 
-    # url = "https://www.busdmm.one"
-    # error_url_list=[]
-    # for i in range(78,79):
-    #     try:
-    #         url = "http://fpie1.com/#/play-details/%s"% i
-    #         sb = SpiderBase(weburl=url)
-    #         #打开网址
-    #         sb.get_web_url()
-    #         #获取视频链接
-    #         video_url = sb.get_video_url()
-    #         #获取下载地址
-    #         down_load = sb.get_down_load()
-    #         #获取封面图
-    #         front_cover_img = sb.get_front_cover_img()
-    #
-    #         from spiderdata.models import SpiderDate
-    #
-    #         spiderdata = SpiderDate()
-    #         spiderdata.splider_url = url
-    #         spiderdata.front_cover_img = front_cover_img
-    #         spiderdata.video = video_url
-    #         spiderdata.down_load = down_load
-    #         is_exist_url_count = SpiderDate.objects.filter(splider_url=url).count()
-    #         print(is_exist_url_count)
-    #         if is_exist_url_count==0:
-    #             spiderdata.save()
-    #         else:
-    #             print("已经爬取过网站：%s" % url)
-    #     except:
-    #         error_url_list.append(url)
-    #
-    # print("失败网址：")
-    # print(error_url_list)
+                # 保存发行商
+                # ------------------------------------------------------------------------------
+                from spiderdata.models import SpiderLabel
+
+                label_save = direcotr_and_studio_and_label_list[2][0]
+                is_exist_label_count = SpiderLabel.objects.filter(label=label_save).count()
+                if is_exist_label_count != 0:
+                    print("发行商[%s]已经存在"%label_save)
+                else:
+                    spiderlabel = SpiderLabel()
+                    spiderlabel.label = label_save
+                    spiderlabel.label_url = direcotr_and_studio_and_label_list[2][1]
+                    spiderlabel.save()
+                    print("已经成功保存发行商【%s】到相应数据库中"%label_save)
+
+                #保存数据前，先保存类别，演员：
+                #保存类别
+                for genre_one_list in genres_and_stars_list[0]:
+                    from spiderdata.models import SpiderGenre
+
+                    genre_save = genre_one_list[0]
+                    is_exist_genre_count = SpiderGenre.objects.filter(genre=genre_save).count()
+                    if is_exist_genre_count != 0:
+                        print("类别[%s]已经存在"% genre_save)
+                    else:
+                        spidergenre = SpiderGenre()
+                        spidergenre.genre = genre_save
+                        spidergenre.genre_url = genre_one_list[1]
+                        spidergenre.save()
+                        print("已经成功保存类别【%s】到相应数据库中"% genre_save)
+
+                #保存演员
+                for star_one_list in genres_and_stars_list[1]:
+                    from spiderdata.models import SpiderStar
+
+                    star_save = star_one_list[0]
+                    is_exist_star_count = SpiderStar.objects.filter(star=star_save).count()
+                    if is_exist_star_count != 0:
+                        print("演员[%s]已经存在"% star_save)
+                    else:
+                        spiderstar = SpiderStar()
+                        spiderstar.star = star_save
+                        spiderstar.star_url = star_one_list[1]
+                        spiderstar.save()
+                        print("已经成功保存演员【%s】到相应数据库中"% star_save)
+
+                #保存演员头像到相应的数据库
+                for star_and_photo_one_list in star_and_photo_list:
+                    from spiderdata.models import SpiderStar
+                    star_search = star_and_photo_one_list[0]
+                    star_find_list = SpiderStar.objects.filter(star=star_search)
+                    for star_one in star_find_list:
+                        print("star_one.star_url:")
+                        print(star_one.star_url)
+                        star_one.star_url=star_and_photo_one_list[0]
+                        star_one.save()
+                        print("已经成功保存演员头像【%s】到相应数据库中" % star_and_photo_one_list[0])
+
+                #保存除下载链接外的数据
+                #保存数据到数据库
+                spiderdata = SpiderData()
+                #保存url
+                spiderdata.splider_url = url
+                #保存title
+                spiderdata.splider_title = splider_title
+                #保存封面图
+                spiderdata.front_cover_img = front_cover_img_local_xpath
+                #保存编号
+                spiderdata.prenum = prenum
+                spiderdata.save()
+
+                #保存下载地址
+                for down_load in down_load_list:
+                    from spiderdata.models import SpiderDownLoad
+
+                    sdl_sd_list = SpiderData.objects.filter(splider_url=url)
+                    for sdl_sd in sdl_sd_list:
+                        spiderdownload = SpiderDownLoad()
+                        spiderdownload.spiderdata_id = sdl_sd.id
+                        spiderdownload.down_load = down_load
+                        spiderdownload.save()
+                        break
+
+            except Exception as e:
+                print("报错：%s" % e)
+                error_url_list.append(url)
+
+    print("失败网址：")
+    print(error_url_list)
 
 
 

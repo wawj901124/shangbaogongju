@@ -1,5 +1,1 @@
-genre = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"类别")
-star = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"演员")
-label = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"发行商")
-studio = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"制作商")
-director = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"导演")
+star
