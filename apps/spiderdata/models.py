@@ -28,6 +28,14 @@ class SpiderGenre(models.Model):
 class SpiderStar(models.Model):
     star =models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"演员")
     star_photo = models.CharField(max_length=1500, default="", null=True, blank=True,verbose_name=u"演员头像")
+    img_height = models.CharField(max_length=100, default=75, null=True, blank=True, verbose_name=u"封面图高度")
+    img_width = models.CharField(max_length=100, default=75, null=True, blank=True, verbose_name=u"封面图宽度")
+    #上传图像路径，如果以/开头，表示在根目录下的文件夹下，如/update,表示在根目录（即项目目录下wanwenys）下的update文件夹
+    #如果不以/开头，表示相对路径是在django配置的media路径下,如update,表示在配置的media目录（即项目目录下wanwenys的文件夹media文件夹下的）下的update文件夹
+    #此处为空，表示存在项目目录下wanwenys的文件夹media文件夹下
+    back_start_photo = models.ImageField(upload_to="", null=True, blank=True, verbose_name=u"补传演员头像",
+                                             height_field='img_height', width_field='img_width', max_length=2000)
+
     star_url = models.CharField(max_length=1500, default="", null=True, blank=True,verbose_name=u"演员外部链接")
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
@@ -99,7 +107,7 @@ class SpiderData(models.Model):
     splider_title = models.CharField(max_length=1000, default="爬取数据",null=True, blank=True, verbose_name=u"数据标题")
     img_height = models.CharField(max_length=100, default=75,null=True, blank=True, verbose_name=u"封面图高度")
     img_width = models.CharField(max_length=100, default=75, null=True, blank=True,verbose_name=u"封面图宽度")
-    back_front_cover_img = models.ImageField(upload_to="report/%Y%m/screenshots/" , null=True, blank=True,verbose_name=u"补传封面图片", height_field='img_height',width_field='img_width',max_length=2000)
+    back_front_cover_img = models.ImageField(upload_to="" , null=True, blank=True,verbose_name=u"补传封面图片", height_field='img_height',width_field='img_width',max_length=2000)
     front_cover_img = models.CharField(max_length=1500, null=True, blank=True,verbose_name=u"封面图片")
     prenum = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"编号")
 
@@ -125,7 +133,8 @@ class SpiderData(models.Model):
 
     def back_image_data(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
-        return mark_safe("<a href='{}'> <img src='{}' style='width:75px;height:75px;'/></a>".format(self.back_front_cover_img.url,self.back_front_cover_img.url))
+        return mark_safe("<a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a>".
+                         format(DJANGO_SERVER_YUMING,self.back_front_cover_img,DJANGO_SERVER_YUMING,self.back_front_cover_img))
         # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
 
     back_image_data.short_description = u"补传封面图片"   #为go_to函数名个名字

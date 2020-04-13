@@ -264,11 +264,14 @@ class SpiderBase(object):
             print(one_text)
             star_and_photo_one_list.append(one_text)
             one_href = one.attrs["src"]
-            local_image_url = self.get_image_from_imgsrc(one_href)[1]
+            start_photo_list = self.get_image_from_imgsrc(one_href)
+            start_photo_image_content = start_photo_list[0]
+            star_and_photo_one_list.append(start_photo_image_content)
+            local_image_url = start_photo_list[1]
             print(local_image_url)
             star_and_photo_one_list.append(local_image_url)
             star_and_photo_list.append(star_and_photo_one_list)
-        return star_and_photo_list
+        return star_and_photo_list #演员数据依次为演员名称，演员图片内容，演员本地图片地址
 
     #获取类别和演员
     def get_genres_and_stars(self):
@@ -379,7 +382,7 @@ if __name__ == "__main__":
 
     yuming = "https://www.busdmm.one"
     error_url_list=[]
-    for i in range(1,2):
+    for i in range(4,5):
         if len(str(i)) == 1:
             fcount_i = '00%s' % i
         elif len(str(i)) == 2:
@@ -504,6 +507,8 @@ if __name__ == "__main__":
                     else:
                         spiderstar = SpiderStar()
                         spiderstar.star = star_save
+                        print("star_one_list[1]:")
+                        print(star_one_list[1])
                         spiderstar.star_url = star_one_list[1]
                         spiderstar.save()
                         print("已经成功保存演员【%s】到相应数据库中"% star_save)
@@ -514,9 +519,16 @@ if __name__ == "__main__":
                     star_search = star_and_photo_one_list[0]
                     star_find_list = SpiderStar.objects.filter(star=star_search)
                     for star_one in star_find_list:
-                        print("star_one.star_url:")
-                        print(star_one.star_url)
-                        star_one.star_url=star_and_photo_one_list[0]
+                        star_one.star_photo=star_and_photo_one_list[2]  #保存本地路图片路径
+
+                        start_photo_name = "%s.png" % star_search
+                        from django.core.files import File  #使用django的File文件类
+                        from io import BytesIO  # BytesIO读取字节类型数据使用
+                        start_photo_image_content = star_and_photo_one_list[1] #远程获取的演员图片，字节类型
+                        pre_back_start_photo = File(BytesIO(start_photo_image_content))
+                        star_one.back_start_photo.save(name=start_photo_name,
+                                                             content=pre_back_start_photo)  # 保存图片到ImageField实例中
+
                         star_one.save()
                         print("已经成功保存演员头像【%s】到相应数据库中" % star_and_photo_one_list[0])
 
