@@ -347,6 +347,7 @@ class SpiderBase(object):
     def get_down_load(self):
         try:
             #使用ajax请求获取链接地址
+            print("进入下载函数")
             gid_and_uc_and_img_list = self.get_gid_and_uc_and_img()
             ajax_url = "https://www.busdmm.one/ajax/uncledatoolsbyajax.php?gid=%s&lang=zh&img=%s&uc=%s&floor=236" %(gid_and_uc_and_img_list[0],gid_and_uc_and_img_list[2],gid_and_uc_and_img_list[1])
             headers = {
@@ -356,6 +357,7 @@ class SpiderBase(object):
             }
             for i in range(1,6):
                 try:
+                    print("进行ajax请求")
                     myresponse = self.hs.get(ajax_url, headers=headers,timeout=5,verify=False)
                     break
                 except Exception as e:
@@ -366,6 +368,7 @@ class SpiderBase(object):
             # print(myresponse.content)
             # print(myresponse.text)
             links_list = myresponse.html.absolute_links  #获取所有链接的绝对路径
+            print("即将打印链接：")
             for i in links_list:
                 print(i)
         except Exception as e:
@@ -382,7 +385,7 @@ if __name__ == "__main__":
 
     yuming = "https://www.busdmm.one"
     error_url_list=[]
-    for i in range(4,5):
+    for i in range(10,100):
         if len(str(i)) == 1:
             fcount_i = '00%s' % i
         elif len(str(i)) == 2:
@@ -430,6 +433,7 @@ if __name__ == "__main__":
                 print(star_and_photo_list)
 
                 # 进行ajax异步请求获取下载链接
+                print("获取下载链接")
                 sb2 = SpiderBase(url)
                 # 获取下载链接
                 down_load_list = sb2.get_down_load()
