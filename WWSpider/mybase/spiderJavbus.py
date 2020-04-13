@@ -312,7 +312,7 @@ if __name__ == "__main__":
 
     yuming = "https://www.busdmm.one"
     error_url_list=[]
-    for i in range(1,200):
+    for i in range(889,890):
         if len(str(i)) == 1:
             fcount_i = '00%s' % i
         elif len(str(i)) == 2:
@@ -320,7 +320,7 @@ if __name__ == "__main__":
         else:
             fcount_i = i
 
-        url = "https://www.busdmm.one/HUNT-%s" % fcount_i
+        url = "https://www.busdmm.one/NSPS-%s" % fcount_i
 
         from spiderdata.models import SpiderData
         is_exist_url_count = SpiderData.objects.filter(splider_url=url).count()
@@ -460,8 +460,37 @@ if __name__ == "__main__":
                 spiderdata.front_cover_img = front_cover_img_local_xpath
                 #保存编号
                 spiderdata.prenum = prenum
+                #保存导演，制作商，发行商
+                #保存导演
+                sd_director_list = SpiderDirector.objects.filter(director=director_save)
+                for sd_director in sd_director_list:
+                    spiderdata.director.add(sd_director)
+                #保存制作商
+                sd_studio_list = SpiderStudio.objects.filter(studio=studio_save)
+                for sd_studio in sd_studio_list:
+                    spiderdata.studio.add(sd_studio)
+                # 保存发行商
+                sd_label_list = SpiderLabel.objects.filter(label=label_save)
+                for sd_label in sd_label_list:
+                    spiderdata.label.add(sd_label)
+
+                #保存类别
+                for genre_one_list in genres_and_stars_list[0]:
+                    from spiderdata.models import SpiderGenre
+                    genre_save = genre_one_list[0]
+                    sd_genre_list = SpiderGenre.objects.filter(genre=genre_save)
+                    for sd_genre in sd_genre_list:
+                        spiderdata.genre.add(sd_genre)
+
+                #保存演员
+                for star_one_list in genres_and_stars_list[1]:
+                    from spiderdata.models import SpiderStar
+                    star_save = star_one_list[0]
+                    sd_star_list = SpiderStar.objects.filter(star=star_save)
+                    for sd_star in sd_star_list:
+                        spiderdata.star.add(sd_star)
+
                 spiderdata.save()
-                spiderdata.spiderdownload_set.model
 
                 #保存下载地址
                 for down_load in down_load_list:
