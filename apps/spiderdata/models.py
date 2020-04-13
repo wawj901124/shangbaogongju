@@ -132,7 +132,12 @@ class SpiderData(models.Model):
 
     def down_load_link(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
-        return mark_safe("<a href='{}'>{}</a>".format(self.down_load,self.down_load))
+        html_all = ""
+        down_load_list = self.spiderdownload_set.all()
+        for down_load in down_load_list:
+            html_one = "<a href='{}'>{}</a><br/>".format(down_load.down_load,down_load.down_load)
+            html_all = "%s%s"%(html_all,html_one)
+        return mark_safe(html_all)
         # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
 
     down_load_link.short_description = u"下载地址连接"   #为go_to函数名个名字

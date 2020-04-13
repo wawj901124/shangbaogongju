@@ -25,8 +25,7 @@ class SpiderDataAdmin(object):
                    'add_time','update_time']#定义显示的字段
     # search_fields =  ['test_project','test_module',
     #                'test_case_title','test_start_time',]   #定义搜索字段
-    # list_filter =  ['test_project','test_module',
-    #                'test_case_title','test_start_time',] #定义筛选的字段
+    list_filter =  ['splider_title',] #定义筛选的字段
     model_icon = 'fa fa-bars '  # 定义图标显示
     ordering = ['-add_time']  # 添加默认排序规则显示排序，根据添加时间倒序排序
     # readonly_fields = ziduan  # 设置某些字段为只为可读  #设置了readonly_fields，再设置exclude，exclude对该字段无效，

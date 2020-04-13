@@ -461,6 +461,7 @@ if __name__ == "__main__":
                 #保存编号
                 spiderdata.prenum = prenum
                 spiderdata.save()
+                spiderdata.spiderdownload_set.model
 
                 #保存下载地址
                 for down_load in down_load_list:
