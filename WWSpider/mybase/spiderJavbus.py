@@ -312,28 +312,33 @@ class SpiderBase(object):
 
     #获取下载地址链接
     def get_down_load(self):
-        #使用ajax请求获取链接地址
-        gid_and_uc_and_img_list = self.get_gid_and_uc_and_img()
-        ajax_url = "https://www.busdmm.one/ajax/uncledatoolsbyajax.php?gid=%s&lang=zh&img=%s&uc=%s&floor=236" %(gid_and_uc_and_img_list[0],gid_and_uc_and_img_list[2],gid_and_uc_and_img_list[1])
-        headers = {
-            # 'x-requested-with': 'XMLHttpRequest',  #这个说明是ajax请求，没有这个，也会识别
-            # 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
-            'referer': '%s' % self.web_url,  # 此处要根据来源网址做出相应，没有就不会获取到相应内容
-        }
-        for i in range(1,6):
-            try:
-                myresponse = self.hs.get(ajax_url, headers=headers,timeout=5,verify=False)
-                break
-            except Exception as e:
-                print("获取下载链接请求超时异常：%s" % e)
-                print("第%s次请求超时..."% i)
-                continue
-        # print(myresponse.status_code)
-        # print(myresponse.content)
-        # print(myresponse.text)
-        links_list = myresponse.html.absolute_links  #获取所有链接的绝对路径
-        for i in links_list:
-            print(i)
+        try:
+            #使用ajax请求获取链接地址
+            gid_and_uc_and_img_list = self.get_gid_and_uc_and_img()
+            ajax_url = "https://www.busdmm.one/ajax/uncledatoolsbyajax.php?gid=%s&lang=zh&img=%s&uc=%s&floor=236" %(gid_and_uc_and_img_list[0],gid_and_uc_and_img_list[2],gid_and_uc_and_img_list[1])
+            headers = {
+                # 'x-requested-with': 'XMLHttpRequest',  #这个说明是ajax请求，没有这个，也会识别
+                # 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+                'referer': '%s' % self.web_url,  # 此处要根据来源网址做出相应，没有就不会获取到相应内容
+            }
+            for i in range(1,6):
+                try:
+                    myresponse = self.hs.get(ajax_url, headers=headers,timeout=5,verify=False)
+                    break
+                except Exception as e:
+                    print("获取下载链接请求超时异常：%s" % e)
+                    print("第%s次请求超时..."% i)
+                    continue
+            # print(myresponse.status_code)
+            # print(myresponse.content)
+            # print(myresponse.text)
+            links_list = myresponse.html.absolute_links  #获取所有链接的绝对路径
+            for i in links_list:
+                print(i)
+        except Exception as e:
+            print("获取下载链接出现问题：%s"% e)
+            print("暂无下载链接")
+            links_list = ['errorlist']
         return links_list
 
 
