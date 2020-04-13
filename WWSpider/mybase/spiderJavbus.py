@@ -77,28 +77,32 @@ class SpiderBase(object):
 
     #把第三方地址的图片转化为本地图片
     def get_image_from_imgsrc(self,imgsrc):
-        import requests
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
-            'Remote Address': '104.26.1.213:443',
-            'Referrer Policy': 'no-referrer-when-downgrade',
-        }
-        for i in range(1,6):
-            try:
-                imagewe = requests.get(url=imgsrc,headers=headers,timeout=5,verify=False)
-                break
-            except Exception as e:
-                print("获取远程图片（头像）请求超时异常：%s" % e)
-                print("第%s次请求超时..."% i)
-                continue
-        image_content = imagewe.content
-        print(image_content)
-        imageend = self.saveSpiderImage()
-        with open(imageend, 'wb') as f:
-            f.write(image_content)
-        imageend_list = imageend.split("media")
-        from wanwenyc.settings import DJANGO_SERVER_YUMING
-        image_xpath = "%s/media%s"%(DJANGO_SERVER_YUMING,imageend_list[1])
+        try:
+            import requests
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
+                'Remote Address': '104.26.1.213:443',
+                'Referrer Policy': 'no-referrer-when-downgrade',
+            }
+            for i in range(1,6):
+                try:
+                    imagewe = requests.get(url=imgsrc,headers=headers,timeout=5,verify=False)
+                    break
+                except Exception as e:
+                    print("获取远程图片（头像）请求超时异常：%s" % e)
+                    print("第%s次请求超时..."% i)
+                    continue
+            image_content = imagewe.content
+            print(image_content)
+            imageend = self.saveSpiderImage()
+            with open(imageend, 'wb') as f:
+                f.write(image_content)
+            imageend_list = imageend.split("media")
+            from wanwenyc.settings import DJANGO_SERVER_YUMING
+            image_xpath = "%s/media%s"%(DJANGO_SERVER_YUMING,imageend_list[1])
+        except Exception as e:
+            print("获取远程图片失败,暂时不获取图片")
+            image_xpath = "erroraddress"
         print("转化成的本地图：%s" % image_xpath)
         # image_xpath = "%s/media/report/202004/screenshots/screenpicture_20200413102350.png" % DJANGO_SERVER_YUMING
         return image_xpath
@@ -108,29 +112,33 @@ class SpiderBase(object):
         front_cover_img = self.get_image()
         front_cover_img_url = front_cover_img.attrs["src"]
         print(front_cover_img_url)
-        import requests
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
-            'Remote Address': '104.26.1.213:443',
-            'Referrer Policy': 'no-referrer-when-downgrade',
-        }
-        for i in range(1,6):
-            try:
-                imagewe = requests.get(url=front_cover_img_url, headers=headers,timeout=5,verify=False)
-                break
-            except Exception as e:
-                print("获取封面图请求超时异常：%s" % e)
-                print("第%s次请求超时..."% i)
-                continue
+        try:
+            import requests
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
+                'Remote Address': '104.26.1.213:443',
+                'Referrer Policy': 'no-referrer-when-downgrade',
+            }
+            for i in range(1,6):
+                try:
+                    imagewe = requests.get(url=front_cover_img_url, headers=headers,timeout=5,verify=False)
+                    break
+                except Exception as e:
+                    print("获取封面图请求超时异常：%s" % e)
+                    print("第%s次请求超时..."% i)
+                    continue
 
-        image_content = imagewe.content
-        print(image_content)
-        imageend = self.saveSpiderImage()
-        with open(imageend, 'wb') as f:
-            f.write(image_content)
-        imageend_list = imageend.split("media")
-        from wanwenyc.settings import DJANGO_SERVER_YUMING
-        image_xpath = "%s/media%s"%(DJANGO_SERVER_YUMING,imageend_list[1])
+            image_content = imagewe.content
+            print(image_content)
+            imageend = self.saveSpiderImage()
+            with open(imageend, 'wb') as f:
+                f.write(image_content)
+            imageend_list = imageend.split("media")
+            from wanwenyc.settings import DJANGO_SERVER_YUMING
+            image_xpath = "%s/media%s"%(DJANGO_SERVER_YUMING,imageend_list[1])
+        except Exception as e:
+            print("获取封面图片失败,暂时不获取图片")
+            image_xpath = "erroraddress"
         print("封面图：%s" % image_xpath)
         # image_xpath = "%s/media/report/202004/screenshots/screenpicture_20200413102329.png"% DJANGO_SERVER_YUMING
         return image_xpath
@@ -336,7 +344,7 @@ if __name__ == "__main__":
 
     yuming = "https://www.busdmm.one"
     error_url_list=[]
-    for i in range(71,72):
+    for i in range(5,100):
         if len(str(i)) == 1:
             fcount_i = '00%s' % i
         elif len(str(i)) == 2:
@@ -344,7 +352,7 @@ if __name__ == "__main__":
         else:
             fcount_i = i
 
-        url = "https://www.busdmm.one/HOKS-%s" % fcount_i
+        url = "https://www.busdmm.one/HUNT-%s" % fcount_i
 
         from spiderdata.models import SpiderData
         is_exist_url_count = SpiderData.objects.filter(splider_url=url).count()
