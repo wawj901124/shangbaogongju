@@ -436,298 +436,600 @@ class SpiderBase(object):
             links_list = ['errorlist']
         return links_list
 
+class RunSpiderBase(object):
+    def __init__(self,yuming,prenum,range_num_down,range_num_up):
+        self.yu_ming = yuming   #网址域名
+        self.prenum = prenum    #编号基础内容
+        self.range_num_down = int(range_num_down)   #编号之编号下限
+        self.range_num_up = int(range_num_up)  # 编号之编号上限
+
+    def run(self):
+        error_url_list = []
+        for i in range(self.range_num_down, self.range_num_up):
+            if len(str(i)) == 1:
+                fcount_i = '00%s' % i
+            elif len(str(i)) == 2:
+                fcount_i = '0%s' % i
+            else:
+                fcount_i = i
+
+            url = "%s/%s-%s" % (self.yu_ming,self.prenum,fcount_i)
+
+            from spiderdata.models import SpiderData
+            is_exist_url_count = SpiderData.objects.filter(splider_url=url).count()
+            print(is_exist_url_count)
+            if is_exist_url_count != 0:
+                print("已经爬取过网站：%s" % url)
+            else:
+                try:
+                    sb = SpiderBase(url)
+                    # 获取标题
+                    splider_title = sb.get_splider_title()
+                    print("标题：")
+                    print(splider_title)
+                    # 获取封面图路径
+                    front_cover_img_list = sb.get_back_front_cover_img()
+                    front_cover_img_local_xpath = front_cover_img_list[1]
+                    back_front_cover_img = front_cover_img_list[0]
+                    print("封面图路径：")
+                    print(front_cover_img_local_xpath)
+                    print("封面图内容：")
+                    print(back_front_cover_img)
+                    # 获取编号
+                    prenum = sb.get_prenum()
+                    print("编号：")
+                    print(prenum)
+                    # 获取导演，制作商，发行商,系列
+                    direcotr_and_studio_and_label_and_series_list = sb.get_direcotr_and_studio_and_label_and_series()
+                    print("导演，制作商，发行商,系列：")
+                    print(direcotr_and_studio_and_label_and_series_list)
+                    # 获取类别和演员
+                    genres_and_stars_list = sb.get_genres_and_stars()
+                    print("类别和演员：")
+                    print(genres_and_stars_list)
+                    # 获取演员和头像
+                    star_and_photo_list = sb.get_star_and_photo()
+                    print("演员和头像:")
+                    print(star_and_photo_list)
+
+                    # 进行ajax异步请求获取下载链接
+                    print("获取下载链接")
+                    sb2 = SpiderBase(url)
+                    # 获取下载链接
+                    down_load_list = sb2.get_down_load()
+                    print("下载链接:")
+                    print(down_load_list)
+
+                    # 保存数据前，先保存导演，制作商，发行商，系列：
+                    from spiderdata.models import SpiderDirector, SpiderStudio, SpiderLabel, SpiderSeries
+                    for i in range(0, 4):
+                        # #保存导演
+                        # ------------------------------------------------------------------------------
+                        if i == 0:  # 为导演
+                            director_all_list = direcotr_and_studio_and_label_and_series_list[i]
+                            for director_one_list in director_all_list:
+                                director_save = director_one_list[0]
+                                is_exist_director_count = SpiderDirector.objects.filter(director=director_save).count()
+                                if is_exist_director_count != 0:
+                                    print("导演[%s]已经存在" % director_save)
+                                else:
+                                    spiderdirector = SpiderDirector()
+                                    spiderdirector.director = director_save
+                                    spiderdirector.director_url = director_one_list[1]
+                                    spiderdirector.save()
+                                    print("已经成功保存导演【%s】到相应数据库中" % director_save)
+                            print("已经处理完所有导演")
+                        # 保存制作商
+                        # ------------------------------------------------------------------------------
+                        elif i == 1:  # 为制作商
+                            studio_all_list = direcotr_and_studio_and_label_and_series_list[i]
+                            for studio_one_list in studio_all_list:
+                                studio_save = studio_one_list[0]
+                                is_exist_studio_count = SpiderStudio.objects.filter(studio=studio_save).count()
+                                if is_exist_studio_count != 0:
+                                    print("制作商[%s]已经存在" % studio_save)
+                                else:
+                                    spiderstudio = SpiderStudio()
+                                    spiderstudio.studio = studio_save
+                                    spiderstudio.studio_url = studio_one_list[1]
+                                    spiderstudio.save()
+                                    print("已经成功保存制作商【%s】到相应数据库中" % studio_save)
+                            print("已经处理完所有制作商")
+                        # 保存发行商
+                        # ------------------------------------------------------------------------------
+                        elif i == 2:  # 为发行商
+                            label_all_list = direcotr_and_studio_and_label_and_series_list[i]
+                            for label_one_list in label_all_list:
+                                label_save = label_one_list[0]
+                                is_exist_label_count = SpiderLabel.objects.filter(label=label_save).count()
+                                if is_exist_label_count != 0:
+                                    print("发行商[%s]已经存在" % label_save)
+                                else:
+                                    spiderlabel = SpiderLabel()
+                                    spiderlabel.label = label_save
+                                    spiderlabel.label_url = label_one_list[1]
+                                    spiderlabel.save()
+                                    print("已经成功保存发行商【%s】到相应数据库中" % label_save)
+                            print("已经处理完所有发行商")
+                        # 保存系列
+                        # ------------------------------------------------------------------------------
+                        elif i == 3:  # 为系列
+                            series_all_list = direcotr_and_studio_and_label_and_series_list[i]
+                            for series_one_list in series_all_list:
+                                series_save = series_one_list[0]
+                                is_exist_series_count = SpiderSeries.objects.filter(series=series_save).count()
+                                if is_exist_series_count != 0:
+                                    print("系列[%s]已经存在" % series_save)
+                                else:
+                                    spiderseries = SpiderSeries()
+                                    spiderseries.series = series_save
+                                    spiderseries.series_url = series_one_list[1]
+                                    spiderseries.save()
+                                    print("已经成功保存系列【%s】到相应数据库中" % series_save)
+                            print("已经处理完所有系列")
+                    print("已经处理完所有导演，制作商，发行商，系列")
+
+                    # 保存数据前，先保存类别，演员：
+                    # 保存类别
+                    for genre_one_list in genres_and_stars_list[0]:
+                        from spiderdata.models import SpiderGenre
+
+                        genre_save = genre_one_list[0]
+                        is_exist_genre_count = SpiderGenre.objects.filter(genre=genre_save).count()
+                        if is_exist_genre_count != 0:
+                            print("类别[%s]已经存在" % genre_save)
+                        else:
+                            spidergenre = SpiderGenre()
+                            spidergenre.genre = genre_save
+                            spidergenre.genre_url = genre_one_list[1]
+                            spidergenre.save()
+                            print("已经成功保存类别【%s】到相应数据库中" % genre_save)
+
+                    # 保存演员
+                    for star_one_list in genres_and_stars_list[1]:
+                        from spiderdata.models import SpiderStar
+
+                        star_save = star_one_list[0]
+                        is_exist_star_count = SpiderStar.objects.filter(star=star_save).count()
+                        if is_exist_star_count != 0:
+                            print("演员[%s]已经存在" % star_save)
+                        else:
+                            spiderstar = SpiderStar()
+                            spiderstar.star = star_save
+                            print("star_one_list[1]:")
+                            print(star_one_list[1])
+                            spiderstar.star_url = star_one_list[1]
+                            spiderstar.save()
+                            print("已经成功保存演员【%s】到相应数据库中" % star_save)
+
+                    # 保存演员头像到相应的数据库
+                    for star_and_photo_one_list in star_and_photo_list:
+                        from spiderdata.models import SpiderStar
+                        star_search = star_and_photo_one_list[0]
+                        star_find_list = SpiderStar.objects.filter(star=star_search)
+                        for star_one in star_find_list:
+                            star_one.star_photo = star_and_photo_one_list[2]  # 保存本地路图片路径
+
+                            start_photo_name = "%s.png" % star_search
+                            from django.core.files import File  # 使用django的File文件类
+                            from io import BytesIO  # BytesIO读取字节类型数据使用
+                            start_photo_image_content = star_and_photo_one_list[1]  # 远程获取的演员图片，字节类型
+                            pre_back_start_photo = File(BytesIO(start_photo_image_content))
+                            star_one.back_start_photo.save(name=start_photo_name,
+                                                           content=pre_back_start_photo)  # 保存图片到ImageField实例中
+
+                            star_one.save()
+                            print("已经成功保存演员头像【%s】到相应数据库中" % star_and_photo_one_list[0])
+
+                    # 保存除下载链接外的数据
+                    # 保存数据到数据库
+                    spiderdata = SpiderData()
+                    print("实例化数据库")
+                    # 保存url
+                    spiderdata.splider_url = url
+                    print("保存url")
+                    # 保存title
+                    spiderdata.splider_title = splider_title
+                    print("保存title")
+                    # 保存封面图
+                    spiderdata.front_cover_img = front_cover_img_local_xpath
+                    fengmian_image_name = "%s.png" % prenum
+                    from django.core.files import File
+                    from io import BytesIO
+                    pre_back_front_cover_img = File(BytesIO(back_front_cover_img))
+                    spiderdata.back_front_cover_img.save(name=fengmian_image_name,
+                                                         content=pre_back_front_cover_img)  # 保存图片到ImageField实例中
+                    print("保存封面图")
+                    # 保存编号
+                    spiderdata.prenum = prenum
+                    print("保存编号")
+                    spiderdata.save()
+
+                    # 处理多对多的保存,多对多可以保存成功的前提是两个都已经有有效的id
+                    spiderdata_manytomany_list = SpiderData.objects.filter(splider_url=url)
+                    for spiderdata_manytomany in spiderdata_manytomany_list:
+                        # 保存导演，制作商，发行商
+                        # 保存导演
+                        director_all_list = direcotr_and_studio_and_label_and_series_list[0]
+                        for director_one_list in director_all_list:
+                            director_save = director_one_list[0]
+                            print("director_save:")
+                            print(director_save)
+                            sd_director_list = SpiderDirector.objects.filter(director=director_save)
+                            for sd_director in sd_director_list:
+                                print("sd_director:")
+                                print(sd_director)
+                                spiderdata_manytomany.director.add(sd_director)
+                            print("多对多保存导演")
+                        print("多对多保存所有导演完成")
+                        # 保存制作商
+                        studio_all_list = direcotr_and_studio_and_label_and_series_list[1]
+                        for studio_one_list in studio_all_list:
+                            studio_save = studio_one_list[0]
+                            sd_studio_list = SpiderStudio.objects.filter(studio=studio_save)
+                            for sd_studio in sd_studio_list:
+                                spiderdata_manytomany.studio.add(sd_studio)
+                            print("多对多保存制作商")
+                        print("多对多保存所有制作商完成")
+                        # 保存发行商
+                        label_all_list = direcotr_and_studio_and_label_and_series_list[1]
+                        for label_one_list in label_all_list:
+                            label_save = label_one_list[0]
+                            sd_label_list = SpiderLabel.objects.filter(label=label_save)
+                            for sd_label in sd_label_list:
+                                spiderdata_manytomany.label.add(sd_label)
+                            print("多对多保存发行商")
+                        print("多对多保存所有发行商完成")
+                        # 保存系列
+                        series_all_list = direcotr_and_studio_and_label_and_series_list[1]
+                        for series_one_list in series_all_list:
+                            series_save = series_one_list[0]
+                            for series_one_list in series_all_list:
+                                series_save = series_one_list[0]
+                                sd_series_list = SpiderSeries.objects.filter(series=series_save)
+                                for sd_series in sd_series_list:
+                                    spiderdata_manytomany.series.add(sd_series)
+                                print("多对多保存系列")
+                        print("多对多保存所有系列完成")
+
+                        # 保存类别
+                        for genre_one_list in genres_and_stars_list[0]:
+                            from spiderdata.models import SpiderGenre
+                            genre_save = genre_one_list[0]
+                            sd_genre_list = SpiderGenre.objects.filter(genre=genre_save)
+                            for sd_genre in sd_genre_list:
+                                spiderdata_manytomany.genre.add(sd_genre)
+                        print("保存类别")
+
+                        # 保存演员
+                        for star_one_list in genres_and_stars_list[1]:
+                            from spiderdata.models import SpiderStar
+                            star_save = star_one_list[0]
+                            sd_star_list = SpiderStar.objects.filter(star=star_save)
+                            for sd_star in sd_star_list:
+                                spiderdata_manytomany.star.add(sd_star)
+                        print("保存演员")
+                        spiderdata_manytomany.save()
+
+                    # 保存下载地址
+                    for down_load in down_load_list:
+                        from spiderdata.models import SpiderDownLoad
+
+                        sdl_sd_list = SpiderData.objects.filter(splider_url=url)
+                        for sdl_sd in sdl_sd_list:
+                            spiderdownload = SpiderDownLoad()
+                            spiderdownload.spiderdata_id = sdl_sd.id
+                            spiderdownload.down_load = down_load
+                            spiderdownload.save()
+                            break
+
+                except Exception as e:
+                    print("报错：%s" % e)
+                    error_url_list.append(url)
+
+        print("失败网址：")
+        print(error_url_list)
+
+
 
 if __name__ == "__main__":
     # yuming_list = ["https://www.javbus.com","https://www.busdmm.one","https://www.dmmbus.zone","https://www.seedmm.one"]
     # pre_number = ["HUNT","HUNTA","MKMP","YMDD","NASH","ZMEN","UMSO","MDTM","MDBK","BAZX","NASH","BAZX","BOKD","XRW","BNJC"]
+    yuming_out = "https://www.busdmm.one"
+    prenum_out = "HUNTA"
+    range_num_down_out = 35
+    range_num_up_out = 100
 
+    rsb = RunSpiderBase(yuming=yuming_out,prenum=prenum_out,range_num_down=range_num_down_out,range_num_up=range_num_up_out)
+    rsb.run()
 
-    yuming = "https://www.busdmm.one"
-    error_url_list=[]
-    for i in range(10,100):
-        if len(str(i)) == 1:
-            fcount_i = '00%s' % i
-        elif len(str(i)) == 2:
-            fcount_i = '0%s' % i
-        else:
-            fcount_i = i
-
-        url = "https://www.busdmm.one/HUNTA-%s" % fcount_i
-
-        from spiderdata.models import SpiderData
-        is_exist_url_count = SpiderData.objects.filter(splider_url=url).count()
-        print(is_exist_url_count)
-        if is_exist_url_count != 0:
-            print("已经爬取过网站：%s" % url)
-        else:
-            try:
-                sb = SpiderBase(url)
-                #获取标题
-                splider_title = sb.get_splider_title()
-                print("标题：")
-                print(splider_title)
-                # 获取封面图路径
-                front_cover_img_list = sb.get_back_front_cover_img()
-                front_cover_img_local_xpath = front_cover_img_list[1]
-                back_front_cover_img = front_cover_img_list[0]
-                print("封面图路径：")
-                print(front_cover_img_local_xpath)
-                print("封面图内容：")
-                print(back_front_cover_img)
-                # 获取编号
-                prenum = sb.get_prenum()
-                print("编号：")
-                print(prenum)
-                # 获取导演，制作商，发行商,系列
-                direcotr_and_studio_and_label_and_series_list = sb.get_direcotr_and_studio_and_label_and_series()
-                print("导演，制作商，发行商,系列：")
-                print(direcotr_and_studio_and_label_and_series_list)
-                # 获取类别和演员
-                genres_and_stars_list = sb.get_genres_and_stars()
-                print("类别和演员：")
-                print(genres_and_stars_list)
-                # 获取演员和头像
-                star_and_photo_list = sb.get_star_and_photo()
-                print("演员和头像:")
-                print(star_and_photo_list)
-
-                # 进行ajax异步请求获取下载链接
-                print("获取下载链接")
-                sb2 = SpiderBase(url)
-                # 获取下载链接
-                down_load_list = sb2.get_down_load()
-                print("下载链接:")
-                print(down_load_list)
-
-                #保存数据前，先保存导演，制作商，发行商，系列：
-                from spiderdata.models import SpiderDirector,SpiderStudio, SpiderLabel,SpiderSeries
-                for i in range(0,4):
-                    # #保存导演
-                    # ------------------------------------------------------------------------------
-                    if i==0: #为导演
-                        director_all_list = direcotr_and_studio_and_label_and_series_list[i]
-                        for director_one_list in director_all_list:
-                            director_save = director_one_list[0]
-                            is_exist_director_count = SpiderDirector.objects.filter(director=director_save).count()
-                            if is_exist_director_count != 0:
-                                print("导演[%s]已经存在" % director_save)
-                            else:
-                                spiderdirector = SpiderDirector()
-                                spiderdirector.director = director_save
-                                spiderdirector.director_url = director_one_list[1]
-                                spiderdirector.save()
-                                print("已经成功保存导演【%s】到相应数据库中" % director_save)
-                        print("已经处理完所有导演")
-                    # 保存制作商
-                    # ------------------------------------------------------------------------------
-                    elif i==1: #为制作商
-                        studio_all_list = direcotr_and_studio_and_label_and_series_list[i]
-                        for studio_one_list in studio_all_list:
-                            studio_save = studio_one_list[0]
-                            is_exist_studio_count = SpiderStudio.objects.filter(studio=studio_save).count()
-                            if is_exist_studio_count != 0:
-                                print("制作商[%s]已经存在" % studio_save)
-                            else:
-                                spiderstudio = SpiderStudio()
-                                spiderstudio.studio = studio_save
-                                spiderstudio.studio_url = studio_one_list[1]
-                                spiderstudio.save()
-                                print("已经成功保存制作商【%s】到相应数据库中" % studio_save)
-                        print("已经处理完所有制作商")
-                    # 保存发行商
-                    # ------------------------------------------------------------------------------
-                    elif i==2: #为发行商
-                        label_all_list = direcotr_and_studio_and_label_and_series_list[i]
-                        for label_one_list in label_all_list:
-                            label_save = label_one_list[0]
-                            is_exist_label_count = SpiderLabel.objects.filter(label=label_save).count()
-                            if is_exist_label_count != 0:
-                                print("发行商[%s]已经存在" % label_save)
-                            else:
-                                spiderlabel = SpiderLabel()
-                                spiderlabel.label = label_save
-                                spiderlabel.label_url = label_one_list[1]
-                                spiderlabel.save()
-                                print("已经成功保存发行商【%s】到相应数据库中" % label_save)
-                        print("已经处理完所有发行商")
-                    # 保存系列
-                    # ------------------------------------------------------------------------------
-                    elif i == 3:  # 为系列
-                        series_all_list = direcotr_and_studio_and_label_and_series_list[i]
-                        for series_one_list in series_all_list:
-                            series_save = series_one_list[0]
-                            is_exist_series_count = SpiderSeries.objects.filter(series=series_save).count()
-                            if is_exist_series_count != 0:
-                                print("系列[%s]已经存在" % series_save)
-                            else:
-                                spiderseries = SpiderSeries()
-                                spiderseries.series = series_save
-                                spiderseries.series_url = series_one_list[1]
-                                spiderseries.save()
-                                print("已经成功保存系列【%s】到相应数据库中" % series_save)
-                        print("已经处理完所有系列")
-                print("已经处理完所有导演，制作商，发行商，系列")
-
-                #保存数据前，先保存类别，演员：
-                #保存类别
-                for genre_one_list in genres_and_stars_list[0]:
-                    from spiderdata.models import SpiderGenre
-
-                    genre_save = genre_one_list[0]
-                    is_exist_genre_count = SpiderGenre.objects.filter(genre=genre_save).count()
-                    if is_exist_genre_count != 0:
-                        print("类别[%s]已经存在"% genre_save)
-                    else:
-                        spidergenre = SpiderGenre()
-                        spidergenre.genre = genre_save
-                        spidergenre.genre_url = genre_one_list[1]
-                        spidergenre.save()
-                        print("已经成功保存类别【%s】到相应数据库中"% genre_save)
-
-                #保存演员
-                for star_one_list in genres_and_stars_list[1]:
-                    from spiderdata.models import SpiderStar
-
-                    star_save = star_one_list[0]
-                    is_exist_star_count = SpiderStar.objects.filter(star=star_save).count()
-                    if is_exist_star_count != 0:
-                        print("演员[%s]已经存在"% star_save)
-                    else:
-                        spiderstar = SpiderStar()
-                        spiderstar.star = star_save
-                        print("star_one_list[1]:")
-                        print(star_one_list[1])
-                        spiderstar.star_url = star_one_list[1]
-                        spiderstar.save()
-                        print("已经成功保存演员【%s】到相应数据库中"% star_save)
-
-                #保存演员头像到相应的数据库
-                for star_and_photo_one_list in star_and_photo_list:
-                    from spiderdata.models import SpiderStar
-                    star_search = star_and_photo_one_list[0]
-                    star_find_list = SpiderStar.objects.filter(star=star_search)
-                    for star_one in star_find_list:
-                        star_one.star_photo=star_and_photo_one_list[2]  #保存本地路图片路径
-
-                        start_photo_name = "%s.png" % star_search
-                        from django.core.files import File  #使用django的File文件类
-                        from io import BytesIO  # BytesIO读取字节类型数据使用
-                        start_photo_image_content = star_and_photo_one_list[1] #远程获取的演员图片，字节类型
-                        pre_back_start_photo = File(BytesIO(start_photo_image_content))
-                        star_one.back_start_photo.save(name=start_photo_name,
-                                                             content=pre_back_start_photo)  # 保存图片到ImageField实例中
-
-                        star_one.save()
-                        print("已经成功保存演员头像【%s】到相应数据库中" % star_and_photo_one_list[0])
-
-                #保存除下载链接外的数据
-                #保存数据到数据库
-                spiderdata = SpiderData()
-                print("实例化数据库")
-                #保存url
-                spiderdata.splider_url = url
-                print("保存url")
-                #保存title
-                spiderdata.splider_title = splider_title
-                print("保存title")
-                #保存封面图
-                spiderdata.front_cover_img = front_cover_img_local_xpath
-                fengmian_image_name = "%s.png"%prenum
-                from django.core.files import File
-                from io import BytesIO
-                pre_back_front_cover_img = File(BytesIO(back_front_cover_img))
-                spiderdata.back_front_cover_img.save(name=fengmian_image_name,content=pre_back_front_cover_img) #保存图片到ImageField实例中
-                print("保存封面图")
-                #保存编号
-                spiderdata.prenum = prenum
-                print("保存编号")
-                spiderdata.save()
-
-                #处理多对多的保存,多对多可以保存成功的前提是两个都已经有有效的id
-                spiderdata_manytomany_list = SpiderData.objects.filter(splider_url=url)
-                for spiderdata_manytomany in spiderdata_manytomany_list:
-                    #保存导演，制作商，发行商
-                    #保存导演
-                    director_all_list = direcotr_and_studio_and_label_and_series_list[0]
-                    for director_one_list in director_all_list:
-                        director_save = director_one_list[0]
-                        print("director_save:")
-                        print(director_save)
-                        sd_director_list = SpiderDirector.objects.filter(director=director_save)
-                        for sd_director in sd_director_list:
-                            print("sd_director:")
-                            print(sd_director)
-                            spiderdata_manytomany.director.add(sd_director)
-                        print("多对多保存导演")
-                    print("多对多保存所有导演完成")
-                    #保存制作商
-                    studio_all_list = direcotr_and_studio_and_label_and_series_list[1]
-                    for studio_one_list in studio_all_list:
-                        studio_save = studio_one_list[0]
-                        sd_studio_list = SpiderStudio.objects.filter(studio=studio_save)
-                        for sd_studio in sd_studio_list:
-                            spiderdata_manytomany.studio.add(sd_studio)
-                        print("多对多保存制作商")
-                    print("多对多保存所有制作商完成")
-                    # 保存发行商
-                    label_all_list = direcotr_and_studio_and_label_and_series_list[1]
-                    for label_one_list in label_all_list:
-                        label_save = label_one_list[0]
-                        sd_label_list = SpiderLabel.objects.filter(label=label_save)
-                        for sd_label in sd_label_list:
-                            spiderdata_manytomany.label.add(sd_label)
-                        print("多对多保存发行商")
-                    print("多对多保存所有发行商完成")
-                    # 保存系列
-                    series_all_list = direcotr_and_studio_and_label_and_series_list[1]
-                    for series_one_list in series_all_list:
-                        series_save = series_one_list[0]
-                        for series_one_list in series_all_list:
-                            series_save = series_one_list[0]
-                            sd_series_list = SpiderSeries.objects.filter(series=series_save)
-                            for sd_series in sd_series_list:
-                                spiderdata_manytomany.series.add(sd_series)
-                            print("多对多保存系列")
-                    print("多对多保存所有系列完成")
-
-
-                    #保存类别
-                    for genre_one_list in genres_and_stars_list[0]:
-                        from spiderdata.models import SpiderGenre
-                        genre_save = genre_one_list[0]
-                        sd_genre_list = SpiderGenre.objects.filter(genre=genre_save)
-                        for sd_genre in sd_genre_list:
-                            spiderdata_manytomany.genre.add(sd_genre)
-                    print("保存类别")
-
-                    #保存演员
-                    for star_one_list in genres_and_stars_list[1]:
-                        from spiderdata.models import SpiderStar
-                        star_save = star_one_list[0]
-                        sd_star_list = SpiderStar.objects.filter(star=star_save)
-                        for sd_star in sd_star_list:
-                            spiderdata_manytomany.star.add(sd_star)
-                    print("保存演员")
-                    spiderdata_manytomany.save()
-
-                #保存下载地址
-                for down_load in down_load_list:
-                    from spiderdata.models import SpiderDownLoad
-
-                    sdl_sd_list = SpiderData.objects.filter(splider_url=url)
-                    for sdl_sd in sdl_sd_list:
-                        spiderdownload = SpiderDownLoad()
-                        spiderdownload.spiderdata_id = sdl_sd.id
-                        spiderdownload.down_load = down_load
-                        spiderdownload.save()
-                        break
-
-            except Exception as e:
-                print("报错：%s" % e)
-                error_url_list.append(url)
-
-    print("失败网址：")
-    print(error_url_list)
+    #
+    # yuming = "https://www.busdmm.one"
+    # error_url_list=[]
+    # for i in range(10,100):
+    #     if len(str(i)) == 1:
+    #         fcount_i = '00%s' % i
+    #     elif len(str(i)) == 2:
+    #         fcount_i = '0%s' % i
+    #     else:
+    #         fcount_i = i
+    #
+    #     url = "https://www.busdmm.one/HUNTA-%s" % fcount_i
+    #
+    #     from spiderdata.models import SpiderData
+    #     is_exist_url_count = SpiderData.objects.filter(splider_url=url).count()
+    #     print(is_exist_url_count)
+    #     if is_exist_url_count != 0:
+    #         print("已经爬取过网站：%s" % url)
+    #     else:
+    #         try:
+    #             sb = SpiderBase(url)
+    #             #获取标题
+    #             splider_title = sb.get_splider_title()
+    #             print("标题：")
+    #             print(splider_title)
+    #             # 获取封面图路径
+    #             front_cover_img_list = sb.get_back_front_cover_img()
+    #             front_cover_img_local_xpath = front_cover_img_list[1]
+    #             back_front_cover_img = front_cover_img_list[0]
+    #             print("封面图路径：")
+    #             print(front_cover_img_local_xpath)
+    #             print("封面图内容：")
+    #             print(back_front_cover_img)
+    #             # 获取编号
+    #             prenum = sb.get_prenum()
+    #             print("编号：")
+    #             print(prenum)
+    #             # 获取导演，制作商，发行商,系列
+    #             direcotr_and_studio_and_label_and_series_list = sb.get_direcotr_and_studio_and_label_and_series()
+    #             print("导演，制作商，发行商,系列：")
+    #             print(direcotr_and_studio_and_label_and_series_list)
+    #             # 获取类别和演员
+    #             genres_and_stars_list = sb.get_genres_and_stars()
+    #             print("类别和演员：")
+    #             print(genres_and_stars_list)
+    #             # 获取演员和头像
+    #             star_and_photo_list = sb.get_star_and_photo()
+    #             print("演员和头像:")
+    #             print(star_and_photo_list)
+    #
+    #             # 进行ajax异步请求获取下载链接
+    #             print("获取下载链接")
+    #             sb2 = SpiderBase(url)
+    #             # 获取下载链接
+    #             down_load_list = sb2.get_down_load()
+    #             print("下载链接:")
+    #             print(down_load_list)
+    #
+    #             #保存数据前，先保存导演，制作商，发行商，系列：
+    #             from spiderdata.models import SpiderDirector,SpiderStudio, SpiderLabel,SpiderSeries
+    #             for i in range(0,4):
+    #                 # #保存导演
+    #                 # ------------------------------------------------------------------------------
+    #                 if i==0: #为导演
+    #                     director_all_list = direcotr_and_studio_and_label_and_series_list[i]
+    #                     for director_one_list in director_all_list:
+    #                         director_save = director_one_list[0]
+    #                         is_exist_director_count = SpiderDirector.objects.filter(director=director_save).count()
+    #                         if is_exist_director_count != 0:
+    #                             print("导演[%s]已经存在" % director_save)
+    #                         else:
+    #                             spiderdirector = SpiderDirector()
+    #                             spiderdirector.director = director_save
+    #                             spiderdirector.director_url = director_one_list[1]
+    #                             spiderdirector.save()
+    #                             print("已经成功保存导演【%s】到相应数据库中" % director_save)
+    #                     print("已经处理完所有导演")
+    #                 # 保存制作商
+    #                 # ------------------------------------------------------------------------------
+    #                 elif i==1: #为制作商
+    #                     studio_all_list = direcotr_and_studio_and_label_and_series_list[i]
+    #                     for studio_one_list in studio_all_list:
+    #                         studio_save = studio_one_list[0]
+    #                         is_exist_studio_count = SpiderStudio.objects.filter(studio=studio_save).count()
+    #                         if is_exist_studio_count != 0:
+    #                             print("制作商[%s]已经存在" % studio_save)
+    #                         else:
+    #                             spiderstudio = SpiderStudio()
+    #                             spiderstudio.studio = studio_save
+    #                             spiderstudio.studio_url = studio_one_list[1]
+    #                             spiderstudio.save()
+    #                             print("已经成功保存制作商【%s】到相应数据库中" % studio_save)
+    #                     print("已经处理完所有制作商")
+    #                 # 保存发行商
+    #                 # ------------------------------------------------------------------------------
+    #                 elif i==2: #为发行商
+    #                     label_all_list = direcotr_and_studio_and_label_and_series_list[i]
+    #                     for label_one_list in label_all_list:
+    #                         label_save = label_one_list[0]
+    #                         is_exist_label_count = SpiderLabel.objects.filter(label=label_save).count()
+    #                         if is_exist_label_count != 0:
+    #                             print("发行商[%s]已经存在" % label_save)
+    #                         else:
+    #                             spiderlabel = SpiderLabel()
+    #                             spiderlabel.label = label_save
+    #                             spiderlabel.label_url = label_one_list[1]
+    #                             spiderlabel.save()
+    #                             print("已经成功保存发行商【%s】到相应数据库中" % label_save)
+    #                     print("已经处理完所有发行商")
+    #                 # 保存系列
+    #                 # ------------------------------------------------------------------------------
+    #                 elif i == 3:  # 为系列
+    #                     series_all_list = direcotr_and_studio_and_label_and_series_list[i]
+    #                     for series_one_list in series_all_list:
+    #                         series_save = series_one_list[0]
+    #                         is_exist_series_count = SpiderSeries.objects.filter(series=series_save).count()
+    #                         if is_exist_series_count != 0:
+    #                             print("系列[%s]已经存在" % series_save)
+    #                         else:
+    #                             spiderseries = SpiderSeries()
+    #                             spiderseries.series = series_save
+    #                             spiderseries.series_url = series_one_list[1]
+    #                             spiderseries.save()
+    #                             print("已经成功保存系列【%s】到相应数据库中" % series_save)
+    #                     print("已经处理完所有系列")
+    #             print("已经处理完所有导演，制作商，发行商，系列")
+    #
+    #             #保存数据前，先保存类别，演员：
+    #             #保存类别
+    #             for genre_one_list in genres_and_stars_list[0]:
+    #                 from spiderdata.models import SpiderGenre
+    #
+    #                 genre_save = genre_one_list[0]
+    #                 is_exist_genre_count = SpiderGenre.objects.filter(genre=genre_save).count()
+    #                 if is_exist_genre_count != 0:
+    #                     print("类别[%s]已经存在"% genre_save)
+    #                 else:
+    #                     spidergenre = SpiderGenre()
+    #                     spidergenre.genre = genre_save
+    #                     spidergenre.genre_url = genre_one_list[1]
+    #                     spidergenre.save()
+    #                     print("已经成功保存类别【%s】到相应数据库中"% genre_save)
+    #
+    #             #保存演员
+    #             for star_one_list in genres_and_stars_list[1]:
+    #                 from spiderdata.models import SpiderStar
+    #
+    #                 star_save = star_one_list[0]
+    #                 is_exist_star_count = SpiderStar.objects.filter(star=star_save).count()
+    #                 if is_exist_star_count != 0:
+    #                     print("演员[%s]已经存在"% star_save)
+    #                 else:
+    #                     spiderstar = SpiderStar()
+    #                     spiderstar.star = star_save
+    #                     print("star_one_list[1]:")
+    #                     print(star_one_list[1])
+    #                     spiderstar.star_url = star_one_list[1]
+    #                     spiderstar.save()
+    #                     print("已经成功保存演员【%s】到相应数据库中"% star_save)
+    #
+    #             #保存演员头像到相应的数据库
+    #             for star_and_photo_one_list in star_and_photo_list:
+    #                 from spiderdata.models import SpiderStar
+    #                 star_search = star_and_photo_one_list[0]
+    #                 star_find_list = SpiderStar.objects.filter(star=star_search)
+    #                 for star_one in star_find_list:
+    #                     star_one.star_photo=star_and_photo_one_list[2]  #保存本地路图片路径
+    #
+    #                     start_photo_name = "%s.png" % star_search
+    #                     from django.core.files import File  #使用django的File文件类
+    #                     from io import BytesIO  # BytesIO读取字节类型数据使用
+    #                     start_photo_image_content = star_and_photo_one_list[1] #远程获取的演员图片，字节类型
+    #                     pre_back_start_photo = File(BytesIO(start_photo_image_content))
+    #                     star_one.back_start_photo.save(name=start_photo_name,
+    #                                                          content=pre_back_start_photo)  # 保存图片到ImageField实例中
+    #
+    #                     star_one.save()
+    #                     print("已经成功保存演员头像【%s】到相应数据库中" % star_and_photo_one_list[0])
+    #
+    #             #保存除下载链接外的数据
+    #             #保存数据到数据库
+    #             spiderdata = SpiderData()
+    #             print("实例化数据库")
+    #             #保存url
+    #             spiderdata.splider_url = url
+    #             print("保存url")
+    #             #保存title
+    #             spiderdata.splider_title = splider_title
+    #             print("保存title")
+    #             #保存封面图
+    #             spiderdata.front_cover_img = front_cover_img_local_xpath
+    #             fengmian_image_name = "%s.png"%prenum
+    #             from django.core.files import File
+    #             from io import BytesIO
+    #             pre_back_front_cover_img = File(BytesIO(back_front_cover_img))
+    #             spiderdata.back_front_cover_img.save(name=fengmian_image_name,content=pre_back_front_cover_img) #保存图片到ImageField实例中
+    #             print("保存封面图")
+    #             #保存编号
+    #             spiderdata.prenum = prenum
+    #             print("保存编号")
+    #             spiderdata.save()
+    #
+    #             #处理多对多的保存,多对多可以保存成功的前提是两个都已经有有效的id
+    #             spiderdata_manytomany_list = SpiderData.objects.filter(splider_url=url)
+    #             for spiderdata_manytomany in spiderdata_manytomany_list:
+    #                 #保存导演，制作商，发行商
+    #                 #保存导演
+    #                 director_all_list = direcotr_and_studio_and_label_and_series_list[0]
+    #                 for director_one_list in director_all_list:
+    #                     director_save = director_one_list[0]
+    #                     print("director_save:")
+    #                     print(director_save)
+    #                     sd_director_list = SpiderDirector.objects.filter(director=director_save)
+    #                     for sd_director in sd_director_list:
+    #                         print("sd_director:")
+    #                         print(sd_director)
+    #                         spiderdata_manytomany.director.add(sd_director)
+    #                     print("多对多保存导演")
+    #                 print("多对多保存所有导演完成")
+    #                 #保存制作商
+    #                 studio_all_list = direcotr_and_studio_and_label_and_series_list[1]
+    #                 for studio_one_list in studio_all_list:
+    #                     studio_save = studio_one_list[0]
+    #                     sd_studio_list = SpiderStudio.objects.filter(studio=studio_save)
+    #                     for sd_studio in sd_studio_list:
+    #                         spiderdata_manytomany.studio.add(sd_studio)
+    #                     print("多对多保存制作商")
+    #                 print("多对多保存所有制作商完成")
+    #                 # 保存发行商
+    #                 label_all_list = direcotr_and_studio_and_label_and_series_list[1]
+    #                 for label_one_list in label_all_list:
+    #                     label_save = label_one_list[0]
+    #                     sd_label_list = SpiderLabel.objects.filter(label=label_save)
+    #                     for sd_label in sd_label_list:
+    #                         spiderdata_manytomany.label.add(sd_label)
+    #                     print("多对多保存发行商")
+    #                 print("多对多保存所有发行商完成")
+    #                 # 保存系列
+    #                 series_all_list = direcotr_and_studio_and_label_and_series_list[1]
+    #                 for series_one_list in series_all_list:
+    #                     series_save = series_one_list[0]
+    #                     for series_one_list in series_all_list:
+    #                         series_save = series_one_list[0]
+    #                         sd_series_list = SpiderSeries.objects.filter(series=series_save)
+    #                         for sd_series in sd_series_list:
+    #                             spiderdata_manytomany.series.add(sd_series)
+    #                         print("多对多保存系列")
+    #                 print("多对多保存所有系列完成")
+    #
+    #
+    #                 #保存类别
+    #                 for genre_one_list in genres_and_stars_list[0]:
+    #                     from spiderdata.models import SpiderGenre
+    #                     genre_save = genre_one_list[0]
+    #                     sd_genre_list = SpiderGenre.objects.filter(genre=genre_save)
+    #                     for sd_genre in sd_genre_list:
+    #                         spiderdata_manytomany.genre.add(sd_genre)
+    #                 print("保存类别")
+    #
+    #                 #保存演员
+    #                 for star_one_list in genres_and_stars_list[1]:
+    #                     from spiderdata.models import SpiderStar
+    #                     star_save = star_one_list[0]
+    #                     sd_star_list = SpiderStar.objects.filter(star=star_save)
+    #                     for sd_star in sd_star_list:
+    #                         spiderdata_manytomany.star.add(sd_star)
+    #                 print("保存演员")
+    #                 spiderdata_manytomany.save()
+    #
+    #             #保存下载地址
+    #             for down_load in down_load_list:
+    #                 from spiderdata.models import SpiderDownLoad
+    #
+    #                 sdl_sd_list = SpiderData.objects.filter(splider_url=url)
+    #                 for sdl_sd in sdl_sd_list:
+    #                     spiderdownload = SpiderDownLoad()
+    #                     spiderdownload.spiderdata_id = sdl_sd.id
+    #                     spiderdownload.down_load = down_load
+    #                     spiderdownload.save()
+    #                     break
+    #
+    #         except Exception as e:
+    #             print("报错：%s" % e)
+    #             error_url_list.append(url)
+    #
+    # print("失败网址：")
+    # print(error_url_list)
 
 
 
