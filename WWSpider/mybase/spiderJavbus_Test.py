@@ -182,7 +182,7 @@ class SpiderBase(object):
 
     def get_obj_full_text(self,inputObj):
         obj_full_text = inputObj.text
-        # print(obj_full_text)
+        print(obj_full_text)
         return obj_full_text
 
     #获取编号
@@ -193,6 +193,8 @@ class SpiderBase(object):
             prenum_text = self.get_obj_full_text(prenum)
             # print(prenum.attrs)
             return prenum_text
+
+
 
     #获取导演，制作商，发行商,系列
     def get_direcotr_and_studio_and_label_and_series(self):
@@ -368,6 +370,23 @@ class SpiderBase(object):
         print(pipei_from_content)
         return pipei_from_content
 
+    #获取时长
+    def get_long_time(self):
+        # 使用xpath的方法获取类名为col-md-3 info的div标签下的第一个P标签下的第二个span元素集合
+        respose_text = self.get_obj_full_text(self.response)
+        long_time_re = self.get_re_content(pipei=".*長度:.*", content=respose_text)
+        # print(long_time_re)
+        long_time_re_list = str(long_time_re).split("長度:")[1]
+        # print(long_time_re_list)
+        long_time_re_list_two = str(long_time_re_list).split("<")[1]
+        # print(long_time_re_list_two)
+        long_time_re_list_three = str(long_time_re_list_two).split(">")[1]
+        # print(long_time_re_list_three)
+        long_time = long_time_re_list_three.strip(" ")
+        print(long_time)
+        return long_time
+
+
 
     def get_gid_and_uc_and_img(self):
 
@@ -429,9 +448,11 @@ class SpiderBase(object):
 if __name__ == "__main__":
     # yuming_list = ["https://www.javbus.com","https://www.busdmm.one","https://www.dmmbus.zone","https://www.seedmm.one"]
     # pre_number = ["HUNT","HUNTA","MKMP","YMDD","NASH","ZMEN","UMSO","MDTM","MDBK","BAZX","NASH","BAZX","BOKD","XRW","BNJC"]
-    url = "https://www.busdmm.one/NACR-281"
+    url = "https://www.busdmm.one/SVDVD-782"
     sb = SpiderBase(url)
-    sb.get_direcotr_and_studio_and_label()
+    shichang = sb.get_long_time()
+    print("时长")
+    print(shichang)
 
 
     #

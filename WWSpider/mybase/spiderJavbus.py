@@ -400,6 +400,22 @@ class SpiderBase(object):
         print(gid_and_uc_and_img_list)
         return gid_and_uc_and_img_list
 
+    #获取时长
+    def get_long_time(self):
+        # 使用xpath的方法获取类名为col-md-3 info的div标签下的第一个P标签下的第二个span元素集合
+        respose_text = self.get_obj_full_text(self.response)
+        long_time_re = self.get_re_content(pipei=".*長度:.*", content=respose_text)
+        # print(long_time_re)
+        long_time_re_list = str(long_time_re).split("長度:")[1]
+        # print(long_time_re_list)
+        long_time_re_list_two = str(long_time_re_list).split("<")[1]
+        # print(long_time_re_list_two)
+        long_time_re_list_three = str(long_time_re_list_two).split(">")[1]
+        # print(long_time_re_list_three)
+        long_time = long_time_re_list_three.strip(" ")
+        print(long_time)
+        return long_time
+
 
 
     #获取下载地址链接
@@ -479,6 +495,9 @@ class RunSpiderBase(object):
                     prenum = sb.get_prenum()
                     print("编号：")
                     print(prenum)
+                    long_time = sb.get_long_time()
+                    print("时长：")
+                    print(long_time)
                     # 获取导演，制作商，发行商,系列
                     direcotr_and_studio_and_label_and_series_list = sb.get_direcotr_and_studio_and_label_and_series()
                     print("导演，制作商，发行商,系列：")
@@ -643,6 +662,8 @@ class RunSpiderBase(object):
                     # 保存编号
                     spiderdata.prenum = prenum
                     print("保存编号")
+                    spiderdata.long_time = long_time
+                    print("保存时长")
                     spiderdata.save()
 
                     # 处理多对多的保存,多对多可以保存成功的前提是两个都已经有有效的id
