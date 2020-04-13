@@ -771,7 +771,7 @@ if __name__ == "__main__":
     # pre_number = ["HUNT","HUNTA","MKMP","YMDD","NASH","ZMEN","UMSO","MDTM","MDBK","BAZX","NASH","BAZX","BOKD","XRW","BNJC"]
     yuming_out = "https://www.busdmm.one"
     prenum_out = "HUNTA"
-    range_num_down_out = 77
+    range_num_down_out = 91
     range_num_up_out = 100
 
     rsb = RunSpiderBase(yuming=yuming_out,prenum=prenum_out,range_num_down=range_num_down_out,range_num_up=range_num_up_out)
