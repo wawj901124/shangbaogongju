@@ -68,7 +68,7 @@ if __name__ == "__main__":
     error_url_list=[]
     for i in range(78,79):
         try:
-            url = "http://fpie1.com/#/play-details/%s"% i
+            url = "http://fpise1.com/play-details/%s"% i
             sb = SpiderBase(weburl=url)
             #打开网址
             sb.get_web_url()
