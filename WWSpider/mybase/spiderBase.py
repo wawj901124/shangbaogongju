@@ -66,7 +66,7 @@ class SpiderBase(object):
 
 if __name__ == "__main__":
     error_url_list=[]
-    for i in range(78,79):
+    for i in range(1,100):
         try:
             url = "http://fpise1.com/play-details/%s"% i
             sb = SpiderBase(weburl=url)
