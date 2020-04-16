@@ -472,9 +472,9 @@ class RunSpiderBase(object):
 
     def run(self):
         error_url_list = []
-        i = self.range_num_down
-        while i<self.range_num_up:
-        # for i in range(self.range_num_down, self.range_num_up):
+        # i = self.range_num_down
+        # while i<self.range_num_up:
+        for i in range(self.range_num_down, self.range_num_up):
             if len(str(i)) == 1:
                 fcount_i = '00%s' % i
             elif len(str(i)) == 2:
@@ -761,7 +761,7 @@ class RunSpiderBase(object):
                     print("报错：%s" % e)
                     error_url_list.append(url)
                     sb.handle_fail_web_url(url)
-            i=i+1
+            # i=i+1
 
         print("失败网址：")
         print(error_url_list)
