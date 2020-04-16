@@ -762,7 +762,7 @@ class RunSpiderBase(object):
                     error_url_list.append(url)
                     sb.handle_fail_web_url(url)
             i=i+1
-        
+
         print("失败网址：")
         print(error_url_list)
 
