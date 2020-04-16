@@ -155,8 +155,8 @@ class SpiderData(models.Model):
 
     def back_image_data(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
-        return mark_safe("<a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a>".
-                         format(DJANGO_SERVER_YUMING,self.back_front_cover_img,DJANGO_SERVER_YUMING,self.back_front_cover_img))
+        return mark_safe("<a href='{}'><span>{}<span></a><br/><a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a>".
+                         format(self.splider_url,self.prenum,DJANGO_SERVER_YUMING,self.back_front_cover_img,DJANGO_SERVER_YUMING,self.back_front_cover_img))
         # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
 
     back_image_data.short_description = u"补传封面图片"   #为go_to函数名个名字
