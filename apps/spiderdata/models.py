@@ -129,6 +129,8 @@ class SpiderData(models.Model):
     front_cover_img = models.CharField(max_length=1500, null=True, blank=True,verbose_name=u"封面图片")
     prenum = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"编号")
     long_time = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"时长（分钟）")
+    is_love = models.BooleanField(default=False,verbose_name=u"喜爱")
+    is_check = models.BooleanField(default=False,verbose_name=u"检查封面")
 
     #对于ManyToManyField，没有null参数，如果加上会报警告如：spiderdata.SpiderData.genre: (fields.W340) null has no effect on ManyToManyField.
     genre = models.ManyToManyField(SpiderGenre,default="", blank=True,verbose_name=u"类别")
