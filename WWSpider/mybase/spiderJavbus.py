@@ -799,8 +799,8 @@ if __name__ == "__main__":
     # yuming_list = ["https://www.javbus.com","https://www.busdmm.one","https://www.dmmbus.zone","https://www.seedmm.one"]
     # pre_number = ["HUNT","HUNTA","MKMP","YMDD","NASH","ZMEN","UMSO","MDTM","MDBK","BAZX","NASH","BAZX","BOKD","XRW","BNJC"]
     yuming_out = "https://www.busdmm.one"
-    prenum_out = "HUNTA"
-    range_num_down_out = 175
+    prenum_out = "GDHH"
+    range_num_down_out = 1
     range_num_up_out = 1000
 
     rsb = RunSpiderBase(yuming=yuming_out,prenum=prenum_out,range_num_down=range_num_down_out,range_num_up=range_num_up_out)

@@ -24,9 +24,8 @@ class SpiderDataAdmin(object):
                    'down_load_link',
                    # 'preview',
                    'add_time','update_time']#定义显示的字段
-    # search_fields =  ['test_project','test_module',
-    #                'test_case_title','test_start_time',]   #定义搜索字段
-    list_filter =  ['splider_title',] #定义筛选的字段
+    search_fields =  ['splider_title','prenum',]   #定义搜索字段
+    list_filter =  ['splider_title','is_love','is_check','prenum',] #定义筛选的字段
     model_icon = 'fa fa-bars '  # 定义图标显示
     ordering = ['-add_time']  # 添加默认排序规则显示排序，根据添加时间倒序排序
     # readonly_fields = ziduan  # 设置某些字段为只为可读  #设置了readonly_fields，再设置exclude，exclude对该字段无效，
@@ -34,7 +33,7 @@ class SpiderDataAdmin(object):
     # inlines = [TestCaseInline]  # inlines配和TestCaseInline使用，可以直接在项目页面添加测试用例#只能做一层嵌套，不能进行两层嵌套
     list_editable = ['is_love','is_check',]  # 可以在列表页对字段进行编辑
     refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
-    list_per_page = 50   #每页设置50条数据，默认每页展示100条数据
+    list_per_page = 150   #每页设置50条数据，默认每页展示100条数据
     # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
     list_display_links = []   #设置点击链接进入编辑页面的字段
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
