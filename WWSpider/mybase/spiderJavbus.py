@@ -462,17 +462,6 @@ class SpiderBase(object):
         return links_list
 
 class HandleFailWebUrl(object):
-    def __init__(self):
-        self.timeStr = GetTimeStr()
-
-    #获取时间串
-    def getTimeStr(self):
-        tStr = self.timeStr.getTimeStr()
-        return tStr
-
-    def getTimeStrNY(self):
-        tStrNY = self.timeStr.getTimeStrNY()
-        return tStrNY
 
     #创建目录
     def createdir(self,filedir):
