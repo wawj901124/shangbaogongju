@@ -461,6 +461,34 @@ class SpiderBase(object):
             links_list = ['errorlist']
         return links_list
 
+class HandleFailWebUrl(object):
+    def __init__(self):
+        self.timeStr = GetTimeStr()
+
+    #获取时间串
+    def getTimeStr(self):
+        tStr = self.timeStr.getTimeStr()
+        return tStr
+
+    def getTimeStrNY(self):
+        tStrNY = self.timeStr.getTimeStrNY()
+        return tStrNY
+
+    #创建目录
+    def createdir(self,filedir):
+        filelist = filedir.split("/")
+        # print(filelist)
+        long = len(filelist)
+        # print(long)
+        zuhefiledir = filelist[0]
+        for i in range(1,long):
+            zuhefiledir = zuhefiledir+"/"+filelist[i]
+            if os.path.exists(zuhefiledir):
+                print("已经存在目录：%s" % zuhefiledir)
+            else:
+                os.mkdir(zuhefiledir)
+                print("已经创建目录：%s" % zuhefiledir)
+
     #处理失败网址
     def handle_fail_web_url(self,fail_url):
         mynowdir = str(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -498,8 +526,8 @@ class RunSpiderBase(object):
             if is_exist_url_count != 0:
                 print("已经爬取过网站：%s" % url)
             else:
-                sb = SpiderBase(url)
                 try:
+                    sb = SpiderBase(url)
                     # 获取标题
                     splider_title = sb.get_splider_title()
                     print("标题：")
@@ -769,7 +797,8 @@ class RunSpiderBase(object):
                 except Exception as e:
                     print("报错：%s" % e)
                     error_url_list.append(url)
-                    sb.handle_fail_web_url(url)
+                    hfwu = HandleFailWebUrl()
+                    hfwu.handle_fail_web_url(url)
             # i=i+1
 
         print("失败网址：")
@@ -782,7 +811,7 @@ if __name__ == "__main__":
     # pre_number = ["HUNT","HUNTA","MKMP","YMDD","NASH","ZMEN","UMSO","MDTM","MDBK","BAZX","NASH","BAZX","BOKD","XRW","BNJC"]
     yuming_out = "https://www.busdmm.one"
     prenum_out = "HUNTA"
-    range_num_down_out = 127
+    range_num_down_out = 128
     range_num_up_out = 1000
 
     rsb = RunSpiderBase(yuming=yuming_out,prenum=prenum_out,range_num_down=range_num_down_out,range_num_up=range_num_up_out)
