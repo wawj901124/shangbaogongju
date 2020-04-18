@@ -799,7 +799,7 @@ if __name__ == "__main__":
     # yuming_list = ["https://www.javbus.com","https://www.busdmm.one","https://www.dmmbus.zone","https://www.seedmm.one"]
     # pre_number = ["HUNT","HUNTA","MKMP","YMDD","NASH","ZMEN","UMSO","MDTM","MDBK","BAZX","NASH","BAZX","BOKD","XRW","BNJC"]
     yuming_out = "https://www.busdmm.one"
-    prenum_out = "GDHH"
+    prenum_out = "RCT"
     range_num_down_out = 1
     range_num_up_out = 1000
 
