@@ -88,6 +88,7 @@ class SpiderHMBookAdmin(object):
               'add_time','update_time']
 
     list_display =['id','front_cover_img_data',
+                   'all_chapter',
                    'is_love','is_check',
                    # 'preview',
                    'add_time','update_time']#定义显示的字段

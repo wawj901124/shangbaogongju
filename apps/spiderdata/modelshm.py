@@ -75,11 +75,21 @@ class SpiderHMBook(models.Model):
 
     def all_chapter(self):
         from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
-        return mark_safe(
-            "<a href='{}'><span>{}<span></a><br/><a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a>".
-            format(self.splider_url, self.chapter_count, DJANGO_SERVER_YUMING, self.front_cover_img,
-                   DJANGO_SERVER_YUMING, self.front_cover_img))
-        all_chapter.short_description = u"已经存在章节"  # 为go_to函数名个名字
+        html_all = ""
+        chapter_list = self.spiderhmchapterdata_set.all()
+        for chapter_one in  chapter_list:
+            html_chapter_one = "<span>{}</span><br/>".format(chapter_one.splider_title)
+            html_all = "%s%s" % (html_all, html_chapter_one)
+            chapter_image_list = chapter_one.spiderhmchapterimage_set.all()
+            for chapter_image_one in chapter_image_list:
+                html_chapter_image_one = "<a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a><br/>".format(
+                    DJANGO_SERVER_YUMING,chapter_image_one.content_img, DJANGO_SERVER_YUMING,chapter_image_one.content_img
+                )
+                html_all = "%s%s" % (html_all, html_chapter_image_one)
+
+        return mark_safe(html_all)
+
+    all_chapter.short_description = u"已经存在章节"  # 为go_to函数名个名字
 
     class Meta:
         verbose_name = u"爬取的漫画书"
