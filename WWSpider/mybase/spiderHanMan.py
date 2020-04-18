@@ -392,7 +392,7 @@ class RunSpiderHanMan(object):
 if __name__ == "__main__":
     yuming = "https://www.mfkhm.com"
     prenum ="chapter"
-    range_num_down = 2
+    range_num_down = 4
     range_num_up =10
     rshm = RunSpiderHanMan(yuming,prenum,range_num_down,range_num_up)
     rshm.run()
