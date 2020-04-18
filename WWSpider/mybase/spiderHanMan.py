@@ -402,21 +402,13 @@ class RunSpiderHanMan(object):
 
 
 if __name__ == "__main__":
-    # yuming = "https://www.mfkhm.com"
-    # prenum ="chapter"
-    # range_num_down = 10
-    # range_num_up =100000
-    # rshm = RunSpiderHanMan(yuming,prenum,range_num_down,range_num_up)
-    # rshm.run()
-    hm_current_chapter="第12话"
-    hm_chapter_num_list = []
-    for i in hm_current_chapter:
-        if i in "0123456789":
-            hm_chapter_num_list.append(i)
-            print(i)
-    print(hm_chapter_num_list)
-    hm_chapter_num_str = "".join(hm_chapter_num_list)
-    print(int(hm_chapter_num_str))
+    yuming = "https://www.mfkhm.com"
+    prenum ="chapter"
+    range_num_down = 1
+    range_num_up =100000
+    rshm = RunSpiderHanMan(yuming,prenum,range_num_down,range_num_up)
+    rshm.run()
+
 
 
 
