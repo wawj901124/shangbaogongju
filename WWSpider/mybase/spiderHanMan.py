@@ -383,6 +383,7 @@ class RunSpiderHanMan(object):
                         chapter_content_one_image_content = File(BytesIO(chapter_content_one_image_bytes))
                         spiderhmchapterimage.content_img.save(name=chapter_content_one_image_name,
                                                        content=chapter_content_one_image_content)  # 保存图片到ImageField实例中
+                        spiderhmchapterimage.chapter_image_num = current_chapter_content_img_bytes_one_count
                         spiderhmchapterimage.save()
                         print("保存章节内容图片成功")
 

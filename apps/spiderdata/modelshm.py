@@ -80,7 +80,7 @@ class SpiderHMBook(models.Model):
         for chapter_one in  chapter_list:
             html_chapter_one = "<span>{}</span><br/>".format(chapter_one.splider_title)
             html_all = "%s%s" % (html_all, html_chapter_one)
-            chapter_image_list = chapter_one.spiderhmchapterimage_set.all().order_by("img_title")
+            chapter_image_list = chapter_one.spiderhmchapterimage_set.all().order_by("chapter_image_num")
             for chapter_image_one in chapter_image_list:
                 html_chapter_image_one = "<a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a><br/>".format(
                     DJANGO_SERVER_YUMING,chapter_image_one.content_img, DJANGO_SERVER_YUMING,chapter_image_one.content_img
@@ -172,7 +172,7 @@ class SpiderHMChapterImage(models.Model):
     img_height = models.CharField(max_length=100, default=75,null=True, blank=True, verbose_name=u"图片高度")
     img_width = models.CharField(max_length=100, default=75, null=True, blank=True,verbose_name=u"图片宽度")
     content_img = models.ImageField(upload_to="hanman/content/" , null=True, blank=True,verbose_name=u"图片", height_field='img_height',width_field='img_width',max_length=2000)
-
+    chapter_image_num = models.IntegerField(null=True, blank=True,verbose_name=u"图片编号")
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
                                     verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
