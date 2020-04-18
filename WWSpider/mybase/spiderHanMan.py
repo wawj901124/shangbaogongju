@@ -302,6 +302,16 @@ class RunSpiderHanMan(object):
                     hm_current_chapter = shm.get_hm_current_chapter()
                     print("当前章节数：")
                     print(hm_current_chapter)
+                    #获取当前章节的数字整数值
+                    hm_chapter_num_list = []
+                    for i in hm_current_chapter:
+                        if i in "0123456789":
+                            hm_chapter_num_list.append(i)
+                            print(i)
+                    print(hm_chapter_num_list)
+                    hm_chapter_num_str = "".join(hm_chapter_num_list)
+                    hm_chapter_num_int = int(hm_chapter_num_str)
+
                     #获取所有章节链接
                     hm_chapter_links_list = shm.get_hm_chapter_links()
                     print("所有章节及其链接：")
@@ -348,6 +358,7 @@ class RunSpiderHanMan(object):
                     spiderhmchapterdata.spiderhmbook_id = self.pre_book_id
                     spiderhmchapterdata.splider_url = url
                     spiderhmchapterdata.splider_title = hm_current_chapter
+                    spiderhmchapterdata.chapter_num = hm_chapter_num_int
                     spiderhmchapterdata.save()
                     print("章节内容外围保存成功")
 
@@ -390,19 +401,24 @@ class RunSpiderHanMan(object):
 
 
 if __name__ == "__main__":
-    yuming = "https://www.mfkhm.com"
-    prenum ="chapter"
-    range_num_down = 4
-    range_num_up =10
-    rshm = RunSpiderHanMan(yuming,prenum,range_num_down,range_num_up)
-    rshm.run()
     # yuming = "https://www.mfkhm.com"
-    # weburl = "/chapter/13435"
-    # shm = SpiderHanMan(yuming=yuming,weburl=weburl)
-    # # shm.get_hm_area_and_type()
-    # # current_chapter_content_img_list = shm.get_hm_current_chapter_content_img_bytes()
-    # # shm.get_hm_chapter_links()
-    # shm.get_hm_front_cover_img()
+    # prenum ="chapter"
+    # range_num_down = 10
+    # range_num_up =100000
+    # rshm = RunSpiderHanMan(yuming,prenum,range_num_down,range_num_up)
+    # rshm.run()
+    hm_current_chapter="第12话"
+    hm_chapter_num_list = []
+    for i in hm_current_chapter:
+        if i in "0123456789":
+            hm_chapter_num_list.append(i)
+            print(i)
+    print(hm_chapter_num_list)
+    hm_chapter_num_str = "".join(hm_chapter_num_list)
+    print(int(hm_chapter_num_str))
+
+
+
 
 
 

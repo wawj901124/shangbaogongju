@@ -76,7 +76,7 @@ class SpiderHMBook(models.Model):
     def all_chapter(self):
         from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
         html_all = ""
-        chapter_list = self.spiderhmchapterdata_set.all().order_by("splider_title")
+        chapter_list = self.spiderhmchapterdata_set.all().order_by("chapter_num")
         for chapter_one in  chapter_list:
             html_chapter_one = "<span>{}</span><br/>".format(chapter_one.splider_title)
             html_all = "%s%s" % (html_all, html_chapter_one)
@@ -104,6 +104,7 @@ class SpiderHMChapterData(models.Model):
     spiderhmbook = models.ForeignKey(SpiderHMBook,null=True, blank=True, verbose_name=u"书目", on_delete=models.PROTECT)
     splider_url = models.CharField(max_length=1500, default="",null=True, blank=True,verbose_name=u"爬取数据URL")  #unique=True,表示设置此字段为主键，唯一
     splider_title = models.CharField(max_length=1000, default="爬取漫画数据",null=True, blank=True, verbose_name=u"数据标题")
+    chapter_num = models.IntegerField(null=True, blank=True,verbose_name=u"章节数")
     # img_height = models.CharField(max_length=100, default=75,null=True, blank=True, verbose_name=u"封面图高度")
     # img_width = models.CharField(max_length=100, default=75, null=True, blank=True,verbose_name=u"封面图宽度")
     # back_front_cover_img = models.ImageField(upload_to="" , null=True, blank=True,verbose_name=u"补传封面图片", height_field='img_height',width_field='img_width',max_length=2000)
