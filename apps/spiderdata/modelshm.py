@@ -72,7 +72,24 @@ class SpiderHMBook(models.Model):
         # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
 
     front_cover_img_data.short_description = u"封面图片"   #为go_to函数名个名字
+    # #显示全部图片加载太慢
+    # def all_chapter(self):
+    #     from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+    #     html_all = ""
+    #     chapter_list = self.spiderhmchapterdata_set.all().order_by("chapter_num")
+    #     for chapter_one in  chapter_list:
+    #         html_chapter_one = "<span>{}</span><br/>".format(chapter_one.splider_title)
+    #         html_all = "%s%s" % (html_all, html_chapter_one)
+    #         chapter_image_list = chapter_one.spiderhmchapterimage_set.all().order_by("chapter_image_num")
+    #         for chapter_image_one in chapter_image_list:
+    #             html_chapter_image_one = "<a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a><br/>".format(
+    #                 DJANGO_SERVER_YUMING,chapter_image_one.content_img, DJANGO_SERVER_YUMING,chapter_image_one.content_img
+    #             )
+    #             html_all = "%s%s" % (html_all, html_chapter_image_one)
+    #
+    #     return mark_safe(html_all)
 
+    #此处只显示章节
     def all_chapter(self):
         from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
         html_all = ""
@@ -80,12 +97,12 @@ class SpiderHMBook(models.Model):
         for chapter_one in  chapter_list:
             html_chapter_one = "<span>{}</span><br/>".format(chapter_one.splider_title)
             html_all = "%s%s" % (html_all, html_chapter_one)
-            chapter_image_list = chapter_one.spiderhmchapterimage_set.all().order_by("chapter_image_num")
-            for chapter_image_one in chapter_image_list:
-                html_chapter_image_one = "<a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a><br/>".format(
-                    DJANGO_SERVER_YUMING,chapter_image_one.content_img, DJANGO_SERVER_YUMING,chapter_image_one.content_img
-                )
-                html_all = "%s%s" % (html_all, html_chapter_image_one)
+            # chapter_image_list = chapter_one.spiderhmchapterimage_set.all().order_by("chapter_image_num")
+            # for chapter_image_one in chapter_image_list:
+            #     html_chapter_image_one = "<a href='{}/media/{}'> <img src='{}/media/{}' style='width:75px;height:75px;'/></a><br/>".format(
+            #         DJANGO_SERVER_YUMING,chapter_image_one.content_img, DJANGO_SERVER_YUMING,chapter_image_one.content_img
+            #     )
+            #     html_all = "%s%s" % (html_all, html_chapter_image_one)
 
         return mark_safe(html_all)
 
