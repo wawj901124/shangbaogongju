@@ -196,3 +196,7 @@
 {% block box2_a %}
     <a href='{{ django_server_yuming }}/spiderdata/spiderhmbook/'>返回数据列表页</a>
 {% endblock %}
+
+{% block box2_button %}
+    <a href='{% url 'spiderdata:spider_hm_chapter_data_id' nextspiderhmchapterdata.id %}'>下一章</a>
+{% endblock %}
