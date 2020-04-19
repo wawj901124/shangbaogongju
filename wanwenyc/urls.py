@@ -34,4 +34,7 @@ urlpatterns = [
 
     # 配置批量替换场景url,namespace指明命名空间，用命名空间做限定
     path('testupdatadb/', include('testupdatadb.urls', namespace='testupdatadb')),
+
+    # 配置爬取数据场景url,namespace指明命名空间，用命名空间做限定
+    path('spiderdata/', include('spiderdata.urls', namespace='spiderdata')),
 ]

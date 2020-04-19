@@ -95,7 +95,8 @@ class SpiderHMBook(models.Model):
         html_all = ""
         chapter_list = self.spiderhmchapterdata_set.all().order_by("chapter_num")
         for chapter_one in  chapter_list:
-            html_chapter_one = "<span>{}</span><br/>".format(chapter_one.splider_title)
+            html_chapter_one = "<a href='{}/spiderdata/spiderhmchapterdata/{}/'><span>{}</span></a><br/>".format(
+                DJANGO_SERVER_YUMING,chapter_one.id,chapter_one.splider_title)
             html_all = "%s%s" % (html_all, html_chapter_one)
             # chapter_image_list = chapter_one.spiderhmchapterimage_set.all().order_by("chapter_image_num")
             # for chapter_image_one in chapter_image_list:
