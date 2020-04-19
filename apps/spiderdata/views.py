@@ -31,17 +31,27 @@ class SpiderHMChapterImageView(View):  # 继承View
             print("chapter_num_list:")
             print(chapter_num_list)
             current_chapter_num_index = chapter_num_list.index(current_chapter_num)
+            print("current_chapter_num_index:")
+            print(current_chapter_num_index)
             chapter_num_list_len = len(chapter_num_list)
             if current_chapter_num_index == chapter_num_list_len-1:
                 next_chapter_num_index = current_chapter_num_index
             else:
                 next_chapter_num_index = current_chapter_num_index+1
+            print("next_chapter_num_index:")
+            print(next_chapter_num_index)
             next_chapter_num = chapter_num_list[next_chapter_num_index]
-            next_spiderhmchapterdata = SpiderHMChapterData.objects.get(chapter_num=next_chapter_num)
+            next_chapter_num_int = int(next_chapter_num)
+            print("next_chapter_num_int")
+            print(next_chapter_num_int)
+            for i in spiderhmchapterdata_list:
+                if next_chapter_num_int == i.chapter_num:
+                    next_spiderhmchapterdata=i
+                    break
 
             return render(request, "spiderhmchapterimage/SpiderHMChapterImage.html",
                           {"spiderhmchapterdata":  spiderhmchapterdata,
-                           "nextspiderhmchapterdata":next_spiderhmchapterdata,
+                           "nextspiderhmchapterdata": next_spiderhmchapterdata,
                            "spiderhmchapterimage_list":  spiderhmchapterimage_list,
                            "django_server_yuming": DJANGO_SERVER_YUMING,
                            "is_withRelevance": is_with_relevance,
