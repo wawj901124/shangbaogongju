@@ -37,4 +37,7 @@ urlpatterns = [
 
     # 配置爬取数据场景url,namespace指明命名空间，用命名空间做限定
     path('spiderdata/', include('spiderdata.urls', namespace='spiderdata')),
+
+    # 配置爬取数据场景url,namespace指明命名空间，用命名空间做限定
+    path('shucaiyidate/', include('shucaiyidate.urls', namespace='shucaiyidate')),
 ]

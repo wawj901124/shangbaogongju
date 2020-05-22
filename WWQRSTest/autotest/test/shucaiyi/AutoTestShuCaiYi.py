@@ -24,6 +24,8 @@ from WWTest.autotest.config.wanwei.depend.radioAndReelectionLabel import RadioAn
     radioandreelectionlabel
 from WWTest.autotest.config.wanwei.depend.iframeBodyInputText import iframebodyinputtext
 
+from WWQRSTest.util.autoModbus.autoModbus import AutoModbus
+
 
 class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
@@ -48,157 +50,165 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
         pass
 
     def setUp(self):  # 每条用例执行测试之前都要执行此方法
-        self.activebrowser = ActiveBrowser()  # 实例化
-        # lpf.login(self.activebrowser)
-        lpf.loginwithcookiesauto(self.activebrowser)
+        # self.activebrowser = ActiveBrowser()  # 实例化
+        # # lpf.login(self.activebrowser)
+        # lpf.loginwithcookiesauto(self.activebrowser)
         pass
 
     def tearDown(self):  # 每条用例执行测试之后都要执行此方法
-        self.activebrowser.closeBrowse()
+        # self.activebrowser.closeBrowse()
         pass
 
-    def definedepend(self, dependid):
-        clickandbackdepend.clickandbackdepend(self.activebrowser, dependid)
+    def testdefineshucaiyi(self,telnet_host_ip ,
+                                telnet_username ,
+                                telnet_password ,
+                                xieyi_bin_dir ,
+                                xieyi_name ,
+                                xieyi_test_port  ,
+                                xieyi_db ,
+                                xieyi_db_remote_path ,
+                                xieyi_db_table_name ,
+                                com_port ,
+                                com_baudrate ,
+                                com_bytesize ,
+                                com_parity ,
+                                com_stopbits ,
+                                com_send_date ,
+                                com_expect_date ,
+                                xieyi_jiexi_expect_result_list ,
+                                tcp_server_ip ,
+                                tcp_server_port ,
+                                is_ftp_upload ,
+                                is_close_xieyi ,
+                                is_restart_xieyi ,
+                                is_com_recive_and_send ,
+                                is_ftp_down_xieyi_file ,
+                                is_assert_file_success ,
+                                is_ftp_get_remote_db_file ,
+                                is_assert_real_db_success ,
+                                is_tcp_server_receive ,
+                                is_assert_tcp_server_receive_success):
 
-    # 定义新增函数
-    def definenewadd(self, num, depend_click_case_id,
-                     is_cancel,
-                     addnew_id,
-                     confirm_ele_find, confirm_ele_find_value,
-                     click_confirm_delay_time,
-                     cancel_ele_find, cancel_ele_find_value,
-                     is_submit_success,
-                     is_signel_page,
-                     page_number_xpath,
-                     result_table_ele_find, result_table_ele_find_value,
-                     table_colnum_counts
-                     ):
-
-        # 如果有依赖ID，则执行依赖函数，达到执行当前用例的前提条件
-        if depend_click_case_id != None:
-            print("depend_click_case_id：%s" % depend_click_case_id)
-            self.definedepend(depend_click_case_id)
-            self.activebrowser.outPutMyLog("依赖函数执行完毕！！！")
-
-        self.activebrowser.outPutMyLog("开始正式执行测试用例")
-
-        # 文本输入框添加内容
-        inputtext_list = inputtapinputtext.inputtapinputtext(self.activebrowser, addnew_id)
-
-        # 文件输入框添加内容
-        inputtapinputfile.inputtapinputfile(self.activebrowser, addnew_id)
-
-        # 选项框添加内容
-        selecttapselectoption.selecttapselectoption(self.activebrowser, addnew_id)
-
-        # 单选项与复选项添加内容
-        radioandreelectionlabel.radioandreelectionlabel(self.activebrowser, addnew_id)
-
-        # 日期添加内容
-        inputtapinputdatetime.inputtapinputdatetime(self.activebrowser, addnew_id)
-
-        #富文本添加内容
-        iframe_inputtext_list = iframebodyinputtext.iframebodyinputtext(self.activebrowser, addnew_id)
-
-        # 判断是否点击取消按钮
-        if is_cancel:
-            # 如果点击取消按钮，则点击取消按钮
-            self.activebrowser.findEleAndClick(num, cancel_ele_find, cancel_ele_find_value)
-            self.activebrowser.outPutMyLog("点击【取消】按钮")
-
-            if is_signel_page:
-                self.activebrowser.outPutMyLog("页面不需要分页")
-            else:
-                son_ele_s = self.activebrowser.getFatherSonElesList("xpath", page_number_xpath, "tag_name", "li")
-                son_count = len(son_ele_s)
-                son_last_xpath = "%s/%s[%s]" % (page_number_xpath, "li", son_count)
-                self.activebrowser.findEleAndClick(num, "xpath", son_last_xpath)
-
-            inputtext_list_len = len(inputtext_list)
-            for i in range(0, inputtext_list_len):
-                reault_check = self.activebrowser. \
-                    findEleAndCheckTableWithColnumCounts(num, result_table_ele_find,
-                                                         result_table_ele_find_value, inputtext_list[i],
-                                                         table_colnum_counts)
-                self.assertFalse(reault_check)
-
-            asserttest_list_all = asserttiptext.assertiptext(self.activebrowser, addnew_id)
-            asserttest_list_all_long = len(asserttest_list_all)
-            if asserttest_list_all_long == 0 and inputtext_list_len == 0:
-                self.activebrowser.outPutErrorMyLog("【异常提示】：本用例为验证点击取消按钮的用例，"
-                                                    "但没有添加要输入的测试数据或者验证文本信息，"
-                                                    "请检查用例测试数据，将测试数据补充完整！")
-                self.assertTrue(False)
+        xieyi_txt_file_name = '%s_%s.txt'%(xieyi_name,xieyi_test_port)
 
 
-        else:
-            # 否则点击确定按钮
-            # self.activebrowser.findEleAndClick(num,confirm_ele_find,confirm_ele_find_value)
-            self.activebrowser.findEleAndClickConfigDelayTime(num, confirm_ele_find, confirm_ele_find_value,
-                                                              click_confirm_delay_time)
-            self.activebrowser.outPutMyLog("点击【确定】按钮")
-            self.activebrowser.getPageSource()
+        am = AutoModbus(
+            telnet_host_ip=None,
+            telnet_username=None,
+            telnet_password=None,
+            telnet_clicent_object=None,
+            ftp_client_object=None,
+            xieyi_name=None,
+            xieyi_test_port=None,
+            xieyi_txt_file_name=None,
+            xieyi_db=None,
+            xieyi_db_remote_path=None,
+            xieyi_db_table_name=None,
+            com_port=None,
+            com_baudrate=None,
+            com_bytesize=None,
+            com_parity=None,
+            com_stopbits=None,
+            com_timeout=None,
+            com_send_date_yinzi_num=None,
+            com_send_date_yinzi_num_is_auto_make=None,
+            com_send_date_yinzi_hex_str_is_auto_make=None,
+            com_send_date_yinzi_hex_str_list=None,
+            com_send_date=None,
+            com_expect_date=None,
+            com_expect_date_bytes=None,
+            com_send_date_list=None,
+            com_send_date_bytes=None,
+            com_send_date_list_bytes=None,
+            xieyi_jiexi_expect_result=None,
+            xieyi_jiexi_expect_result_list=None,
+            xieyi_cfg_protocol=None,
+            xieyi_cfg_idNum=None,
+            xieyi_cfg_startAddress=None,
+            xieyi_cfg_functionCode=None,
+            xieyi_cfg_registerNum=None,
+            xieyi_cfg_DataLen=None,
+            xieyi_cfg_dataLen=None,
+            xieyi_cfg_dataType=None,
+            tcp_server_ip=None,
+            tcp_server_port=None,
+            tcp_server_file_name=None,
+            tcp_server_object=None,
+            is_ftp_get_modbus_cfg=None,
+            is_check_modbus_xieyi_cfg=None,
+            is_get_modbus_cfg_main=None,
+            is_set_com_send_date=None,
+            is_write_device=None,
+            write_device_reatart_time=None,
+            is_telnet_client_close_default_start_xieyi=None,
+            is_telnet_client_rstart_xieyi=None,
+            is_com_recive_and_send=None,
+            is_ftp_get_file=None,
+            is_assert_file_success=None,
+            is_ftp_get_remote_db_file=None,
+            is_assert_real_db_success=None,
+            is_tcp_server_receive=None,
+            is_assert_tcp_server_receive_success=None
+        )
+        ftp_up_load_file_list = [['/usr/app_install/collect/bin/text.txt','D:/pycharmproject/shangbaogongju/WWQRSTest/util/text.txt'],
+                                 ['/usr/app_install/collect/bin/result1.txt','D:/pycharmproject/shangbaogongju/WWQRSTest/util/result1.txt']]
+        #1.是否上传配置文件
+        #1-1.上传配置文件之前先修改远程文件名称为备份文件名
+        #1-2.上传配置文件
+        #上传文件进行可执行命令
+        #先分离远程文件目录，获取到目录和文件
+        if is_ftp_upload:   #如果需要上传文件
+            am.run_ftp_up_load_file_list(ftp_up_load_file_list)
 
-            if not is_submit_success:  # 如果不是添加成功，需要验证某些文本信息
-                self.activebrowser.outPutMyLog("提交不成功时的提示信息验证")
-                asserttest_list_all = asserttiptext.assertiptext(self.activebrowser, addnew_id)
-                asserttest_list_all_long = len(asserttest_list_all)
-                if asserttest_list_all_long != 0:
-                    for i in range(0, asserttest_list_all_long):
-                        self.assertEqual(asserttest_list_all[i][0], asserttest_list_all[i][1])
-                else:
-                    self.activebrowser.outPutErrorMyLog("【异常提示】：本用例为验证提示信息用例，"
-                                                        "但是却没有添加相应的提示信息测试数据"
-                                                        "请检查用例测试数据，将测试数据补充完整！")
-                    self.assertTrue(False)
-            else:
-                self.activebrowser.outPutMyLog("添加成功后的添加数据的验证")
+        #如果进行web端操作
 
-                # 验证弹框或文本信息
-                asserttest_list_all = asserttiptext.assertiptext(self.activebrowser, addnew_id)
-                asserttest_list_all_long = len(asserttest_list_all)
-                if asserttest_list_all_long != 0:
-                    for i in range(0, asserttest_list_all_long):
-                        self.assertEqual(asserttest_list_all[i][0], asserttest_list_all[i][1])
+        #如果关闭和重启协议
+        #是否关闭默认启动的协议，一定要关闭吗  #杀死科内特
+        if is_close_xieyi:
+            mycommad_list = ['stop_guard','ps aux | grep %s | xargs kill -9 &>/dev/null &' % xieyi_name]
+            am.telnet_client_close_default_start_xieyi(mycommad_list)
+
+        #重启协议
+        if is_restart_xieyi:
+            mycommad_list = ['cd /usr/app_install/collect/bin',
+                             'rm -rf %s'% xieyi_txt_file_name,
+                             './%s --id=com%s_1 --log_level=develop &>%s &'% (xieyi_name,xieyi_test_port,xieyi_txt_file_name)]
+            am.telnet_client_rstart_xieyi(mycommad_list)
+
+        #是否发送数据
+        if is_com_recive_and_send:
+            send_data_list = []
+            am.com_recive_and_send()
+
+        #是否ftp下载获取解析文件
+        if is_ftp_down_xieyi_file:
+            xieyi_remote_file = xieyi_bin_dir+'/'+xieyi_txt_file_name
+            xieyi_local_file = xieyi_txt_file_name
+            am.run_ftp_down(remote_file=xieyi_remote_file, local_file=xieyi_local_file)
+
+        #是否对在协议文件中找到相应的解析内容
+        if is_assert_file_success:
+            am.assert_file_success()
+
+        #是否ftp下载实时数据
+        if is_ftp_get_remote_db_file:
+            am.ftp_get_remote_db_file()
+
+        #是否验证实时数据
+        if is_assert_real_db_success:
+            am.assert_real_db_success()
+
+        #是否上报平台
+        if is_tcp_server_receive:
+            am.tcp_server_receive()
+
+        if is_assert_tcp_server_receive_success:
+            am.assert_tcp_server_receive_success()
 
 
-                # 是否单页面判断
-                if is_signel_page:
-                    self.activebrowser.outPutMyLog("页面不需要分页")
-                else:
-                    son_ele_s = self.activebrowser.getFatherSonElesList("xpath", page_number_xpath, "tag_name", "li")
-                    son_count = len(son_ele_s)
-                    son_last_xpath = "%s/%s[%s]" % (page_number_xpath, "li", son_count)
-                    self.activebrowser.findEleAndClick(num, "xpath", son_last_xpath)
-                # 验证表格内容(验证input框输入的内容在表格中)
-                inputtext_list_len = len(inputtext_list)
-                iframe_inputtext_list_len = len(iframe_inputtext_list)
-                if inputtext_list_len != 0:
-                    for i in range(0, inputtext_list_len):
-                        reault_check = self.activebrowser. \
-                            findEleAndCheckTableWithColnumCounts(num, result_table_ele_find,
-                                                                 result_table_ele_find_value, inputtext_list[i],
-                                                                 table_colnum_counts)
-                        self.assertTrue(reault_check)
-                #验证表格内容（验证富文本输入的内容在表格中）
-                if iframe_inputtext_list_len != 0:
-                    for i in range(0, iframe_inputtext_list_len):
-                        reault_check = self.activebrowser. \
-                            findEleAndCheckTableWithColnumCounts(num, result_table_ele_find,
-                                                                 result_table_ele_find_value, iframe_inputtext_list[i],
-                                                                 table_colnum_counts)
-                        self.assertTrue(reault_check)
 
-                # 如果没有断言文本或者断言添加的内容，则
-                if asserttest_list_all_long == 0 and inputtext_list_len == 0 and iframe_inputtext_list_len ==0:
-                    self.activebrowser.outPutErrorMyLog("【异常提示】：本用例为验证添加成功后，"
-                                                        "是否存在添加的数据或弹框提示或文本验证，但实际没有添加要验证的数据"
-                                                        "请检查用例测试数据，将测试数据补充完整！")
-                    self.assertTrue(False)
 
-    # def test001(self):
-    #     print("第一条测试用例")
-    #     self.definedepend(self.dependid)
+
 
     @staticmethod  # 根据不同的参数生成测试用例
     def getTestFunc(num, depend_click_case_id,
@@ -230,25 +240,25 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
 
 def __generateTestCases():
-    from testdatas.models import NewAddAndCheck
+    from shucaiyidate.models import XieyiConfigDate
 
-    newaddandchecktestcase_all = NewAddAndCheck.objects.filter(id=163).order_by('id')
+    xieyiconfigdatetestcase_all = XieyiConfigDate.objects.filter(id=1).order_by('id')
 
-    for newaddandchecktestcase in newaddandchecktestcase_all:
-        forcount = newaddandchecktestcase.case_counts
+    for xieyiconfigdatetestcase in xieyiconfigdatetestcase_all:
+        forcount = xieyiconfigdatetestcase.case_counts
         starttime = GetTimeStr().getTimeStr()
-        if len(str(newaddandchecktestcase.id)) == 1:
-            newaddandchecktestcaseid = '0000%s' % newaddandchecktestcase.id
-        elif len(str(newaddandchecktestcase.id)) == 2:
-            newaddandchecktestcaseid = '000%s' % newaddandchecktestcase.id
-        elif len(str(newaddandchecktestcase.id)) == 3:
-            newaddandchecktestcaseid = '00%s' % newaddandchecktestcase.id
-        elif len(str(newaddandchecktestcase.id)) == 4:
-            newaddandchecktestcaseid = '0%s' % newaddandchecktestcase.id
-        elif len(str(newaddandchecktestcase.id)) == 5:
-            newaddandchecktestcaseid = '%s' % newaddandchecktestcase.id
+        if len(str(xieyiconfigdatetestcase.id)) == 1:
+            xieyiconfigdatetestcaseid = '0000%s' % xieyiconfigdatetestcase.id
+        elif len(str(xieyiconfigdatetestcase.id)) == 2:
+            xieyiconfigdatetestcaseid = '000%s' % xieyiconfigdatetestcase.id
+        elif len(str(xieyiconfigdatetestcase.id)) == 3:
+            xieyiconfigdatetestcaseid = '00%s' % xieyiconfigdatetestcase.id
+        elif len(str(xieyiconfigdatetestcase.id)) == 4:
+            xieyiconfigdatetestcaseid = '0%s' % xieyiconfigdatetestcase.id
+        elif len(str(xieyiconfigdatetestcase.id)) == 5:
+            xieyiconfigdatetestcaseid = '%s' % xieyiconfigdatetestcase.id
         else:
-            newaddandchecktestcaseid = 'Id已经超过5位数，请重新定义'
+            xieyiconfigdatetestcaseid = 'Id已经超过5位数，请重新定义'
 
         for i in range(1, forcount + 1):  # 循环，从1开始
             if len(str(i)) == 1:
@@ -265,34 +275,36 @@ def __generateTestCases():
                 forcount_i = 'Id已经超过5位数，请重新定义'
 
             args = []
-            args.append(newaddandchecktestcaseid)
+            args.append(xieyiconfigdatetestcaseid)
             # args.append(i)
-            args.append(newaddandchecktestcase.depend_click_case_id)
-            args.append(newaddandchecktestcase.is_click_cancel)
-            args.append(newaddandchecktestcase.id)
-            args.append(newaddandchecktestcase.confirm_ele_find)
-            args.append(newaddandchecktestcase.confirm_ele_find_value)
-            args.append(newaddandchecktestcase.click_confirm_delay_time)
-            args.append(newaddandchecktestcase.cancel_ele_find)
-            args.append(newaddandchecktestcase.cancel_ele_find_value)
-            args.append(newaddandchecktestcase.is_submit_success)
-            args.append(newaddandchecktestcase.is_signel_page)
-            args.append(newaddandchecktestcase.page_number_xpath)
-            args.append(newaddandchecktestcase.result_table_ele_find)
-            args.append(newaddandchecktestcase.result_table_ele_find_value)
-            args.append(newaddandchecktestcase.table_colnum_counts)
+            args.append(xieyiconfigdatetestcase.depend_click_case_id)
+            args.append(xieyiconfigdatetestcase.is_click_cancel)
+            args.append(xieyiconfigdatetestcase.id)
+            args.append(xieyiconfigdatetestcase.confirm_ele_find)
+            args.append(xieyiconfigdatetestcase.confirm_ele_find_value)
+            args.append(xieyiconfigdatetestcase.click_confirm_delay_time)
+            args.append(xieyiconfigdatetestcase.cancel_ele_find)
+            args.append(xieyiconfigdatetestcase.cancel_ele_find_value)
+            args.append(xieyiconfigdatetestcase.is_submit_success)
+            args.append(xieyiconfigdatetestcase.is_signel_page)
+            args.append(xieyiconfigdatetestcase.page_number_xpath)
+            args.append(xieyiconfigdatetestcase.result_table_ele_find)
+            args.append(xieyiconfigdatetestcase.result_table_ele_find_value)
+            args.append(xieyiconfigdatetestcase.table_colnum_counts)
 
             setattr(TestShuCaiYiClass,
                     'test_func_%s_%s_%s' % (
-                    newaddandchecktestcaseid, newaddandchecktestcase.test_case_title, forcount_i),
+                    xieyiconfigdatetestcaseid, xieyiconfigdatetestcase.test_case_title, forcount_i),
                     TestShuCaiYiClass.getTestFunc(*args))  # 通过setattr自动为TestCase类添加成员方法，方法以“test_func_”开头
 
 
 __generateTestCases()
 
 if __name__ == '__main__':
-    print("hello world")
-    unittest.main()
+    # print("hello world")
+    # unittest.main()
+    ts = TestShuCaiYiClass()
+    ts.testdefineshucaiyi()
 
 
 

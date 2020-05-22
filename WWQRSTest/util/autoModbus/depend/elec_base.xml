@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>	
+	<version>20190622</version>
+	<!--工艺-->
+	<craftList>
+		<!--typeCode:工艺类型-->
+		<craft typeCode="05" typeName="05废水工艺(">
+			<item code="127" name="127碱吸收" />		
+		</craft>
+		<craft typeCode="89" typeName="89废气工艺">
+			<item code="1109" name="1109光阳催化" />		
+		</craft>
+	</craftList>
+	
+	<!--监测指标-->
+	<factorsList>
+		<item code="Ua" name="A相电压" rtdUnit="V" rtdAccuracy="3" />
+		<item code="Ub" name="B相电压" rtdUnit="V" rtdAccuracy="3" />
+		<item code="Uc" name="C相电压" rtdUnit="V" rtdAccuracy="3" />		
+		<item code="Ia" name="A相电流" rtdUnit="A" rtdAccuracy="3" />
+		<item code="Ib" name="B相电流" rtdUnit="A" rtdAccuracy="3" />
+		<item code="Ic" name="C相电流" rtdUnit="A" rtdAccuracy="3" />
+		<item code="Pga" name="A相功率角" rtdUnit="" rtdAccuracy="0" />
+		<item code="Pgb" name="B相功率角" rtdUnit="" rtdAccuracy="0" />
+		<item code="Pgc" name="C相功率角" rtdUnit="" rtdAccuracy="0" />
+		
+		<item code="Pt" name="总有功功率" rtdUnit="kW" rtdAccuracy="3" />
+		<item code="Pa" name="A相有功功率" rtdUnit="kW" rtdAccuracy="3" />
+		<item code="Pb" name="B相有功功率" rtdUnit="kW" rtdAccuracy="3" />
+		<item code="Pc" name="C相有功功率" rtdUnit="kW" rtdAccuracy="3" />
+		<item code="Qt" name="总无功功率" rtdUnit="kW" rtdAccuracy="3" />
+		<item code="Qa" name="A相无功功率" rtdUnit="kW" rtdAccuracy="3" />
+		<item code="Qb" name="B相无功功率" rtdUnit="kW" rtdAccuracy="3" />
+		<item code="Qc" name="C相无功功率" rtdUnit="kW" rtdAccuracy="3" />
+		<item code="Pft" name="总功率因数" rtdUnit="" rtdAccuracy="3" />
+		<item code="Pfa" name="A相功率因数" rtdUnit="" rtdAccuracy="3" />
+		<item code="Pfb" name="B相功率因数" rtdUnit="" rtdAccuracy="3" />
+		<item code="Pfc" name="C相功率因数" rtdUnit="" rtdAccuracy="3" />
+		
+		<item code="Et" name="总用电量" rtdUnit="kWh" rtdAccuracy="3" />
+		<item code="Epn" name="正向有功电能" rtdUnit="kWh" rtdAccuracy="3" />
+		<item code="Epf" name="反向有功电能" rtdUnit="kWh" rtdAccuracy="3" />
+		<item code="Eqn" name="正向无功电能" rtdUnit="kvarh" rtdAccuracy="3" />
+		<item code="Eqf" name="反向无功电能" rtdUnit="kvarh" rtdAccuracy="3" />
+		
+		<item code="Ept" name="总有功电能" rtdUnit="kWh" rtdAccuracy="3" />
+		<item code="Eqt" name="总无功电能" rtdUnit="kvarh" rtdAccuracy="3" />
+		<item code="RS" name="设备运行状态" rtdUnit="" rtdAccuracy="0" />
+		
+	</factorsList>	
+</root>

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}
+    tagcontent
+{% endblock %}
+{% block action_url %}
+    {% url 'shucaiyidate:tag_content_id' tagcontent.id %}
+{% endblock %}
+{% block box_h1_title %}
+    添加数据
+{% endblock %}
+{% block table_data %}
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <label>项目名称:</label>
+            </td>
+            <td>
+                <input id="config_project" name="config_project" type="text" value="{{ tagcontent.config_project }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>节点名字:</label>
+            </td>
+            <td>
+                <input id="tag_name" name="tag_name" type="text" value="{{ tagcontent.tag_name }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否根节点:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_root" name="is_root"  value="true"  {% if tagcontent.is_root == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_root" name="is_root"  value="false" {% if tagcontent.is_root == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>节点层数:</label>
+            </td>
+            <td>
+                <input id="tag_level" name="tag_level" type="text" value="{{ tagcontent.tag_level }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>节点文本内容:</label>
+            </td>
+            <td>
+                <input id="tag_text" name="tag_text" type="text" value="{{ tagcontent.tag_text }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>依赖的父节点:</label>
+            </td>
+            <td>
+                <select id="tag_father" name="tag_father">
+                    <option value=""
+                            {% if tagcontent.tag_father_id == None %}
+                                selected="selected"
+                            {% endif %}>
+                            ---请选择
+                    </option>
+                    {%for cab in depend_all%}
+                        <option
+                                value={{cab.id}}
+                                        {% if cab.id == tagcontent.tag_father_id%}
+                                            selected="selected"
+                                        {% endif %}>
+                            [{{ cab.config_project }}]-[{{ cab.tag_name }}]-[{{ cab.tag_level }}]_{{cab.tag_text }}]
+                        </option>
+                    {%endfor%}
+
+                </select>
+
+            </td>
+        </tr>
+
+{#        <tr>#}
+{#            <td>#}
+{#                <label>节点属性:</label>#}
+{#            </td>#}
+{#            <td>#}
+{#                {%for tagattrib_one in depend_tagattrib%}#}
+{#                    <table cellpadding="1" cellspacing="1">#}
+{#                        <tr>#}
+{#                            <td>#}
+{#                                <label>节点属性名字:</label>#}
+{#                            </td>#}
+{#                            <td>#}
+{#                                <input id="tagattrib_{{ forloop.counter }}_tag_value_name" name="tagattrib_{{ forloop.counter }}_tag_value_name" type="text" value="{{ tagattrib_one.tag_value_name }}"/>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                         <tr>#}
+{#                            <td>#}
+{#                                <label>节点属性值:</label>#}
+{#                            </td>#}
+{#                            <td>#}
+{#                                <input id="tagattrib_{{ forloop.counter }}_tag_value_name" name="tagattrib_{{ forloop.counter }}_tag_value_name" type="text" value="{{ tagattrib_one.tag_value_name }}"/>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                    </table>#}
+{#                {% endfor %}#}
+{#            </td>#}
+{#        </tr>#}
+
+
+        <tr>
+            <td>
+                <label>是否附带复制:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=1 {% if is_withRelevance == 1 %} checked="checked"{% endif %}>附带
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=0 {% if is_withRelevance == 0 %} checked="checked"{% endif %}>不附带
+            </td>
+        </tr>
+
+
+    </table>
+{% endblock %}
+{% block box2_a %}
+    <a href='{{ django_server_yuming }}/shucaiyidate/tagcontent/'>返回数据列表页</a>
+{% endblock %}
