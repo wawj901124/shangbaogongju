@@ -13,7 +13,7 @@ class MyLogs(object):
         self.context = context
         self.logger = self.createLogger()
         self.log_name = self.createLogFile()
-        self.consle = self.openConsoleOutputLog()    #打开控制台日志输出
+        # self.consle = self.openConsoleOutputLog()    #打开控制台日志输出
         self.file_handle = self.openFileOutputLog()  #打开文件日志输出
 
     def createLogger(self):
@@ -90,9 +90,9 @@ class MyLogs(object):
         self.logger.error(self.context)  # 打印日志
 
 
-    def closeConsoleOutputLog(self): #关闭控制台日志输出
-        self.consle.close()  # 关闭流
-        self.logger.removeHandler(self.consle)  # 将日志移出流
+    # def closeConsoleOutputLog(self): #关闭控制台日志输出
+    #     self.consle.close()  # 关闭流
+    #     self.logger.removeHandler(self.consle)  # 将日志移出流
 
     def closeopenFileOutputLog(self):#关闭文件日志输出
         # 关闭文件输出日志
@@ -101,13 +101,13 @@ class MyLogs(object):
 
     def runMyLog(self):
         self.printLog()
-        self.closeConsoleOutputLog()
+        # self.closeConsoleOutputLog()
         self.closeopenFileOutputLog()
         lock.release()  # 释放锁，归回锁，其他线程可以拿去用了
 
     def runErrorLog(self):
         self.printErrorLog()
-        self.closeConsoleOutputLog()
+        # self.closeConsoleOutputLog()
         self.closeopenFileOutputLog()
         lock.release()  # 释放锁，归回锁，其他线程可以拿去用了
 

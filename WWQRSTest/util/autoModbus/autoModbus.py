@@ -1003,7 +1003,7 @@ class AutoModbus(object):
         local_file = self.xieyi_txt_file_name
         with open(local_file, "r", encoding='utf-8') as f:
             result = f.read()
-            self.outPutMyLog("获取的内容：")
+            self.outPutMyLog("获取到文件【%s】中的内容为：" % str(local_file))
             self.outPutMyLog(result)
         expect_result_list = self.xieyi_jiexi_expect_result_list
         for expect_result in expect_result_list:

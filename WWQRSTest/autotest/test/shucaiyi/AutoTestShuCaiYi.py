@@ -208,6 +208,12 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
         if is_assert_tcp_server_receive_success:
             am.assert_tcp_server_receive_success()
 
+        am.outPutMyLog("="*50)
+        am.outPutMyLog("接收的数据：%s"% str(com_expect_date))
+        am.outPutMyLog("发送的数据：%s" % str(com_send_hex_list))
+        am.outPutMyLog("预期的解析结果：%s" %str(xieyi_jiexi_expect_result_list))
+        am.outPutMyLog("=" * 50)
+
 
 
     @staticmethod  # 根据不同的参数生成测试用例
@@ -357,7 +363,7 @@ if __name__ == '__main__':
     # print("hello world")
     # unittest.main()
     ts = TestShuCaiYiClass()
-    ts.testdefineshucaiyi()
+    ts.defineshucaiyi()
 
 
 
