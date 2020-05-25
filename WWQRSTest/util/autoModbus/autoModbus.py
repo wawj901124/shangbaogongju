@@ -11,6 +11,7 @@ from WWQRSTest.util.autoModbus.depend.modbusCrc import ModbusCrc
 from WWQRSTest.util.autoModbus.depend.tcpServerReceive import TcpServerReceive
 from WWQRSTest.util.autoModbus.depend.handleTxt import HandleTxt
 from WWQRSTest.util.autoModbus.depend.mysqlite import MySqlite
+from WWQRSTest.util.myLogs import MyLogs
 
 
 
@@ -59,6 +60,7 @@ class AutoModbus(object):
         self.com_bytesize = com_bytesize  # 设置数据位
         self.com_parity = com_parity  # 设置校验位  N(无校验)、O（奇校验）、E（偶校验）0、1
         self.com_stopbits = com_stopbits  # 设置停止位
+        self.com_timeout = 2   #超时设置
 
         self.com_send_date = com_send_date
         self.com_expect_date = com_expect_date
@@ -86,15 +88,6 @@ class AutoModbus(object):
         self.ftp_client_object = None
 
 
-        # self.xieyi_db='rtd.db'
-        # self.xieyi_db_remote_path = '/tmp/database.d/%s'% self.xieyi_db
-        # self.xieyi_db_table_name = 'tb_rtd'
-        # self.com_port = 'COM3'   #设置端口号
-        # self.com_baudrate = 9600   # 设置波特率
-        # self.com_bytesize = 8  # 设置数据位
-        # self.com_parity = "N"  # 设置校验位  N(无校验)、O（奇校验）、E（偶校验）0、1
-        # self.com_stopbits = 1  # 设置停止位
-        self.com_timeout = 2   #超时设置
         self.com_send_date_yinzi_num = '1'  #回复数据中因子个数
         self.com_send_date_yinzi_num_is_auto_make = False # 回复数据中因子个数是否根据配置文件自动生成
         self.com_send_date_yinzi_hex_str_is_auto_make = False # 回复数据中因子16进制字符串是否自动生成
@@ -141,9 +134,9 @@ class AutoModbus(object):
 
     #延时函数
     def time_delay(self,deletime):
-        print("即将等待%s秒" % str(deletime))
+        self.outPutMyLog("即将等待%s秒" % str(deletime))
         time.sleep(int(deletime))
-        print("等待%s秒结束" % str(deletime))
+        self.outPutMyLog("等待%s秒结束" % str(deletime))
 
     def get_time_str(self):
         now_time = datetime.datetime.now()
@@ -152,6 +145,15 @@ class AutoModbus(object):
         # self.outPutMyLog("当前时间：%s"% now_time)
         # self.outPutMyLog("时间串：%s"% timestr)
         return timestr
+
+    def outPutMyLog(self,context):
+        mylog = MyLogs(context)
+        mylog.runMyLog()
+
+
+    def outPutErrorMyLog(self,context):
+        mylog = MyLogs(context)
+        mylog.runErrorLog()
 
     #ftp连接
     def ftp_connnect(self):
@@ -176,7 +178,7 @@ class AutoModbus(object):
         #再下载新文件
         self.ftp_client_object.ftp_download(remote_file, local_file)
         self.time_delay(3)
-        # print(self.ftp_client_object)
+        # self.outPutMyLog(self.ftp_client_object)
 
     #ftp上传文件
     def run_ftp_up(self,remote_file,local_file):
@@ -196,17 +198,17 @@ class AutoModbus(object):
         flag = False
         ht = HandleTxt(file_name=local_file)
         all_content_list = ht.read_all_content_list()
-        print(all_content_list)
+        self.outPutMyLog(all_content_list)
         for one_content in all_content_list:
             one = one_content.strip("\n")  #去掉换行符
-            print(one)
+            self.outPutMyLog(one)
             if expect_name == one:
                 flag = True
                 break
-            print("***************************")
-            print(one_content)
-            print(flag)
-            print("***************************")
+            self.outPutMyLog("***************************")
+            self.outPutMyLog(one_content)
+            self.outPutMyLog(flag)
+            self.outPutMyLog("***************************")
         return flag
 
     def run_ftp_up_load_file_list(self,ftp_up_load_file_list):
@@ -214,17 +216,17 @@ class AutoModbus(object):
             remote_file_path_one = ftp_up_load_file_list_one[0]
             local_file_path_one = ftp_up_load_file_list_one[1]
             remote_file_path_one_list = remote_file_path_one.split('/')
-            print(remote_file_path_one_list)
+            self.outPutMyLog(remote_file_path_one_list)
             remote_file_path_new_list = remote_file_path_one_list[0:-1]  # 获取除最后一项
-            print(remote_file_path_new_list)
+            self.outPutMyLog(remote_file_path_new_list)
             # 远程目录
             remote_file_path_dir = '/'.join(remote_file_path_new_list)
-            print("远程文件路径：")
-            print(remote_file_path_dir)
+            self.outPutMyLog("远程文件路径：")
+            self.outPutMyLog(remote_file_path_dir)
             # 远程文件
             remote_file_name = remote_file_path_one_list[-1]
-            print("远程文件：")
-            print(remote_file_name)
+            self.outPutMyLog("远程文件：")
+            self.outPutMyLog(remote_file_name)
             ls_result = 'ls_%s_result.txt' % remote_file_name
 
             # 1-1.上传配置文件之前先修改远程文件名称为备份文件名
@@ -235,10 +237,10 @@ class AutoModbus(object):
             mycommad_list.append(mycommad_one)
             mycommad_list.append(mycommad_two)
             mycommad_result_list = self.run_telnet_command_list(mycommad_list)
-            print(mycommad_result_list)
+            self.outPutMyLog(mycommad_result_list)
 
             down_remote_file = remote_file_path_dir + '/' + ls_result
-            print(down_remote_file)
+            self.outPutMyLog(down_remote_file)
             down_local_file = ls_result
             # 将ls文件down下来
             self.run_ftp_down(remote_file=down_remote_file, local_file=down_local_file)
@@ -253,7 +255,7 @@ class AutoModbus(object):
                 mycommad_list.append(mycommad_one)
                 mycommad_list.append(mycommad_two)
                 mycommad_result_list = self.run_telnet_command_list(mycommad_list)
-                print(mycommad_result_list)
+                self.outPutMyLog(mycommad_result_list)
 
             # 上传文件
             self.run_ftp_up(remote_file=remote_file_path_one, local_file=local_file_path_one)
@@ -264,7 +266,7 @@ class AutoModbus(object):
             mycommad_list.append(mycommad_one)
             mycommad_list.append(mycommad_two)
             mycommad_result_list = self.run_telnet_command_list(mycommad_list)
-            print(mycommad_result_list)
+            self.outPutMyLog(mycommad_result_list)
 
 
     #获取modbus.cfg文件，查看是否存在相应的协议配置内容，
@@ -283,7 +285,7 @@ class AutoModbus(object):
         #再下载新文件
         self.ftp_client_object.ftp_download(remote_file, local_file)
         self.time_delay(3)
-        print(self.ftp_client_object)
+        self.outPutMyLog(self.ftp_client_object)
 
     def read_modbus_cfg(self):
         with open('modbus.cfg', "r") as f:
@@ -297,27 +299,27 @@ class AutoModbus(object):
         modbus_cfg_list = self.read_modbus_cfg()
         for one_line in modbus_cfg_list:
             if self.xieyi_name in one_line:
-                print(one_line)
+                self.outPutMyLog(one_line)
                 #解析每一行的内容
                 one_line_list = one_line.split(";")
-                print(one_line_list)
+                self.outPutMyLog(one_line_list)
                 for one_line_list_one in one_line_list:
                     if self.xieyi_name in one_line_list_one:
-                        print(one_line_list_one)
+                        self.outPutMyLog(one_line_list_one)
                         one_line_list_one_list = one_line_list_one.split("=")
-                        print(one_line_list_one_list)
+                        self.outPutMyLog(one_line_list_one_list)
                         for one_line_list_one_list_one in one_line_list_one_list:
                             if self.xieyi_name in one_line_list_one_list_one:
-                                print(one_line_list_one_list_one)
+                                self.outPutMyLog(one_line_list_one_list_one)
                                 if self.xieyi_name == one_line_list_one_list_one:
                                     # 如果modbus.cfg文件中的配置名和需要的协议名字一致，则
                                     #添加改行内容到xieyi_cfg_list数组中
                                     xieyi_cfg_list.append(one_line)
-                                    print("退出one_line_list_one_list循环")
+                                    self.outPutMyLog("退出one_line_list_one_list循环")
                                     break   #退出循环、
-                        print("退出one_line_list循环")
+                        self.outPutMyLog("退出one_line_list循环")
                         break #退出循环
-        print(xieyi_cfg_list)
+        self.outPutMyLog(xieyi_cfg_list)
         return xieyi_cfg_list
 
     #根据
@@ -325,18 +327,18 @@ class AutoModbus(object):
         #传入的registerNum为16进制文本
         registerNum = registerNum
         registerNum_int = int(registerNum, 16)  # 字符串转为16进制整数,其实就是按照16进制，转为整数如'0F'转为15
-        print("16进制整数：")
-        print(registerNum_int)
+        self.outPutMyLog("16进制整数：")
+        self.outPutMyLog(registerNum_int)
         DataLen_from_registerNum = registerNum_int * 2
         DataLen_from_registerNum_hex = hex(DataLen_from_registerNum)  # 10进制数转为16进制数
-        print(DataLen_from_registerNum_hex)
-        print("查看类型：")
-        print(type(DataLen_from_registerNum_hex))
+        self.outPutMyLog(DataLen_from_registerNum_hex)
+        self.outPutMyLog("查看类型：")
+        self.outPutMyLog(type(DataLen_from_registerNum_hex))
         DataLen_from_registerNum_hex_list = DataLen_from_registerNum_hex.split("x")
-        print("查看列表：")
-        print(DataLen_from_registerNum_hex_list)
+        self.outPutMyLog("查看列表：")
+        self.outPutMyLog(DataLen_from_registerNum_hex_list)
         DataLen_from_registerNum_hex_list_get = DataLen_from_registerNum_hex_list[1]
-        print(DataLen_from_registerNum_hex_list_get)
+        self.outPutMyLog(DataLen_from_registerNum_hex_list_get)
         DataLen_from_registerNum_hex_list_get_str = str(DataLen_from_registerNum_hex_list_get)
         DataLen_from_registerNum_hex_list_get_str_len = len(DataLen_from_registerNum_hex_list_get_str)
         if DataLen_from_registerNum_hex_list_get_str_len == 1:
@@ -394,24 +396,24 @@ class AutoModbus(object):
         xieyi_cfg_dict['dataLen']= dataLen
         dataType = self.xieyi_cfg_dataType
         xieyi_cfg_dict['dataType']= dataType
-        print("协议字典：")
-        print(xieyi_cfg_dict)
+        self.outPutMyLog("协议字典：")
+        self.outPutMyLog(xieyi_cfg_dict)
         #字典转为字符串数据
         xieyi_cfg_str = ''
         for key, value in xieyi_cfg_dict.items():
             one = key + '=' + value+';'
-            print(one)
+            self.outPutMyLog(one)
             xieyi_cfg_str=xieyi_cfg_str+one
         xieyi_cfg_str = xieyi_cfg_str
-        print("****************************************")
-        print(xieyi_cfg_str)
-        print("****************************************")
+        self.outPutMyLog("****************************************")
+        self.outPutMyLog(xieyi_cfg_str)
+        self.outPutMyLog("****************************************")
 
         # 写入modbus.cfg文件
         hs = HandleTxt('modbus.cfg')
         hs.add_content(xieyi_cfg_str)
         again_modbus_content = self.read_modbus_cfg()
-        print(again_modbus_content)
+        self.outPutMyLog(again_modbus_content)
 
         #FTP 上传之前先更改原配置文件为备份文件名
         self.set_modbus_cfg_to_modbus_cfg_bak()
@@ -429,23 +431,23 @@ class AutoModbus(object):
         xieyi_cfg_list_len = len(xieyi_cfg_list)
         if xieyi_cfg_list_len == 0:  #如果长度为0,说明没有配置文件
             #没有配置文件
-            print("modbus.cfg文件中没有相关【%s】协议配置文件" % self.xieyi_name)
-            print("需要进行配置！！！")
+            self.outPutMyLog("modbus.cfg文件中没有相关【%s】协议配置文件" % self.xieyi_name)
+            self.outPutMyLog("需要进行配置！！！")
             xieyi_cfg_str = self.set_xieyi_cfg()
             hs = HandleTxt('modbus.cfg')
             hs.add_content(xieyi_cfg_str)
             again_modbus_content = self.read_modbus_cfg
-            print(again_modbus_content)
+            self.outPutMyLog(again_modbus_content)
 
         else:
             for i in range(0,xieyi_cfg_list_len):  #遍历配置内容
                 if "instantSampleCmd" in  xieyi_cfg_list[i]:
-                    print("存在及使采样配置：")
-                    print(xieyi_cfg_list[i])
+                    self.outPutMyLog("存在及使采样配置：")
+                    self.outPutMyLog(xieyi_cfg_list[i])
                     ji_shi_list.append(xieyi_cfg_list[i])
                 else:
-                    print("存在实时采样配置：")
-                    print(xieyi_cfg_list[i])
+                    self.outPutMyLog("存在实时采样配置：")
+                    self.outPutMyLog(xieyi_cfg_list[i])
                     shi_shi_list.append(xieyi_cfg_list[i])
             all_cfg_list.append(shi_shi_list)  #第一项为实时采样配置
             all_cfg_list.append(ji_shi_list)   #第二项为及时采样配置
@@ -457,30 +459,30 @@ class AutoModbus(object):
         # 则根据配置文件得出
         shi_shi_list_len = len(shi_shi_list)
         if shi_shi_list_len != 1:
-            print("获取到的配置条数有且应该只有1条，而实际为【%s】:" )
-            print(shi_shi_list)
+            self.outPutMyLog("获取到的配置条数有且应该只有1条，而实际为【%s】:" )
+            self.outPutMyLog(shi_shi_list)
             return None
         else:
             shi_shi_cfg_dict = {}
-            print("获取到1条配置信息，开始分解获取相关内容...")
+            self.outPutMyLog("获取到1条配置信息，开始分解获取相关内容...")
             for shi_shi_list_one in shi_shi_list:
                 #根据实时采样配置得出相应的内容
                 #遍历列表项，看有几条相关配置
                 #理论上有且只能有一条
                 shi_shi_list_one_list = shi_shi_list_one.split(";")
-                print(shi_shi_list_one_list)
+                self.outPutMyLog(shi_shi_list_one_list)
                 for shi_shi_list_one_list_one in shi_shi_list_one_list:
                     if 'protocol' in shi_shi_list_one_list_one:
                         shi_shi_list_one_list_one_list = shi_shi_list_one_list_one.split("=")
-                        print("协议名称：")
+                        self.outPutMyLog("协议名称：")
                         protocol = shi_shi_list_one_list_one_list[1]
-                        print(protocol)
+                        self.outPutMyLog(protocol)
                         shi_shi_cfg_dict['protocol']=protocol
                     if 'idNum' in shi_shi_list_one_list_one:
                         shi_shi_list_one_list_one_list = shi_shi_list_one_list_one.split("=")
-                        print("设备ID：")
+                        self.outPutMyLog("设备ID：")
                         idNum = shi_shi_list_one_list_one_list[1]
-                        print(idNum)
+                        self.outPutMyLog(idNum)
                         idNum_len = len(idNum)
                         if idNum_len == 1:
                             idNum = '0%s' % idNum
@@ -492,16 +494,16 @@ class AutoModbus(object):
 
                     if 'startAddress' in shi_shi_list_one_list_one:
                         shi_shi_list_one_list_one_list = shi_shi_list_one_list_one.split("=")
-                        print("寄存器开始地址：")
+                        self.outPutMyLog("寄存器开始地址：")
                         startAddress = shi_shi_list_one_list_one_list[1]
-                        print(startAddress)
+                        self.outPutMyLog(startAddress)
                         shi_shi_cfg_dict['startAddress'] = startAddress
 
                     if 'functionCode' in shi_shi_list_one_list_one:
                         shi_shi_list_one_list_one_list = shi_shi_list_one_list_one.split("=")
-                        print("功能码：")
+                        self.outPutMyLog("功能码：")
                         functionCode = shi_shi_list_one_list_one_list[1]
-                        print(functionCode)
+                        self.outPutMyLog(functionCode)
                         functionCode_len = len(functionCode)
                         if functionCode_len == 1:
                             functionCode = '0%s' % functionCode
@@ -513,23 +515,23 @@ class AutoModbus(object):
 
                     if 'registerNum' in shi_shi_list_one_list_one:
                         shi_shi_list_one_list_one_list = shi_shi_list_one_list_one.split("=")
-                        print("寄存器长度（或者个数）：")
+                        self.outPutMyLog("寄存器长度（或者个数）：")
                         registerNum = shi_shi_list_one_list_one_list[1]
-                        print(registerNum)
+                        self.outPutMyLog(registerNum)
                         shi_shi_cfg_dict['registerNum'] = registerNum
                         registerNum_int = int(registerNum, 16)  # 字符串转为16进制整数,其实就是按照16进制，转为整数如'0F'转为15
-                        print("16进制整数：")
-                        print(registerNum_int)
+                        self.outPutMyLog("16进制整数：")
+                        self.outPutMyLog(registerNum_int)
                         DataLen_from_registerNum = registerNum_int * 2
                         DataLen_from_registerNum_hex = hex(DataLen_from_registerNum)  # 10进制数转为16进制数
-                        print(DataLen_from_registerNum_hex)
-                        print("查看类型：")
-                        print(type(DataLen_from_registerNum_hex))
+                        self.outPutMyLog(DataLen_from_registerNum_hex)
+                        self.outPutMyLog("查看类型：")
+                        self.outPutMyLog(type(DataLen_from_registerNum_hex))
                         DataLen_from_registerNum_hex_list = DataLen_from_registerNum_hex.split("x")
-                        print("查看列表：")
-                        print(DataLen_from_registerNum_hex_list)
+                        self.outPutMyLog("查看列表：")
+                        self.outPutMyLog(DataLen_from_registerNum_hex_list)
                         DataLen_from_registerNum_hex_list_get = DataLen_from_registerNum_hex_list[1]
-                        print(DataLen_from_registerNum_hex_list_get)
+                        self.outPutMyLog(DataLen_from_registerNum_hex_list_get)
                         DataLen_from_registerNum_hex_list_get_str = str(DataLen_from_registerNum_hex_list_get)
                         DataLen_from_registerNum_hex_list_get_str_len = len(DataLen_from_registerNum_hex_list_get_str)
                         if DataLen_from_registerNum_hex_list_get_str_len == 1:
@@ -542,30 +544,30 @@ class AutoModbus(object):
 
                     if 'DataLen' in shi_shi_list_one_list_one:
                         shi_shi_list_one_list_one_list = shi_shi_list_one_list_one.split("=")
-                        print("回复数据区总长度（一个寄存器占两个字节，所以数据区总长度能且只能为寄存器长度的2倍：）：")
-                        print(shi_shi_list_one_list_one_list[1])
-                        # print("（配置DataLen为registerNum的2倍，则配置正确；）")
-                        # print("（未配置DataLen，DataLen的值默认为registerNum的2倍；）")
-                        # print("（如果配置了DataLen，但是DataLen的值不是registerNum的2倍，则配置不正确；）")
+                        self.outPutMyLog("回复数据区总长度（一个寄存器占两个字节，所以数据区总长度能且只能为寄存器长度的2倍：）：")
+                        self.outPutMyLog(shi_shi_list_one_list_one_list[1])
+                        # self.outPutMyLog("（配置DataLen为registerNum的2倍，则配置正确；）")
+                        # self.outPutMyLog("（未配置DataLen，DataLen的值默认为registerNum的2倍；）")
+                        # self.outPutMyLog("（如果配置了DataLen，但是DataLen的值不是registerNum的2倍，则配置不正确；）")
                     if 'dataLen' in shi_shi_list_one_list_one:
                         shi_shi_list_one_list_one_list = shi_shi_list_one_list_one.split("=")
-                        print("一个实时值长度（不是数据总长度，一个或多个实时值的长度加起来应该小于总长度）：")
+                        self.outPutMyLog("一个实时值长度（不是数据总长度，一个或多个实时值的长度加起来应该小于总长度）：")
                         dataLen = shi_shi_list_one_list_one_list[1]
-                        print(dataLen)
-                        # print("（总长度为实时值长度的整倍数）")
-                        # print("（一个实时值的长度只能为2或4）")
-                        # print("一个实时值的长度为2时，数据为短整数")
-                        # print("一个实时值的长度为4时，数据为整数（无符号或有符号）或者单精度浮点数")
-                        # print("例如配置多个因子值：一个实时值的长度为4时，要2个因子，则回复数据区总长度即DataLen的值必须为8，"
+                        self.outPutMyLog(dataLen)
+                        # self.outPutMyLog("（总长度为实时值长度的整倍数）")
+                        # self.outPutMyLog("（一个实时值的长度只能为2或4）")
+                        # self.outPutMyLog("一个实时值的长度为2时，数据为短整数")
+                        # self.outPutMyLog("一个实时值的长度为4时，数据为整数（无符号或有符号）或者单精度浮点数")
+                        # self.outPutMyLog("例如配置多个因子值：一个实时值的长度为4时，要2个因子，则回复数据区总长度即DataLen的值必须为8，"
                         #       "而registerNum的值必须为4")
                         shi_shi_cfg_dict['dataLen'] = dataLen
                     if 'dataType' in shi_shi_list_one_list_one:
                         shi_shi_list_one_list_one_list = shi_shi_list_one_list_one.split("=")
-                        print("数据类型（实际作用为字节序）：")
+                        self.outPutMyLog("数据类型（实际作用为字节序）：")
                         dataType = shi_shi_list_one_list_one_list[1]
-                        print(dataType)
+                        self.outPutMyLog(dataType)
                         com_send_data_danyinzizhi_zijiexu = dataType
-                        # print("""
+                        # self.outPutMyLog("""
                         # dataLen=2时：短整型数据
                         #     dataType=120、121、210、211四种类型，前两位表示字节序，末位0表示无符号短整型，末位1表示有符号短整型；
                         # dataLen=4时：
@@ -573,14 +575,14 @@ class AutoModbus(object):
                         #     dataType=0时将前端设备回复的数据按照字节序为12340进行解析，解析出来的数是无符号整形数
                         #     dataType的值为四位数1234,、4321、1342、1423、等等时：此时dataType表示数据区的字节序，会将前端设备回复的数据按照设定的字节序，解析成对应的单精度浮点数，也就是解析成float型的数。
                         # 当dataLen不等于4时：不解析 """)
-                        # print("(dataLen=2时,dataType只能为120、121、210、211、12、21，其中12等于120,21等于210)")
-                        # print("(dataLen=4时,dataType只能是五位的、四位的、0)")
-                        # print("(当dataType只能为五位的、四位的、0时，若dataLen不等于4，则不进行数据解析)")
+                        # self.outPutMyLog("(dataLen=2时,dataType只能为120、121、210、211、12、21，其中12等于120,21等于210)")
+                        # self.outPutMyLog("(dataLen=4时,dataType只能是五位的、四位的、0)")
+                        # self.outPutMyLog("(当dataType只能为五位的、四位的、0时，若dataLen不等于4，则不进行数据解析)")
                         shi_shi_cfg_dict['dataType'] = com_send_data_danyinzizhi_zijiexu
 
                 break  # 只循环一次
-            print("获取到的实时采样配置信息：")
-            print(shi_shi_cfg_dict)
+            self.outPutMyLog("获取到的实时采样配置信息：")
+            self.outPutMyLog(shi_shi_cfg_dict)
             return shi_shi_cfg_dict
 
     #根据数据区中长度和单因子实时值长度计算返回因子个数
@@ -588,13 +590,13 @@ class AutoModbus(object):
                                                     com_send_date_danyinzizhi_long):
         #根据数据区总长度和单因子长度计算根据配置得出的因子个数
         com_send_date_shujuquzongchandu_int = int(com_send_date_shujuquzongchandu, 16)  # 字符串转换成16进制整数
-        print(com_send_date_shujuquzongchandu_int)
+        self.outPutMyLog(com_send_date_shujuquzongchandu_int)
         com_send_date_danyinzizhi_long_int = int(com_send_date_danyinzizhi_long)  # 字符串转换成10进制整数
-        print(com_send_date_danyinzizhi_long_int)
+        self.outPutMyLog(com_send_date_danyinzizhi_long_int)
         com_send_date_yinzi_num_int = com_send_date_shujuquzongchandu_int // com_send_date_danyinzizhi_long_int  # 只获取整数部分
-        print(com_send_date_yinzi_num_int)
+        self.outPutMyLog(com_send_date_yinzi_num_int)
         com_send_date_yinzi_num = str(com_send_date_yinzi_num_int)
-        print(com_send_date_yinzi_num)
+        self.outPutMyLog(com_send_date_yinzi_num)
         return com_send_date_yinzi_num
 
 
@@ -604,11 +606,11 @@ class AutoModbus(object):
             self.ftp_get_modbus_cfg()   #从数采仪中获取modbus.cfg到本地
         # xieyi_cfg_list = self.check_modbus_xieyi_cfg()   #读取modbus.cfg文件，查看是否有相关配置
         all_cfg_list = self.get_xieyi_cfg()  # 获取协议相关配置，包含xieyi_cfg_list = self.check_modbus_xieyi_cfg()
-        print(all_cfg_list)
+        self.outPutMyLog(all_cfg_list)
         shi_shi_list = all_cfg_list[0]
         shi_shi_cfg_dict = self.get_shi_shi_cfg(shi_shi_list)  #获取协议配置
-        print("【%s】协议配置："%self.xieyi_name)
-        print(shi_shi_cfg_dict)
+        self.outPutMyLog("【%s】协议配置："%self.xieyi_name)
+        self.outPutMyLog(shi_shi_cfg_dict)
         #根据传入的因子个数校验并修改配置
         com_send_date_shebeiid = shi_shi_cfg_dict['idNum']  # 设备ID
         com_send_date_gongnengma = shi_shi_cfg_dict['functionCode']  # 功能码
@@ -622,17 +624,17 @@ class AutoModbus(object):
         com_send_date_yinzi_num = self.get_com_send_date_yinzi_num_from_modbus_cfg(com_send_date_shujuquzongchandu,
                                                                                    com_send_date_danyinzizhi_long)
         com_send_date_yinzi_num_int = int(com_send_date_yinzi_num)
-        print("从配置文件中获取计算得出的因子个数为:")
-        print(com_send_date_yinzi_num_int)
+        self.outPutMyLog("从配置文件中获取计算得出的因子个数为:")
+        self.outPutMyLog(com_send_date_yinzi_num_int)
         if int(self.com_send_date_yinzi_num) == com_send_date_yinzi_num_int:
-            print("从配置文件中获取计算得出的因子个数与传入的因子个数一致，都为【%s】，无需更改配置" % self.com_send_date_yinzi_num)
+            self.outPutMyLog("从配置文件中获取计算得出的因子个数与传入的因子个数一致，都为【%s】，无需更改配置" % self.com_send_date_yinzi_num)
         else:
-            print("从配置文件中获取计算得出的因子个数为:%s"% com_send_date_yinzi_num)
-            print("传入的因子个数为:%s" % self.com_send_date_yinzi_num)
-            print("从配置文件中获取计算得出的因子个数与传入的因子个数不一致")
-            print("正在配置为传入的因子个数...")
+            self.outPutMyLog("从配置文件中获取计算得出的因子个数为:%s"% com_send_date_yinzi_num)
+            self.outPutMyLog("传入的因子个数为:%s" % self.com_send_date_yinzi_num)
+            self.outPutMyLog("从配置文件中获取计算得出的因子个数与传入的因子个数不一致")
+            self.outPutMyLog("正在配置为传入的因子个数...")
             modbus_cfg_list = self.read_modbus_cfg()
-            print(modbus_cfg_list)
+            self.outPutMyLog(modbus_cfg_list)
 
 
 
@@ -642,7 +644,7 @@ class AutoModbus(object):
         ams = AutoMakeString()
         string_type = '0123456789ABCDEF'
         two_hex_str = ams.getBaseString(string_type,2)
-        print(two_hex_str)
+        self.outPutMyLog(two_hex_str)
         return two_hex_str
 
     #根据单因子实时值长度自动生成单因子16进制字符串
@@ -652,9 +654,9 @@ class AutoModbus(object):
         for i in range(0,danyinzizhi_long_int):
             two_hex_str = self.get_two_hex_str()
             danyinzizhi_hex_str_list.append(two_hex_str)
-        print(danyinzizhi_hex_str_list)
+        self.outPutMyLog(danyinzizhi_hex_str_list)
         danyinzizhi_hex_str = ' '.join(danyinzizhi_hex_str_list)
-        print(danyinzizhi_hex_str)
+        self.outPutMyLog(danyinzizhi_hex_str)
         return danyinzizhi_hex_str
 
     #根据单因子16进制字符串和字节序生成单因子浮点型预期结果
@@ -662,47 +664,47 @@ class AutoModbus(object):
     def get_danyinzi_expect_result(self,danyinzizhi_hex_str,danyinzizhi_zijiexu):
         # 根据字节序获取到单精度浮点型的数值
         danyinzi_zijiexu_list = []  # 字节序字符串转为列表要保存的内容
-        print("单因子字节序：")
-        print(danyinzizhi_zijiexu)
+        self.outPutMyLog("单因子字节序：")
+        self.outPutMyLog(danyinzizhi_zijiexu)
         danyinzizhi_zijiexu_len = len(danyinzizhi_zijiexu)
-        print(danyinzizhi_zijiexu_len)
+        self.outPutMyLog(danyinzizhi_zijiexu_len)
         # 如果dataType的值为4位（字符串长度为4）：
         if danyinzizhi_zijiexu_len == 4:
             # 将单因子字节序字符串转存到danyinzi_zijiexu_list中
             for i in danyinzizhi_zijiexu:
                 danyinzi_zijiexu_list.append(i)
-        print("字节序列表")
-        print(danyinzi_zijiexu_list)  # 打印字节序列表
+        self.outPutMyLog("字节序列表")
+        self.outPutMyLog(danyinzi_zijiexu_list)  # 打印字节序列表
 
         danyinzizhi_hex_str_list = danyinzizhi_hex_str.split(" ")
-        print(danyinzizhi_hex_str_list)
+        self.outPutMyLog(danyinzizhi_hex_str_list)
         danyinzizhi_hex_str_list_len = len(danyinzizhi_hex_str_list)
         danyinzizhi_zhengxu_hex_str_list = []
         for i in range(0, danyinzizhi_hex_str_list_len):
             danyinzizhi_hex_str_zhengxu = danyinzizhi_hex_str_list[int(danyinzi_zijiexu_list[i]) - 1]
             danyinzizhi_zhengxu_hex_str_list.append(danyinzizhi_hex_str_zhengxu)
-        print("单因子（16进制文件）正序后的列表：")
-        print(danyinzizhi_zhengxu_hex_str_list)
+        self.outPutMyLog("单因子（16进制文件）正序后的列表：")
+        self.outPutMyLog(danyinzizhi_zhengxu_hex_str_list)
 
         # 单因子十六进制文件正确顺序值
         danyinzizhi_zhengxu_hex_str = ''.join(danyinzizhi_zhengxu_hex_str_list)
-        print(danyinzizhi_zhengxu_hex_str)
+        self.outPutMyLog(danyinzizhi_zhengxu_hex_str)
         # 单因子十六进制字符串转为16进制数值
         hex_pre = r'0x'
         danyinzizhi_zhengxu_hex = hex_pre + danyinzizhi_zhengxu_hex_str.lower()
         # 打印单因子十六进制字符串转为16进制数值的值
-        print(danyinzizhi_zhengxu_hex)
+        self.outPutMyLog(danyinzizhi_zhengxu_hex)
         from WWQRSTest.util.autoModbus.depend.floutOrHex import hex_to_float
         # 单因子16进制数值转为浮点型数据
         danyinzizhi_shuzizhi_float = hex_to_float(danyinzizhi_zhengxu_hex)
         # 打印得到的浮点数值
-        print(danyinzizhi_shuzizhi_float)  # 得到十六进制文件解析出的数值
+        self.outPutMyLog(danyinzizhi_shuzizhi_float)  # 得到十六进制文件解析出的数值
         # 将浮点数据保存六位小数（四舍五入规则）
         danyinzizhi_shuzizhi_float_with_six = '%3f' % danyinzizhi_shuzizhi_float  # 默认保留小数6个
         #转为字符串类型
         danyinzizhi_shuzizhi_float_with_six_str = str(danyinzizhi_shuzizhi_float_with_six)
         # 打印带6位小数点的浮点数
-        print(danyinzizhi_shuzizhi_float_with_six_str)  # 默认保留小数6个
+        self.outPutMyLog(danyinzizhi_shuzizhi_float_with_six_str)  # 默认保留小数6个
         return danyinzizhi_shuzizhi_float_with_six_str
 
     # 根据因子个数自动生成多个因子16进制字符串列表数据
@@ -713,8 +715,8 @@ class AutoModbus(object):
             #自动生成单因子16进制字符串
             danyinzizhi_hex_str = self.auto_make_danyinzi_hex_str(danyinzizhi_long)
             duoyinzizhi_hex_str_list.append(danyinzizhi_hex_str)
-        print("自动生成的多因子16进制文件列表：")
-        print(duoyinzizhi_hex_str_list)
+        self.outPutMyLog("自动生成的多因子16进制文件列表：")
+        self.outPutMyLog(duoyinzizhi_hex_str_list)
         return duoyinzizhi_hex_str_list
 
 
@@ -726,7 +728,7 @@ class AutoModbus(object):
         for i in range(0,yinzigeshu_int):
             #单因子16进制字符串
             danyinzizhi_hex_str = duoyinzizhi_hex_str_list[i]
-            print(danyinzizhi_hex_str)
+            self.outPutMyLog(danyinzizhi_hex_str)
             #根据字节序获取到单精度浮点型的数值
             danyinzizhi_shuzizhi_float_with_six_str = \
                 self.get_danyinzi_expect_result(danyinzizhi_hex_str=danyinzizhi_hex_str,
@@ -734,12 +736,12 @@ class AutoModbus(object):
             #将预期数值（带6位小数点的浮点数）放到预期数组中
             duoyinzizhi_expect_result_list.append(danyinzizhi_shuzizhi_float_with_six_str)
         #多因子16进制文件
-        print("多因子16进制文件列表：")
-        print(duoyinzizhi_hex_str_list)
+        self.outPutMyLog("多因子16进制文件列表：")
+        self.outPutMyLog(duoyinzizhi_hex_str_list)
         #按照字节序得到的浮点数据
-        print("按照字节序得到的相应浮点数字的列表：")
+        self.outPutMyLog("按照字节序得到的相应浮点数字的列表：")
         #打印预期数组
-        print(duoyinzizhi_expect_result_list)
+        self.outPutMyLog(duoyinzizhi_expect_result_list)
         duoyinzizhi_hex_str_and_expect_result_list.append(duoyinzizhi_hex_str_list)
         duoyinzizhi_hex_str_and_expect_result_list.append(duoyinzizhi_expect_result_list)
         return duoyinzizhi_hex_str_and_expect_result_list
@@ -750,11 +752,11 @@ class AutoModbus(object):
     #如果没有配置则设置配置
     def set_com_send_date(self):
         all_cfg_list = self.get_xieyi_cfg()
-        print(all_cfg_list)
-        print("实时采样配置：")
-        print(all_cfg_list[0])
-        print("及使采样配置：")
-        print(all_cfg_list[1])
+        self.outPutMyLog(all_cfg_list)
+        self.outPutMyLog("实时采样配置：")
+        self.outPutMyLog(all_cfg_list[0])
+        self.outPutMyLog("及使采样配置：")
+        self.outPutMyLog(all_cfg_list[1])
         shi_shi_list = all_cfg_list[0]
         shi_shi_list_len = len(shi_shi_list)
 
@@ -774,13 +776,13 @@ class AutoModbus(object):
             if self.com_send_date_yinzi_num_is_auto_make:
                 #根据配置文件自动生成
                 com_send_date_shujuquzongchandu_int = int(com_send_date_shujuquzongchandu, 16)  # 字符串转换成16进制整数
-                print(com_send_date_shujuquzongchandu_int)
+                self.outPutMyLog(com_send_date_shujuquzongchandu_int)
                 com_send_date_danyinzizhi_long_int = int(com_send_date_danyinzizhi_long)  # 字符串转换成10进制整数
-                print(com_send_date_danyinzizhi_long_int)
+                self.outPutMyLog(com_send_date_danyinzizhi_long_int)
                 com_send_date_yinzi_num_int = com_send_date_shujuquzongchandu_int//com_send_date_danyinzizhi_long_int  #只获取整数部分
-                print(com_send_date_yinzi_num_int)
+                self.outPutMyLog(com_send_date_yinzi_num_int)
                 com_send_date_yinzi_num = str(com_send_date_yinzi_num_int)
-                print(com_send_date_yinzi_num)
+                self.outPutMyLog(com_send_date_yinzi_num)
             else:
                 com_send_date_yinzi_num = self.com_send_date_yinzi_num
 
@@ -799,25 +801,25 @@ class AutoModbus(object):
                                                              danyinzizhi_zijiexu=com_send_data_danyinzizhi_zijiexu)
 
             com_send_date_duoyinzizhi_hex_str_list = duoyinzizhi_hex_str_and_expect_result_list[0]
-            print(com_send_date_duoyinzizhi_hex_str_list)
+            self.outPutMyLog(com_send_date_duoyinzizhi_hex_str_list)
             com_send_date_duoyinzizhi_expect_result_list = duoyinzizhi_hex_str_and_expect_result_list[1]
-            print(com_send_date_duoyinzizhi_expect_result_list)
-            print("原期望数值列表：")
-            print(self.xieyi_jiexi_expect_result_list)
+            self.outPutMyLog(com_send_date_duoyinzizhi_expect_result_list)
+            self.outPutMyLog("原期望数值列表：")
+            self.outPutMyLog(self.xieyi_jiexi_expect_result_list)
             self.xieyi_jiexi_expect_result_list = com_send_date_duoyinzizhi_expect_result_list
-            print("重设期望数值列表：")
-            print(self.xieyi_jiexi_expect_result_list)
+            self.outPutMyLog("重设期望数值列表：")
+            self.outPutMyLog(self.xieyi_jiexi_expect_result_list)
 
             com_send_date_duoyinzizhi_hex_str = ' '.join(com_send_date_duoyinzizhi_hex_str_list)
-            print("多因子16进制字符串：")
-            print(com_send_date_duoyinzizhi_hex_str)
+            self.outPutMyLog("多因子16进制字符串：")
+            self.outPutMyLog(com_send_date_duoyinzizhi_hex_str)
             com_send_date = com_send_date_shebeiid+' '+com_send_date_gongnengma+' '+ com_send_date_shujuquzongchandu + ' '+com_send_date_duoyinzizhi_hex_str
-            print(com_send_date)
-            print("原发送数据：")
-            print(self.com_send_date )
+            self.outPutMyLog(com_send_date)
+            self.outPutMyLog("原发送数据：")
+            self.outPutMyLog(self.com_send_date )
             self.com_send_date = com_send_date  #重置发送数据
-            print("重设发送数据：")
-            print(self.com_send_date)
+            self.outPutMyLog("重设发送数据：")
+            self.outPutMyLog(self.com_send_date)
 
 
     #web后台，写入设备
@@ -846,11 +848,11 @@ class AutoModbus(object):
 
             #获取js弹窗
             alert = self.chromedriver.switch_to.alert
-            # print(alert.text)
+            # self.outPutMyLog(alert.text)
             # alert.accept()
         except Exception as e:
-            print("问题：")
-            print(e)
+            self.outPutMyLog("问题：")
+            self.outPutMyLog(e)
 
         self.time_delay(int(self.write_device_reatart_time))  #等该30秒
 
@@ -919,13 +921,13 @@ class AutoModbus(object):
     def handle_Hexstr_to_bytes(self,HexDate):
         send_data_hex_str = HexDate
         send_data_hex_str_list = send_data_hex_str.split(' ')
-        print(send_data_hex_str_list )
+        self.outPutMyLog(send_data_hex_str_list )
         send_data_bytes = b''
         for i in send_data_hex_str_list:
             str_hex_to_bytes = bytes.fromhex(i)  # 十六进制字符串转二进制
-            print(str_hex_to_bytes)
+            self.outPutMyLog(str_hex_to_bytes)
             send_data_bytes = send_data_bytes + str_hex_to_bytes
-        print(send_data_bytes)
+        self.outPutMyLog(send_data_bytes)
         return send_data_bytes
 
     #处理发送的二进制数据
@@ -934,13 +936,13 @@ class AutoModbus(object):
         for HexDate in HexDateList:
             send_data_hex_str = HexDate
             send_data_hex_str_list = send_data_hex_str.split(' ')
-            print(send_data_hex_str_list )
+            self.outPutMyLog(send_data_hex_str_list )
             send_data_bytes = b''
             for i in send_data_hex_str_list:
                 str_hex_to_bytes = bytes.fromhex(i)  # 十六进制字符串转二进制
-                print(str_hex_to_bytes)
+                self.outPutMyLog(str_hex_to_bytes)
                 send_data_bytes = send_data_bytes + str_hex_to_bytes
-            print(send_data_bytes)
+            self.outPutMyLog(send_data_bytes)
             send_data_bytes_list.append(send_data_bytes)
         return send_data_bytes_list
 
@@ -949,7 +951,7 @@ class AutoModbus(object):
         #进行CRC16位低位在前校验
         mc = ModbusCrc()
         send_data_hex_str = mc.crc16Add_di(self.com_send_date)  #16进制字符串,进行CRC校验后
-        print(send_data_hex_str)
+        self.outPutMyLog(send_data_hex_str)
         send_data_bytes = self.handle_Hexstr_to_bytes(send_data_hex_str)
         return send_data_bytes
 
@@ -960,25 +962,26 @@ class AutoModbus(object):
         Bytesize = int(self.com_bytesize)
         Parity = self.com_parity
         Stopbits = int(self.com_stopbits)
-        Senddate =self.com_send_date_bytes
+        # Senddate =self.com_send_date_bytes
+        Senddate = None
         Senddatelist =self.com_send_date_list_bytes
         ExpectDateBytes=self.com_expect_date_bytes
         rt = ComThread(Port=Port,Baudrate=Baudrate,Bytesize=Bytesize,Parity =Parity,Stopbits=Stopbits,
                        ExpectDateBytes=ExpectDateBytes,Senddate=Senddate,Senddatelist=Senddatelist)
         try:
             if rt.start():
-                print(rt.l_serial.name)
+                self.outPutMyLog(rt.l_serial.name)
                 rt.waiting()
-                print("The data is:%s,The Id is:%s" % (rt.data, rt.ID))
+                self.outPutMyLog("The data is:%s,The Id is:%s" % (rt.data, rt.ID))
                 rt.stop()
             else:
                 pass
         except Exception as se:
-            print(str(se))
+            self.outPutMyLog(str(se))
         if rt.alive:
             rt.stop()
-        print('')
-        print('End OK .')
+        self.outPutMyLog('')
+        self.outPutMyLog('End OK .')
         del rt
         self.time_delay(30)  #等待30秒
 
@@ -1000,17 +1003,17 @@ class AutoModbus(object):
         local_file = self.xieyi_txt_file_name
         with open(local_file, "r", encoding='utf-8') as f:
             result = f.read()
-            print("获取的内容：")
-            print(result)
+            self.outPutMyLog("获取的内容：")
+            self.outPutMyLog(result)
         expect_result_list = self.xieyi_jiexi_expect_result_list
         for expect_result in expect_result_list:
         # expect_result = self.xieyi_jiexi_expect_result
             if expect_result in result:
-                print("查到解析结果：%s" % expect_result)
-                print("解析数据正确")
+                self.outPutMyLog("查到解析结果：%s" % expect_result)
+                self.outPutMyLog("解析数据正确")
                 assert True
             else:
-                print("解析数据失败！！！")
+                self.outPutErrorMyLog("解析数据失败！！！")
                 assert False
 
     #ftp获取串口解析文件
@@ -1031,38 +1034,38 @@ class AutoModbus(object):
         table_name = self.xieyi_db_table_name
         ms = MySqlite(sql_name=local_db,table_name=table_name)
         table_content_list = ms.get_table_content()
-        print("表的内容：")
-        print(table_content_list)
+        self.outPutMyLog("表的内容：")
+        self.outPutMyLog(table_content_list)
         # 循环遍历预期结果
         expect_result_list = self.xieyi_jiexi_expect_result_list
         message_list = []
         for expect_result_one in expect_result_list:
-            print("遍历数据：")
-            print(expect_result_one)
+            self.outPutMyLog("遍历数据：")
+            self.outPutMyLog(expect_result_one)
             assert_result_flag = False
             #遍历数据库查看预期结果是否在数据库中：
             for table_content_one in table_content_list:
-                print("遍历表：")
-                print(table_content_one)
-                print(table_content_one)
+                self.outPutMyLog("遍历表：")
+                self.outPutMyLog(table_content_one)
+                self.outPutMyLog(table_content_one)
                 #遍历一条数据的字段值，如果存在字段值则停止本次验证
                 for one_ziduan_value in table_content_one:
                     #如果值在里面，则打印
                     if expect_result_one in str(one_ziduan_value):
                         message_one = "验证值【%s】在实际值【%s】中。"%(expect_result_one,one_ziduan_value)
                         message_list.append(message_one)
-                        print("退出从一条数据中查找一个预期结果的循环")
+                        self.outPutMyLog("退出从一条数据中查找一个预期结果的循环")
                         assert_result_flag = True
                         break  #退出本次循环
-                print("退出遍历一个表中的每条数据的循环")
+                self.outPutMyLog("退出遍历一个表中的每条数据的循环")
                 if assert_result_flag:
                     break
-            print("开始进入下一个预期结果值的查找的循环")
+            self.outPutMyLog("开始进入下一个预期结果值的查找的循环")
         if assert_result_flag :
-            print("查找结果信息：")
-            print(message_list)
+            self.outPutMyLog("查找结果信息：")
+            self.outPutMyLog(message_list)
         else:
-            print("没有在数据库【%s】中的【%s】表中查找到【%s】" % (local_db,table_name,str(expect_result_list)))
+            self.outPutErrorMyLog("没有在数据库【%s】中的【%s】表中查找到【%s】" % (local_db,table_name,str(expect_result_list)))
         return assert_result_flag
 
 
@@ -1081,17 +1084,17 @@ class AutoModbus(object):
         local_file = self.tcp_server_file_name
         with open(local_file, "r", encoding='utf-8') as f:
             result = f.read()
-            print("获取的内容：")
-            print(result)
+            self.outPutMyLog("获取的内容：")
+            self.outPutMyLog(result)
         expect_result_list = self.xieyi_jiexi_expect_result_list
         for expect_result in expect_result_list:
         # expect_result = self.xieyi_jiexi_expect_result
             if expect_result in result:
-                print("查到上报结果：%s" % expect_result)
-                print("上报数据正确")
+                self.outPutMyLog("查到上报结果：%s" % expect_result)
+                self.outPutMyLog("上报数据正确")
                 assert True
             else:
-                print("上报数据失败！！！")
+                self.outPutErrorMyLog("上报数据失败！！！")
                 assert False
 
 

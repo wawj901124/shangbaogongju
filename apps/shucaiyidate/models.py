@@ -22,17 +22,16 @@ class XieyiConfigDate(models.Model):
     telnet_host_ip = models.CharField(max_length=100, default="192.168.101.133", verbose_name=u"数采仪IP地址")
     telnet_username = models.CharField(max_length=100, default="root", verbose_name=u"登录数采仪的用户名")
     telnet_password = models.CharField(max_length=100, default="wwyc8888", verbose_name=u"登录数采仪的密码")
-    # telnet_clicent_object = None
-    # ftp_client_object
+    is_ftp_upload =  models.BooleanField(default=False,verbose_name=u"是否上传配置文件")
+    is_close_xieyi =  models.BooleanField(default=False,verbose_name=u"是否关闭开机自启动时启动的协议")
+    is_restart_xieyi = models.BooleanField(default=False,verbose_name=u"是否重新启动协议")
     xieyi_bin_dir =  models.CharField(max_length=100, default="/usr/app_install/collect/bin", verbose_name=u"数采仪存放协议二进制文件的bin目录")
     xieyi_name =  models.CharField(max_length=100, default="11020", verbose_name=u"协议二进制文件的名字")
     xieyi_test_port  =  models.CharField(max_length=100, default="4", verbose_name=u"数采仪协议串口号",help_text=u"请填写数字，"
                                                                    u"例如串口为COM4，则填写4")
-    # xieyi_txt_file_name
-    xieyi_db =  models.CharField(max_length=100, default="real.db", verbose_name=u"协议实时数据存放的数据库名字")
-    xieyi_db_remote_path =  models.CharField(max_length=100, default="/tmp/real.db", verbose_name=u"协议实时数据存放的数据库在数采仪中的路径",
-                                             help_text=u"如数据库路径为'/tmp/real.db',则填写'/tmp/real.db'")
-    xieyi_db_table_name = models.CharField(max_length=100, default="rttable", verbose_name=u"协议实时数据存放的数据的数据表")
+
+    is_com_recive_and_send =  models.BooleanField(default=False,verbose_name=u"是否进行数据接收和发送")
+
     com_port = models.CharField(max_length=100, default="COM3", verbose_name=u"电脑与数采仪连接的USB口",
                                 help_text=u"电脑与数采仪连接的USB口，例如USB口为COM4，则填写COM4")
 
@@ -50,53 +49,32 @@ class XieyiConfigDate(models.Model):
 
     com_stopbits =  models.CharField(max_length=100, default="1", verbose_name=u"协议停止位",
                                     help_text=u"协议停止位，一般有1、1.5、2，如协议使用停止位为1，则此处填写1")
-    # com_timeout
-    # com_send_date_yinzi_num =
-    # com_send_date_yinzi_num_is_auto_make
-    # com_send_date_yinzi_hex_str_is_auto_make
-    # com_send_date_yinzi_hex_str_list =  models.CharField(max_length=100, default="", verbose_name=u"回复指令中的数据的16进制文本内容",
-    #                                 help_text=u"回复指令中的数据的16进制文本内容，如回复的全部数据为：01 03 02 00 EA 39 CB，则此处填写00 EA，即数据内容")
+
     com_send_date =  models.CharField(max_length=1000, default="01 03 02 00 EA 39 CB", verbose_name=u"回复指令中的全部内容",
                                     help_text=u"回复指令中的全部内容，如回复的全部数据为：01 03 02 00 EA 39 CB，则此处填写01 03 02 00 EA 39 CB；"
                                               u"如需要发送多条指令，则每条指令之间以半角逗号隔开，")
-    com_expect_date = models.CharField(max_length=100, default="01 03 12 2D 00 01 11 7B", verbose_name=u"预期接收指令的全部内容",
-                                    help_text=u"预期接收指令的全部内容，如预期接收的全部内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
-    # com_expect_date_bytes
-    # com_send_date_list = models.CharField(max_length=100, default="", verbose_name=u"回复指令中的全部内容",
-    #                                 help_text=u"回复指令中的全部内容，如回复的全部数据为：01 03 02 00 EA 39 CB，则此处填写01 03 02 00 EA 39 CB")
-    # com_send_date_bytes
-    # com_send_date_list_bytes
-    # xieyi_jiexi_expect_result
-    xieyi_jiexi_expect_result_list = models.CharField(max_length=1000, default="0.234", verbose_name=u"协议解析预期结果",
-                                    help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234，如有多个预期结果，每个结果之间以半角逗号隔开，如:0.234,9.55")
-    # xieyi_cfg_protocol =
-    # xieyi_cfg_idNum
-    # xieyi_cfg_startAddress
-    # xieyi_cfg_functionCode
-    # xieyi_cfg_registerNum
-    # xieyi_cfg_DataLen
-    # xieyi_cfg_dataLen
-    # xieyi_cfg_dataType
-    tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", verbose_name=u"数据上报平台的IP地址")
-    tcp_server_port = models.CharField(max_length=100, default="63503", verbose_name=u"数据上报平台的端口号")
-    # tcp_server_file_name =  models.CharField(max_length=100, default="", verbose_name=u"数据上报平台的端口号")
-    # tcp_server_object
-    # is_ftp_get_modbus_cfg
-    # is_check_modbus_xieyi_cfg
-    # is_get_modbus_cfg_main
-    # is_set_com_send_date
-    # is_write_device
-    # write_device_reatart_time
-    is_ftp_upload =  models.BooleanField(default=False,verbose_name=u"是否上传配置文件")
-    is_close_xieyi =  models.BooleanField(default=False,verbose_name=u"是否关闭自启动时启动的协议")
-    is_restart_xieyi = models.BooleanField(default=False,verbose_name=u"是否重新启动协议")
-    is_com_recive_and_send =  models.BooleanField(default=False,verbose_name=u"是否进行数据接收和发送")
+    com_expect_date = models.CharField(max_length=100, default="01 03 12 2D 00 01 11 7B", verbose_name=u"预期接收到的指令的内容",
+                                    help_text=u"预期接收到的指令的内容，如预期接收到的指令的内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
+
     is_ftp_down_xieyi_file = models.BooleanField(default=False,verbose_name=u"是否ftp下载获取解析文件")
     is_assert_file_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在协议解析文件中")
+
+    xieyi_jiexi_expect_result = models.CharField(max_length=1000, default="0.234", verbose_name=u"协议解析预期结果",
+                                    help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234，如有多个预期结果，每个结果之间以半角逗号隔开，如:0.234,9.55")
+
     is_ftp_get_remote_db_file =  models.BooleanField(default=False,verbose_name=u"是否ftp下载远程数据库文件")
     is_assert_real_db_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在实时数据库的表中")
+
+    xieyi_db =  models.CharField(max_length=100, default="real.db", verbose_name=u"协议实时数据存放的数据库名字")
+    xieyi_db_remote_path =  models.CharField(max_length=100, default="/tmp/real.db", verbose_name=u"协议实时数据存放的数据库在数采仪中的路径",
+                                             help_text=u"如数据库路径为'/tmp/real.db',则填写'/tmp/real.db'")
+    xieyi_db_table_name = models.CharField(max_length=100, default="rttable", verbose_name=u"协议实时数据存放的数据的数据表")
+
     is_tcp_server_receive = models.BooleanField(default=False,verbose_name=u"是否接收平台报文")
     is_assert_tcp_server_receive_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在接收的报文中")
+
+    tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", verbose_name=u"数据上报平台的IP地址")
+    tcp_server_port = models.CharField(max_length=100, default="63503", verbose_name=u"数据上报平台的端口号")
 
 
     case_counts = models.IntegerField(default="1",verbose_name="循环次数",help_text=u"循环次数，请填写数字，"
@@ -113,3 +91,77 @@ class XieyiConfigDate(models.Model):
 
     def __str__(self):
         return self.test_case_title
+
+
+class FtpUploadFile(models.Model):
+    xieyiconfigdate = models.ForeignKey(XieyiConfigDate,default="", null=True, blank=True,
+                                        verbose_name=u"依赖的协议测试",on_delete=models.PROTECT)
+    up_remote_file = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"远程路径文件")
+    up_local_file = models.CharField(max_length=1000, default="", null=True, blank=True, verbose_name=u"本地路径文件")
+    write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"FTP上传文件"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.up_remote_file
+
+
+
+class CloseXieYiCommand(models.Model):
+    xieyiconfigdate = models.ForeignKey(XieyiConfigDate,default="", null=True, blank=True,
+                                        verbose_name=u"依赖的协议测试",on_delete=models.PROTECT)
+    close_command = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"关闭协议命令")
+    write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"关闭协议命令"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.close_command
+
+
+class RestartXieYiCommand(models.Model):
+    xieyiconfigdate = models.ForeignKey(XieyiConfigDate,default="", null=True, blank=True,
+                                        verbose_name=u"依赖的协议测试",on_delete=models.PROTECT)
+    restart_command = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"关闭协议命令")
+    write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"重启协议命令"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.restart_command
+
+
+class SenderHexData(models.Model):
+    xieyiconfigdate = models.ForeignKey(XieyiConfigDate,default="", null=True, blank=True,
+                                        verbose_name=u"依赖的协议测试",on_delete=models.PROTECT)
+    sender_hex_data = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"发送数据命令")
+    write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"发送数据命令"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.sender_hex_data

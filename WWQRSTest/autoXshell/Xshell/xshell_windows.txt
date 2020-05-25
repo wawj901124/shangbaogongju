@@ -1,0 +1,1605 @@
+D:\myenv\mypython332\Scripts\python.exe D:/pycharmproject/shangbaogongju/WWQRSTest/autoXshell/Xshell/autotest.py
+Control Identifiers:
+
+Xshell6::MainFrame_0 - '数采仪 - Xshell 6'    (L185, T246, R1185, B1019)
+['数采仪 - Xshell 6', 'Xshell6::MainFrame_0', '数采仪 - Xshell 6Xshell6::MainFrame_0']
+child_window(title="数采仪 - Xshell 6", class_name="Xshell6::MainFrame_0")
+   |
+   | Afx:Slider:cd0000:8:10003:10 - ''    (L193, T730, R1177, B734)
+   | ['数采仪 - Xshell 6Afx:Slider:cd0000:8:10003:10', 'Afx:Slider:cd0000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:cd0000:8:10003:100', '数采仪 - Xshell 6Afx:Slider:cd0000:8:10003:101', 'Afx:Slider:cd0000:8:10003:100', 'Afx:Slider:cd0000:8:10003:101']
+   | child_window(class_name="Afx:Slider:cd0000:8:10003:10")
+   |
+   | Afx:ControlBar:cd0000:8:10003:10 - '撰写'    (L193, T734, R1177, B884)
+   | ['Afx:ControlBar:cd0000:8:10003:10', '撰写', '撰写Afx:ControlBar:cd0000:8:10003:10', 'Afx:ControlBar:cd0000:8:10003:100', 'Afx:ControlBar:cd0000:8:10003:101']
+   | child_window(title="撰写", class_name="Afx:ControlBar:cd0000:8:10003:10")
+   |    |
+   |    | Edit - ''    (L222, T761, R1178, B884)
+   |    | ['Edit', '数采仪 - Xshell 6Edit', 'Edit0', 'Edit1', '数采仪 - Xshell 6Edit0', '数采仪 - Xshell 6Edit1']
+   |    | child_window(class_name="Edit")
+   |    |
+   |    | Toolbar - ''    (L193, T761, R219, B884)
+   |    | ['Toolbar', '数采仪 - Xshell 6Toolbar', 'Toolbar0', 'Toolbar1', '数采仪 - Xshell 6Toolbar0', '数采仪 - Xshell 6Toolbar1']
+   |    | child_window(class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |
+   | Edit - ''    (L222, T761, R1178, B884)
+   | ['Edit', '数采仪 - Xshell 6Edit', 'Edit0', 'Edit1', '数采仪 - Xshell 6Edit0', '数采仪 - Xshell 6Edit1']
+   | child_window(class_name="Edit")
+   |
+   | Toolbar - ''    (L193, T761, R219, B884)
+   | ['Toolbar', '数采仪 - Xshell 6Toolbar', 'Toolbar0', 'Toolbar1', '数采仪 - Xshell 6Toolbar0', '数采仪 - Xshell 6Toolbar1']
+   | child_window(class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |
+   | Afx:Slider:cd0000:8:10003:10 - ''    (L193, T884, R1177, B888)
+   | ['数采仪 - Xshell 6Afx:Slider:cd0000:8:10003:102', 'Afx:Slider:cd0000:8:10003:102']
+   | child_window(class_name="Afx:Slider:cd0000:8:10003:10")
+   |
+   | Afx:ControlBar:cd0000:8:10003:10 - 'Default Quick Command Set'    (L193, T888, R1177, B988)
+   | ['Afx:ControlBar:cd0000:8:10003:102', 'Default Quick Command SetAfx:ControlBar:cd0000:8:10003:10', 'Default Quick Command Set']
+   | child_window(title="Default Quick Command Set", class_name="Afx:ControlBar:cd0000:8:10003:10")
+   |    |
+   |    | AfxWnd110u - 'CScrollWnd'    (L193, T915, R1177, B988)
+   |    | ['AfxWnd110u', 'CScrollWnd', 'CScrollWndAfxWnd110u']
+   |    | child_window(title="CScrollWnd", class_name="AfxWnd110u")
+   |    |    |
+   |    |    | Toolbar - ''    (L193, T915, R1177, B988)
+   |    |    | ['Toolbar2', '数采仪 - Xshell 6Toolbar2']
+   |    |    | child_window(class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |    |
+   |    | Toolbar - ''    (L193, T915, R1177, B988)
+   |    | ['Toolbar2', '数采仪 - Xshell 6Toolbar2']
+   |    | child_window(class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |
+   | AfxWnd110u - 'CScrollWnd'    (L193, T915, R1177, B988)
+   | ['AfxWnd110u', 'CScrollWnd', 'CScrollWndAfxWnd110u']
+   | child_window(title="CScrollWnd", class_name="AfxWnd110u")
+   |    |
+   |    | Toolbar - ''    (L193, T915, R1177, B988)
+   |    | ['Toolbar2', '数采仪 - Xshell 6Toolbar2']
+   |    | child_window(class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |
+   | Toolbar - ''    (L193, T915, R1177, B988)
+   | ['Toolbar2', '数采仪 - Xshell 6Toolbar2']
+   | child_window(class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |
+   | Afx:Slider:cd0000:8:10003:10 - ''    (L393, T390, R397, B1011)
+   | ['数采仪 - Xshell 6Afx:Slider:cd0000:8:10003:103', 'Afx:Slider:cd0000:8:10003:103']
+   | child_window(class_name="Afx:Slider:cd0000:8:10003:10")
+   |
+   | Afx:ControlBar:cd0000:8:10003:10 - '会话管理器'    (L193, T390, R393, B1011)
+   | ['会话管理器Afx:ControlBar:cd0000:8:10003:10', 'Afx:ControlBar:cd0000:8:10003:103', '会话管理器']
+   | child_window(title="会话管理器", class_name="Afx:ControlBar:cd0000:8:10003:10")
+   |    |
+   |    | Edit - ''    (L195, T417, R373, B437)
+   |    | ['Edit2', '数采仪 - Xshell 6Edit2']
+   |    | child_window(class_name="Edit")
+   |    |
+   |    | Button - ''    (L373, T417, R393, B437)
+   |    | ['数采仪 - Xshell 6Button', 'Button', 'Button0', 'Button1']
+   |    | child_window(class_name="Button")
+   |    |
+   |    | TreeView - ''    (L193, T439, R393, B807)
+   |    | ['TreeView', '数采仪 - Xshell 6TreeView']
+   |    | child_window(class_name="SysTreeView32")
+   |    |
+   |    | ListView - ''    (L193, T811, R393, B1011)
+   |    | ['ListView说明', 'ListView名称', 'ListViewTELNET', 'ListView类型', '数采仪 - Xshell 6ListView', 'ListView192.168.101.104', 'ListViewroot', 'ListView会话', 'ListView主机', 'ListView23', 'ListView数采仪', 'ListView', 'ListView用户名', 'ListView端口', 'ListView协议', 'ListView0', 'ListView1', '数采仪 - Xshell 6ListView0', '数采仪 - Xshell 6ListView1']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T833, R393, B857)
+   |    |    | ['数采仪 - Xshell 6Header', 'Header', 'Header值', 'Header名称', 'Header0', 'Header1', '数采仪 - Xshell 6Header0', '数采仪 - Xshell 6Header1']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T833, R393, B857)
+   |    | ['数采仪 - Xshell 6Header', 'Header', 'Header值', 'Header名称', 'Header0', 'Header1', '数采仪 - Xshell 6Header0', '数采仪 - Xshell 6Header1']
+   |    | child_window(class_name="SysHeader32")
+   |
+   | Edit - ''    (L195, T417, R373, B437)
+   | ['Edit2', '数采仪 - Xshell 6Edit2']
+   | child_window(class_name="Edit")
+   |
+   | Button - ''    (L373, T417, R393, B437)
+   | ['数采仪 - Xshell 6Button', 'Button', 'Button0', 'Button1']
+   | child_window(class_name="Button")
+   |
+   | TreeView - ''    (L193, T439, R393, B807)
+   | ['TreeView', '数采仪 - Xshell 6TreeView']
+   | child_window(class_name="SysTreeView32")
+   |
+   | ListView - ''    (L193, T811, R393, B1011)
+   | ['ListView说明', 'ListView名称', 'ListViewTELNET', 'ListView类型', '数采仪 - Xshell 6ListView', 'ListView192.168.101.104', 'ListViewroot', 'ListView会话', 'ListView主机', 'ListView23', 'ListView数采仪', 'ListView', 'ListView用户名', 'ListView端口', 'ListView协议', 'ListView0', 'ListView1', '数采仪 - Xshell 6ListView0', '数采仪 - Xshell 6ListView1']
+   | child_window(class_name="SysListView32")
+   |    |
+   |    | Header - ''    (L193, T833, R393, B857)
+   |    | ['数采仪 - Xshell 6Header', 'Header', 'Header值', 'Header名称', 'Header0', 'Header1', '数采仪 - Xshell 6Header0', '数采仪 - Xshell 6Header1']
+   |    | child_window(class_name="SysHeader32")
+   | ********************************************************数采仪属性***************************************************************************
+   | Header - ''    (L193, T833, R393, B857)
+   | ['数采仪 - Xshell 6Header', 'Header', 'Header值', 'Header名称', 'Header0', 'Header1', '数采仪 - Xshell 6Header0', '数采仪 - Xshell 6Header1']
+   | child_window(class_name="SysHeader32")
+   |  ********************************************************顶上部分***************************************************************************
+   | ReBar - ''    (L193, T277, R1177, B390)
+   | ['ReBar', '数采仪 - Xshell 6ReBar']
+   | child_window(class_name="ReBarWindow32")
+   |    |
+   |    | Toolbar - '链接栏'    (L204, T360, R1177, B386)
+   |    | ['Toolbar3', '链接栏', '链接栏Toolbar']
+   |    | child_window(title="链接栏", class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |    |
+   |    | Toolbar - '地址栏'    (L204, T332, R1177, B358)
+   |    | ['Toolbar4', '地址栏Toolbar', '地址栏']
+   |    | child_window(title="地址栏", class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |    |    |
+   |    |    | ComboBox - 'telnet://root:********@192.168.101.104:23'    (L207, T333, R1169, B356)
+   |    |    | ['ComboBox', '数采仪 - Xshell 6ComboBox', 'ComboBox0', 'ComboBox1', '数采仪 - Xshell 6ComboBox0', '数采仪 - Xshell 6ComboBox1']
+   |    |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="NsComboBox")
+   |    |    |    |
+   |    |    |    | Edit - 'telnet://root:********@192.168.101.104:23'    (L234, T336, R1144, B355)
+   |    |    |    | ['Edit3', '数采仪 - Xshell 6Edit3']
+   |    |    |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="Edit")
+   |    |    |
+   |    |    | Edit - 'telnet://root:********@192.168.101.104:23'    (L234, T336, R1144, B355)
+   |    |    | ['Edit3', '数采仪 - Xshell 6Edit3']
+   |    |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="Edit")
+   |    |
+   |    | ComboBox - 'telnet://root:********@192.168.101.104:23'    (L207, T333, R1169, B356)
+   |    | ['ComboBox', '数采仪 - Xshell 6ComboBox', 'ComboBox0', 'ComboBox1', '数采仪 - Xshell 6ComboBox0', '数采仪 - Xshell 6ComboBox1']
+   |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="NsComboBox")
+   |    |    |
+   |    |    | Edit - 'telnet://root:********@192.168.101.104:23'    (L234, T336, R1144, B355)
+   |    |    | ['Edit3', '数采仪 - Xshell 6Edit3']
+   |    |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="Edit")
+   |    |
+   |    | Edit - 'telnet://root:********@192.168.101.104:23'    (L234, T336, R1144, B355)
+   |    | ['Edit3', '数采仪 - Xshell 6Edit3']
+   |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="Edit")
+   |    |
+   |    | Toolbar - '标准按钮'    (L204, T304, R1177, B330)
+   |    | ['Toolbar5', '标准按钮Toolbar', '标准按钮']
+   |    | child_window(title="标准按钮", class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |    |
+   |    | Toolbar - '菜单栏'    (L204, T277, R1177, B302)
+   |    | ['Toolbar6', '菜单栏Toolbar', '菜单栏']
+   |    | child_window(title="菜单栏", class_name="Afx:ToolBar:cd0000:8:10003:10")
+   ***********************************************************************************************************************************
+   |
+   | Toolbar - '链接栏'    (L204, T360, R1177, B386)
+   | ['Toolbar3', '链接栏', '链接栏Toolbar']
+   | child_window(title="链接栏", class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |
+   | Toolbar - '地址栏'    (L204, T332, R1177, B358)
+   | ['Toolbar4', '地址栏Toolbar', '地址栏']
+   | child_window(title="地址栏", class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |    |
+   |    | ComboBox - 'telnet://root:********@192.168.101.104:23'    (L207, T333, R1169, B356)
+   |    | ['ComboBox', '数采仪 - Xshell 6ComboBox', 'ComboBox0', 'ComboBox1', '数采仪 - Xshell 6ComboBox0', '数采仪 - Xshell 6ComboBox1']
+   |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="NsComboBox")
+   |    |    |
+   |    |    | Edit - 'telnet://root:********@192.168.101.104:23'    (L234, T336, R1144, B355)
+   |    |    | ['Edit3', '数采仪 - Xshell 6Edit3']
+   |    |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="Edit")
+   |    |
+   |    | Edit - 'telnet://root:********@192.168.101.104:23'    (L234, T336, R1144, B355)
+   |    | ['Edit3', '数采仪 - Xshell 6Edit3']
+   |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="Edit")
+   |
+   | ComboBox - 'telnet://root:********@192.168.101.104:23'    (L207, T333, R1169, B356)
+   | ['ComboBox', '数采仪 - Xshell 6ComboBox', 'ComboBox0', 'ComboBox1', '数采仪 - Xshell 6ComboBox0', '数采仪 - Xshell 6ComboBox1']
+   | child_window(title="telnet://root:********@192.168.101.104:23", class_name="NsComboBox")
+   |    |
+   |    | Edit - 'telnet://root:********@192.168.101.104:23'    (L234, T336, R1144, B355)
+   |    | ['Edit3', '数采仪 - Xshell 6Edit3']
+   |    | child_window(title="telnet://root:********@192.168.101.104:23", class_name="Edit")
+   |
+   | Edit - 'telnet://root:********@192.168.101.104:23'    (L234, T336, R1144, B355)
+   | ['Edit3', '数采仪 - Xshell 6Edit3']
+   | child_window(title="telnet://root:********@192.168.101.104:23", class_name="Edit")
+   |
+   | Toolbar - '标准按钮'    (L204, T304, R1177, B330)
+   | ['Toolbar5', '标准按钮Toolbar', '标准按钮']
+   | child_window(title="标准按钮", class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |
+   | Toolbar - '菜单栏'    (L204, T277, R1177, B302)
+   | ['Toolbar6', '菜单栏Toolbar', '菜单栏']
+   | child_window(title="菜单栏", class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |
+   | StatusBar - 'telnet://root@192.168.101.104:23'    (L193, T988, R1177, B1011)
+   | ['telnet://root@192.168.101.104:23', 'telnet://root@192.168.101.104:23StatusBar', 'StatusBar']
+   | child_window(title="telnet://root@192.168.101.104:23", class_name="Afx:StatusBar:cd0000:8:10003:10")
+   |
+   | Afx:DockPane:cd0000:8:10003:10 - ''    (L193, T277, R1177, B277)
+   | ['Afx:DockPane:cd0000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:10', 'Afx:DockPane:cd0000:8:10003:100', 'Afx:DockPane:cd0000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:101']
+   | child_window(class_name="Afx:DockPane:cd0000:8:10003:10")
+   |
+   | Afx:DockPane:cd0000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   | ['Afx:DockPane:cd0000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:102']
+   | child_window(class_name="Afx:DockPane:cd0000:8:10003:10")
+   |    |
+   |    | Toolbar - ''    (L193, T1011, R32960, B1037)
+   |    | ['Toolbar7', '数采仪 - Xshell 6Toolbar3']
+   |    | child_window(class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |    |    |
+   |    |    | ComboBox - ''    (L195, T1013, R255, B1133)
+   |    |    | ['ComboBox2', '数采仪 - Xshell 6ComboBox2']
+   |    |    | child_window(class_name="NsComboBox")
+   |    |    |    |
+   |    |    |    | Edit - ''    (L222, T1025, R230, B1132)
+   |    |    |    | ['Edit4', '数采仪 - Xshell 6Edit4']
+   |    |    |    | child_window(class_name="Edit")
+   |    |    |
+   |    |    | Edit - ''    (L222, T1025, R230, B1132)
+   |    |    | ['Edit4', '数采仪 - Xshell 6Edit4']
+   |    |    | child_window(class_name="Edit")
+   |    |
+   |    | ComboBox - ''    (L195, T1013, R255, B1133)
+   |    | ['ComboBox2', '数采仪 - Xshell 6ComboBox2']
+   |    | child_window(class_name="NsComboBox")
+   |    |    |
+   |    |    | Edit - ''    (L222, T1025, R230, B1132)
+   |    |    | ['Edit4', '数采仪 - Xshell 6Edit4']
+   |    |    | child_window(class_name="Edit")
+   |    |
+   |    | Edit - ''    (L222, T1025, R230, B1132)
+   |    | ['Edit4', '数采仪 - Xshell 6Edit4']
+   |    | child_window(class_name="Edit")
+   |
+   | Toolbar - ''    (L193, T1011, R32960, B1037)
+   | ['Toolbar7', '数采仪 - Xshell 6Toolbar3']
+   | child_window(class_name="Afx:ToolBar:cd0000:8:10003:10")
+   |    |
+   |    | ComboBox - ''    (L195, T1013, R255, B1133)
+   |    | ['ComboBox2', '数采仪 - Xshell 6ComboBox2']
+   |    | child_window(class_name="NsComboBox")
+   |    |    |
+   |    |    | Edit - ''    (L222, T1025, R230, B1132)
+   |    |    | ['Edit4', '数采仪 - Xshell 6Edit4']
+   |    |    | child_window(class_name="Edit")
+   |    |
+   |    | Edit - ''    (L222, T1025, R230, B1132)
+   |    | ['Edit4', '数采仪 - Xshell 6Edit4']
+   |    | child_window(class_name="Edit")
+   |
+   | ComboBox - ''    (L195, T1013, R255, B1133)
+   | ['ComboBox2', '数采仪 - Xshell 6ComboBox2']
+   | child_window(class_name="NsComboBox")
+   |    |
+   |    | Edit - ''    (L222, T1025, R230, B1132)
+   |    | ['Edit4', '数采仪 - Xshell 6Edit4']
+   |    | child_window(class_name="Edit")
+   |
+   | Edit - ''    (L222, T1025, R230, B1132)
+   | ['Edit4', '数采仪 - Xshell 6Edit4']
+   | child_window(class_name="Edit")
+   |
+   | Afx:DockPane:cd0000:8:10003:10 - ''    (L193, T277, R193, B1011)
+   | ['Afx:DockPane:cd0000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:103']
+   | child_window(class_name="Afx:DockPane:cd0000:8:10003:10")
+   |
+   | Afx:DockPane:cd0000:8:10003:10 - ''    (L1177, T277, R1177, B1011)
+   | ['Afx:DockPane:cd0000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:104']
+   | child_window(class_name="Afx:DockPane:cd0000:8:10003:10")
+   |
+   | Afx:DockPane:cd0000:8:10003:10 - ''    (L193, T390, R1177, B390)
+   | ['Afx:DockPane:cd0000:8:10003:105', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:105']
+   | child_window(class_name="Afx:DockPane:cd0000:8:10003:10")
+   |
+   | Afx:DockPane:cd0000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   | ['Afx:DockPane:cd0000:8:10003:106', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:106']
+   | child_window(class_name="Afx:DockPane:cd0000:8:10003:10")
+   |
+   | Afx:DockPane:cd0000:8:10003:10 - ''    (L193, T390, R193, B1011)
+   | ['Afx:DockPane:cd0000:8:10003:107', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:107']
+   | child_window(class_name="Afx:DockPane:cd0000:8:10003:10")
+   |
+   | Afx:DockPane:cd0000:8:10003:10 - ''    (L1177, T390, R1177, B1011)
+   | ['Afx:DockPane:cd0000:8:10003:108', '数采仪 - Xshell 6Afx:DockPane:cd0000:8:10003:108']
+   | child_window(class_name="Afx:DockPane:cd0000:8:10003:10")
+   |
+   | NsMultiPaneCtrl - ''    (L193, T390, R1177, B1011)
+   | ['数采仪 - Xshell 6NsMultiPaneCtrl', 'NsMultiPaneCtrl']
+   | child_window(class_name="NsMultiPaneCtrl")
+   |    |
+   |    | TabCtrl:cd0000:8:10003:0:0 - ''    (L193, T390, R1177, B1011)
+   |    | ['数采仪 - Xshell 6TabCtrl:cd0000:8:10003:0:0', 'TabCtrl:cd0000:8:10003:0:0']
+   |    | child_window(class_name="TabCtrl:cd0000:8:10003:0:0")
+   |    |    |
+   |    |    | Xshell6::CoreApp - 'Xshell'    (L193, T391, R1177, B1011)
+   |    |    | ['Xshell6::CoreApp', 'XshellXshell6::CoreApp', 'Xshell']
+   |    |    | child_window(title="Xshell", class_name="Xshell6::CoreApp")
+   |    |    |    |
+   |    |    |    | Afx:ControlBar:400000:8:10003:10 - '隧道窗格'    (L193, T391, R873, B511)
+   |    |    |    | ['Afx:ControlBar:400000:8:10003:10', '隧道窗格', '隧道窗格Afx:ControlBar:400000:8:10003:10', 'Afx:ControlBar:400000:8:10003:100', 'Afx:ControlBar:400000:8:10003:101']
+   |    |    |    | child_window(title="隧道窗格", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |    |    |
+   |    |    |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |    |    |
+   |    |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |    |
+   |    |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |    |
+   |    |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R1177, B391)
+   |    |    |    | ['Afx:DockPane:400000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:10', 'Afx:DockPane:400000:8:10003:100', 'Afx:DockPane:400000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:101']
+   |    |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   |    |    |    | ['Afx:DockPane:400000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:102']
+   |    |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |    |    |
+   |    |    |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R193, B1011)
+   |    |    |    | ['Afx:DockPane:400000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:103']
+   |    |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L1177, T391, R1177, B1011)
+   |    |    |    | ['Afx:DockPane:400000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:104']
+   |    |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Afx:Slider:400000:8:10003:10 - ''    (L193, T391, R196, B394)
+   |    |    |    | ['Afx:Slider:400000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:400000:8:10003:10']
+   |    |    |    | child_window(class_name="Afx:Slider:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Afx:ControlBar:400000:8:10003:10 - 'Caption Bar'    (L193, T391, R1627, B426)
+   |    |    |    | ['Caption BarAfx:ControlBar:400000:8:10003:10', 'Caption Bar', 'Afx:ControlBar:400000:8:10003:102']
+   |    |    |    | child_window(title="Caption Bar", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | AfxFrameOrView110u - ''    (L193, T391, R1177, B1011)
+   |    |    |    | ['数采仪 - Xshell 6AfxFrameOrView110u', 'AfxFrameOrView110u']
+   |    |    |    | child_window(class_name="AfxFrameOrView110u")
+   |    |    |    |    |
+   |    |    |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |    |    |
+   |    |    |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |    |    |
+   |    |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |    |
+   |    |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |    |
+   |    |    | Afx:ControlBar:400000:8:10003:10 - '隧道窗格'    (L193, T391, R873, B511)
+   |    |    | ['Afx:ControlBar:400000:8:10003:10', '隧道窗格', '隧道窗格Afx:ControlBar:400000:8:10003:10', 'Afx:ControlBar:400000:8:10003:100', 'Afx:ControlBar:400000:8:10003:101']
+   |    |    | child_window(title="隧道窗格", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R1177, B391)
+   |    |    | ['Afx:DockPane:400000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:10', 'Afx:DockPane:400000:8:10003:100', 'Afx:DockPane:400000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:101']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:102']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R193, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:103']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L1177, T391, R1177, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:104']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:Slider:400000:8:10003:10 - ''    (L193, T391, R196, B394)
+   |    |    | ['Afx:Slider:400000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:Slider:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:ControlBar:400000:8:10003:10 - 'Caption Bar'    (L193, T391, R1627, B426)
+   |    |    | ['Caption BarAfx:ControlBar:400000:8:10003:10', 'Caption Bar', 'Afx:ControlBar:400000:8:10003:102']
+   |    |    | child_window(title="Caption Bar", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |
+   |    |    | AfxFrameOrView110u - ''    (L193, T391, R1177, B1011)
+   |    |    | ['数采仪 - Xshell 6AfxFrameOrView110u', 'AfxFrameOrView110u']
+   |    |    | child_window(class_name="AfxFrameOrView110u")
+   |    |    |    |
+   |    |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |    |
+   |    |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |    |
+   |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |
+   |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |
+   |    | Xshell6::CoreApp - 'Xshell'    (L193, T391, R1177, B1011)
+   |    | ['Xshell6::CoreApp', 'XshellXshell6::CoreApp', 'Xshell']
+   |    | child_window(title="Xshell", class_name="Xshell6::CoreApp")
+   |    |    |
+   |    |    | Afx:ControlBar:400000:8:10003:10 - '隧道窗格'    (L193, T391, R873, B511)
+   |    |    | ['Afx:ControlBar:400000:8:10003:10', '隧道窗格', '隧道窗格Afx:ControlBar:400000:8:10003:10', 'Afx:ControlBar:400000:8:10003:100', 'Afx:ControlBar:400000:8:10003:101']
+   |    |    | child_window(title="隧道窗格", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R1177, B391)
+   |    |    | ['Afx:DockPane:400000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:10', 'Afx:DockPane:400000:8:10003:100', 'Afx:DockPane:400000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:101']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:102']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R193, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:103']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L1177, T391, R1177, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:104']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:Slider:400000:8:10003:10 - ''    (L193, T391, R196, B394)
+   |    |    | ['Afx:Slider:400000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:Slider:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:ControlBar:400000:8:10003:10 - 'Caption Bar'    (L193, T391, R1627, B426)
+   |    |    | ['Caption BarAfx:ControlBar:400000:8:10003:10', 'Caption Bar', 'Afx:ControlBar:400000:8:10003:102']
+   |    |    | child_window(title="Caption Bar", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |
+   |    |    | AfxFrameOrView110u - ''    (L193, T391, R1177, B1011)
+   |    |    | ['数采仪 - Xshell 6AfxFrameOrView110u', 'AfxFrameOrView110u']
+   |    |    | child_window(class_name="AfxFrameOrView110u")
+   |    |    |    |
+   |    |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |    |
+   |    |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |    |
+   |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |
+   |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |
+   |    | Afx:ControlBar:400000:8:10003:10 - '隧道窗格'    (L193, T391, R873, B511)
+   |    | ['Afx:ControlBar:400000:8:10003:10', '隧道窗格', '隧道窗格Afx:ControlBar:400000:8:10003:10', 'Afx:ControlBar:400000:8:10003:100', 'Afx:ControlBar:400000:8:10003:101']
+   |    | child_window(title="隧道窗格", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R1177, B391)
+   |    | ['Afx:DockPane:400000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:10', 'Afx:DockPane:400000:8:10003:100', 'Afx:DockPane:400000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:101']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:102']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |
+   |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R193, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:103']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L1177, T391, R1177, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:104']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:Slider:400000:8:10003:10 - ''    (L193, T391, R196, B394)
+   |    | ['Afx:Slider:400000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:400000:8:10003:10']
+   |    | child_window(class_name="Afx:Slider:400000:8:10003:10")
+   |    |
+   |    | Afx:ControlBar:400000:8:10003:10 - 'Caption Bar'    (L193, T391, R1627, B426)
+   |    | ['Caption BarAfx:ControlBar:400000:8:10003:10', 'Caption Bar', 'Afx:ControlBar:400000:8:10003:102']
+   |    | child_window(title="Caption Bar", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |
+   |    | AfxFrameOrView110u - ''    (L193, T391, R1177, B1011)
+   |    | ['数采仪 - Xshell 6AfxFrameOrView110u', 'AfxFrameOrView110u']
+   |    | child_window(class_name="AfxFrameOrView110u")
+   |    |    |
+   |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |
+   |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |
+   |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |
+   |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    | child_window(title="关闭会话", class_name="Button")
+   |
+   | TabCtrl:cd0000:8:10003:0:0 - ''    (L193, T390, R1177, B1011)
+   | ['数采仪 - Xshell 6TabCtrl:cd0000:8:10003:0:0', 'TabCtrl:cd0000:8:10003:0:0']
+   | child_window(class_name="TabCtrl:cd0000:8:10003:0:0")
+   |    |
+   |    | Xshell6::CoreApp - 'Xshell'    (L193, T391, R1177, B1011)
+   |    | ['Xshell6::CoreApp', 'XshellXshell6::CoreApp', 'Xshell']
+   |    | child_window(title="Xshell", class_name="Xshell6::CoreApp")
+   |    |    |
+   |    |    | Afx:ControlBar:400000:8:10003:10 - '隧道窗格'    (L193, T391, R873, B511)
+   |    |    | ['Afx:ControlBar:400000:8:10003:10', '隧道窗格', '隧道窗格Afx:ControlBar:400000:8:10003:10', 'Afx:ControlBar:400000:8:10003:100', 'Afx:ControlBar:400000:8:10003:101']
+   |    |    | child_window(title="隧道窗格", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |    |
+   |    |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R1177, B391)
+   |    |    | ['Afx:DockPane:400000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:10', 'Afx:DockPane:400000:8:10003:100', 'Afx:DockPane:400000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:101']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:102']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R193, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:103']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:DockPane:400000:8:10003:10 - ''    (L1177, T391, R1177, B1011)
+   |    |    | ['Afx:DockPane:400000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:104']
+   |    |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:Slider:400000:8:10003:10 - ''    (L193, T391, R196, B394)
+   |    |    | ['Afx:Slider:400000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:Slider:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:ControlBar:400000:8:10003:10 - 'Caption Bar'    (L193, T391, R1627, B426)
+   |    |    | ['Caption BarAfx:ControlBar:400000:8:10003:10', 'Caption Bar', 'Afx:ControlBar:400000:8:10003:102']
+   |    |    | child_window(title="Caption Bar", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |
+   |    |    | AfxFrameOrView110u - ''    (L193, T391, R1177, B1011)
+   |    |    | ['数采仪 - Xshell 6AfxFrameOrView110u', 'AfxFrameOrView110u']
+   |    |    | child_window(class_name="AfxFrameOrView110u")
+   |    |    |    |
+   |    |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |    |
+   |    |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |    |
+   |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |
+   |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |
+   |    | Afx:ControlBar:400000:8:10003:10 - '隧道窗格'    (L193, T391, R873, B511)
+   |    | ['Afx:ControlBar:400000:8:10003:10', '隧道窗格', '隧道窗格Afx:ControlBar:400000:8:10003:10', 'Afx:ControlBar:400000:8:10003:100', 'Afx:ControlBar:400000:8:10003:101']
+   |    | child_window(title="隧道窗格", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R1177, B391)
+   |    | ['Afx:DockPane:400000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:10', 'Afx:DockPane:400000:8:10003:100', 'Afx:DockPane:400000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:101']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:102']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |
+   |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R193, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:103']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L1177, T391, R1177, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:104']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:Slider:400000:8:10003:10 - ''    (L193, T391, R196, B394)
+   |    | ['Afx:Slider:400000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:400000:8:10003:10']
+   |    | child_window(class_name="Afx:Slider:400000:8:10003:10")
+   |    |
+   |    | Afx:ControlBar:400000:8:10003:10 - 'Caption Bar'    (L193, T391, R1627, B426)
+   |    | ['Caption BarAfx:ControlBar:400000:8:10003:10', 'Caption Bar', 'Afx:ControlBar:400000:8:10003:102']
+   |    | child_window(title="Caption Bar", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |
+   |    | AfxFrameOrView110u - ''    (L193, T391, R1177, B1011)
+   |    | ['数采仪 - Xshell 6AfxFrameOrView110u', 'AfxFrameOrView110u']
+   |    | child_window(class_name="AfxFrameOrView110u")
+   |    |    |
+   |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |
+   |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |
+   |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |
+   |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    | child_window(title="关闭会话", class_name="Button")
+   |
+   | Xshell6::CoreApp - 'Xshell'    (L193, T391, R1177, B1011)
+   | ['Xshell6::CoreApp', 'XshellXshell6::CoreApp', 'Xshell']
+   | child_window(title="Xshell", class_name="Xshell6::CoreApp")
+   |    |
+   |    | Afx:ControlBar:400000:8:10003:10 - '隧道窗格'    (L193, T391, R873, B511)
+   |    | ['Afx:ControlBar:400000:8:10003:10', '隧道窗格', '隧道窗格Afx:ControlBar:400000:8:10003:10', 'Afx:ControlBar:400000:8:10003:100', 'Afx:ControlBar:400000:8:10003:101']
+   |    | child_window(title="隧道窗格", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |    |
+   |    |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    |    | child_window(class_name="SysListView32")
+   |    |    |    |    |
+   |    |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R1177, B391)
+   |    | ['Afx:DockPane:400000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:10', 'Afx:DockPane:400000:8:10003:100', 'Afx:DockPane:400000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:101']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:102']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |    |
+   |    |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |
+   |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R193, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:103']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:DockPane:400000:8:10003:10 - ''    (L1177, T391, R1177, B1011)
+   |    | ['Afx:DockPane:400000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:104']
+   |    | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Afx:Slider:400000:8:10003:10 - ''    (L193, T391, R196, B394)
+   |    | ['Afx:Slider:400000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:400000:8:10003:10']
+   |    | child_window(class_name="Afx:Slider:400000:8:10003:10")
+   |    |
+   |    | Afx:ControlBar:400000:8:10003:10 - 'Caption Bar'    (L193, T391, R1627, B426)
+   |    | ['Caption BarAfx:ControlBar:400000:8:10003:10', 'Caption Bar', 'Afx:ControlBar:400000:8:10003:102']
+   |    | child_window(title="Caption Bar", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |
+   |    | AfxFrameOrView110u - ''    (L193, T391, R1177, B1011)
+   |    | ['数采仪 - Xshell 6AfxFrameOrView110u', 'AfxFrameOrView110u']
+   |    | child_window(class_name="AfxFrameOrView110u")
+   |    |    |
+   |    |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |    |
+   |    |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    |    | child_window(title="关闭会话", class_name="Button")
+   |    |
+   |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |
+   |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    | child_window(title="关闭会话", class_name="Button")
+   |
+   | Afx:ControlBar:400000:8:10003:10 - '隧道窗格'    (L193, T391, R873, B511)
+   | ['Afx:ControlBar:400000:8:10003:10', '隧道窗格', '隧道窗格Afx:ControlBar:400000:8:10003:10', 'Afx:ControlBar:400000:8:10003:100', 'Afx:ControlBar:400000:8:10003:101']
+   | child_window(title="隧道窗格", class_name="Afx:ControlBar:400000:8:10003:10")
+   |    |
+   |    | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   |    | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   |    | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | ListView - ''    (L193, T418, R873, B511)
+   |    |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    |    | child_window(class_name="SysListView32")
+   |    |    |    |
+   |    |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    |    | child_window(class_name="SysHeader32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    | child_window(class_name="SysHeader32")
+   |
+   | Afx:TabWnd:400000:8:10003:10 - ''    (L193, T391, R873, B511)
+   | ['数采仪 - Xshell 6Afx:TabWnd:400000:8:10003:10', 'Afx:TabWnd:400000:8:10003:10']
+   | child_window(class_name="Afx:TabWnd:400000:8:10003:10")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView2', '数采仪 - Xshell 6ListView2']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | ListView - ''    (L193, T418, R873, B511)
+   |    | ['ListView3', '数采仪 - Xshell 6ListView3']
+   |    | child_window(class_name="SysListView32")
+   |    |    |
+   |    |    | Header - ''    (L193, T419, R873, B443)
+   |    |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    |    | child_window(class_name="SysHeader32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    | child_window(class_name="SysHeader32")
+   |
+   | ListView - ''    (L193, T418, R873, B511)
+   | ['ListView2', '数采仪 - Xshell 6ListView2']
+   | child_window(class_name="SysListView32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   |    | child_window(class_name="SysHeader32")
+   |
+   | Header - ''    (L193, T419, R873, B443)
+   | ['HeaderID', 'Header2', 'Header到', 'Header发送的字节', '数采仪 - Xshell 6Header2', 'Header创建时间', 'Header接收到字节', 'Header类型', 'Header从']
+   | child_window(class_name="SysHeader32")
+   |
+   | ListView - ''    (L193, T418, R873, B511)
+   | ['ListView3', '数采仪 - Xshell 6ListView3']
+   | child_window(class_name="SysListView32")
+   |    |
+   |    | Header - ''    (L193, T419, R873, B443)
+   |    | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   |    | child_window(class_name="SysHeader32")
+   |
+   | Header - ''    (L193, T419, R873, B443)
+   | ['Header说明', 'Header3', 'Header方向', '数采仪 - Xshell 6Header3', 'Header状态', 'Header目标', 'Header源']
+   | child_window(class_name="SysHeader32")
+   |
+   | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R1177, B391)
+   | ['Afx:DockPane:400000:8:10003:10', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:10', 'Afx:DockPane:400000:8:10003:100', 'Afx:DockPane:400000:8:10003:101', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:100', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:101']
+   | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |
+   | Afx:DockPane:400000:8:10003:10 - ''    (L193, T1011, R1177, B1011)
+   | ['Afx:DockPane:400000:8:10003:102', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:102']
+   | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |    |
+   |    | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   |    | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   |    | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |
+   | Toolbar - '快速命令'    (L193, T1011, R1177, B1037)
+   | ['Toolbar8', '快速命令Toolbar', '快速命令']
+   | child_window(title="快速命令", class_name="Afx:ToolBar:400000:8:10003:10")
+   |
+   | Afx:DockPane:400000:8:10003:10 - ''    (L193, T391, R193, B1011)
+   | ['Afx:DockPane:400000:8:10003:103', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:103']
+   | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |
+   | Afx:DockPane:400000:8:10003:10 - ''    (L1177, T391, R1177, B1011)
+   | ['Afx:DockPane:400000:8:10003:104', '数采仪 - Xshell 6Afx:DockPane:400000:8:10003:104']
+   | child_window(class_name="Afx:DockPane:400000:8:10003:10")
+   |
+   | Afx:Slider:400000:8:10003:10 - ''    (L193, T391, R196, B394)
+   | ['Afx:Slider:400000:8:10003:10', '数采仪 - Xshell 6Afx:Slider:400000:8:10003:10']
+   | child_window(class_name="Afx:Slider:400000:8:10003:10")
+   |
+   | Afx:ControlBar:400000:8:10003:10 - 'Caption Bar'    (L193, T391, R1627, B426)
+   | ['Caption BarAfx:ControlBar:400000:8:10003:10', 'Caption Bar', 'Afx:ControlBar:400000:8:10003:102']
+   | child_window(title="Caption Bar", class_name="Afx:ControlBar:400000:8:10003:10")
+   |
+   | AfxFrameOrView110u - ''    (L193, T391, R1177, B1011)
+   | ['数采仪 - Xshell 6AfxFrameOrView110u', 'AfxFrameOrView110u']
+   | child_window(class_name="AfxFrameOrView110u")
+   |    |
+   |    | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   |    | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   |    | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |    |
+   |    | Button - '关闭会话'    (L193, T391, R217, B415)
+   |    | ['Button2', '关闭会话', '关闭会话Button']
+   |    | child_window(title="关闭会话", class_name="Button")
+   |
+   | Afx:00400000:0 - 'CURSOR'    (L226, T606, R233, B620)
+   | ['CURSORAfx:00400000:0', 'CURSOR', 'Afx:00400000:0']
+   | child_window(title="CURSOR", class_name="Afx:00400000:0")
+   |
+   | Button - '关闭会话'    (L193, T391, R217, B415)
+   | ['Button2', '关闭会话', '关闭会话Button']
+   | child_window(title="关闭会话", class_name="Button")
+
+
