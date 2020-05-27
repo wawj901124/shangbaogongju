@@ -417,9 +417,15 @@ class ActionDevTagXadmin(object):
                 stms = SaveToMySql(data_list=data_list, config_project=config_project, root_name=root_name)
                 stms.runSaveDateListToMySql()
                 db_root_id = stms.db_root_id
+
+                # 如果是新加的内容，则保存root_id的值为新的值
+                print("db_root_id:%s" %str(db_root_id))
+                qs_one.export_root_num=db_root_id
+                qs_one.save()   #保存root_id的值
             else:  #否则只从数据库导出数据
                 #从数据库导出内容
-                db_root_id = qs_one.db_root_id
+                db_root_id = qs_one.export_root_num
+                print("获取的db_root_id:%s" %str(db_root_id))
 
             gddl = GetDataDictFromMySql(db_root_id)
             data_list = gddl.treeCheck()
