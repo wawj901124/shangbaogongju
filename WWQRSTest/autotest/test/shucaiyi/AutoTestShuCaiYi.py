@@ -286,7 +286,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 def __generateTestCases():
     from shucaiyidate.models import XieyiConfigDate
 
-    xieyiconfigdatetestcase_all = XieyiConfigDate.objects.filter(id=1).order_by('id')
+    xieyiconfigdatetestcase_all = XieyiConfigDate.objects.filter(is_run_case=True).order_by('id')
 
     for xieyiconfigdatetestcase in xieyiconfigdatetestcase_all:
         forcount = xieyiconfigdatetestcase.case_counts

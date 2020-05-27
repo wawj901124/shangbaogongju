@@ -19,7 +19,7 @@ class XieyiConfigDateXadmin(object):
                     "test_case_title", "is_run_case",
 
                     "case_counts",
-                    ]  # 定义显示的字段
+                    "go_to",]  # 定义显示的字段
     list_filter = ["test_project", "test_module", "test_page",
                    "test_case_title", "is_run_case",
                    "write_user"]  # 定义筛选的字段
