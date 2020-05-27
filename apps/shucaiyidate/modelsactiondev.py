@@ -9,11 +9,11 @@ User = get_user_model()  #get_user_model() 函数直接返回User类，找的是
 
 class ActionDevTag(models.Model):
 
-    original_file_name = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"原有dev文件路径")
+    original_file_name = models.CharField(max_length=1000, default="", null=True, blank=True, verbose_name=u"原有dev文件路径")
     config_project = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"入库的项目名称")
     root_name = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"入库的根节点名称")
     export_root_num = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"导出的数据库根节点ID号")
-    new_file_name = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"导出的新的dev文件路径")
+    new_file_name = models.CharField(max_length=1000, default="", null=True, blank=True, verbose_name=u"导出的新的dev文件路径")
     is_read_original_dev = models.BooleanField(default=False, verbose_name=u"是否从原dev文件导入数据到数据库")
     is_create_new_dev = models.BooleanField(default=False, verbose_name=u"是否导出数据库中的节点数据到新的dev文件中")
 
