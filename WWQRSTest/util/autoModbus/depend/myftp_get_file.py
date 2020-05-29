@@ -47,15 +47,15 @@ class MyFTP(object):
 
 
 if __name__ == '__main__':
-    host = '192.168.101.133'
+    host = '192.168.101.124'
     username = 'root'
-    password = "wwyc8888"
+    password = "wwyc5166"
     m = MyFTP(host,username,password)
 
     # remote_file = '/usr/app_install/protocol/bin/969_w_4.txt'
     # local_file = '969_w_4.txt'
-    remote_file = '/usr/app_install/common/cfg/elec_base.xml'
-    local_file = 'elec_base.xml'
+    remote_file = '/usr/app_install/protocol/bin/1985_N'
+    local_file = '1985_N'
     # m.ftp_download(remote_file,local_file)
     # m.ftp_upload()
     # m.ftp_dir()

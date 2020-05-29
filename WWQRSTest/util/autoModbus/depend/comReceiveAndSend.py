@@ -302,9 +302,36 @@ def run_com():
 
 
 if __name__ == '__main__':
+    Port = "COM4"
+    Baudrate = 9600
+    Bytesize = 8
+    Parity = "N"
+    Stopbits = 1
+    # Senddate =self.com_send_date_bytes
+    Senddate = None
+    Senddatelist = b'\x03\x03\x04\xF8\x00\x3F\xAC\xF9\x1E'
+    ExpectDateBytes = b'\x03\x03\x04\xF8\x00\x3F\xAC\xF9\x1E'
+    rt = ComThread(Port=Port, Baudrate=Baudrate, Bytesize=Bytesize, Parity=Parity, Stopbits=Stopbits,
+                   ExpectDateBytes=ExpectDateBytes, Senddate=Senddate, Senddatelist=Senddatelist)
+    try:
+        if rt.start():
+            print(rt.l_serial.name)
+            rt.waiting()
+            print("The data is:%s,The Id is:%s" % (rt.data, rt.ID))
+            rt.stop()
+        else:
+            pass
+    except Exception as se:
+        print(str(se))
+    if rt.alive:
+        rt.stop()
+    print('')
+    print('End OK .')
+    del rt
+    time.sleep(30)  # 等待30秒
 
-    #设置一个run_com函数，用来运行窗口，便于若其他地方下需要调用串口是可以直接调用main函数
-    ID,data = run_com()
-
-    print("******")
-    print(ID,data)
+    # #设置一个run_com函数，用来运行窗口，便于若其他地方下需要调用串口是可以直接调用main函数
+    # ID,data = run_com()
+    #
+    # print("******")
+    # print(ID,data)

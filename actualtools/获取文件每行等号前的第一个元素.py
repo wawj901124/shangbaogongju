@@ -4,32 +4,51 @@ f=open("wenjian.txt","r",encoding="utf8")
 
 qianzui = "new_udd."
 houzui = "qs_one."
+expect_list = []
 for i in f:
+    lie_list = i.split(" ")
+    for lie_one in lie_list:
+        lie_one = lie_one.strip("\n")
+        expect_list.append(lie_one)
 
-    gong = """
-for %s_one_list in %s_all_list:
-    %s_save = %s_one_list[0]
-    sd_%s_list = Spider%s.objects.filter(%s=%s_save)
-    for sd_%s in sd_%s_list:
-        spiderdata_manytomany.%s.add(sd_%s)
-    print("保存发行商")
-    """%(i,i,i,i,i,i,i,i,i,i,i,i)
-    print("%s"%(gong,))
+print(expect_list)
+print(len(expect_list))
 
-    # gong = gong.strip()
-    # print("%s%s=%s%s"% (qianzui,gong,houzui,gong))
-#     gong_list = gong.split(" ")
-#     gong_list_len = len(gong_list)
-#     if gong_list_len>1:
-#         gong = "_".join(gong_list)
-#     # gong = gong.strip()
-#     # gong = gong.split(" ")
-#     gong = """
-# %s(){
-#         ss -an|grep "^tcp" |grep "%s"|wc -l   #使用ss命令获取以tcp开头的内容且包含LISTEN 的行数
-# }
-#     """ % (gong,gong)
-#     print("%s" % gong)
+
+
+# for i in f:
+#     lie_list = i.split("=")
+#     lei_one = lie_list[0]
+#     lei_one = lei_one.strip()
+#     lei_two = lie_list[1]
+#     lei_two = lei_two.strip()
+#     lei = """
+#         <tr>
+#             <td>
+#                 <label>%s:</label>
+#             </td>
+#             <td>
+#                 <input id="%s" name="%s" type="text" value="{{ xieyiconfigdate.%s|default:""  }}"/>
+#             </td>
+#         </tr>
+#     """ %(lei_two,lei_one,lei_one,lei_one)
+#     # lei = """
+#     #     <tr>
+#     #         <td>
+#     #             <label>%s:</label>
+#     #         </td>
+#     #         <td>
+#     #             <input type="radio" id="%s" name="%s"  value="true"  {%% if xieyiconfigdate.%s == 1 %%} checked="checked"{%% endif %%}>是
+#     #             <input type="radio" id="%s" name="%s"  value="false" {%% if xieyiconfigdate.%s == 0 %%} checked="checked"{%% endif %%}>否
+#     #         </td>
+#     #     </tr>
+#     # """ %(lei_two,lei_one,lei_one,lei_one,lei_one,lei_one,lei_one)
+#     print(lei)
+
+
+
+
+
 
 
 

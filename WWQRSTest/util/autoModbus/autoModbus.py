@@ -19,6 +19,7 @@ class AutoModbus(object):
     def __init__(self,telnet_host_ip =None,
                         telnet_username =None,
                         telnet_password =None,
+                        xieyi_bin_dir=None,
                         xieyi_name =None,
                         xieyi_test_port =None,
                         xieyi_db=None,
@@ -49,6 +50,7 @@ class AutoModbus(object):
         self.telnet_username = telnet_username
         self.telnet_password = telnet_password
 
+        self.xieyi_bin_dir = xieyi_bin_dir
         self.xieyi_name = xieyi_name
         self.xieyi_test_port = xieyi_test_port
         self.xieyi_txt_file_name = '%s_%s.txt'%(self.xieyi_name,self.xieyi_test_port)
@@ -882,10 +884,36 @@ class AutoModbus(object):
                 command_result_list.append(result)
         return command_result_list
 
+    # 关闭默认启动协议进程_写死通用
+    def telnet_client_close_default_start_xieyi_common(self):
+        mycommad_list = []
+        mycommad_one = "stop_guard &"   #关闭守护进程，如果有的话
+        mycommad_two = "cd %s" % self.xieyi_bin_dir  # 进入到协议二进制程序的bin目录下
+        mycommad_three = "./Debug_scrip.sh %s&>/dev/null & " % self.xieyi_name  # 关闭自启动协议
+        mycommad_four = "ps aux | grep %s | xargs kill -9 &>/dev/null &" % self.xieyi_name  #杀死协议进程
+        mycommad_list.append(mycommad_one)
+        mycommad_list.append(mycommad_two)
+        mycommad_list.append(mycommad_three)
+        mycommad_list.append(mycommad_four)
+        self.run_telnet_command_list(mycommad_list)
+        self.time_delay(15)
+
     #关闭默认启动协议进程
     def telnet_client_close_default_start_xieyi(self,mycommad_list):
         self.run_telnet_command_list(mycommad_list)
         self.time_delay(15)
+
+    #关闭默认启动协议进程后，重新启动协议_写死通用
+    def telnet_client_rstart_xieyi_common(self):
+        mycommad_list = []
+        mycommad_one = "cd %s" % self.xieyi_bin_dir  # 进入到协议二进制程序的bin目录下
+        mycommad_two = "rm -rf %s&>/dev/null &" % self.xieyi_txt_file_name  # 删除已有txt文件
+        mycommad_three = "./%s --id=com%s_%s --log_level=develop &>%s &" % (self.xieyi_name,self.com_port,self.com_port,self.xieyi_txt_file_name)  # 或启动程序
+        mycommad_list.append(mycommad_one)
+        mycommad_list.append(mycommad_two)
+        mycommad_list.append(mycommad_three)
+        self.run_telnet_command_list(mycommad_list)
+        self.time_delay(3)
 
     #关闭默认启动协议进程后，重新启动协议
     def telnet_client_rstart_xieyi(self,mycommad_list):
@@ -984,6 +1012,14 @@ class AutoModbus(object):
         self.outPutMyLog('End OK .')
         del rt
         self.time_delay(30)  #等待30秒
+
+
+    #ftp获取串口解析文件_通用函数
+    def ftp_down_xieyi_file_commom(self):
+        xieyi_remote_file = self.xieyi_bin_dir + '/' + self.xieyi_txt_file_name
+        xieyi_local_file = self.xieyi_txt_file_name
+        self.time_delay(60)
+        self.run_ftp_down(remote_file=xieyi_remote_file, local_file=xieyi_local_file)
 
 
     #ftp获取串口解析文件
