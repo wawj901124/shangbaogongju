@@ -3,22 +3,18 @@
 	<!-- 设备配置文件版本 -->
 	<version>v20200527</version>
 	<!-- 设备型号 -->
-	<deviceModel>无锡创晨氨氮分析仪</deviceModel>
+	<deviceModel>山东思睿氨氮分析仪</deviceModel>
 	<collectCmds ackPacketMaxLen="">
 		<!-- id：采集命令标识,可以为空 返回当前数据-->
-		<cmd id="rtdCollect" format="HEX" cmd="${ID}0400020009${MODBUS_L_CRC16}" ackType="R_HEAD_LEN" ackHead="${ID}04" ackTail="" ackLen="23" ackGap="" ackCheckMode="MODBUS_L_CRC16" ackCheckArg="">
+		<cmd id="rtdCollect" format="ASCII" cmd="##" ackType="R_HEAD_TAIL" ackHead="##" ackTail="&&" ackLen="" ackGap="" ackCheckMode="HJ212_CRC" ackCheckArg="">
 			<!-- 污染物因子 -->
 			<pollutantFactor>
 				<!-- findMode：查找模式(OFFSET,固定偏移；MARK,固定标识) -->
-				<factor factorCode="W21003" findMode="OFFSET" offset="7" mark="" len="4" decodeType="decode1" operator="*" operand="1"/>
+				<factor factorCode="060" findMode="MARK" offset="" mark="N" len="4" decodeType="decode1" operator="*" operand="1"/>
 			</pollutantFactor>
 			<!-- 仪器状态因子 -->
 			<stateFactor>
 				<!-- factorCode：状态因子代码; factorType：状态因子类型(STATE,状态; PARAM,参数)-->
-				<!--吸光度 参数配置 -->
-				<factor factorCode="i12090" factorType="PARAM">
-				    <section dataType="FLOAT" strFormat="%.3f" findMode="OFFSET" offset="3" mark="" len="4" decodeType="decode1" operator="*" operand="1">
-				</factor>
 				<!--日期参数配置 年-月-日-时-分 参数配置 -->
 			    <factor factorCode="SampleTime" factorType="PARAM">
 					<section dataType="INT" strFormat="%02d" findMode="OFFSET" offset="11" mark="" len="2" decodeType="decode7" operator="*" operand="1">

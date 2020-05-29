@@ -109,7 +109,7 @@ class  ActiveBrowser(object):
         chrome_options.add_argument("--start-fullscreen")  #全屏启动
         #chrome_options.add_argument("--window-size=4000,1600")  #专门应对无头浏览器中不能最大化屏幕的方案
         chrome_options.add_argument("--window-size=1920,1050")  # 专门应对无头浏览器中不能最大化屏幕的方案
-        # chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222")   #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
+        chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222")   #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
         ## chrome_options.debugger_address="127.0.0.1:9222" #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
         # chrome_options.add_argument('--disable-dev-shm-usage') #不加载图片, 提升速度
         # chrome_options.add_argument('blink-settings=imagesEnabled=false')

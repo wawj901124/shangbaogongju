@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <p>
+        <?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<!-- 设备配置文件版本 -->
+	<version>v20180423</version>
+	<!-- 设备型号 -->
+	<deviceModel>碧朗氨氮分析仪</deviceModel>
+	<collectCmds ackPacketMaxLen="">
+		<!-- id：采集命令标识,可以为空 -->
+		<cmd id="rtdCollect" format="HEX" cmd="${ID}0300010002${MODBUS_L_CRC16}" ackType="R_HEAD_LEN" ackHead="${ID}03" ackTail="" ackLen="9" ackGap="" ackCheckMode="MODBUS_L_CRC16" ackCheckArg="">
+			<!-- 污染物因子 -->
+			<pollutantFactor>
+				<!-- findMode：查找模式(OFFSET,固定偏移；MARK,固定标识) -->
+				<factor factorCode="W21003" findMode="OFFSET" offset="3" mark="" len="4" decodeType="decode2" operator="*" operand="1"/>
+			</pollutantFactor>
+			<!-- 仪器状态因子 -->
+			<stateFactor>
+				<!-- factorCode：状态因子代码; factorType：状态因子类型(STATE,状态; PARAM,参数)-->
+				<factor factorCode="i13201" factorType="PARAM">
+				    <section dataType="FLOAT" strFormat="%.3f" findMode="OFFSET" offset="3" mark="" len="4" decodeType="decode2" operator="*" operand="1">
+				</factor>
+
+				<factor factorCode="i1320C" factorType="PARAM">
+				    <section dataType="FLOAT" strFormat="%.3f" findMode="OFFSET" offset="3" mark="" len="4" decodeType="decode2" operator="*" operand="1">
+				</factor>
+
+				<factor factorCode="i1320D" factorType="PARAM">
+				    <section dataType="FLOAT" strFormat="%.3f" findMode="OFFSET" offset="3" mark="" len="4" decodeType="decode2" operator="*" operand="1">
+				</factor>
+				<factor factorCode="i12201" factorType="STATE">
+				    <section dataType="INT" strFormat="%2df" findMode="OFFSET" offset="3" mark="" len="2" decodeType="decode7" operator="*" operand="1">
+				    	<convertRule ruleType="1" enumValue="1" minValue="" maxValue="" resultValue="1"/>
+						<convertRule ruleType="1" enumValue="16" minValue="" maxValue="" resultValue="3"/>
+						<convertRule ruleType="1" enumValue="32" minValue="" maxValue="" resultValue="4"/>
+						<convertRule ruleType="1" enumValue="64" minValue="" maxValue="" resultValue="5"/>
+						<convertRule ruleType="1" enumValue="128" minValue="" maxValue="" resultValue="7"/>
+						<convertRule ruleType="1" enumValue="256" minValue="" maxValue="" resultValue="18"/>
+				    </section>
+				</factor>
+			</stateFactor>
+		</cmd>
+	</collectCmds>
+</root>
+    </p>
+</head>
+<body>
+
+</body>
+</html>

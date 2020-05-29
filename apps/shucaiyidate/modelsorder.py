@@ -73,8 +73,8 @@ class XieyiConfigDateOrder(models.Model):
     is_tcp_server_receive = models.BooleanField(default=False,verbose_name=u"是否接收平台报文")
     is_assert_tcp_server_receive_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在接收的报文中")
 
-    tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", verbose_name=u"数据上报平台的IP地址")
-    tcp_server_port = models.CharField(max_length=100, default="63503", verbose_name=u"数据上报平台的端口号")
+    tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", null=True, blank=True,verbose_name=u"数据上报平台的IP地址")
+    tcp_server_port = models.CharField(max_length=100, default="63503", null=True, blank=True,verbose_name=u"数据上报平台的端口号")
 
 
     # case_counts = models.IntegerField(default="1",verbose_name="循环次数",help_text=u"循环次数，请填写数字，"
@@ -126,7 +126,7 @@ class XieyiTestCase(models.Model):
         verbose_name_plural=verbose_name
 
     def __str__(self):
-        return self.test_case_title
+        return "{}-【{}】-{}".format(self.id,self.test_project,self.test_case_title)
 
     def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
