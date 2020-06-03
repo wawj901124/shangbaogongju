@@ -6,7 +6,9 @@ import serial
 
 class ComThread:
     def __init__(self, Port='COM4',Baudrate=9600,Bytesize=8,Parity ="N",Stopbits=1,Timeout=2,
-                 ExpectDateBytes=None,Senddatelist=None,Senddate=None):
+                 IsNeedExpectDate=None,ExpectDateBytesList=None,
+                 ExpectDateBytes=None,Senddatelist=None,Senddate=None,
+                 SenderHexDataOrderBytesList=None):
         self.l_serial = None
         self.alive = False
         self.waitEnd = None
@@ -21,6 +23,11 @@ class ComThread:
         self.expectdatebytes=ExpectDateBytes
         self.senddate =Senddate  #发送数据
         self.senddate_list = Senddatelist  # 发送数据
+        self.isneedeexpectdate = IsNeedExpectDate
+        self.expectdatebyteslist = ExpectDateBytesList
+        self.senderhexdataorderbyteslist = SenderHexDataOrderBytesList
+
+    #获取多个
 
 
     def waiting(self):
@@ -87,21 +94,52 @@ class ComThread:
             # print(data)
             n = self.l_serial.inWaiting()
             if len(data)>0 and n==0:
-                #如果接收到数据：
-                if data !=b'':
-                    if data == self.expectdatebytes:
-                        print("预期二进制：")
-                        print(self.expectdatebytes)
-                        print(type(self.expectdatebytes))
-                        #发送数据
-                        print("发送数据：")
-                        print(self.senddate)
-                        self.SendDate(self.senddate)
-                        for send_one in self.senddate_list:
+                #循环发送列表中的所有数据
+                zonghe_list = self.senderhexdataorderbyteslist
+                for zonghe_list_one in zonghe_list:  # 循环发送列表中的所有数据
+                    print("开始for循环")
+                    if zonghe_list_one[1]:  # 如果需要接收
+                        if data == zonghe_list_one[2]:
                             print("发送数据：")
-                            print(send_one)
-                            self.SendDate(send_one)
-                        break   #退出循环
+                            print(zonghe_list_one[0])
+                            self.SendDate(zonghe_list_one[0])
+                    else:  # 如果不需要接收，则直接发送数据
+                        print("发送数据：")
+                        print(zonghe_list_one[0])
+                        self.SendDate(zonghe_list_one[0])
+                print("结束for循环")
+                break  # 退出循环
+                # #如果接收到数据：
+                # if data !=b'':
+                #     zonghe_list = self.senderhexdataorderbyteslist
+                #     for zonghe_list_one in zonghe_list:   #循环发送列表中的所有数据
+                #         print("开始for循环")
+                #         if zonghe_list_one[1]:  #如果需要接收
+                #             if data == zonghe_list_one[2]:
+                #                 print("发送数据：")
+                #                 print(zonghe_list_one[0])
+                #                 self.SendDate(zonghe_list_one[0])
+                #         else:  #如果不需要接收，则直接发送数据
+                #             print("发送数据：")
+                #             print(zonghe_list_one[0])
+                #             self.SendDate(zonghe_list_one[0])
+                #     print("结束for循环")
+                #     break  #退出循环
+                    # for expectdatebytes in self.expectdatebyteslist:
+                    #     if data == expectdatebytes:
+                    #         print("预期二进制：")
+                    #         print(expectdatebytes)
+                    #         print(type(expectdatebytes))
+                    #         # #发送数据
+                    #         # print("发送数据：")
+                    #         # print(self.senddate)
+                    #         # self.SendDate(self.senddate)
+                    #         #则发送列表数据
+                    #         for send_one in self.senddate_list:
+                    #             print("发送数据：")
+                    #             print(send_one)
+                    #             self.SendDate(send_one)
+
 
 
 

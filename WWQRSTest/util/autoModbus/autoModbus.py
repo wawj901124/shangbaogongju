@@ -33,6 +33,8 @@ class AutoModbus(object):
                         com_send_date =None,
                         com_expect_date =None,
                         com_send_date_list =None,
+                        is_need_expect_list = None,
+                        com_expect_date_list=None,
                         xieyi_jiexi_expect_result_list =None,
                         tcp_server_ip =None,
                         tcp_server_port =None,
@@ -94,14 +96,14 @@ class AutoModbus(object):
         self.com_send_date_yinzi_num_is_auto_make = False # 回复数据中因子个数是否根据配置文件自动生成
         self.com_send_date_yinzi_hex_str_is_auto_make = False # 回复数据中因子16进制字符串是否自动生成
         self.com_send_date_yinzi_hex_str_list = ['F8 00 3F AC']  # 回复数据中因子16进制字符串非自动生成时，需要再此处传入
-        # self.com_send_date = '01 03 02 00 EA'
-        # self.com_expect_date = '01 03 12 2D 00 01 11 7B'
-        self.com_expect_date_bytes = self.handle_Hexstr_to_bytes(self.com_expect_date)
-        # self.com_send_date_list = ['01 03 02 18 75','01 03 02 18 75','01 03 02 18 75']
-        # self.com_send_date_bytes = self.handle_send_data()
-        self.com_send_date_list_bytes = self.handle_Hexstr_list_to_bytes_list(self.com_send_date_list)
-        # self.xieyi_jiexi_expect_result = '9.55'  #协议解析预期结果
-        # self.xieyi_jiexi_expect_result_list = ['0.234']  # 协议解析预期结果.列表值
+        # # self.com_send_date = '01 03 02 00 EA'
+        # # self.com_expect_date = '01 03 12 2D 00 01 11 7B'
+        # self.com_expect_date_bytes = self.handle_Hexstr_to_bytes(self.com_expect_date)
+        # # self.com_send_date_list = ['01 03 02 18 75','01 03 02 18 75','01 03 02 18 75']
+        # # self.com_send_date_bytes = self.handle_send_data()
+        # self.com_send_date_list_bytes = self.handle_Hexstr_list_to_bytes_list(self.com_send_date_list)
+        # # self.xieyi_jiexi_expect_result = '9.55'  #协议解析预期结果
+        # # self.xieyi_jiexi_expect_result_list = ['0.234']  # 协议解析预期结果.列表值
         self.xieyi_cfg_protocol = ""
         self.xieyi_cfg_idNum = "11"
         self.xieyi_cfg_startAddress = "0000"
@@ -992,8 +994,10 @@ class AutoModbus(object):
         Stopbits = int(self.com_stopbits)
         # Senddate =self.com_send_date_bytes
         Senddate = None
-        Senddatelist =self.com_send_date_list_bytes
-        ExpectDateBytes=self.com_expect_date_bytes
+        # Senddatelist =self.com_send_date_list_bytes
+        # ExpectDateBytes=self.com_expect_date_bytes
+        Senddatelist =None
+        ExpectDateBytes=None
         rt = ComThread(Port=Port,Baudrate=Baudrate,Bytesize=Bytesize,Parity =Parity,Stopbits=Stopbits,
                        ExpectDateBytes=ExpectDateBytes,Senddate=Senddate,Senddatelist=Senddatelist)
         try:
@@ -1013,6 +1017,59 @@ class AutoModbus(object):
         del rt
         self.time_delay(30)  #等待30秒
 
+
+    #解析收到的数据sender_hex_data_order_list的数据为一条一条可手法的二进制
+    def get_sender_hex_data_order_list_bytes_list(self,sender_hex_data_order_list):
+        sender_hex_data_order_list_len = len(sender_hex_data_order_list)
+        sender_hex_data_order_list_bytes = []
+        for i in range(0,sender_hex_data_order_list_len):
+            sender_hex_data_order_list_bytes_one = []
+            com_send_date_one_bytes = self.handle_Hexstr_to_bytes(sender_hex_data_order_list[i][0])
+            is_need_expect = sender_hex_data_order_list[i][1]
+            if sender_hex_data_order_list[i][2]==None:
+                com_expect_date_bytes = None
+            else:
+                com_expect_date_bytes = self.handle_Hexstr_to_bytes(sender_hex_data_order_list[i][2])
+            sender_hex_data_order_list_bytes_one.append(com_send_date_one_bytes)
+            sender_hex_data_order_list_bytes_one.append(is_need_expect)
+            sender_hex_data_order_list_bytes_one.append(com_expect_date_bytes)
+            sender_hex_data_order_list_bytes.append(sender_hex_data_order_list_bytes_one)
+        print("sender_hex_data_order_list_bytes:")
+        print(sender_hex_data_order_list_bytes)
+        return sender_hex_data_order_list_bytes
+
+    # 开启COM模拟接收和发送数据_使用参数
+    def com_recive_and_send_with_params(self,sender_hex_data_order_list):
+
+        Port = self.com_port
+        Baudrate = int(self.com_baudrate)
+        Bytesize = int(self.com_bytesize)
+        Parity = self.com_parity
+        Stopbits = int(self.com_stopbits)
+        # Senddate =self.com_send_date_bytes
+        Senddate = None
+        Senddatelist =None
+        ExpectDateBytes=None
+        SenderHexDataOrderBytesList = self.get_sender_hex_data_order_list_bytes_list(sender_hex_data_order_list)
+        rt = ComThread(Port=Port,Baudrate=Baudrate,Bytesize=Bytesize,Parity =Parity,Stopbits=Stopbits,
+                       SenderHexDataOrderBytesList = SenderHexDataOrderBytesList,
+                       ExpectDateBytes=ExpectDateBytes,Senddate=Senddate,Senddatelist=Senddatelist)
+        try:
+            if rt.start():
+                self.outPutMyLog(rt.l_serial.name)
+                rt.waiting()
+                self.outPutMyLog("The data is:%s,The Id is:%s" % (rt.data, rt.ID))
+                rt.stop()
+            else:
+                pass
+        except Exception as se:
+            self.outPutMyLog(str(se))
+        if rt.alive:
+            rt.stop()
+        self.outPutMyLog('')
+        self.outPutMyLog('End OK .')
+        del rt
+        self.time_delay(30)  #等待30秒
 
     #ftp获取串口解析文件_通用函数
     def ftp_down_xieyi_file_commom(self):

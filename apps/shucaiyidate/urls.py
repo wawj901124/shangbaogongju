@@ -3,6 +3,8 @@ from django.urls import  path
 from .views import TagContentView  #导入TagContentView
 from .views import XieyiConfigDateView
 
+from .views import NodeConfigMakeDevRequest,NodeConfigCopyRequest
+
 
 
 urlpatterns = [
@@ -12,6 +14,14 @@ urlpatterns = [
 
     # 协议测试用例页面的url配置
     path('xieyiconfigdate/<path:xieyiconfigdate_id>/', XieyiConfigDateView.as_view(), name="xie_yi_config_date_id"),
+    # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
+
+    # 节点配置NodeConfig页面的url配置-生成dev的配置
+    path('nodeconfigmakedev/<path:nodeconfig_id>/', NodeConfigMakeDevRequest, name="node_config_make_dev_id"),
+    # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
+
+    # 节点配置NodeConfig页面的url配置-完全复制数
+    path('nodeconfigallcopy/<path:nodeconfig_id>/', NodeConfigCopyRequest, name="node_config_all_copy_id"),
     # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
 
 

@@ -7,13 +7,12 @@ houzui = "qs_one."
 expect_list = []
 for i in f:
     lie_list = i.split(" ")
-    ziduan = lie_list[0]
-    # print(ziduan+",")
-    # yuqi = "%s = ConfigControlSendPorsConvertrule_one.%s" % (ziduan,ziduan)
-    # expect_list.append(ziduan)
-    # print(yuqi)
-    yuqi = """new_configcontrolsendporsconvertrule.%s = configcontrolsendporsconvertrule_old_one.%s""" % (ziduan,ziduan)
-    print(yuqi)
+    for lie_one in lie_list:
+        lie_one = lie_one.strip("\n")
+        expect_list.append(lie_one)
+
+print(expect_list)
+print(len(expect_list))
 
 
 

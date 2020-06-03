@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<version>v20200522_changxl</version>
+	<deviceModel>哈希II代COD分析仪</deviceModel>
+	<collectCmds ackPacketMaxLen="">
+	    <cmd id="rtdCollect" format="HEX" cmd="${ID}0300000011${MODBUS_L_CRC16}" ackType="HEAD_LEN" ackHead="" ackTail="" ackLen="39" ackGap="" ackCheckMode="" ackCheckArg="">
+		</cmd>
+	</collectCmds>
+	<controlCmds>
+		<cmd id="immediateSample" format="HEX" cmd="${ID}0600330001${MODBUS_L_CRC16}" ackType="NO_ACK" ackHead="" ackTail="" ackLen="" ackGap="" ackCheckMode="" ackCheckArg="">
+		</cmd>
+ 	</collectCmds>
+</root>

@@ -61,253 +61,224 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
     def defineshucaiyi(self,
                            case_id,
-                           telnet_host_ip ,
-                           telnet_username ,
-                           telnet_password ,
-                           xieyi_bin_dir ,
-                           xieyi_name ,
-                           xieyi_test_port  ,
-                           com_port,
-                           com_baudrate,
-                           com_bytesize,
-                           com_parity,
-                           com_stopbits,
-                           com_send_date,
-                           com_expect_date,
-                           xieyi_jiexi_expect_result,
-                           xieyi_db ,
-                           xieyi_db_remote_path ,
-                           xieyi_db_table_name ,
-                           tcp_server_ip ,
-                           tcp_server_port ,
-                           is_ftp_upload ,
-                           is_close_xieyi ,
-                           is_restart_xieyi ,
-                           is_com_recive_and_send ,
-                           is_ftp_down_xieyi_file ,
-                           is_assert_file_success ,
-                           is_ftp_get_remote_db_file ,
-                           is_assert_real_db_success ,
-                           is_tcp_server_receive ,
-                           is_assert_tcp_server_receive_success):
+                           depend_config_id
+                        ):
 
-        xieyi_txt_file_name = '%s_%s.txt'%(xieyi_name,xieyi_test_port)
-
-        if com_send_date == None:
-            com_send_hex_list = []
+        #通过协议配置模块获取配置相关信息
+        from shucaiyidate.modelsorder import XieyiConfigDateOrder
+        xieyiconfigdateorder = XieyiConfigDateOrder.objects.filter(id=depend_config_id)
+        xieyiconfigdateorder_count = xieyiconfigdateorder.count()
+        if xieyiconfigdateorder_count == 0:
+            print("没有选择相关配置依赖，请选择相关配置依赖")
+            assert False
         else:
-            com_send_hex_list = com_send_date.split(",")
+            #获取配置信息
+            for xieyiconfigdateorder_one in xieyiconfigdateorder:
+                telnet_host_ip = xieyiconfigdateorder_one.telnet_host_ip
+                telnet_username = xieyiconfigdateorder_one.telnet_username
+                telnet_password = xieyiconfigdateorder_one.telnet_password
+                xieyi_bin_dir = xieyiconfigdateorder_one.xieyi_bin_dir
+                xieyi_name = xieyiconfigdateorder_one.xieyi_name
+                xieyi_test_port = xieyiconfigdateorder_one.xieyi_test_port
+                com_port = xieyiconfigdateorder_one.com_port
+                com_baudrate = xieyiconfigdateorder_one.com_baudrate
+                com_bytesize = xieyiconfigdateorder_one.com_bytesize
+                com_parity = xieyiconfigdateorder_one.com_parity
+                com_stopbits = xieyiconfigdateorder_one.com_stopbits
+                xieyi_db = xieyiconfigdateorder_one.xieyi_db
+                xieyi_db_remote_path = xieyiconfigdateorder_one.xieyi_db_remote_path
+                xieyi_db_table_name = xieyiconfigdateorder_one.xieyi_db_table_name
+                tcp_server_ip = xieyiconfigdateorder_one.tcp_server_ip
+                tcp_server_port = xieyiconfigdateorder_one.tcp_server_port
+                is_ftp_upload = xieyiconfigdateorder_one.is_ftp_upload
+                is_close_xieyi = xieyiconfigdateorder_one.is_close_xieyi
+                is_restart_xieyi = xieyiconfigdateorder_one.is_restart_xieyi
+                is_com_recive_and_send = xieyiconfigdateorder_one.is_com_recive_and_send
+                is_ftp_down_xieyi_file = xieyiconfigdateorder_one.is_ftp_down_xieyi_file
+                is_assert_file_success = xieyiconfigdateorder_one.is_assert_file_success
+                is_ftp_get_remote_db_file = xieyiconfigdateorder_one.is_ftp_get_remote_db_file
+                is_assert_real_db_success = xieyiconfigdateorder_one.is_assert_real_db_success
+                is_tcp_server_receive = xieyiconfigdateorder_one.is_tcp_server_receive
+                is_assert_tcp_server_receive_success = xieyiconfigdateorder_one.is_assert_tcp_server_receive_success
+                break
 
-        if xieyi_jiexi_expect_result == None:
+
+
+            #通过发送和接收数据部分获取发送和接收的数据以及预期结果的list
+            from depend.shucaiyi.modelorderdepend.senderHexDataOrderDependClass import senderhexdataorderdepend
+            sender_hex_data_order_list = senderhexdataorderdepend.makeSenderHexDataOrderList(case_id)
+
             xieyi_jiexi_expect_result_list = []
-        else:
-            xieyi_jiexi_expect_result_list = xieyi_jiexi_expect_result.split(",")
-
-        am = AutoModbus(
-            telnet_host_ip=telnet_host_ip,
-            telnet_username=telnet_username,
-            telnet_password=telnet_password,
-            xieyi_bin_dir=xieyi_bin_dir,
-            xieyi_name=xieyi_name,
-            xieyi_test_port=xieyi_test_port,
-            com_port=com_port,
-            com_baudrate=com_baudrate,
-            com_bytesize=com_bytesize,
-            com_parity=com_parity,
-            com_stopbits=com_stopbits,
-            com_send_date_list=com_send_hex_list ,
-            com_expect_date=com_expect_date,
-
-            xieyi_jiexi_expect_result_list=xieyi_jiexi_expect_result_list,
-
-            xieyi_db=xieyi_db,
-            xieyi_db_remote_path=xieyi_db_remote_path,
-            xieyi_db_table_name=xieyi_db_table_name,
-
-            tcp_server_ip=tcp_server_ip,
-            tcp_server_port=tcp_server_port,
-        )
-        ftp_up_load_file_list = [['/usr/app_install/collect/bin/text.txt','D:/pycharmproject/shangbaogongju/WWQRSTest/util/text.txt'],
-                                 ['/usr/app_install/collect/bin/result1.txt','D:/pycharmproject/shangbaogongju/WWQRSTest/util/result1.txt']]
-        from depend.shucaiyi.ftpUploadFileDependClass import ftpuploadfiledepend
-        ftp_up_load_file_list = ftpuploadfiledepend.makeFtpUpliadFileList(depend_id=case_id)   #传入程序的id，获取上传文件列表
-        #1.是否上传配置文件
-        #1-1.上传配置文件之前先修改远程文件名称为备份文件名
-        #1-2.上传配置文件
-        #上传文件进行可执行命令
-        #先分离远程文件目录，获取到目录和文件
-        if ftp_up_load_file_list == []: #则说明没有填写上传文件路径，不进行文件上传
-            pass
-        else:
-            if is_ftp_upload:   #如果需要上传文件
-                am.run_ftp_up_load_file_list(ftp_up_load_file_list)
-
-        #如果进行web端操作
+            for sender_hex_data_order_list_one in sender_hex_data_order_list:
+                xieyi_jiexi_expect_result_list.append(sender_hex_data_order_list_one[3])
+            print("预期校验数据：")
+            print(xieyi_jiexi_expect_result_list)
 
 
+            xieyi_txt_file_name = '%s_%s.txt'%(xieyi_name,xieyi_test_port)
 
-        #是否关闭默认启动的协议，一定要关闭吗  #杀死科内特
-        from depend.shucaiyi.closeXieYiCommandDependClass import closexieyicommanddepend
-        close_xie_yi_commad_list = closexieyicommanddepend.makeCloseXieYiCommandList(depend_id=case_id)  #传入程序的id，获取关闭协议命令
-        if close_xie_yi_commad_list == []:  #则说明没有关闭命令，不执行关闭命令
+            # if com_send_date == None:
+            #     com_send_hex_list = []
+            # else:
+            #     com_send_hex_list = com_send_date.split(",")
+            #
+            # if xieyi_jiexi_expect_result == None:
+            #     xieyi_jiexi_expect_result_list = []
+            # else:
+            #     xieyi_jiexi_expect_result_list = xieyi_jiexi_expect_result.split(",")
+
+            am = AutoModbus(
+                telnet_host_ip=telnet_host_ip,
+                telnet_username=telnet_username,
+                telnet_password=telnet_password,
+                xieyi_bin_dir=xieyi_bin_dir,
+                xieyi_name=xieyi_name,
+                xieyi_test_port=xieyi_test_port,
+                com_port=com_port,
+                com_baudrate=com_baudrate,
+                com_bytesize=com_bytesize,
+                com_parity=com_parity,
+                com_stopbits=com_stopbits,
+                # com_send_date_list=com_send_hex_list ,
+                # com_expect_date=com_expect_date,
+
+                xieyi_jiexi_expect_result_list=xieyi_jiexi_expect_result_list,
+
+                xieyi_db=xieyi_db,
+                xieyi_db_remote_path=xieyi_db_remote_path,
+                xieyi_db_table_name=xieyi_db_table_name,
+
+                tcp_server_ip=tcp_server_ip,
+                tcp_server_port=tcp_server_port,
+            )
+            ftp_up_load_file_list = [['/usr/app_install/collect/bin/text.txt','D:/pycharmproject/shangbaogongju/WWQRSTest/util/text.txt'],
+                                     ['/usr/app_install/collect/bin/result1.txt','D:/pycharmproject/shangbaogongju/WWQRSTest/util/result1.txt']]
+            from depend.shucaiyi.ftpUploadFileDependClass import ftpuploadfiledepend
+            ftp_up_load_file_list = ftpuploadfiledepend.makeFtpUpliadFileList(depend_id=case_id)   #传入程序的id，获取上传文件列表
+            #1.是否上传配置文件
+            #1-1.上传配置文件之前先修改远程文件名称为备份文件名
+            #1-2.上传配置文件
+            #上传文件进行可执行命令
+            #先分离远程文件目录，获取到目录和文件
+            if ftp_up_load_file_list == []: #则说明没有填写上传文件路径，不进行文件上传
+                pass
+            else:
+                if is_ftp_upload:   #如果需要上传文件
+                    am.run_ftp_up_load_file_list(ftp_up_load_file_list)
+
+            #如果进行web端操作
+
+            #是否关闭默认启动的协议，一定要关闭吗  # 杀死科内特
             am.telnet_client_close_default_start_xieyi_common()  # 执行关闭协议通用命令
-            pass
-        else:
-            if is_close_xieyi:
+            # #是否关闭默认启动的协议，一定要关闭吗  #杀死科内特
+            # from depend.shucaiyi.closeXieYiCommandDependClass import closexieyicommanddepend
+            # close_xie_yi_commad_list = closexieyicommanddepend.makeCloseXieYiCommandList(depend_id=case_id)  #传入程序的id，获取关闭协议命令
+            # if close_xie_yi_commad_list == []:  #则说明没有关闭命令，不执行关闭命令
+            #     am.telnet_client_close_default_start_xieyi_common()  # 执行关闭协议通用命令
+            #     pass
+            # else:
+            #     if is_close_xieyi:
+            #
+            #         mycommad_list = ['stop_guard','ps aux | grep %s | xargs kill -9 &>/dev/null &' % xieyi_name]
+            #         am.telnet_client_close_default_start_xieyi(close_xie_yi_commad_list)  #执行关闭协议命令
 
-                mycommad_list = ['stop_guard','ps aux | grep %s | xargs kill -9 &>/dev/null &' % xieyi_name]
-                am.telnet_client_close_default_start_xieyi(close_xie_yi_commad_list)  #执行关闭协议命令
-
-        #重启协议
-        from depend.shucaiyi.restartXieYiCommandDependClass import restartxieyicommanddepend
-        restart_xie_yi_commad_list = restartxieyicommanddepend.makeRestartXieYiCommandList(depend_id=case_id)
-        if restart_xie_yi_commad_list == []:  #则说明没有重启命令，不执行重启命令
             am.telnet_client_rstart_xieyi_common()  # 执行重启通用命令
-            pass
-        else:
-            if is_restart_xieyi:
-                mycommad_list = ['cd /usr/app_install/collect/bin',
-                                 'rm -rf %s'% xieyi_txt_file_name,
-                                 './%s --id=com%s_1 --log_level=develop &>%s &'% (xieyi_name,xieyi_test_port,xieyi_txt_file_name)]
-                am.telnet_client_rstart_xieyi(restart_xie_yi_commad_list)
+
+            # #重启协议
+            # from depend.shucaiyi.restartXieYiCommandDependClass import restartxieyicommanddepend
+            # restart_xie_yi_commad_list = restartxieyicommanddepend.makeRestartXieYiCommandList(depend_id=case_id)
+            # if restart_xie_yi_commad_list == []:  #则说明没有重启命令，不执行重启命令
+            #     am.telnet_client_rstart_xieyi_common()  # 执行重启通用命令
+            #     pass
+            # else:
+            #     if is_restart_xieyi:
+            #         mycommad_list = ['cd /usr/app_install/collect/bin',
+            #                          'rm -rf %s'% xieyi_txt_file_name,
+            #                          './%s --id=com%s_1 --log_level=develop &>%s &'% (xieyi_name,xieyi_test_port,xieyi_txt_file_name)]
+            #         am.telnet_client_rstart_xieyi(restart_xie_yi_commad_list)
 
 
 
-        #是否发送数据
-        if is_com_recive_and_send:
-            send_data_list = []
-            am.com_recive_and_send()
+            #是否发送数据
+            if is_com_recive_and_send:
+                send_data_list = []
+                # am.com_recive_and_send()
+                am.com_recive_and_send_with_params(sender_hex_data_order_list)
 
 
-        #是否ftp下载获取解析文件
-        if is_ftp_down_xieyi_file:
-            am.ftp_down_xieyi_file_commom()
-            # xieyi_remote_file = xieyi_bin_dir+'/'+xieyi_txt_file_name
-            # xieyi_local_file = xieyi_txt_file_name
-            # am.time_delay(60)
-            # am.run_ftp_down(remote_file=xieyi_remote_file, local_file=xieyi_local_file)
+            #是否ftp下载获取解析文件
+            if is_ftp_down_xieyi_file:
+                am.ftp_down_xieyi_file_commom()
+                # xieyi_remote_file = xieyi_bin_dir+'/'+xieyi_txt_file_name
+                # xieyi_local_file = xieyi_txt_file_name
+                # am.time_delay(60)
+                # am.run_ftp_down(remote_file=xieyi_remote_file, local_file=xieyi_local_file)
 
 
-        #是否ftp下载实时数据
-        if is_ftp_get_remote_db_file:
-            am.ftp_get_remote_db_file()
+            #是否ftp下载实时数据
+            if is_ftp_get_remote_db_file:
+                am.ftp_get_remote_db_file()
 
 
 
-        #是否上报平台
-        if is_tcp_server_receive:
-            am.tcp_server_receive()
+            #是否上报平台
+            if is_tcp_server_receive:
+                am.tcp_server_receive()
 
-        am.end_work()   #善后工作
+            am.end_work()   #善后工作
 
 
-        #是否对在协议文件中找到相应的解析内容
-        if is_assert_file_success:
-            am.assert_file_success()
+            #是否对在协议文件中找到相应的解析内容
+            if is_assert_file_success:
+                am.assert_file_success()
 
-        #是否验证实时数据
-        if is_assert_real_db_success:
-            am.assert_real_db_success()
+            #是否验证实时数据
+            if is_assert_real_db_success:
+                am.assert_real_db_success()
 
-        #是否验证平台上报内容
-        if is_assert_tcp_server_receive_success:
-            am.assert_tcp_server_receive_success()
+            #是否验证平台上报内容
+            if is_assert_tcp_server_receive_success:
+                am.assert_tcp_server_receive_success()
 
-        am.outPutMyLog("="*50)
-        am.outPutMyLog("接收的数据：%s"% str(com_expect_date))
-        am.outPutMyLog("发送的数据：%s" % str(com_send_hex_list))
-        am.outPutMyLog("预期的解析结果：%s" %str(xieyi_jiexi_expect_result_list))
-        am.outPutMyLog("=" * 50)
+
+            for sender_hex_data_order_list_one in sender_hex_data_order_list:
+                am.outPutMyLog("="*50)
+                am.outPutMyLog("接收的数据：%s"% str(sender_hex_data_order_list_one[2]))
+                am.outPutMyLog("发送的数据：%s" % str(sender_hex_data_order_list_one[0]))
+                am.outPutMyLog("预期的解析结果：%s" %str(sender_hex_data_order_list_one[3]))
+                am.outPutMyLog("=" * 50)
 
 
 
     @staticmethod  # 根据不同的参数生成测试用例
-    def getTestFunc(case_id,
-                           telnet_host_ip ,
-                           telnet_username ,
-                           telnet_password ,
-                           xieyi_bin_dir ,
-                           xieyi_name ,
-                           xieyi_test_port  ,
-                           com_port,
-                           com_baudrate,
-                           com_bytesize,
-                           com_parity,
-                           com_stopbits,
-                           com_send_date,
-                           com_expect_date,
-                           xieyi_jiexi_expect_result,
-                           xieyi_db ,
-                           xieyi_db_remote_path ,
-                           xieyi_db_table_name ,
-                           tcp_server_ip ,
-                           tcp_server_port ,
-                           is_ftp_upload ,
-                           is_close_xieyi ,
-                           is_restart_xieyi ,
-                           is_com_recive_and_send ,
-                           is_ftp_down_xieyi_file ,
-                           is_assert_file_success ,
-                           is_ftp_get_remote_db_file ,
-                           is_assert_real_db_success ,
-                           is_tcp_server_receive ,
-                           is_assert_tcp_server_receive_success):
+    def getTestFunc(case_id,depend_config_id):
 
         def func(self):
-            self.defineshucaiyi(case_id,
-                           telnet_host_ip ,
-                           telnet_username ,
-                           telnet_password ,
-                           xieyi_bin_dir ,
-                           xieyi_name ,
-                           xieyi_test_port  ,
-                           com_port,
-                           com_baudrate,
-                           com_bytesize,
-                           com_parity,
-                           com_stopbits,
-                           com_send_date,
-                           com_expect_date,
-                           xieyi_jiexi_expect_result,
-                           xieyi_db ,
-                           xieyi_db_remote_path ,
-                           xieyi_db_table_name ,
-                           tcp_server_ip ,
-                           tcp_server_port ,
-                           is_ftp_upload ,
-                           is_close_xieyi ,
-                           is_restart_xieyi ,
-                           is_com_recive_and_send ,
-                           is_ftp_down_xieyi_file ,
-                           is_assert_file_success ,
-                           is_ftp_get_remote_db_file ,
-                           is_assert_real_db_success ,
-                           is_tcp_server_receive ,
-                           is_assert_tcp_server_receive_success)
+            self.defineshucaiyi(case_id,depend_config_id)
 
         return func
 
 
 def __generateTestCases():
-    from shucaiyidate.models import XieyiConfigDate
+    from shucaiyidate.modelsorder import XieyiTestCase
 
-    xieyiconfigdatetestcase_all = XieyiConfigDate.objects.filter(is_run_case=True).order_by('id')
+    xieyitestcase_all = XieyiTestCase.objects.filter(is_run_case=True).order_by('id')
 
-    for xieyiconfigdatetestcase in xieyiconfigdatetestcase_all:
-        forcount = xieyiconfigdatetestcase.case_counts
+    for xieyitestcase in xieyitestcase_all:
+        forcount = xieyitestcase.case_counts
         starttime = GetTimeStr().getTimeStr()
-        if len(str(xieyiconfigdatetestcase.id)) == 1:
-            xieyiconfigdatetestcaseid = '0000%s' % xieyiconfigdatetestcase.id
-        elif len(str(xieyiconfigdatetestcase.id)) == 2:
-            xieyiconfigdatetestcaseid = '000%s' % xieyiconfigdatetestcase.id
-        elif len(str(xieyiconfigdatetestcase.id)) == 3:
-            xieyiconfigdatetestcaseid = '00%s' % xieyiconfigdatetestcase.id
-        elif len(str(xieyiconfigdatetestcase.id)) == 4:
-            xieyiconfigdatetestcaseid = '0%s' % xieyiconfigdatetestcase.id
-        elif len(str(xieyiconfigdatetestcase.id)) == 5:
-            xieyiconfigdatetestcaseid = '%s' % xieyiconfigdatetestcase.id
+        if len(str(xieyitestcase.id)) == 1:
+            xieyitestcaseid = '0000%s' % xieyitestcase.id
+        elif len(str(xieyitestcase.id)) == 2:
+            xieyitestcaseid = '000%s' % xieyitestcase.id
+        elif len(str(xieyitestcase.id)) == 3:
+            xieyitestcaseid = '00%s' % xieyitestcase.id
+        elif len(str(xieyitestcase.id)) == 4:
+            xieyitestcaseid = '0%s' % xieyitestcase.id
+        elif len(str(xieyitestcase.id)) == 5:
+            xieyitestcaseid = '%s' % xieyitestcase.id
         else:
-            xieyiconfigdatetestcaseid = 'Id已经超过5位数，请重新定义'
+            xieyitestcaseid = 'Id已经超过5位数，请重新定义'
 
         for i in range(1, forcount + 1):  # 循环，从1开始
             if len(str(i)) == 1:
@@ -324,41 +295,12 @@ def __generateTestCases():
                 forcount_i = 'Id已经超过5位数，请重新定义'
 
             args = []
-            args.append(xieyiconfigdatetestcase.id)
-            args.append(xieyiconfigdatetestcase.telnet_host_ip)
-            args.append(xieyiconfigdatetestcase.telnet_username)
-            args.append(xieyiconfigdatetestcase.telnet_password)
-            args.append(xieyiconfigdatetestcase.xieyi_bin_dir)
-            args.append(xieyiconfigdatetestcase.xieyi_name)
-            args.append(xieyiconfigdatetestcase.xieyi_test_port)
-            args.append(xieyiconfigdatetestcase.com_port)
-            args.append(xieyiconfigdatetestcase.com_baudrate)
-            args.append(xieyiconfigdatetestcase.com_bytesize)
-            args.append(xieyiconfigdatetestcase.com_parity)
-            args.append(xieyiconfigdatetestcase.com_stopbits)
-            args.append(xieyiconfigdatetestcase.com_send_date)
-            args.append(xieyiconfigdatetestcase.com_expect_date)
-            args.append(xieyiconfigdatetestcase.xieyi_jiexi_expect_result)
-            args.append(xieyiconfigdatetestcase.xieyi_db)
-            args.append(xieyiconfigdatetestcase.xieyi_db_remote_path)
-            args.append(xieyiconfigdatetestcase.xieyi_db_table_name)
-            args.append(xieyiconfigdatetestcase.tcp_server_ip)
-            args.append(xieyiconfigdatetestcase.tcp_server_port)
-            args.append(xieyiconfigdatetestcase.is_ftp_upload)
-            args.append(xieyiconfigdatetestcase.is_close_xieyi)
-            args.append(xieyiconfigdatetestcase.is_restart_xieyi)
-            args.append(xieyiconfigdatetestcase.is_com_recive_and_send)
-            args.append(xieyiconfigdatetestcase.is_ftp_down_xieyi_file)
-            args.append(xieyiconfigdatetestcase.is_assert_file_success)
-            args.append(xieyiconfigdatetestcase.is_ftp_get_remote_db_file)
-            args.append(xieyiconfigdatetestcase.is_assert_real_db_success)
-            args.append(xieyiconfigdatetestcase.is_tcp_server_receive)
-            args.append(xieyiconfigdatetestcase.is_assert_tcp_server_receive_success)
-
+            args.append(xieyitestcase.id)
+            args.append(xieyitestcase.depend_config_id)
 
             setattr(TestShuCaiYiClass,
                     'test_func_%s_%s_%s' % (
-                    xieyiconfigdatetestcaseid, xieyiconfigdatetestcase.test_case_title, forcount_i),
+                    xieyitestcaseid, xieyitestcase.test_case_title, forcount_i),
                     TestShuCaiYiClass.getTestFunc(*args))  # 通过setattr自动为TestCase类添加成员方法，方法以“test_func_”开头
 
 

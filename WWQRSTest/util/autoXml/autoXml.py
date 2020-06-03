@@ -317,12 +317,14 @@ class WriteXml(object):
 
 
 if __name__ == '__main__':
-    filename = "instr_1972_N.dev"
+    filename = "D:\pycharmproject\shangbaogongju\media/Dev/2_哈希分析仪/哈希分析仪.dev"
+    # filename = "instr_1972_N.dev"
+    # filename = "test.dev"
     ax=AutoXml(filename)
     data_list = ax.redXml()
-    file_name = 'new_project.dev'
-    wx = WriteXml(data_list=data_list,file_name=file_name)
-    wx.generateXml()
+    # file_name = 'new_project.dev'
+    # wx = WriteXml(data_list=data_list,file_name=file_name)
+    # wx.generateXml()
 
     # fatherele = ax.et_xml_root
     # count = 1
