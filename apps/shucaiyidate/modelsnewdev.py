@@ -23,6 +23,7 @@ def upload_local_file_path(instance, filename):  #instance代表模式示例，f
 
 class NodeConfig(models.Model):
     config_project = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"项目名称")
+    config_file_name = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"文件名称")
     config_version = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"版本号",
                                       help_text=u" 版本号配置，每次修改配置都需要更新，一般取配置日期作为版本号,例如：v20180423")
     config_device = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"设备名称",

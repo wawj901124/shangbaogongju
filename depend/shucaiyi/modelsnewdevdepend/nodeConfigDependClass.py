@@ -1090,7 +1090,7 @@ class ReadNodeConfig(object):
         self.node_config = self.createDB()
         self.xml_tree = self.readXml()
         self.xml_root = self.getRootFromXml()
-        self.project_name = self.splitPathFile()
+        self.file_name = self.splitPathFile()
 
 
     #读取文件,并一行为单位项，返回一个列表
@@ -1120,9 +1120,9 @@ class ReadNodeConfig(object):
         return nodeconfig
 
     def saveProjectName(self):
-        #如果工程名字m没有名字，则保存文件名为工程名，否则不保存
-        if self.node_config.config_project ==None:
-            self.node_config.config_project = self.project_name
+        #如果文件名称不等于上传的文件名称则修改为上传的文件名称
+        if self.node_config.config_file_name !=self.file_name:
+            self.node_config.config_file_name = self.file_name
             self.node_config.save()
 
     def readXml(self):
