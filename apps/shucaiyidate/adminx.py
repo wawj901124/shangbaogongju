@@ -771,7 +771,7 @@ class NodeConfigXadmin(object):
                    "add_time", "update_time"]
     list_display = ["id",
                     "config_project",
-                    "dev_file",
+                    "config_file_name",
                     "go_to"]  # 定义显示的字段
     list_filter = ["config_project",
                    "write_user"]  # 定义筛选的字段
