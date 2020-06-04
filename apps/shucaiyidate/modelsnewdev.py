@@ -14,6 +14,13 @@ def upload_dev_file_path(instance, filename):  #instance代表模式示例，fil
     return  file_path
     # return '/'.join([MEDIA_ROOT, "Dev","%s_%s".format(instance.id,instance.config_project), filename])
 
+#让上传的文件路径动态地与config_project的名字有关
+def upload_local_file_path(instance, filename):  #instance代表模式示例，filename代表上传文件的名字
+    file_path = '/'.join(["Local", "{}_{}".format(instance.id, instance.config_project), filename])
+    print(file_path)
+    return  file_path
+    # return '/'.join([MEDIA_ROOT, "Dev","%s_%s".format(instance.id,instance.config_project), filename])
+
 class NodeConfig(models.Model):
     config_project = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"项目名称")
     config_version = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"版本号",
@@ -22,7 +29,8 @@ class NodeConfig(models.Model):
                                       help_text=u"设备名称，一般取仪器的名称，例如：雪迪龙U23分析仪")
     config_collect_packet_len = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"采集指令_应答包最大长度",
                                       help_text=u"采集指令_应答包长度配置，前端仪器回复包的最大长度，如果不写默认1024")
-    # dev_file = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"生成的dev文件")
+
+    local_file = models.FileField(upload_to=upload_local_file_path,  blank=True, null=True,verbose_name="上传的dev文件")
     dev_file = models.FileField(upload_to=upload_dev_file_path,  blank=True, null=True,verbose_name="生成的dev文件")
 
     # tag_father = models.ForeignKey('self', null=True, blank=True, verbose_name=u"依赖的父节点", on_delete=models.PROTECT)
@@ -42,17 +50,19 @@ class NodeConfig(models.Model):
 
     def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
-        make_html = "<a href='{}/shucaiyidate/nodeconfigmakedev/{}/'>生成Dev文件</a>&nbsp;&nbsp;".format(DJANGO_SERVER_YUMING,self.id)
+        save_html = "<a href='{}/shucaiyidate/nodeconfigreadandsave/{}/'>入库原上传Dev文件</a>".format(DJANGO_SERVER_YUMING, self.id)
+        make_html = "<a href='{}/shucaiyidate/nodeconfigmakedev/{}/'>生成新Dev文件</a>&nbsp;&nbsp;".format(DJANGO_SERVER_YUMING,self.id)
         if self.dev_file:   #如果有则显示
-            open_html = "<a href='{}{}'>下载Dev文件</a>&nbsp;&nbsp;".format(DJANGO_SERVER_YUMING,self.dev_file.url)
+            open_html = "<a href='{}{}'>下载新Dev文件</a>&nbsp;&nbsp;".format(DJANGO_SERVER_YUMING,self.dev_file.url)
         else:  #否则不显示
             open_html = ""
-        copy_html = "<a href='{}/shucaiyidate/nodeconfigallcopy/{}/'>复制新加数据</a>".format(DJANGO_SERVER_YUMING,self.id)
-        all_html = make_html+open_html+copy_html
+        copy_html = "<a href='{}/shucaiyidate/nodeconfigallcopy/{}/'>复制新加当前数据</a>&nbsp;&nbsp;".format(DJANGO_SERVER_YUMING,self.id)
+
+        all_html =save_html+ make_html+open_html+copy_html
         return mark_safe(all_html)
         # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
 
-    go_to.short_description = u"复制新加"   #为go_to函数名个名字
+    go_to.short_description = u"操作"   #为go_to函数名个名字
 
     # def node_first_attrib(self):   #定义点击后跳转到某一个地方（可以加html代码）
     #     from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
@@ -150,7 +160,7 @@ class ConfigCollectSendCmd(models.Model):
         verbose_name_plural=verbose_name
 
     def __str__(self):
-        return self.config_collect_send_cmd
+        return "{}-{}".format(self.nodeconfig,self.config_collect_send_cmd)
 
 class ConfigCollectFactor(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -262,7 +272,7 @@ class ConfigCollectReceivePors(models.Model):
         verbose_name_plural=verbose_name
 
     def __str__(self):
-        return self.config_collect_receive_pors_factorcode
+        return "{}-{}".format(self.configcollectsendcmd,self.config_collect_receive_pors_factorcode)
 
 class ConfigCollectReceivePorsSection(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -353,7 +363,7 @@ class ConfigCollectReceivePorsSection(models.Model):
         verbose_name_plural=verbose_name
 
     def __str__(self):
-        return "{}-{}-{}-{}".format(self.configcollectreceivepors.config_collect_receive_pors_factorcode,
+        return "{}-{}-{}-{}-{}".format(self.configcollectreceivepors,self.configcollectreceivepors.config_collect_receive_pors_factorcode,
                                     self.config_collect_receive_pors_section_findmode,
                                     self.config_collect_receive_pors_section_offset,
                                     self.config_collect_receive_pors_section_mark)
@@ -521,7 +531,7 @@ class ConfigControlSendCmd(models.Model):
         verbose_name_plural=verbose_name
 
     def __str__(self):
-        return self.config_control_send_cmd
+        return "{}-{}".format(self.nodeconfig,self.config_control_send_cmd)
 
 class ConfigControlSendParamid(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -547,7 +557,7 @@ class ConfigControlSendParamid(models.Model):
         verbose_name_plural=verbose_name
 
     def __str__(self):
-        return self.config_control_send_paramid
+        return "{}-{}".format(self.configcontrolsendcmd,self.config_control_send_paramid)
 
 class ConfigControlSendPorsSection(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -636,7 +646,7 @@ class ConfigControlSendPorsSection(models.Model):
         verbose_name_plural=verbose_name
 
     def __str__(self):
-        return "{}-{}-{}-{}".format(self.configcontrolsendparamid.config_control_send_paramid,
+        return "{}-{}-{}-{}-{}".format(self.configcontrolsendparamid,self.configcontrolsendparamid.config_control_send_paramid,
                              self.config_control_send_pors_section_findmode,
                              self.config_control_send_pors_section_offset,
                              self.config_control_send_pors_section_mark)

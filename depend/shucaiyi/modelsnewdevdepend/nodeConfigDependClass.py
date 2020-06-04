@@ -1081,24 +1081,21 @@ class MakeNodeConfig(object):
 
         return file_content
 
-class ReadXml(object):
-    def __init__(self,fileName):
-        self.file_name = fileName
-
-
 
 class ReadNodeConfig(object):
     def __init__(self,filePath,caseId):
         self.file_path = filePath
         self.content_list = self.readFile()
-        self.case_id = caseId
+        self.case_id = int(caseId)
         self.node_config = self.createDB()
         self.xml_tree = self.readXml()
         self.xml_root = self.getRootFromXml()
+        self.project_name = self.splitPathFile()
+
 
     #读取文件,并一行为单位项，返回一个列表
     def readFile(self):
-        with open(self.file_path,"r") as f:
+        with open(self.file_path,"r",encoding="utf-8") as f:
             file_content_list = f.readlines()
 
         print("file_content_list:")
@@ -1117,11 +1114,15 @@ class ReadNodeConfig(object):
         print(project_name)
         return project_name
 
-
     def createDB(self):
         from shucaiyidate.modelsnewdev import NodeConfig
-        nodeconfig = NodeConfig.objects.get(id=int(self.case_id))
+        nodeconfig = NodeConfig.objects.get(id=self.case_id)
         return nodeconfig
+
+    def saveProjectName(self):
+        if self.node_config.config_project ==None:
+            self.node_config.config_project = self.project_name
+            self.node_config.save()
 
     def readXml(self):
         xml_tree = ET.parse(self.file_path)
@@ -1132,17 +1133,460 @@ class ReadNodeConfig(object):
         xml_root = self.xml_tree.getroot()
         return xml_root
 
-    def getVersionFromXml(self):
-        version_node = self.xml_root.getiterator("version")
-        version_content = version_node.text
+    def saveVersionFromXml(self):
+        version_node_list = self.xml_tree.getiterator("version")
+        for version_node_one in version_node_list:
+            version_content = version_node_one.text
+            #保存 version
+            self.node_config.config_version = version_content
+            self.node_config.save()   #保存版本信息
+            break
         print(version_content)
-        return version_content
+
+    def saveDeviceFromXml(self):
+        device_node_list = self.xml_tree.getiterator("deviceModel")
+        for device_node_one in device_node_list:
+            device_content = device_node_one.text
+            #保存 device
+            self.node_config.config_device = device_content
+            self.node_config.save()   #保存版本信息
+            break
+        print(device_content)
+
+    def saveCollectFromXml(self):
+        collect_node_list = self.xml_tree.getiterator("collectCmds")
+        collect_node_list_len = len(collect_node_list)
+        if collect_node_list_len == 0:   #如果节点个数为0，
+            pass
+        else: #否则返回节点
+            for collect_node_one in collect_node_list:
+                    #保存节点属性
+                    collect_attrib_dict = collect_node_one.attrib
+                    print(collect_attrib_dict)
+                    collect_attrib_dict_ackPacketMaxLen = collect_attrib_dict["ackPacketMaxLen"]
+                    self.node_config.config_collect_packet_len = collect_attrib_dict_ackPacketMaxLen
+                    self.node_config.save()  # 保存版本信息
+
+                    #获取下发指令cmd
+                    collect_cmd_list = collect_node_one.findall("cmd")
+                    collect_cmd_list_len = len(collect_cmd_list)
+                    if collect_cmd_list_len == 0:
+                        pass
+                    else:
+                        for collect_cmd_one in collect_cmd_list:
+                            collect_cmd_one_attrib_dict = collect_cmd_one.attrib
+                            print(collect_cmd_one_attrib_dict)
+                            collect_cmd_one_id = collect_cmd_one_attrib_dict["id"]
+                            collect_cmd_one_format = collect_cmd_one_attrib_dict["format"]
+                            collect_cmd_one_cmd = collect_cmd_one_attrib_dict["cmd"]
+                            collect_cmd_one_ackType = collect_cmd_one_attrib_dict["ackType"]
+                            collect_cmd_one_ackHead = collect_cmd_one_attrib_dict["ackHead"]
+                            collect_cmd_one_ackTail = collect_cmd_one_attrib_dict["ackTail"]
+                            collect_cmd_one_ackLen = collect_cmd_one_attrib_dict["ackLen"]
+                            collect_cmd_one_ackGap = collect_cmd_one_attrib_dict["ackGap"]
+                            collect_cmd_one_ackCheckMode = collect_cmd_one_attrib_dict["ackCheckMode"]
+                            collect_cmd_one_ackCheckArg = collect_cmd_one_attrib_dict["ackCheckArg"]
+
+                            #保存下发指令
+                            from shucaiyidate.modelsnewdev import ConfigCollectSendCmd
+                            #先查看是否找到nodeconfig_id的值为当前caseid，并且存在cmd，则不保存
+                            check_ConfigCollectSendCmd_list = ConfigCollectSendCmd.objects.filter(nodeconfig_id=self.case_id).filter(config_collect_send_cmd=collect_cmd_one_cmd)
+                            check_ConfigCollectSendCmd_list_count = check_ConfigCollectSendCmd_list.count()
+                            if check_ConfigCollectSendCmd_list_count == 0:#如果不存在，则保存
+                                #保存，并获取最新一条数据
+                                new_configcollectsendcmd =  ConfigCollectSendCmd()
+                                new_configcollectsendcmd.nodeconfig_id = self.case_id
+                                new_configcollectsendcmd.config_collect_send_id = collect_cmd_one_id
+                                new_configcollectsendcmd.config_collect_send_format = collect_cmd_one_format
+                                new_configcollectsendcmd.config_collect_send_cmd = collect_cmd_one_cmd
+                                new_configcollectsendcmd.config_collect_send_acktype = collect_cmd_one_ackType
+                                new_configcollectsendcmd.config_collect_send_ackhead = collect_cmd_one_ackHead
+                                new_configcollectsendcmd.config_collect_send_acktail = collect_cmd_one_ackTail
+                                new_configcollectsendcmd.config_collect_send_acklen = collect_cmd_one_ackLen
+                                new_configcollectsendcmd.config_collect_send_ackgap = collect_cmd_one_ackGap
+                                new_configcollectsendcmd.config_collect_send_ackcheckmode = collect_cmd_one_ackCheckMode
+                                new_configcollectsendcmd.config_collect_send_ackcheckarg = collect_cmd_one_ackCheckArg
+                                new_configcollectsendcmd.save()
+
+                                zx_configcollectsendcmd = ConfigCollectSendCmd.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+                            else:  #否则筛选到这个对象
+                                for check_ConfigCollectSendCmd_one in check_ConfigCollectSendCmd_list:
+                                    zx_configcollectsendcmd = check_ConfigCollectSendCmd_one
+                                    break  #只取第一个
+
+                            #获取collect_cmd的子节点
+                            collect_cmd_one_children_list = collect_cmd_one.getchildren()   #获取子节点
+                            collect_cmd_one_children_list_len = len(collect_cmd_one_children_list)
+                            print(collect_cmd_one_children_list)
+                            if collect_cmd_one_children_list_len == 0:  #说明不存在子节点，不保存
+                                pass
+                            else: #否则进行保存
+                                for collect_cmd_one_children_one in collect_cmd_one_children_list:
+                                    # 获取下发指令中的监测因子
+                                    if 'pollutantFactor' in str(collect_cmd_one_children_one):  #说明是监测因子
+                                        pollutantfactor_factor_list = collect_cmd_one_children_one.getchildren()   #获取子节点
+                                        pollutantfactor_factor_list_len = len(pollutantfactor_factor_list)
+                                        if pollutantfactor_factor_list_len == 0:
+                                            pass
+                                        else:  #否则，遍历保存因子
+                                            for pollutantfactor_factor_one in pollutantfactor_factor_list:
+                                                pollutantfactor_factor_one_attrib_dict = pollutantfactor_factor_one.attrib
+                                                print("监测因子属性字典：")
+                                                print(pollutantfactor_factor_one_attrib_dict)
+                                                pollutantfactor_factor_one_factorCode = pollutantfactor_factor_one_attrib_dict["factorCode"]
+                                                pollutantfactor_factor_one_findMode = pollutantfactor_factor_one_attrib_dict["findMode"]
+                                                pollutantfactor_factor_one_offset = pollutantfactor_factor_one_attrib_dict["offset"]
+                                                pollutantfactor_factor_one_mark = pollutantfactor_factor_one_attrib_dict["mark"]
+                                                pollutantfactor_factor_one_len = pollutantfactor_factor_one_attrib_dict["len"]
+                                                pollutantfactor_factor_one_decodeType = pollutantfactor_factor_one_attrib_dict["decodeType"]
+                                                pollutantfactor_factor_one_operator = pollutantfactor_factor_one_attrib_dict["operator"]
+                                                pollutantfactor_factor_one_operand = pollutantfactor_factor_one_attrib_dict["operand"]
+
+                                                #保存监测因子
+                                                from shucaiyidate.modelsnewdev import ConfigCollectFactor
+
+                                                #如果筛选到相应的内容，则不再保存，否则，进行保存
+                                                check_ConfigCollectFactor_list = ConfigCollectFactor.objects.filter(nodeconfig_id=self.case_id).\
+                                                    filter(configcollectsendcmd_id=zx_configcollectsendcmd.id).\
+                                                    filter(config_collect_factor_factorcode=pollutantfactor_factor_one_factorCode)
+                                                check_ConfigCollectFactor_list_count = check_ConfigCollectFactor_list.count()
+
+                                                if check_ConfigCollectFactor_list_count == 0:  #没有查询到，则保存，并获取最新一条数据
+                                                    new_configcollectfactor = ConfigCollectFactor()
+                                                    new_configcollectfactor.nodeconfig_id = self.case_id
+                                                    new_configcollectfactor.configcollectsendcmd_id = zx_configcollectsendcmd.id
+                                                    new_configcollectfactor.config_collect_factor_factorcode = pollutantfactor_factor_one_factorCode
+                                                    new_configcollectfactor.config_collect_factor_findmode = pollutantfactor_factor_one_findMode
+                                                    new_configcollectfactor.config_collect_factor_offset = pollutantfactor_factor_one_offset
+                                                    new_configcollectfactor.config_collect_factor_mark = pollutantfactor_factor_one_mark
+                                                    new_configcollectfactor.config_collect_factor_len = pollutantfactor_factor_one_len
+                                                    new_configcollectfactor.config_collect_factor_decodetype = pollutantfactor_factor_one_decodeType
+                                                    new_configcollectfactor.config_collect_factor_operator = pollutantfactor_factor_one_operator
+                                                    new_configcollectfactor.config_collect_factor_operand =  pollutantfactor_factor_one_operand
+                                                    new_configcollectfactor.save()  # 保存
+                                                    print("保存因子数据")
+                                                else:  #否则不保存数据，获取筛选到的内容
+                                                    pass
+
+                                    # 获取下发指令中的 采集指令_回复指令中的参数或状态
+                                    elif 'stateFactor' in str(collect_cmd_one_children_one):  # 说明是采集指令_回复指令中的参数或状态
+                                        statefactor_factor_list = collect_cmd_one_children_one.getchildren()   #获取子节点
+                                        statefactor_factor_list_len = len(statefactor_factor_list)
+                                        if statefactor_factor_list_len == 0:  #说明不存在子节点
+                                            pass
+                                        else:  #否则保存子节点
+                                            for statefactor_factor_one in statefactor_factor_list:
+                                                statefactor_factor_one_attrib_dict = statefactor_factor_one.attrib
+                                                print("采集指令_回复指令中的参数或状态属性字典：")
+                                                print(statefactor_factor_one_attrib_dict)
+                                                statefactor_factor_one_factorCode = statefactor_factor_one_attrib_dict["factorCode"]
+                                                statefactor_factor_one_factorType = statefactor_factor_one_attrib_dict["factorType"]
+
+                                                #保存 采集指令_回复指令中的参数或状态
+                                                from shucaiyidate.modelsnewdev import ConfigCollectReceivePors
+                                                check_ConfigCollectReceivePors_list = ConfigCollectReceivePors.objects.filter(nodeconfig_id=self.case_id).\
+                                                    filter(configcollectsendcmd_id=zx_configcollectsendcmd.id).\
+                                                    filter(config_collect_receive_pors_factorcode=statefactor_factor_one_factorCode).\
+                                                    filter(config_collect_receive_pors_factortype=statefactor_factor_one_factorType)
+                                                check_ConfigCollectReceivePors_list_count = check_ConfigCollectReceivePors_list.count()
+                                                if check_ConfigCollectReceivePors_list_count == 0:   #如果没有筛选到内容，则说明不存在相同的数据，需要保存数据
+                                                    new_configcollectreceivepors = ConfigCollectReceivePors()
+                                                    new_configcollectreceivepors.nodeconfig_id = self.case_id
+                                                    new_configcollectreceivepors.configcollectsendcmd_id = zx_configcollectsendcmd.id
+                                                    new_configcollectreceivepors.config_collect_receive_pors_factorcode = statefactor_factor_one_factorCode
+                                                    new_configcollectreceivepors.config_collect_receive_pors_factortype = statefactor_factor_one_factorType
+                                                    new_configcollectreceivepors.save()  # 保存
+
+                                                    zx_configcollectreceivepors = ConfigCollectReceivePors.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+                                                else:  #否则获取查询到的数据
+                                                    for check_ConfigCollectReceivePors_one in check_ConfigCollectReceivePors_list:
+                                                        zx_configcollectreceivepors = check_ConfigCollectReceivePors_one
+                                                        break  #只获取第一条
+
+                                                #获取factor下的子节点
+                                                collect_section_list = statefactor_factor_one.getchildren()   #获取子节点
+                                                collect_section_list_len = len(collect_section_list)
+                                                if collect_section_list_len == 0:  #说明不存在子节点，不需要保存
+                                                    pass
+                                                else:  #否则需要保存
+                                                    for collect_section_one in collect_section_list:
+                                                        collect_section_one_attrib_dict = collect_section_one.attrib
+                                                        print("采集指令_回复指令中的参数或状态_数据解析配置属性字典:")
+                                                        print(collect_section_one_attrib_dict)
+
+                                                        collect_section_one_dataType = collect_section_one_attrib_dict["dataType"]
+                                                        collect_section_one_strFormat = collect_section_one_attrib_dict["strFormat"]
+                                                        collect_section_one_findMode = collect_section_one_attrib_dict["findMode"]
+                                                        collect_section_one_offset = collect_section_one_attrib_dict["offset"]
+                                                        collect_section_one_mark = collect_section_one_attrib_dict["mark"]
+                                                        collect_section_one_len = collect_section_one_attrib_dict["len"]
+                                                        collect_section_one_decodeType = collect_section_one_attrib_dict["decodeType"]
+                                                        collect_section_one_operator = collect_section_one_attrib_dict["operator"]
+                                                        collect_section_one_operand = collect_section_one_attrib_dict["operand"]
+
+                                                        #筛选相应的内容，如果可以查询到，则不保存，否则，保存
+                                                        from shucaiyidate.modelsnewdev import ConfigCollectReceivePorsSection
+
+                                                        check_ConfigCollectReceivePorsSection_list = ConfigCollectReceivePorsSection.objects.filter(nodeconfig_id=self.case_id).\
+                                                            filter(configcollectreceivepors_id=zx_configcollectreceivepors.id).\
+                                                            filter(config_collect_receive_pors_section_findmode=collect_section_one_findMode).\
+                                                            filter(config_collect_receive_pors_section_offset=collect_section_one_offset).\
+                                                            filter(config_collect_receive_pors_section_mark=collect_section_one_mark)
+                                                        check_ConfigCollectReceivePorsSection_list_count = check_ConfigCollectReceivePorsSection_list.count()
+
+                                                        if check_ConfigCollectReceivePorsSection_list_count == 0: #说明没有数据，需要保存
+                                                            new_configcollectreceiveporssection = ConfigCollectReceivePorsSection()
+                                                            new_configcollectreceiveporssection.nodeconfig_id = self.case_id
+                                                            new_configcollectreceiveporssection.configcollectreceivepors_id = zx_configcollectreceivepors.id
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_datatype = collect_section_one_dataType
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_strformat = collect_section_one_strFormat
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_findmode = collect_section_one_findMode
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_offset = collect_section_one_offset
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_mark = collect_section_one_mark
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_len = collect_section_one_len
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_decodetype = collect_section_one_decodeType
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_operator = collect_section_one_operator
+                                                            new_configcollectreceiveporssection.config_collect_receive_pors_section_operand = collect_section_one_operand
+                                                            new_configcollectreceiveporssection.save()
+
+                                                            zx_configcollectreceiveporssection = ConfigCollectReceivePorsSection.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+                                                        else:  #否则，获取最新的筛选到一条数据
+                                                            for check_ConfigCollectReceivePorsSection_one in check_ConfigCollectReceivePorsSection_list:
+                                                                zx_configcollectreceiveporssection = check_ConfigCollectReceivePorsSection_one
+                                                                break  #只获取第一条
+
+                                                        # 获取section下的子节点
+                                                        collect_convertrule_list = collect_section_one.getchildren()  # 获取子节点
+                                                        collect_convertrule_list_len = len(collect_convertrule_list)
+                                                        if collect_convertrule_list_len == 0:  #如果没有子节点，则不保存
+                                                            pass
+                                                        else: #否则，保存节点数据
+                                                            for collect_convertrule_one in collect_convertrule_list:
+                                                                collect_convertrule_one_attrib_dict = collect_convertrule_one.attrib
+                                                                print("采集指令_回复指令中的参数或状态_数据解析配置_特殊规则属性字典:")
+                                                                print(collect_convertrule_one_attrib_dict)
+                                                                collect_convertrule_one_ruleType = collect_convertrule_one_attrib_dict["ruleType"]
+                                                                collect_convertrule_one_enumValue = collect_convertrule_one_attrib_dict["enumValue"]
+                                                                collect_convertrule_one_minValue = collect_convertrule_one_attrib_dict["minValue"]
+                                                                collect_convertrule_one_maxValue = collect_convertrule_one_attrib_dict["maxValue"]
+                                                                collect_convertrule_one_resultValue = collect_convertrule_one_attrib_dict["resultValue"]
+
+                                                                #保存节点数据
+                                                                from shucaiyidate.modelsnewdev import ConfigCollectReceivePorsConvertrule
+
+                                                                #筛选数据，如果筛选到则不再保存，如果没有则保存
+                                                                check_ConfigCollectReceivePorsConvertrule_list = ConfigCollectReceivePorsConvertrule.objects.filter(nodeconfig_id=self.case_id).\
+                                                                    filter(configcollectreceiveporssection_id=zx_configcollectreceiveporssection.id).\
+                                                                    filter(config_collect_receive_pors_convertrule_ruletype = collect_convertrule_one_ruleType).\
+                                                                    filter(config_collect_receive_pors_convertrule_enumvalue=collect_convertrule_one_enumValue).\
+                                                                    filter(config_collect_receive_pors_convertrule_minvalue = collect_convertrule_one_minValue).\
+                                                                    filter(config_collect_receive_pors_convertrule_maxvalue = collect_convertrule_one_maxValue).\
+                                                                    filter(config_collect_receive_pors_convertrule_resultvalue = collect_convertrule_one_resultValue)
+
+                                                                check_ConfigCollectReceivePorsConvertrule_list_count = check_ConfigCollectReceivePorsConvertrule_list.count()
+
+                                                                if check_ConfigCollectReceivePorsConvertrule_list_count == 0:  #说明不存在，需要保存
+                                                                    new_configcollectreceiveporsconvertrule = ConfigCollectReceivePorsConvertrule()
+                                                                    new_configcollectreceiveporsconvertrule.nodeconfig_id = self.case_id
+                                                                    new_configcollectreceiveporsconvertrule.configcollectreceiveporssection_id = zx_configcollectreceiveporssection.id
+                                                                    new_configcollectreceiveporsconvertrule.config_collect_receive_pors_convertrule_ruletype = collect_convertrule_one_ruleType
+                                                                    new_configcollectreceiveporsconvertrule.config_collect_receive_pors_convertrule_enumvalue = collect_convertrule_one_enumValue
+                                                                    new_configcollectreceiveporsconvertrule.config_collect_receive_pors_convertrule_minvalue = collect_convertrule_one_minValue
+                                                                    new_configcollectreceiveporsconvertrule.config_collect_receive_pors_convertrule_maxvalue = collect_convertrule_one_maxValue
+                                                                    new_configcollectreceiveporsconvertrule.config_collect_receive_pors_convertrule_resultvalue = collect_convertrule_one_resultValue
+                                                                    new_configcollectreceiveporsconvertrule.save()
+                                                                else:
+                                                                    pass
+
+    def saveControlFromXml(self):
+        control_node_list = self.xml_tree.getiterator("controlCmds")
+        control_node_list_len = len(control_node_list)
+        if control_node_list_len == 0:  #如果节点个数为0，则不保存
+            pass
+        else:  #否则，保存数据
+            for control_node_one in control_node_list:
+                #获取反控指令cmd节点
+                control_cmd_list = control_node_one.findall("cmd")
+                control_cmd_list_len = len(control_cmd_list)
+                if control_cmd_list_len == 0:   #说明没有cmd
+                    pass
+                else:
+                    for control_cmd_one in control_cmd_list:
+                        control_cmd_one_attrib_dict = control_cmd_one.attrib
+                        print(control_cmd_one_attrib_dict)
+                        control_cmd_one_id = control_cmd_one_attrib_dict["id"]
+                        control_cmd_one_format = control_cmd_one_attrib_dict["format"]
+                        control_cmd_one_cmd = control_cmd_one_attrib_dict["cmd"]
+                        control_cmd_one_ackType = control_cmd_one_attrib_dict["ackType"]
+                        control_cmd_one_ackHead = control_cmd_one_attrib_dict["ackHead"]
+                        control_cmd_one_ackTail = control_cmd_one_attrib_dict["ackTail"]
+                        control_cmd_one_ackLen = control_cmd_one_attrib_dict["ackLen"]
+                        control_cmd_one_ackGap = control_cmd_one_attrib_dict["ackGap"]
+                        control_cmd_one_ackCheckMode = control_cmd_one_attrib_dict["ackCheckMode"]
+                        control_cmd_one_ackCheckArg = control_cmd_one_attrib_dict["ackCheckArg"]
+
+                        #筛选，如果查找到，则获取找到的内容，如果没查找到，则进行保存
+                        from shucaiyidate.modelsnewdev import ConfigControlSendCmd
+                        check_ConfigControlSendCmd_list = ConfigControlSendCmd.objects.filter(nodeconfig_id=self.case_id).\
+                            filter(config_control_send_cmd=control_cmd_one_cmd)
+                        check_ConfigControlSendCmd_list_count = check_ConfigControlSendCmd_list.count()
+                        if check_ConfigControlSendCmd_list_count == 0:  #则说明没有筛选到数据，需要保存数据
+                            new_configcontrolsendcmd = ConfigControlSendCmd()
+                            new_configcontrolsendcmd.nodeconfig_id = self.case_id
+                            new_configcontrolsendcmd.config_control_send_id =  control_cmd_one_id
+                            new_configcontrolsendcmd.config_control_send_format = control_cmd_one_format
+                            new_configcontrolsendcmd.config_control_send_cmd = control_cmd_one_cmd
+                            new_configcontrolsendcmd.config_control_send_acktype = control_cmd_one_ackType
+                            new_configcontrolsendcmd.config_control_send_ackhead = control_cmd_one_ackHead
+                            new_configcontrolsendcmd.config_control_send_acktail = control_cmd_one_ackTail
+                            new_configcontrolsendcmd.config_control_send_acklen = control_cmd_one_ackLen
+                            new_configcontrolsendcmd.config_control_send_ackgap = control_cmd_one_ackGap
+                            new_configcontrolsendcmd.config_control_send_ackcheckmode = control_cmd_one_ackCheckMode
+                            new_configcontrolsendcmd.config_control_send_ackcheckarg = control_cmd_one_ackCheckArg
+                            new_configcontrolsendcmd.save()
+
+                            zx_configcontrolsendcmd = ConfigControlSendCmd.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+                        else:  #获取筛选到的数据
+                            for check_ConfigControlSendCmd_one  in check_ConfigControlSendCmd_list:
+                                zx_configcontrolsendcmd = check_ConfigControlSendCmd_one
+                                break  #只获取第一项
+
+                        #获取cmdParam节点
+                        control_cmdParam_list = control_cmd_one.findall("cmdParam")
+                        control_cmdParam_list_len = len(control_cmdParam_list)
+                        if control_cmdParam_list_len == 0:  #如果没有子节点，则不需要保存
+                            pass
+                        else: #否则保存节点数据
+                            for control_cmdParam_one in control_cmdParam_list:
+                                control_cmdParam_one_attrib_dict = control_cmdParam_one.attrib   #获取属性字典
+                                print("反控指令_下发指令_参数字典属性：")
+                                print(control_cmdParam_one_attrib_dict)
+                                control_cmdParam_one_paramId = control_cmdParam_one_attrib_dict["paramId"]
+
+                                #筛选到相应的数据就取筛选到的数据，没有筛选到就保存新数据
+                                from shucaiyidate.modelsnewdev import ConfigControlSendParamid
+
+                                check_ConfigControlSendParamid_list = ConfigControlSendParamid.objects.filter(nodeconfig_id=self.case_id).\
+                                    filter(configcontrolsendcmd_id=zx_configcontrolsendcmd.id).\
+                                    filter(config_control_send_paramid = control_cmdParam_one_paramId)
+                                check_ConfigControlSendParamid_list_count = check_ConfigControlSendParamid_list.count()
+
+                                if check_ConfigControlSendParamid_list_count == 0:  #说明没有筛选到相应的数据，需要保存
+                                    new_configcontrolsendparamid = ConfigControlSendParamid()
+                                    new_configcontrolsendparamid.nodeconfig_id = self.case_id
+                                    new_configcontrolsendparamid.configcontrolsendcmd_id = zx_configcontrolsendcmd.id
+                                    new_configcontrolsendparamid.config_control_send_paramid = control_cmdParam_one_paramId
+                                    new_configcontrolsendparamid.save()
+
+                                    zx_configcontrolsendparamid = ConfigControlSendParamid.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+
+                                else:
+                                    for check_ConfigControlSendParamid_one in check_ConfigControlSendParamid_list:
+                                        zx_configcontrolsendparamid = check_ConfigControlSendParamid_one
+                                        break   #只获取第一条数据
 
 
+                                #获取 反控指令_下发指令_参数_配置 节点内容
+                                control_section_list = control_cmdParam_one.findall("section")
+                                control_section_list_len = len(control_section_list)
+                                if control_section_list_len == 0: #说明没有节点，不需要配置
+                                    pass
+                                else:  #保存节点内容
+                                    for control_section_one in control_section_list:
+                                        control_section_one_attrib_dict = control_section_one.attrib  #获取属性字典内容
+                                        print("反控指令_下发指令_参数_配置字典属性:")
+                                        print(control_section_one_attrib_dict)
 
-    def saveVersion(self):
-        pass
+                                        control_section_one_dataType = control_section_one_attrib_dict["dataType"]
+                                        control_section_one_strFormat = control_section_one_attrib_dict["strFormat"]
+                                        control_section_one_findMode = control_section_one_attrib_dict["findMode"]
+                                        control_section_one_offset = control_section_one_attrib_dict["offset"]
+                                        control_section_one_mark = control_section_one_attrib_dict["mark"]
+                                        control_section_one_len = control_section_one_attrib_dict["len"]
+                                        control_section_one_decodeType = control_section_one_attrib_dict["decodeType"]
+                                        control_section_one_operator = control_section_one_attrib_dict["operator"]
+                                        control_section_one_operand = control_section_one_attrib_dict["operand"]
 
+                                        #筛选获取，如果筛选到相应内容，则获取相应内容， 如果没有，则保存
+                                        from shucaiyidate.modelsnewdev import ConfigControlSendPorsSection
+                                        check_ConfigControlSendPorsSection_list = ConfigControlSendPorsSection.objects.filter(nodeconfig_id=self.case_id).\
+                                            filter(configcontrolsendparamid_id=zx_configcontrolsendparamid.id).\
+                                            filter(config_control_send_pors_section_findmode=control_section_one_findMode).\
+                                            filter(config_control_send_pors_section_offset=control_section_one_offset).\
+                                            filter(config_control_send_pors_section_mark=control_section_one_mark)
+
+                                        check_ConfigControlSendPorsSection_list_count = check_ConfigControlSendPorsSection_list.count()
+
+                                        if check_ConfigControlSendPorsSection_list_count == 0:  #说明没有筛选到相应数据，需要将现有数据保存
+                                            new_configcontrolsendporssection = ConfigControlSendPorsSection()
+                                            new_configcontrolsendporssection.nodeconfig_id = self.case_id
+                                            new_configcontrolsendporssection.configcontrolsendparamid_id = zx_configcontrolsendparamid.id
+                                            new_configcontrolsendporssection.config_control_send_pors_section_datatype = control_section_one_dataType
+                                            new_configcontrolsendporssection.config_control_send_pors_section_strformat = control_section_one_strFormat
+                                            new_configcontrolsendporssection.config_control_send_pors_section_findmode = control_section_one_findMode
+                                            new_configcontrolsendporssection.config_control_send_pors_section_offset = control_section_one_offset
+                                            new_configcontrolsendporssection.config_control_send_pors_section_mark = control_section_one_mark
+                                            new_configcontrolsendporssection.config_control_send_pors_section_len = control_section_one_len
+                                            new_configcontrolsendporssection.config_control_send_pors_section_decodetype =  control_section_one_decodeType
+                                            new_configcontrolsendporssection.config_control_send_pors_section_operator = control_section_one_operator
+                                            new_configcontrolsendporssection.config_control_send_pors_section_operand = control_section_one_operand
+                                            new_configcontrolsendporssection.save()
+
+                                            zx_configcontrolsendporssection = ConfigControlSendPorsSection.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+                                        else: #否则，说明筛选到数据，获取筛选到的内容
+                                            for check_ConfigControlSendPorsSection_one in check_ConfigControlSendPorsSection_list:
+                                                zx_configcontrolsendporssection = check_ConfigControlSendPorsSection_one
+                                                break  #只获取一条数据
+
+
+                                        # 获取 反控指令_下发指令_参数_配置_特殊规则 节点内容
+                                        control_convertRule_list = control_section_one.findall("convertRule")
+                                        control_convertRule_list_len = len(control_convertRule_list)
+                                        if control_convertRule_list_len == 0:  #说明没有子节点，不需要保存数据
+                                            pass
+                                        else:  #否则保存节点数据
+                                            for control_convertRule_one in control_convertRule_list:
+                                                control_convertRule_one_attrib_dict = control_convertRule_one.attrib  #获取节点属性字典内容\
+                                                print("反控指令_下发指令_参数_配置_特殊规则字典属性:")
+                                                print(control_convertRule_one_attrib_dict)
+                                                control_convertRule_one_ruleType = control_convertRule_one_attrib_dict["ruleType"]
+                                                control_convertRule_one_enumValue = control_convertRule_one_attrib_dict["enumValue"]
+                                                control_convertRule_one_minValue = control_convertRule_one_attrib_dict["minValue"]
+                                                control_convertRule_one_maxValue = control_convertRule_one_attrib_dict["maxValue"]
+                                                control_convertRule_one_resultValue = control_convertRule_one_attrib_dict["resultValue"]
+
+                                                #筛选相应内容，如果找到，则获取相应内容，如果未找到，则保存
+                                                from shucaiyidate.modelsnewdev import ConfigControlSendPorsConvertrule
+                                                check_ConfigControlSendPorsConvertrule_list = ConfigControlSendPorsConvertrule.objects.filter(nodeconfig_id=self.case_id).\
+                                                    filter(configcontrolsendporssection_id=zx_configcontrolsendporssection.id).\
+                                                    filter(config_control_send_pors_convertrule_ruletype=control_convertRule_one_ruleType).\
+                                                    filter(config_control_send_pors_convertrule_enumvalue = control_convertRule_one_enumValue).\
+                                                    filter(config_control_send_pors_convertrule_minvalue=control_convertRule_one_minValue).\
+                                                    filter(config_control_send_pors_convertrule_maxvalue=control_convertRule_one_maxValue).\
+                                                    filter(config_control_send_pors_convertrule_resultvalue=control_convertRule_one_resultValue)
+
+                                                check_ConfigControlSendPorsConvertrule_list_count = check_ConfigControlSendPorsConvertrule_list.count()
+                                                if check_ConfigControlSendPorsConvertrule_list_count == 0:  #没有筛选到，需要保存数据
+                                                    new_configcontrolsendporsconvertrule = ConfigControlSendPorsConvertrule()
+                                                    new_configcontrolsendporsconvertrule.nodeconfig_id = self.case_id
+                                                    new_configcontrolsendporsconvertrule.configcontrolsendporssection_id = zx_configcontrolsendporssection.id
+                                                    new_configcontrolsendporsconvertrule.config_control_send_pors_convertrule_ruletype = control_convertRule_one_ruleType
+                                                    new_configcontrolsendporsconvertrule.config_control_send_pors_convertrule_enumvalue = control_convertRule_one_enumValue
+                                                    new_configcontrolsendporsconvertrule.config_control_send_pors_convertrule_minvalue = control_convertRule_one_minValue
+                                                    new_configcontrolsendporsconvertrule.config_control_send_pors_convertrule_maxvalue = control_convertRule_one_maxValue
+                                                    new_configcontrolsendporsconvertrule.config_control_send_pors_convertrule_resultvalue = control_convertRule_one_resultValue
+                                                    new_configcontrolsendporsconvertrule.save()  # 保存
+                                                else:  #否则，不保存
+                                                    pass
+
+
+    #运行主函数,保存dev文件内容到数据库中
+    def runMain(self):
+        self.saveProjectName()
+        self.saveVersionFromXml()
+        self.saveDeviceFromXml()
+        self.saveCollectFromXml()
+        self.saveControlFromXml()
 
 
 
@@ -1153,18 +1597,14 @@ if __name__ == '__main__':
     fileName = "D:\pycharmproject\shangbaogongju\media/Dev/2_哈希分析仪/哈希分析仪.dev"
     # fileName = r"D:\pycharmproject\shangbaogongju\WWQRSTest\util\autoXml\instr_1972_N.dev"
 
-    # import chardet
-    # with open(fileName, "rb",encoding="utf8") as f:
-    #
-    #     data = f.read()
-    #
-    # res = chardet.detect(data)
-    # print(res["encoding"])
-    #
-    # rn = ReadNodeConfig(fileName,1)
-    # # # rn.readFile()
-    # # # rn.splitPathFile()
-    # rn.getVersionFromXml()
+
+    rn = ReadNodeConfig(fileName,3)
+    # # rn.readFile()
+    # # rn.splitPathFile()
+    rn.saveVersionFromXml()
+    rn.saveDeviceFromXml()
+    rn.saveCollectFromXml()
+    rn.saveControlFromXml()
 
 
 

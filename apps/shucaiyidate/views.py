@@ -3,7 +3,7 @@ from django.views.generic import View   #导入View
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 
-from wanwenyc.settings import DJANGO_SERVER_YUMING
+from wanwenyc.settings import DJANGO_SERVER_YUMING,MEDIA_ROOT
 
 
 from .modelsdev import TagContent,User,TagAttrib
@@ -461,3 +461,31 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
 
     print("重定向返回'/shucaiyidate/nodeconfig/'")
     return HttpResponseRedirect('/shucaiyidate/nodeconfig/')  #重定向到该页面
+
+#解析上传的原有的Dev文件，并将其入库
+def NodeConfigReadAndSaveRequest(request, nodeconfig_id, trackback=None):
+    from depend.shucaiyi.modelsnewdevdepend.nodeConfigDependClass import  ReadNodeConfig
+    nodeconfig = NodeConfig.objects.get(id=int(nodeconfig_id))   #获取用例
+
+    if nodeconfig.local_file:  #如果local_file上传有文件，则对文件进行解析
+        file_path = str(nodeconfig.local_file)
+        print("上传文件：")
+        print(file_path)
+
+        file_full_path = MEDIA_ROOT + "/" + file_path
+        print("上传文件绝对路径：")
+        print(file_full_path)
+        try:
+            filePath = file_full_path
+            caseId = nodeconfig_id
+            rn = ReadNodeConfig(filePath,caseId)
+            rn.runMain()
+        except  Exception as e:
+            print("没有入库成功，原因：【%s】" % e)
+
+    else:  #否则，不做任何处理
+        pass
+
+    print("重定向返回'/shucaiyidate/nodeconfig/'")
+    return HttpResponseRedirect('/shucaiyidate/nodeconfig/')  #重定向到该页面
+

@@ -13,6 +13,8 @@ from .modelsnewdev import NodeConfig,ConfigCollectSendCmd,ConfigCollectFactor, \
     ConfigCollectReceivePorsConvertrule,ConfigControlSendCmd,\
     ConfigControlSendParamid,ConfigControlSendPorsSection,ConfigControlSendPorsConvertrule
 
+from .forms import ConfigCollectFactorForm
+
 
 
 class XieyiTestCaseXadmin(object):
@@ -781,7 +783,7 @@ class NodeConfigXadmin(object):
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
     show_detail_fields = ["config_project", ]  # 显示数据详情
 
-    fields=['config_project','config_version','config_device','config_collect_packet_len',]   #添加页的字段显示
+    fields=['config_project','config_version','config_device','config_collect_packet_len','local_file',]   #添加页的字段显示
 
     list_export = ('xls',)  # 控制列表页导出数据的可选格式
     show_bookmarks = True  # 控制是否显示书签功能
@@ -798,12 +800,14 @@ class NodeConfigXadmin(object):
         extra = 1
         style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
 
+
     #设置内联
     class ConfigCollectFactorInline(object):
         model = ConfigCollectFactor
         exclude = ["write_user","add_time","update_time"]
         extra = 1
         style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
+        # form = ConfigCollectFactorForm
 
     #设置内联
     class  ConfigCollectReceivePorsInline(object):
@@ -854,6 +858,7 @@ class NodeConfigXadmin(object):
         exclude = ["write_user","add_time","update_time"]
         extra = 1
         style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
+
 
 
     inlines = [ConfigCollectSendCmdInline,
@@ -948,6 +953,14 @@ class NodeConfigXadmin(object):
     patch_delete.short_description = "批量删除"
 
     actions=[patch_delete,]
+
+    # #外键筛选
+    # def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+    #     # 新增 Post 时，相关联的 Blog 需要过滤，关键就在下面这句。
+    #     context['adminform'].form.fields['blog'].queryset = Team.objects.filter(user=request.user)
+    #     return super(NodeConfigXadmin, self).render_change_form(request, context, add, change, form_url, obj)
+
+
 
 
     def save_models(self):  # 重载save_models的方法，可以在做了某个动作后，动态重新加载
