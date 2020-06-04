@@ -19,18 +19,25 @@ class XieyiConfigDateForm(forms.ModelForm):#定义处理前段“我要学习”
 
 
 class ConfigCollectFactorForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     if not kwargs.get('initial'):
+    #         return self.uid = kwargs.get('initial').get('uid')
+
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.request = kwargs("request")
+    #     print("self.request:")
+    #     print(self.request)
+    #
+    #     self.fields['configcollectsendcmd'].queryset = ConfigCollectSendCmd.objects.filter(nodeconfig_id=1)
+
     class Meta:
         model = ConfigCollectFactor
         # exclude = ('user', 'recurring',)
         fields = "__all__"
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.request = kwargs("request")
-        print("self.request:")
-        print(self.request)
-
-        self.fields['configcollectsendcmd'].queryset = ConfigCollectSendCmd.objects.filter(nodeconfig_id=1)
 
 
 

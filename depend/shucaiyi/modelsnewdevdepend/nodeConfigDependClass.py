@@ -1120,6 +1120,7 @@ class ReadNodeConfig(object):
         return nodeconfig
 
     def saveProjectName(self):
+        #如果工程名字m没有名字，则保存文件名为工程名，否则不保存
         if self.node_config.config_project ==None:
             self.node_config.config_project = self.project_name
             self.node_config.save()

@@ -756,6 +756,15 @@ class TagContentXadmin(object):
         # 一定不要忘记，否则整个ClickAndBackXAdmin保存都会出错
 
 
+# 设置内联
+class ConfigCollectFactorInline(object):
+    model = ConfigCollectFactor
+    exclude = ["write_user", "add_time", "update_time"]
+    extra = 1
+    style = 'accordion'  # 以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
+
+
+
 class NodeConfigXadmin(object):
     all_zi_duan = ["id",
                    "config_project",
@@ -783,14 +792,14 @@ class NodeConfigXadmin(object):
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
     show_detail_fields = ["config_project", ]  # 显示数据详情
 
+    # 编辑页的字段显示
     fields=['config_project','config_version','config_device','config_collect_packet_len','local_file',]   #添加页的字段显示
 
     list_export = ('xls',)  # 控制列表页导出数据的可选格式
     show_bookmarks = True  # 控制是否显示书签功能
 
     # 设置是否加入导入插件
-    import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
-
+    import_excel = False  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
 
 
     #设置内联
@@ -801,13 +810,13 @@ class NodeConfigXadmin(object):
         style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
 
 
-    #设置内联
-    class ConfigCollectFactorInline(object):
-        model = ConfigCollectFactor
-        exclude = ["write_user","add_time","update_time"]
-        extra = 1
-        style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
-        # form = ConfigCollectFactorForm
+    # #设置内联
+    # class ConfigCollectFactorInline(object):
+    #     model = ConfigCollectFactor
+    #     exclude = ["write_user","add_time","update_time"]
+    #     extra = 1
+    #     style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
+    #     # form = ConfigCollectFactorForm
 
     #设置内联
     class  ConfigCollectReceivePorsInline(object):
@@ -913,27 +922,70 @@ class NodeConfigXadmin(object):
     def patch_delete(self,request,querset):
         for qs_one in querset:
             #先删除关联
+
+            #关联之 ConfigCollectReceivePorsConvertrule 去掉依赖
+            ConfigCollectReceivePorsConvertrule_all = ConfigCollectReceivePorsConvertrule.objects.filter(nodeconfig_id=qs_one.id)
+            for ConfigCollectReceivePorsConvertrule_one in ConfigCollectReceivePorsConvertrule_all:
+                ConfigCollectReceivePorsConvertrule_one.nodeconfig_id = ""  #置空依赖
+                ConfigCollectReceivePorsConvertrule_one.configcollectreceiveporssection = ""  #置空依赖
+                ConfigCollectReceivePorsConvertrule_one.delete()  #删除
+
+            #关联之 ConfigCollectReceivePorsSection 去掉依赖
+            ConfigCollectReceivePorsSection_all = ConfigCollectReceivePorsSection.objects.filter(nodeconfig_id=qs_one.id)
+            for ConfigCollectReceivePorsSection_one in ConfigCollectReceivePorsSection_all:
+                ConfigCollectReceivePorsSection_one.nodeconfig_id = ""  #置空依赖
+                ConfigCollectReceivePorsSection_one.configcollectreceivepors_id = ""  # 置空依赖
+                ConfigCollectReceivePorsSection_one.delete()  #删除
+
+            #关联之 ConfigCollectReceivePors 去掉依赖
+            ConfigCollectReceivePors_all = ConfigCollectReceivePors.objects.filter(nodeconfig_id=qs_one.id)
+            for ConfigCollectReceivePors_one in ConfigCollectReceivePors_all:
+                ConfigCollectReceivePors_one.nodeconfig_id = ""  #置空依赖
+                ConfigCollectReceivePors_one.configcollectsendcmd = ""   #置空依赖
+                ConfigCollectReceivePors_one.delete()  #删除
+
+            #关联之 ConfigCollectFactor 去掉依赖
+            ConfigCollectFactor_all = ConfigCollectFactor.objects.filter(nodeconfig_id=qs_one.id)
+            for ConfigCollectFactor_one in ConfigCollectFactor_all:
+                ConfigCollectFactor_one.nodeconfig_id = ""  #置空依赖
+                ConfigCollectFactor_one.configcollectsendcmd_id = ""  # 置空依赖
+                ConfigCollectFactor_one.delete()  #删除
+
+
             #关联之 ConfigCollectSendCmd 去掉依赖
             ConfigCollectSendCmd_all = ConfigCollectSendCmd.objects.filter(nodeconfig_id=qs_one.id)
             for ConfigCollectSendCmd_one in ConfigCollectSendCmd_all:
-                ConfigCollectSendCmd_one.nodeconfig_id = ""
-                ConfigCollectSendCmd_one.save()
+                ConfigCollectSendCmd_one.nodeconfig_id = ""  #置空依赖
+                ConfigCollectSendCmd_one.delete()  #删除
 
-            #关联之 ConfigCollectFactor 去掉依赖
-
-            #关联之 ConfigCollectReceivePors 去掉依赖
-
-            #关联之 ConfigCollectReceivePorsSection 去掉依赖
-
-            #关联之 ConfigCollectReceivePorsConvertrule 去掉依赖
-
-            #关联之 ConfigControlSendCmd 去掉依赖
-
-            #关联之 ConfigControlSendParamid 去掉依赖
-
-            #关联之 ConfigControlSendPorsSection 去掉依赖
 
             # 关联之 ConfigControlSendPorsConvertrule 去掉依赖
+            ConfigControlSendPorsConvertrule_all = ConfigControlSendPorsConvertrule.objects.filter(nodeconfig_id=qs_one.id)
+            for ConfigControlSendPorsConvertrule_one in ConfigControlSendPorsConvertrule_all:
+                ConfigControlSendPorsConvertrule_one.nodeconfig_id = ""  #置空依赖
+                ConfigControlSendPorsConvertrule_one.configcontrolsendporssection_id = ""  #置空依赖
+                ConfigControlSendPorsConvertrule_one.delete()  #删除
+
+            #关联之 ConfigControlSendPorsSection 去掉依赖
+            ConfigControlSendPorsSection_all = ConfigControlSendPorsSection.objects.filter(nodeconfig_id=qs_one.id)
+            for ConfigControlSendPorsSection_one in ConfigControlSendPorsSection_all:
+                ConfigControlSendPorsSection_one.nodeconfig_id = ""  #置空依赖
+                ConfigControlSendPorsSection_one.configcontrolsendparamid_id = ""  #置空依赖
+                ConfigControlSendPorsSection_one.delete()  #删除
+
+            #关联之 ConfigControlSendParamid 去掉依赖
+            ConfigControlSendParamid_all = ConfigControlSendParamid.objects.filter(nodeconfig_id=qs_one.id)
+            for ConfigControlSendParamid_one in ConfigControlSendParamid_all:
+                ConfigControlSendParamid_one.nodeconfig_id = ""  #置空依赖
+                ConfigControlSendParamid_one.configcontrolsendcmd_id = ""  #置空依赖
+                ConfigControlSendParamid_one.delete()  #删除
+
+
+            #关联之 ConfigControlSendCmd 去掉依赖
+            ConfigControlSendCmd_all = ConfigControlSendCmd.objects.filter(nodeconfig_id=qs_one.id)
+            for ConfigControlSendCmd_one in ConfigControlSendCmd_all:
+                ConfigControlSendCmd_one.nodeconfig_id = ""
+                ConfigControlSendCmd_one.delete()  #删除
 
             # 再删除本体
             qs_one.delete()
@@ -959,7 +1011,6 @@ class NodeConfigXadmin(object):
     #     # 新增 Post 时，相关联的 Blog 需要过滤，关键就在下面这句。
     #     context['adminform'].form.fields['blog'].queryset = Team.objects.filter(user=request.user)
     #     return super(NodeConfigXadmin, self).render_change_form(request, context, add, change, form_url, obj)
-
 
 
 

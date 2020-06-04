@@ -30,7 +30,7 @@ class NodeConfig(models.Model):
     config_collect_packet_len = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"采集指令_应答包最大长度",
                                       help_text=u"采集指令_应答包长度配置，前端仪器回复包的最大长度，如果不写默认1024")
 
-    local_file = models.FileField(upload_to=upload_local_file_path,  blank=True, null=True,verbose_name="上传的dev文件")
+    local_file = models.FileField(upload_to=upload_local_file_path,  blank=True, null=True,verbose_name="上传的原dev文件")
     dev_file = models.FileField(upload_to=upload_dev_file_path,  blank=True, null=True,verbose_name="生成的dev文件")
 
     # tag_father = models.ForeignKey('self', null=True, blank=True, verbose_name=u"依赖的父节点", on_delete=models.PROTECT)
@@ -50,15 +50,19 @@ class NodeConfig(models.Model):
 
     def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
-        save_html = "<a href='{}/shucaiyidate/nodeconfigreadandsave/{}/'>入库原上传Dev文件</a>".format(DJANGO_SERVER_YUMING, self.id)
-        make_html = "<a href='{}/shucaiyidate/nodeconfigmakedev/{}/'>生成新Dev文件</a>&nbsp;&nbsp;".format(DJANGO_SERVER_YUMING,self.id)
-        if self.dev_file:   #如果有则显示
-            open_html = "<a href='{}{}'>下载新Dev文件</a>&nbsp;&nbsp;".format(DJANGO_SERVER_YUMING,self.dev_file.url)
+        save_local_to_db_html = "<a href='{}/shucaiyidate/nodeconfigreadandsave/{}/'>入库原上传Dev文件</a>&nbsp;&nbsp;</br>".format(DJANGO_SERVER_YUMING, self.id)
+        if self.local_file:   #如果有则显示
+            open_local_html = "<a href='{}{}'>下载原上传Dev文件</a>&nbsp;&nbsp;</br>".format(DJANGO_SERVER_YUMING,self.local_file.url)
         else:  #否则不显示
-            open_html = ""
-        copy_html = "<a href='{}/shucaiyidate/nodeconfigallcopy/{}/'>复制新加当前数据</a>&nbsp;&nbsp;".format(DJANGO_SERVER_YUMING,self.id)
+            open_local_html = ""
+        make_dev_from_db_html = "<a href='{}/shucaiyidate/nodeconfigmakedev/{}/'>生成新Dev文件</a>&nbsp;&nbsp;</br>".format(DJANGO_SERVER_YUMING,self.id)
+        if self.dev_file:   #如果有则显示
+            open_dev_html = "<a href='{}{}'>下载新Dev文件</a>&nbsp;&nbsp;</br>".format(DJANGO_SERVER_YUMING,self.dev_file.url)
+        else:  #否则不显示
+            open_dev_html = ""
+        copy_html = "<a href='{}/shucaiyidate/nodeconfigallcopy/{}/'>复制新加当前数据</a>&nbsp;&nbsp;</br>".format(DJANGO_SERVER_YUMING,self.id)
 
-        all_html =save_html+ make_html+open_html+copy_html
+        all_html =save_local_to_db_html+open_local_html+make_dev_from_db_html+open_dev_html+copy_html
         return mark_safe(all_html)
         # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
 
