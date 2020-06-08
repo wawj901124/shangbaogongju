@@ -220,7 +220,12 @@ def NodeConfigMakeDevRequest(request, nodeconfig_id, trackback=None):
     from depend.shucaiyi.modelsnewdevdepend.nodeConfigDependClass import MakeNodeConfig
     caseId  = nodeconfig.id
     mnc = MakeNodeConfig(caseId=caseId)
-    file_name = nodeconfig.config_file_name + ".dev"
+    if nodeconfig.config_file_name != None:
+        file_name = nodeconfig.config_file_name + ".dev"
+    elif nodeconfig.config_project != None:
+        file_name = nodeconfig.config_project + ".dev"
+    else:
+        file_name = nodeconfig.config_file_name + ".dev"
     file_content = mnc.makeAllXml()
     # import chardet
     # res = chardet.detect(file_content)
