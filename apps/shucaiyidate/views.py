@@ -220,12 +220,19 @@ def NodeConfigMakeDevRequest(request, nodeconfig_id, trackback=None):
     from depend.shucaiyi.modelsnewdevdepend.nodeConfigDependClass import MakeNodeConfig
     caseId  = nodeconfig.id
     mnc = MakeNodeConfig(caseId=caseId)
-    if nodeconfig.config_file_name != None:
-        file_name = nodeconfig.config_file_name + ".dev"
-    elif nodeconfig.config_project != None:
+    print("nodeconfig.config_file_name:")
+    print(nodeconfig.config_file_name)
+    print("nodeconfig.config_project:")
+    print(nodeconfig.config_project)
+
+    if nodeconfig.config_file_name == None or nodeconfig.config_file_name =="" :
         file_name = nodeconfig.config_project + ".dev"
+        print("进入if")
     else:
         file_name = nodeconfig.config_file_name + ".dev"
+        print("进入else")
+    print("得出的DEV文件的名字：")
+    print(file_name)
     file_content = mnc.makeAllXml()
     # import chardet
     # res = chardet.detect(file_content)
@@ -258,6 +265,9 @@ def NodeConfigMakeDevRequest(request, nodeconfig_id, trackback=None):
     from django.core.files.base import ContentFile  #导入ContentFile
     #使用ContentFile保存内容
     nodeconfig.dev_file.save(name=file_name,content=ContentFile(file_content))   #使用ContentFile保存  #学习网址：https://www.jianshu.com/p/5c05eb437e08
+    file_name_no_dev = file_name.split(".dev")[0]
+    nodeconfig.config_file_name = file_name_no_dev
+    nodeconfig.save()   #保存文件名字
 
     # #将文件编码从ISO-8859-1修改为utf-8
     # with open(file_name_full_path, "r",encoding='iso8859-1') as f:
