@@ -25,6 +25,7 @@ class AutoModbus(object):
                         xieyi_db=None,
                         xieyi_db_remote_path =None,
                         xieyi_db_table_name =None,
+                        xieyi_device_id = None,
                         com_port =None,
                         com_baudrate =None,
                         com_bytesize =None,
@@ -54,12 +55,13 @@ class AutoModbus(object):
 
         self.xieyi_bin_dir = xieyi_bin_dir
         self.xieyi_name = xieyi_name
-        self.xieyi_test_port = xieyi_test_port
+        self.xieyi_test_port = xieyi_test_port  #数采仪端端口号
+        self.xieyi_device_id = xieyi_device_id  #数采仪下发或接收指令的设备ID号或站地址
         self.xieyi_txt_file_name = '%s_%s.txt'%(self.xieyi_name,self.xieyi_test_port)
         self.xieyi_db = xieyi_db
         self.xieyi_db_remote_path = xieyi_db_remote_path
         self.xieyi_db_table_name = xieyi_db_table_name
-        self.com_port = com_port   #设置端口号
+        self.com_port = com_port   #设置端口号(电脑端)
         self.com_baudrate = com_baudrate  # 设置波特率
         self.com_bytesize = com_bytesize  # 设置数据位
         self.com_parity = com_parity  # 设置校验位  N(无校验)、O（奇校验）、E（偶校验）0、1
@@ -898,6 +900,8 @@ class AutoModbus(object):
         mycommad_list.append(mycommad_three)
         mycommad_list.append(mycommad_four)
         self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
         self.time_delay(15)
 
     #关闭默认启动协议进程
@@ -910,11 +914,13 @@ class AutoModbus(object):
         mycommad_list = []
         mycommad_one = "cd %s" % self.xieyi_bin_dir  # 进入到协议二进制程序的bin目录下
         mycommad_two = "rm -rf %s&>/dev/null &" % self.xieyi_txt_file_name  # 删除已有txt文件
-        mycommad_three = "./%s --id=com%s_%s --log_level=develop &>%s &" % (self.xieyi_name,self.com_port,self.com_port,self.xieyi_txt_file_name)  # 或启动程序
+        mycommad_three = "./%s --id=com%s_%s --log_level=develop &>%s &" % (self.xieyi_name,self.xieyi_test_port,self.xieyi_device_id ,self.xieyi_txt_file_name)  # 或启动程序
         mycommad_list.append(mycommad_one)
         mycommad_list.append(mycommad_two)
         mycommad_list.append(mycommad_three)
         self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
         self.time_delay(3)
 
     #关闭默认启动协议进程后，重新启动协议
@@ -1020,6 +1026,8 @@ class AutoModbus(object):
 
     #解析收到的数据sender_hex_data_order_list的数据为一条一条可手法的二进制
     def get_sender_hex_data_order_list_bytes_list(self,sender_hex_data_order_list):
+        print("sender_hex_data_order_list:")
+        print(sender_hex_data_order_list)
         sender_hex_data_order_list_len = len(sender_hex_data_order_list)
         sender_hex_data_order_list_bytes = []
         for i in range(0,sender_hex_data_order_list_len):
@@ -1030,9 +1038,13 @@ class AutoModbus(object):
                 com_expect_date_bytes = None
             else:
                 com_expect_date_bytes = self.handle_Hexstr_to_bytes(sender_hex_data_order_list[i][2])
+            is_need_after_expect = sender_hex_data_order_list[i][4]
+            is_just_one = sender_hex_data_order_list[i][5]
             sender_hex_data_order_list_bytes_one.append(com_send_date_one_bytes)
             sender_hex_data_order_list_bytes_one.append(is_need_expect)
             sender_hex_data_order_list_bytes_one.append(com_expect_date_bytes)
+            sender_hex_data_order_list_bytes_one.append(is_need_after_expect)
+            sender_hex_data_order_list_bytes_one.append(is_just_one)
             sender_hex_data_order_list_bytes.append(sender_hex_data_order_list_bytes_one)
         print("sender_hex_data_order_list_bytes:")
         print(sender_hex_data_order_list_bytes)

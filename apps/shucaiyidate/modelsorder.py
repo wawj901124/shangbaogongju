@@ -29,6 +29,8 @@ class XieyiConfigDateOrder(models.Model):
     xieyi_name =  models.CharField(max_length=100, default="11020", verbose_name=u"协议二进制文件的名字")
     xieyi_test_port  =  models.CharField(max_length=100, default="4", verbose_name=u"数采仪协议串口号",help_text=u"请填写数字，"
                                                                    u"例如串口为COM4，则填写4")
+    xieyi_device_id = models.CharField(max_length=100, default="1",  null=True, blank=True,verbose_name=u"设备ID号",
+                                 help_text=u"下发或接收指令的设备ID号或站地址")
 
     is_com_recive_and_send =  models.BooleanField(default=True,verbose_name=u"是否进行数据接收和发送")
 
@@ -195,7 +197,9 @@ class SenderHexDataOrder(models.Model):
     # sender_hex_data = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"发送数据命令")
     com_send_date =  models.CharField(max_length=1000, default="01 03 02 00 EA 39 CB", verbose_name=u"回复指令中的全部内容",
                                     help_text=u"回复指令中的全部内容，如回复的全部数据为：01 03 02 00 EA 39 CB，则此处填写01 03 02 00 EA 39 CB；")
-    is_need_expect = models.BooleanField(default=True,verbose_name=u"发送数据前是否需要先接收到指令")
+    is_need_expect = models.BooleanField(default=False,verbose_name=u"发送数据前是否需要先接收到指令")
+    is_need_after_expect = models.BooleanField(default=False, verbose_name=u"发送数据后是否需要接收到指令")
+    is_just_one =  models.BooleanField(default=True, verbose_name=u"是否只发送一次数据")
     com_expect_date = models.CharField(max_length=1000, default="01 03 12 2D 00 01 11 7B",null=True, blank=True, verbose_name=u"预期接收到的指令的内容",
                                     help_text=u"预期接收到的指令的内容，如预期接收到的指令的内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
     xieyi_jiexi_expect_result = models.CharField(max_length=1000, default="0.234", verbose_name=u"协议解析预期结果",

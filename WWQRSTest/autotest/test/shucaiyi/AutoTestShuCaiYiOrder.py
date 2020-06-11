@@ -80,6 +80,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 xieyi_bin_dir = xieyiconfigdateorder_one.xieyi_bin_dir
                 xieyi_name = xieyiconfigdateorder_one.xieyi_name
                 xieyi_test_port = xieyiconfigdateorder_one.xieyi_test_port
+                xieyi_device_id = xieyiconfigdateorder_one.xieyi_device_id
                 com_port = xieyiconfigdateorder_one.com_port
                 com_baudrate = xieyiconfigdateorder_one.com_baudrate
                 com_bytesize = xieyiconfigdateorder_one.com_bytesize
@@ -134,6 +135,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 xieyi_bin_dir=xieyi_bin_dir,
                 xieyi_name=xieyi_name,
                 xieyi_test_port=xieyi_test_port,
+                xieyi_device_id = xieyi_device_id,
                 com_port=com_port,
                 com_baudrate=com_baudrate,
                 com_bytesize=com_bytesize,
@@ -169,7 +171,8 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
             #如果进行web端操作
 
             #是否关闭默认启动的协议，一定要关闭吗  # 杀死科内特
-            am.telnet_client_close_default_start_xieyi_common()  # 执行关闭协议通用命令
+            if is_close_xieyi:
+                am.telnet_client_close_default_start_xieyi_common()  # 执行关闭协议通用命令
             # #是否关闭默认启动的协议，一定要关闭吗  #杀死科内特
             # from depend.shucaiyi.closeXieYiCommandDependClass import closexieyicommanddepend
             # close_xie_yi_commad_list = closexieyicommanddepend.makeCloseXieYiCommandList(depend_id=case_id)  #传入程序的id，获取关闭协议命令
@@ -181,8 +184,8 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
             #
             #         mycommad_list = ['stop_guard','ps aux | grep %s | xargs kill -9 &>/dev/null &' % xieyi_name]
             #         am.telnet_client_close_default_start_xieyi(close_xie_yi_commad_list)  #执行关闭协议命令
-
-            am.telnet_client_rstart_xieyi_common()  # 执行重启通用命令
+            if is_restart_xieyi:
+                am.telnet_client_rstart_xieyi_common()  # 执行重启通用命令
 
             # #重启协议
             # from depend.shucaiyi.restartXieYiCommandDependClass import restartxieyicommanddepend
