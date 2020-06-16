@@ -195,11 +195,14 @@ class SenderHexDataOrder(models.Model):
     xieyitestcase = models.ForeignKey(XieyiTestCase,default="", null=True, blank=True,
                                         verbose_name=u"依赖的协议测试用例",on_delete=models.PROTECT)
     # sender_hex_data = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"发送数据命令")
+    is_send_hex = models.BooleanField(default=True,verbose_name=u"发送的数据是否为16进制",help_text="选中则表示发送的数据为16进制，否则表示发送的数据为ASCII字符")
     com_send_date =  models.CharField(max_length=1000, default="01 03 02 00 EA 39 CB", verbose_name=u"回复指令中的全部内容",
                                     help_text=u"回复指令中的全部内容，如回复的全部数据为：01 03 02 00 EA 39 CB，则此处填写01 03 02 00 EA 39 CB；")
     is_need_expect = models.BooleanField(default=False,verbose_name=u"发送数据前是否需要先接收到指令")
     is_need_after_expect = models.BooleanField(default=False, verbose_name=u"发送数据后是否需要接收到指令")
     is_just_one =  models.BooleanField(default=True, verbose_name=u"是否只发送一次数据")
+    is_receive_hex = models.BooleanField(default=True, verbose_name=u"接收的数据是否为16进制",
+                                      help_text="选中则表示接收的数据为16进制，否则表示接收的数据为ASCII字符")
     com_expect_date = models.CharField(max_length=1000, default="01 03 12 2D 00 01 11 7B",null=True, blank=True, verbose_name=u"预期接收到的指令的内容",
                                     help_text=u"预期接收到的指令的内容，如预期接收到的指令的内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
     xieyi_jiexi_expect_result = models.CharField(max_length=1000, default="0.234", verbose_name=u"协议解析预期结果",

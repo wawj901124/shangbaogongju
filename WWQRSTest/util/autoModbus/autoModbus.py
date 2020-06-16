@@ -1024,7 +1024,7 @@ class AutoModbus(object):
         self.time_delay(30)  #等待30秒
 
 
-    #解析收到的数据sender_hex_data_order_list的数据为一条一条可手法的二进制
+    #解析收到的数据sender_hex_data_order_list的数据为一条一条可收发的二进制
     def get_sender_hex_data_order_list_bytes_list(self,sender_hex_data_order_list):
         print("sender_hex_data_order_list:")
         print(sender_hex_data_order_list)
@@ -1032,12 +1032,23 @@ class AutoModbus(object):
         sender_hex_data_order_list_bytes = []
         for i in range(0,sender_hex_data_order_list_len):
             sender_hex_data_order_list_bytes_one = []
-            com_send_date_one_bytes = self.handle_Hexstr_to_bytes(sender_hex_data_order_list[i][0])
+            is_send_hex = sender_hex_data_order_list[i][6]
+            if is_send_hex:   #如果是16进制
+                com_send_date_one_bytes = self.handle_Hexstr_to_bytes(sender_hex_data_order_list[i][0])
+            else:  #否则为ASCII
+                from WWQRSTest.util.autoModbus.depend.floutOrHex import strtobytes
+                com_send_date_one_bytes = strtobytes(sender_hex_data_order_list[i][0])
             is_need_expect = sender_hex_data_order_list[i][1]
+
             if sender_hex_data_order_list[i][2]==None:
                 com_expect_date_bytes = None
             else:
-                com_expect_date_bytes = self.handle_Hexstr_to_bytes(sender_hex_data_order_list[i][2])
+                is_receive_hex = sender_hex_data_order_list[i][7]
+                if is_receive_hex:  #如果是16进制
+                    com_expect_date_bytes = self.handle_Hexstr_to_bytes(sender_hex_data_order_list[i][2])
+                else:  #否则为ASCII
+                    from WWQRSTest.util.autoModbus.depend.floutOrHex import strtobytes
+                    com_expect_date_bytes = strtobytes(sender_hex_data_order_list[i][2])
             is_need_after_expect = sender_hex_data_order_list[i][4]
             is_just_one = sender_hex_data_order_list[i][5]
             sender_hex_data_order_list_bytes_one.append(com_send_date_one_bytes)

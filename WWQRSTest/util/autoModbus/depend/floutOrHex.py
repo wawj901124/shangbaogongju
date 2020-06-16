@@ -34,6 +34,18 @@ def str2hex(s):
             odata += tmp - ord('A') + 10
     return odata
 
+#处理字符串转为字节
+def strtobytes(s):
+    b_s = bytes(s ,'utf-8')   #字符串转为字节
+    print(b_s)
+    return b_s
+
+#处理字符串转为字节
+def strtobytestwo(s):
+    b_s = s.encode('utf-8')   #字符串转为字节
+    print(b_s)
+    return b_s
+
 if __name__ == '__main__':
     #字符串转整数:
     int('10')  # 字符串转换成10进制整数

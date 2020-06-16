@@ -25,6 +25,8 @@ class SenderHexDataOrderDepend(object):
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.xieyi_jiexi_expect_result)
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_need_after_expect)
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_just_one)
+                sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_send_hex)
+                sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_receive_hex)
                 sender_hex_data_order_list.append(sender_hex_data_order_one_list)
 
         print("sender_hex_data_order_list:")

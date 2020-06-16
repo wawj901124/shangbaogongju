@@ -21,7 +21,7 @@ class XieyiTestCaseXadmin(object):
     all_zi_duan = ["id", "test_project",
                    "write_user",
                    "add_time", "update_time"]
-    list_display = ["test_project",
+    list_display = ["test_project","test_case_title",
                     "go_to",]  # 定义显示的字段
     list_filter = ["test_project",
                    "write_user"]  # 定义筛选的字段
