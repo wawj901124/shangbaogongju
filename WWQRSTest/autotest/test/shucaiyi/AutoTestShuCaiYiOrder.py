@@ -111,7 +111,9 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
             xieyi_jiexi_expect_result_list = []
             for sender_hex_data_order_list_one in sender_hex_data_order_list:
-                xieyi_jiexi_expect_result_list.append(sender_hex_data_order_list_one[3])
+                expect_one_list = sender_hex_data_order_list_one[3].split(",")
+                for expect_one in expect_one_list:
+                    xieyi_jiexi_expect_result_list.append(expect_one)
             print("预期校验数据：")
             print(xieyi_jiexi_expect_result_list)
 

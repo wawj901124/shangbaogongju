@@ -117,8 +117,9 @@ class ComThread:
                 data = data.encode('utf-8')
 
                 n = self.l_serial.inWaiting()
-                print("n的值：")
-                print(n)
+                if n !=0:
+                    print("n的值：")
+                    print(n)
                 if n:
                      data = data + self.l_serial.read(n)
                      print('get data from serial port:', data)
@@ -128,8 +129,8 @@ class ComThread:
                 # print(data)
                 n = self.l_serial.inWaiting()
 
-                print("data数据：")
-                print(data)
+                # print("data数据：")
+                # print(data)
 
                 if is_need_expect:    #如果发送数据前需要接收数据，则进行接收数据后发送数据操作
                     if len(data) > 0 and n == 0:

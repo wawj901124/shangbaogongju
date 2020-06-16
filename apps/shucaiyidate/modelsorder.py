@@ -206,7 +206,7 @@ class SenderHexDataOrder(models.Model):
     com_expect_date = models.CharField(max_length=1000, default="01 03 12 2D 00 01 11 7B",null=True, blank=True, verbose_name=u"预期接收到的指令的内容",
                                     help_text=u"预期接收到的指令的内容，如预期接收到的指令的内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
     xieyi_jiexi_expect_result = models.CharField(max_length=1000, default="0.234", verbose_name=u"协议解析预期结果",
-                                    help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234")
+                                    help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234；如需多个预期值，则多个预期值之间以半角逗号隔开，例如：0.234,0.506")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
