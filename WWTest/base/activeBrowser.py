@@ -84,6 +84,9 @@ class  ActiveBrowser(object):
 
         print(sys.getdefaultencoding())  # 系统默认编码
 
+        #谷歌浏览器下载网址：https://www.google.cn/chrome/
+        #谷歌驱动更新网址：http://chromedriver.storage.googleapis.com/index.html
+
 
 
         #开启谷歌浏览器访问端口
@@ -109,7 +112,7 @@ class  ActiveBrowser(object):
         chrome_options.add_argument("--start-fullscreen")  #全屏启动
         #chrome_options.add_argument("--window-size=4000,1600")  #专门应对无头浏览器中不能最大化屏幕的方案
         chrome_options.add_argument("--window-size=1920,1050")  # 专门应对无头浏览器中不能最大化屏幕的方案
-        chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222")   #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
+        # chrome_options.add_experimental_option("debuggerAddress","127.0.0.1:9222")   #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
         ## chrome_options.debugger_address="127.0.0.1:9222" #设置打开谷歌浏览器用9222端口，保证只要有一个浏览器打开，再次会使用同一个
         # chrome_options.add_argument('--disable-dev-shm-usage') #不加载图片, 提升速度
         # chrome_options.add_argument('blink-settings=imagesEnabled=false')
@@ -265,7 +268,35 @@ class  ActiveBrowser(object):
                 assert False
         return sonElesList
 
+    #查找ul中对应的li元素并点击
+    def findUlAndClickSelectLi(self,ul_xpath,li_text):
+        li_text_list = []
+        son_ele_s = self.getFatherSonElesList("xpath", ul_xpath, "tag_name", "li")  # 获取选项的所有li元素
+        son_count = len(son_ele_s)
+        for son_count_one in range(1, son_count + 1, 1):
+            li_xpath_one = "%s/%s[%s]" % (ul_xpath, "li", son_count_one)
+            # 获取li的文本内容
+            li_one_text = self.findElementByXpathAndReturnTextNotNum(li_xpath_one)
+            print(li_one_text)
+            li_text_list.append(li_one_text)
+            if li_text in li_one_text:  # 如果元素文本包含预期，则进行点击选择
+                self.findEleAndClick(0, "xpath", li_xpath_one)  # 点击
+                break  # 退出循环
 
+        self.outPutMyLog("已经获取到的列表的选项内容：")
+        self.outPutMyLog(li_text_list)
+
+        is_exist_flag = False
+        for li_text_one in li_text_list:
+            if li_text in li_text_one:
+                self.outPutMyLog("【%s】在列表选项【%s】中" % (str(li_text), str(li_text_one)))
+                is_exist_flag = True
+                break
+        if is_exist_flag:
+            self.outPutMyLog("【%s】在列表选项【%s】中" % (str(li_text), str(li_text_list)))
+        else:
+            self.outPutErrorMyLog("【%s】不在列表选项【%s】中" % (str(li_text), str(li_text_list)))
+        return is_exist_flag
 
     #获取元素
     def findELesList(self,findstyle,findstylevalue):
@@ -486,6 +517,10 @@ class  ActiveBrowser(object):
             assert  False
         except:
             pass
+
+
+
+
 
     #查找元素，然后输入内容
     def findEleAndInputNum(self,num,findstyle,findstylevalue,inputcontent):
