@@ -6,23 +6,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wanwenyc.settings")
 django.setup()
 # ----------------------------------------------------------------------
 # 独运行某一个py文件时会出现如下错误：django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.，以上内容可以解决此问题,加载django中的App
-import ddt
 
-from WWTest.autotest.config.wanwei.globalconfig.globalConfig import GlobalConfig, gc  # 导入全局变量
-from WWTest.base.activeBrowser import ActiveBrowser
 from WWTest.util.getTimeStr import GetTimeStr
-from WWTest.autotest.config.lina.zhonghuanxie.page.loginPage import *  # 导入登录页
-from WWTest.autotest.config.wanwei.depend.clickAndBackDepend import ClickAndBackDepend, clickandbackdepend
-# 导入 ClickAndBack依赖
-from WWTest.autotest.config.wanwei.depend.inputTapInputText import InputTapInputText, inputtapinputtext
-from WWTest.autotest.config.wanwei.depend.selectTapSelectOption import SelectTapSelectOption, selecttapselectoption
-from WWTest.autotest.config.wanwei.depend.selectTapSelectText import SelectTapSelectText, selecttapselecttext
-from WWTest.autotest.config.wanwei.depend.inputTapInputFile import InputTapInputFile, inputtapinputfile
-from WWTest.autotest.config.wanwei.depend.assertTipText import AssertTipText, asserttiptext
-from WWTest.autotest.config.wanwei.depend.inputTapInputDateTime import inputtapinputdatetime, InputTapInputDateTime
-from WWTest.autotest.config.wanwei.depend.radioAndReelectionLabel import RadioAndReelectionLabel, \
-    radioandreelectionlabel
-from WWTest.autotest.config.wanwei.depend.iframeBodyInputText import iframebodyinputtext
+
 
 from WWQRSTest.util.autoModbus.autoModbus import AutoModbus
 
@@ -31,17 +17,6 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
     @classmethod  # 类方法，只执行一次，但必须要加注解@classmethod,且名字固定为setUpClass
     def setUpClass(cls):
-        # cls.activeweb = ActiveBrowser()  # 实例化
-        # cls.loginurl = LoginPage().pageurl
-        # cls.activeweb.getUrl(indexpage.pageurl)  # 打开网址
-        # cls.activeweb.findElementByXpathAndInput(LoginPage().account,AGENT_LOGIN_ACCOUNT)
-        # cls.activeweb.findElementByXpathAndInput(LoginPage().password,AGENT_LOGIN_PASSWORD)
-        # cls.activeweb.findElementByXpathAndClick(LoginPage().loginbutton)
-        # cls.activeweb.delayTime(3)
-        # cls.testpage = DetailsPage()
-        # cls.testpageurl =cls.testpage.pageurl   #测试页面url
-        # cls.activeweb.getUrl(cls.testpageurl)
-        # cls.activeweb.delayTime(3)
         pass
 
     @classmethod  # 类方法，只执行一次，但必须要加注解@classmethod,且名字固定为tearDownClass
@@ -50,13 +25,9 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
         pass
 
     def setUp(self):  # 每条用例执行测试之前都要执行此方法
-        # self.activebrowser = ActiveBrowser()  # 实例化
-        # # lpf.login(self.activebrowser)
-        # lpf.loginwithcookiesauto(self.activebrowser)
         pass
 
     def tearDown(self):  # 每条用例执行测试之后都要执行此方法
-        # self.activebrowser.closeBrowse()
         pass
 
     def defineshucaiyi(self,
@@ -305,7 +276,8 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 am.outPutMyLog("="*50)
                 am.outPutMyLog("接收的数据：%s"% str(sender_hex_data_order_list_one[2]))
                 am.outPutMyLog("发送的数据：%s" % str(sender_hex_data_order_list_one[0]))
-                am.outPutMyLog("预期的解析结果：%s" %str(sender_hex_data_order_list_one[3]))
+                if sender_hex_data_order_list_one[9]:  #如果不断言结果，则不写预期结果
+                    am.outPutMyLog("预期的解析结果：%s" %str(sender_hex_data_order_list_one[3]))
                 am.outPutMyLog("=" * 50)
 
 
@@ -367,8 +339,6 @@ def __generateTestCases():
 __generateTestCases()
 
 if __name__ == '__main__':
-    # print("hello world")
-    # unittest.main()
     ts = TestShuCaiYiClass()
     ts.defineshucaiyi()
 
