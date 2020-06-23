@@ -1104,6 +1104,23 @@ class  ActiveBrowser(object):
             self.outPutErrorMyLog("填写内容与选项内容对不上，关闭驱动.问题描述：%s"% e)
             self.closeBrowse()
 
+
+    #通过xpath查找到select元素,选择要选择的项
+    def findElementByXpathAndSelectOptionsNum(self,num,path,optiontext):
+        optionlist = self.findElementByXpathAndReturnAllOptions(path)
+
+        for optionone in optionlist:
+            if optiontext in optionone :  #如果文本在选项中，则将选项内容赋值给文本
+                optiontext = optionone
+
+        ele = Select(self.getEleImage(num,path))
+        try:
+            selectoption = ele.select_by_visible_text(optiontext)
+            self.delayTime(2)
+        except Exception as e:
+            self.outPutErrorMyLog("填写内容与选项内容对不上，关闭驱动.问题描述：%s"% e)
+            self.closeBrowse()
+
     #通过xpath查找到select并打印其所有的options
     def findElementByXpathAndReturnAllOptions(self,path):
         ele = Select(self.findElementByXpath(path))
