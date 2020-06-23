@@ -39,6 +39,7 @@ class AutoModbus(object):
                         xieyi_jiexi_expect_result_list =None,
                         tcp_server_ip =None,
                         tcp_server_port =None,
+                        tcp_receive_delay_min=None,
                         is_telnet_client_close_default_start_xieyi =None,
                         is_telnet_client_rstart_xieyi =None,
                         is_com_recive_and_send =None,
@@ -77,6 +78,7 @@ class AutoModbus(object):
 
         self.tcp_server_ip = tcp_server_ip
         self.tcp_server_port = tcp_server_port
+        self.tcp_receive_delay_min = tcp_receive_delay_min
 
 
         self.is_telnet_client_close_default_start_xieyi = is_telnet_client_close_default_start_xieyi
@@ -953,6 +955,46 @@ class AutoModbus(object):
         #         f.write(result)
         #     # result = self.telnet_clicent_object.execute_some_command(command4)
 
+
+    #清除实时数据库，写死通用
+    def telnet_client_delete_real_or_rtd_db(self):
+        mycommad_list = []
+        mycommad_one = "cd /tmp/database.d"   #进入/tmp/database.d目录下
+        mycommad_two = "rm -rf *.db>/dev/null &"  #删除目录下所有数据库
+        mycommad_three = "cd /tmp"  #进入/tmp目录下
+        mycommad_four = "rm -rf *.db>/dev/null &"  #删除目录下所有数据库
+        mycommad_list.append(mycommad_one)
+        mycommad_list.append(mycommad_two)
+        mycommad_list.append(mycommad_three)
+        mycommad_list.append(mycommad_four)
+        self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
+        self.time_delay(3)
+
+    #清除平台上报数据库，写死通用
+    def telnet_client_delete_upload_db(self):
+        mycommad_list = []
+        mycommad_one = "cd /usr/database/upload_log/"   #进入/usr/database/upload_log/目录下
+        mycommad_two = "rm -rf *.db>/dev/null &"  #删除目录下所有数据库
+        mycommad_list.append(mycommad_one)
+        mycommad_list.append(mycommad_two)
+        self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
+        self.time_delay(3)
+
+    #重启数采仪，写死通用
+    def telnet_client_restart_scy(self):
+        mycommad_list = []
+        mycommad_one = "reboot"  #重启
+        mycommad_list.append(mycommad_one)
+        self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
+        self.time_delay(60)
+
+
     #处理发送的二进制数据
     def handle_Hexstr_to_bytes(self,HexDate):
         send_data_hex_str = HexDate
@@ -1051,11 +1093,13 @@ class AutoModbus(object):
                     com_expect_date_bytes = strtobytes(sender_hex_data_order_list[i][2])
             is_need_after_expect = sender_hex_data_order_list[i][4]
             is_just_one = sender_hex_data_order_list[i][5]
+            send_wait_time = sender_hex_data_order_list[i][8]
             sender_hex_data_order_list_bytes_one.append(com_send_date_one_bytes)
             sender_hex_data_order_list_bytes_one.append(is_need_expect)
             sender_hex_data_order_list_bytes_one.append(com_expect_date_bytes)
             sender_hex_data_order_list_bytes_one.append(is_need_after_expect)
             sender_hex_data_order_list_bytes_one.append(is_just_one)
+            sender_hex_data_order_list_bytes_one.append(send_wait_time)
             sender_hex_data_order_list_bytes.append(sender_hex_data_order_list_bytes_one)
         print("sender_hex_data_order_list_bytes:")
         print(sender_hex_data_order_list_bytes)
@@ -1155,6 +1199,7 @@ class AutoModbus(object):
         # 循环遍历预期结果
         expect_result_list = self.xieyi_jiexi_expect_result_list
         message_list = []
+        message_error_list = []
         for expect_result_one in expect_result_list:
             self.outPutMyLog("遍历数据：")
             self.outPutMyLog(expect_result_one)
@@ -1173,6 +1218,12 @@ class AutoModbus(object):
                         self.outPutMyLog("退出从一条数据中查找一个预期结果的循环")
                         assert_result_flag = True
                         break  #退出本次循环
+                    else:
+                        message_error_one = "验证值【%s】不在实际值【%s】中。"%(expect_result_one,one_ziduan_value)
+                        message_error_list.append( message_error_one)
+                        self.outPutErrorMyLog("退出从一条数据中查找一个预期结果的循环")
+                        assert_result_flag = False
+                        continue  #继续本条数据的循环查找
                 self.outPutMyLog("退出遍历一个表中的每条数据的循环")
                 if assert_result_flag:
                     break
@@ -1181,7 +1232,8 @@ class AutoModbus(object):
             self.outPutMyLog("查找结果信息：")
             self.outPutMyLog(message_list)
         else:
-            self.outPutErrorMyLog("没有在数据库【%s】中的【%s】表中查找到【%s】" % (local_db,table_name,str(expect_result_list)))
+            self.outPutErrorMyLog("没有在数据库【%s】中的【%s】表中查找到【%s】中的全部数据" % (local_db,table_name,str(expect_result_list)))
+            self.outPutErrorMyLog(message_error_list)
         return assert_result_flag
 
 
@@ -1189,11 +1241,16 @@ class AutoModbus(object):
 
     #处理tcp_server接受数据
     def tcp_server_receive(self):
-        self.tcp_server_object = TcpServerReceive(ip=self.tcp_server_ip,
-                                                  port=int(self.tcp_server_port),
-                                                  file_name=self.tcp_server_file_name)
-        self.tcp_server_object.tcp_server_receive()
-        self.tcp_server_object.tcp_server_close()
+        try:
+            tcp_receive_delay_min = self.tcp_receive_delay_min
+            self.tcp_server_object = TcpServerReceive(ip=self.tcp_server_ip,
+                                                      port=int(self.tcp_server_port),
+                                                      file_name=self.tcp_server_file_name,
+                                                      tcp_receive_delay_min=tcp_receive_delay_min)
+            self.tcp_server_object.tcp_server_receive()
+            self.tcp_server_object.tcp_server_close()
+        except Exception as e:
+            self.outPutErrorMyLog("tcp服务器接收数据报错，错误：%s" % e)
 
     #断言tcp_server接受到上报的数据
     def assert_tcp_server_receive_success(self):
@@ -1203,23 +1260,41 @@ class AutoModbus(object):
             self.outPutMyLog("获取的内容：")
             self.outPutMyLog(result)
         expect_result_list = self.xieyi_jiexi_expect_result_list
+
+        message_list = []
+        message_error_list = []
+        assert_result_flag_list = []
         for expect_result in expect_result_list:
         # expect_result = self.xieyi_jiexi_expect_result
             if expect_result in result:
                 self.outPutMyLog("查到上报结果：%s" % expect_result)
                 self.outPutMyLog("上报数据正确")
-                assert True
+                assert_result_flag_list.append(True)
+                message_list.append("【%s】在【%s】中。"%(expect_result,result))
             else:
                 self.outPutErrorMyLog("上报数据失败！！！")
-                assert False
+                # assert False
+                message_error_list.append("【%s】不在【%s】中。" % (expect_result, result))
+                assert_result_flag_list.append(False)
+
+        for assert_result_flag_one in assert_result_flag_list:
+            if not assert_result_flag_one:  #如果有False，则返回False
+                self.outPutErrorMyLog(message_error_list)
+                return False
+
+        self.outPutMyLog(message_list)
+        return True  #否则返回True
 
 
     #一些善后工作
     def end_work(self):
-        if self.telnet_clicent_object != None:
-            self.telnet_clicent_object.logout_host()  #如果telnet连接则退出
-        if self.ftp_client_object != None:
-            self.ftp_client_object.ftp_close()   #如果tfp连接，则退出
+        try:
+            if self.telnet_clicent_object != None:
+                self.telnet_clicent_object.logout_host()  #如果telnet连接则退出
+            if self.ftp_client_object != None:
+                self.ftp_client_object.ftp_close()   #如果tfp连接，则退出
+        except Exception as e:
+            self.outPutErrorMyLog("善后工作出现问题，问题：%s" % e)
 
 
     def run_test(self):

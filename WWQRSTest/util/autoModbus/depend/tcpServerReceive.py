@@ -12,13 +12,14 @@ receive_count: int = 0
 
 
 class TcpServerReceive(object):
-    def __init__(self, ip,port,file_name):
+    def __init__(self, ip,port,file_name,tcp_receive_delay_min=10):
         self.ip = ip
         self.port = port
         self.file_name = file_name
         self.ht = HandleTxt(self.file_name)
         self.sock =self.start_sock()
         self.tcp_server_client = self.tcp_server_start()
+        self.tcp_receive_delay_min = tcp_receive_delay_min  #tcp服务接收的数据为当前时间后延的时间（以分钟为单位）
 
     def start_sock(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -77,12 +78,45 @@ class TcpServerReceive(object):
         print("当前时间串（分钟）：%s" % timestr_minute)
         return timestr_minute
 
+    #获取当前时间10分钟之后的时间串-分钟
+    def get_now_time_after_ten_minute(self):
+        now_time = datetime.datetime.now()
+        now_plus_10 = now_time + datetime.timedelta(minutes=10)
+        timestr = now_plus_10.strftime('%Y%m%d%H%M')
+        print("当前时间10分钟后的时间：%s" % now_plus_10)
+        print("时间串：%s" % timestr)
+        timestr_after_ten_minute = '%s00'% timestr
+        print("当前时间10分钟后的时间串（分钟）：%s" % timestr_after_ten_minute)
+        return timestr_after_ten_minute
+
+    #获取当前时间N分钟之后的时间串-分钟(后延分钟数为传入的分钟数)
+    def get_now_time_after_param_minute(self):
+        now_time = datetime.datetime.now()
+        delay_time = int(self.tcp_receive_delay_min)
+        now_plus_n = now_time + datetime.timedelta(minutes= delay_time)
+        timestr = now_plus_n.strftime('%Y%m%d%H%M')
+        print("当前时间%s分钟后的时间：%s" % (str(delay_time),now_plus_n))
+        print("时间串：%s" % timestr)
+        timestr_after_n_minute = '%s00'% timestr
+        print("当前时间%s分钟后的时间串（分钟）：%s" % (str(delay_time),timestr_after_n_minute))
+        return timestr_after_n_minute
+
+    def compare_time_str(self,timestrone,timestrtwo):
+        if timestrone >= timestrtwo:
+            print("【%s】大于等于【%s】"% (timestrone,timestrtwo))
+            return True
+        else:
+            print("【%s】小于【%s】" % (timestrone, timestrtwo))
+            return False
+
     #接受数据
     def tcp_server_receive(self):
         #接受前，先删除之前存在的文件
         self.ht.delete_file()
-        #获取当前时间
-        now_timestr_minute = self.get_now_time_minute()
+        # #获取当前时间
+        # now_timestr_minute = self.get_now_time_minute()
+        #获取当前往后10分钟的时间
+        now_timestr_after_ten_minute = self.get_now_time_after_param_minute()  #传入有参数的后延分钟数
         receive_count = 0
         receive_count += 1
         while True:
@@ -95,6 +129,11 @@ class TcpServerReceive(object):
             print(msg_de)
             print("###############################")
             print(type(msg_de))
+            msg_de_timestr_list = msg_de.split("DataTime=")[1]
+            print(msg_de_timestr_list)
+            #获取报文中的时间串
+            msg_de_timestr_zhogjian =  msg_de_timestr_list.split(";")[0]
+            print(msg_de_timestr_zhogjian)
 
             self.ht.add_content(msg_de)  # 将接受到的报文保存在一个文件中
             if msg_de == 'disconnect':
@@ -103,9 +142,14 @@ class TcpServerReceive(object):
             self.tcp_server_client.send(msg.encode('utf-8'))
             print("send len is : [%d]" % len(msg))
             print("第%s次接收" % receive_count)
+
+            #接收报文的时间串和获取当前往后10分钟的时间串作比较，如果接收报文的时间串大于等于当前往后10分钟的时间串，则停止接收
+            #是否停止接收
+            is_stop_receive = self.compare_time_str(timestrone=msg_de_timestr_zhogjian,timestrtwo= now_timestr_after_ten_minute)
+
             # 如果当前时间的数据在接受的报文中，则停止退出循环
-            if now_timestr_minute in msg_de:
-                print("接受到【%s】分钟时间串的数据，停止Tcp服务器接受！"% now_timestr_minute)
+            if  is_stop_receive:
+                print("接收到或已经接收到超过【%s】分钟时间串的数据，停止Tcp服务器接收！"% now_timestr_after_ten_minute)
                 break
             receive_count += 1
 
@@ -119,9 +163,13 @@ class TcpServerReceive(object):
 if __name__=='__main__':
     import time
     ip = "192.168.101.123"
-    port =  63501
+    port =  65321
     file_name = 'tcp_server_receive.txt'
     tsr = TcpServerReceive(ip=ip,port=port,file_name=file_name)
     tsr.tcp_server_receive()
     tsr.tcp_server_close()
+    # tsr.get_now_time_after_ten_minute()
+    # timestrone = "20200622092100"
+    # timestrtwo = "20200622092100"
+    # tsr.compare_time_str(timestrone, timestrtwo)
 

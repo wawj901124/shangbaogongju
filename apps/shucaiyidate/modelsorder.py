@@ -19,6 +19,15 @@ class XieyiConfigDateOrder(models.Model):
     # test_case_title = models.CharField(max_length=200, default="", verbose_name=u"测试内容的名称")
     # is_run_case = models.BooleanField(default=True,verbose_name=u"是否运行")
 
+    is_web_modify_xieyi = models.BooleanField(default=True,verbose_name=u"是否通过web端修改协议")
+    web_type = models.CharField(max_length=10,null=True, blank=True,
+                                     choices=(("P0", u"V4"), ("P1", u"V5") , ("P2", u"V6"), ("P3", "other")),
+                                     default="P2",
+                                     verbose_name=u"web界面类型")
+    web_xieyi_name =  models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端选择的协议名称")
+    web_xieyi_yinzi = models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端添加的监控因子",
+                                       help_text=u"web端添加的监控因子，多个因子之间以半角逗号隔开")
+
     telnet_host_ip = models.CharField(max_length=100, default="192.168.101.133", verbose_name=u"数采仪IP地址")
     telnet_username = models.CharField(max_length=100, default="root", verbose_name=u"登录数采仪的用户名")
     telnet_password = models.CharField(max_length=100, default="wwyc8888", verbose_name=u"登录数采仪的密码")
@@ -77,6 +86,7 @@ class XieyiConfigDateOrder(models.Model):
 
     tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", null=True, blank=True,verbose_name=u"数据上报平台的IP地址")
     tcp_server_port = models.CharField(max_length=100, default="63503", null=True, blank=True,verbose_name=u"数据上报平台的端口号")
+    tcp_receive_delay_min = models.CharField(max_length=100, default="10", null=True, blank=True,verbose_name=u"tcp服务接收的数据为当前时间后延的时间（以分钟为单位）")
 
 
     # case_counts = models.IntegerField(default="1",verbose_name="循环次数",help_text=u"循环次数，请填写数字，"
@@ -99,6 +109,7 @@ class XieyiConfigDateOrder(models.Model):
         return mark_safe("<a href='{}/shucaiyidate/xieyiconfigdate/{}/'>复制新加</a>".format(DJANGO_SERVER_YUMING,self.id))
 
     go_to.short_description = u"复制新加"   #为go_to函数名个名字
+
 
 
 class XieyiTestCase(models.Model):
@@ -196,6 +207,7 @@ class SenderHexDataOrder(models.Model):
                                         verbose_name=u"依赖的协议测试用例",on_delete=models.PROTECT)
     # sender_hex_data = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"发送数据命令")
     is_send_hex = models.BooleanField(default=True,verbose_name=u"发送的数据是否为16进制",help_text="选中则表示发送的数据为16进制，否则表示发送的数据为ASCII字符")
+    send_wait_time = models.CharField(max_length=1000, default="0", verbose_name=u"发送数据前等待时间（单位秒）")
     com_send_date =  models.CharField(max_length=1000, default="01 03 02 00 EA 39 CB", verbose_name=u"回复指令中的全部内容",
                                     help_text=u"回复指令中的全部内容，如回复的全部数据为：01 03 02 00 EA 39 CB，则此处填写01 03 02 00 EA 39 CB；")
     is_need_expect = models.BooleanField(default=False,verbose_name=u"发送数据前是否需要先接收到指令")
@@ -205,7 +217,8 @@ class SenderHexDataOrder(models.Model):
                                       help_text="选中则表示接收的数据为16进制，否则表示接收的数据为ASCII字符")
     com_expect_date = models.CharField(max_length=1000, default="01 03 12 2D 00 01 11 7B",null=True, blank=True, verbose_name=u"预期接收到的指令的内容",
                                     help_text=u"预期接收到的指令的内容，如预期接收到的指令的内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
-    xieyi_jiexi_expect_result = models.CharField(max_length=1000, default="0.234", verbose_name=u"协议解析预期结果",
+    is_assert_expect = models.BooleanField(default=True,verbose_name=u"是否断言预期结果")
+    xieyi_jiexi_expect_result = models.CharField(max_length=1000, default="0.234",null=True, blank=True, verbose_name=u"协议解析预期结果",
                                     help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234；如需多个预期值，则多个预期值之间以半角逗号隔开，例如：0.234,0.506")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
@@ -220,3 +233,5 @@ class SenderHexDataOrder(models.Model):
 
     def __str__(self):
         return self.xieyi_jiexi_expect_result
+
+

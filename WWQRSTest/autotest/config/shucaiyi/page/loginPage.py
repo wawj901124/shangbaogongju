@@ -2,11 +2,11 @@ from WWTest.base.activeBrowser import ActiveBrowser
 from WWQRSTest.autotest.config.shucaiyi.globalconfig.globalConfig import gc
 
 class LoginPage(object):
-    login_account_input_xpath = "/html/body/div/div/div/div[2]/div[3]/form/div[1]/div/div/div/input"
-    login_password_input_xpath = "/html/body/div/div/div/div[2]/div[3]/form/div[2]/div/div/div/input"
+    login_account_input_xpath = "/html/body/div[1]/div/div[2]/div[2]/div/form/div[1]/div/div/div/div/input"
+    login_password_input_xpath = "/html/body/div[1]/div/div[2]/div[2]/div/form/div[2]/div/div/div/input"
     # login_code_xpath = "/html/body/div[1]/div/div[3]/div[1]/div/form/div[3]/div/div/div[2]/img"
     # login_code_input_xpath = "/html/body/div/div/div[3]/div[1]/div/form/div[3]/div/div/div[1]/div/input"
-    login_button_xpath = "/html/body/div/div/div/div[2]/div[3]/form/div[4]/div/div/button"
+    login_button_xpath = "/html/body/div[1]/div/div[2]/div[2]/div/form/div[4]/div/button/span"
 
 
 loginpage = LoginPage()
@@ -35,14 +35,14 @@ class LoginPageFunction(object):
             loginpassword = gc.TEST_LOGIN_PASSWORD
 
         activebroser.getUrl(loginurl)
-        activebroser.findEleAndInputNum(0,"xpath",loginpage.login_account_input_xpath,loginaccount)
-        activebroser.findEleAndInputNum(0,"xpath",loginpage.login_password_input_xpath,loginpassword)
+        # activebroser.findEleAndInputNum(0,"xpath",loginpage.login_account_input_xpath,loginaccount)
+        activebroser.findEleAndInputNum(0,"xpath",loginpage.login_password_input_xpath,loginpassword)  #输入密码
         # code = activebroser.getcodetext(loginpage.login_code_xpath)
         # code = activebroser.getCodeTextByThreeInterfase(loginpage.login_code_xpath)
         # print("code:%s" %code)
         # activebroser.findEleAndInputNum(0, "xpath",loginpage.login_code_input_xpath,code)
-        activebroser.findEleAndClick(0,"xpath",loginpage.login_button_xpath)
-        activebroser.writerCookieToJson(gc.COOKIE_FILE_NAME)
+        activebroser.findEleAndClick(0,"xpath",loginpage.login_button_xpath)  #点击登录
+        activebroser.writerCookieToJson(gc.COOKIE_FILE_NAME)  #写入cookie
 
 
     def loginwithcookies(self,activebroser):
@@ -102,3 +102,10 @@ lpf = LoginPageFunction()
 # lpf.login(111)
 # lpf.loginwithcookies(111)
 # lpf.loginwithcookiesauto(111)
+
+if __name__ == '__main__':
+    # print("hello world")
+    # unittest.main()
+    ac = ActiveBrowser()
+    # lpf.login(activebroser=ac)
+    lpf.loginwithcookiesauto(activebroser=ac)

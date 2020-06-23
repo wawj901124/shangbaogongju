@@ -22,17 +22,22 @@ class SenderHexDataOrderDepend(object):
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.com_send_date)
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_need_expect)
                 expect_data_str= SenderHexDataOrder_one.com_expect_date
-                # print("原数据：%s" % expect_data_str)
-                #有双斜杠转发单斜杠
-                expect_data_str_new = expect_data_str.encode("gbk").decode("unicode_escape")  #将字符串先编码后解码，解决单斜杠，变为双斜杠问题
-                # print("双斜杠变为单斜杠的数据：%s" % expect_data_str_new)
-                sender_hex_data_order_one_list.append(expect_data_str_new)
+                print("原数据：%s" % expect_data_str)
+                if expect_data_str == None:
+                    sender_hex_data_order_one_list.append(expect_data_str)
+                else:
+                    #有双斜杠转发单斜杠
+                    expect_data_str_new = expect_data_str.encode("gbk").decode("unicode_escape")  #将字符串先编码后解码，解决单斜杠，变为双斜杠问题
+                    # print("双斜杠变为单斜杠的数据：%s" % expect_data_str_new)
+                    sender_hex_data_order_one_list.append(expect_data_str_new)
                 # sender_hex_data_order_one_list.append(SenderHexDataOrder_one.com_expect_date.replace('\\\\','\\'))  #a.replace('\\\\','\\'),将双斜杠转为单斜杠
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.xieyi_jiexi_expect_result)
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_need_after_expect)
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_just_one)
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_send_hex)
                 sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_receive_hex)
+                sender_hex_data_order_one_list.append(SenderHexDataOrder_one.send_wait_time)
+                sender_hex_data_order_one_list.append(SenderHexDataOrder_one.is_assert_expect)
                 sender_hex_data_order_list.append(sender_hex_data_order_one_list)
 
         print("sender_hex_data_order_list:")

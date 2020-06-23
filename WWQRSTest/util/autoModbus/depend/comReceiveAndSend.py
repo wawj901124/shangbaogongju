@@ -71,7 +71,10 @@ class ComThread:
         try:
             # 发送数据到相应的处理组件
             self.l_serial.write(send)
-            print("发送数据：")
+            import datetime
+            now_time = str(datetime.datetime.now())  #获取当前时间
+            # print(now_time)
+            print("时间：%s ，发送数据：" % now_time)
             print(send)
         except Exception as ex:
             pass;
@@ -81,6 +84,9 @@ class ComThread:
         for zonghe_list_one in zonghe_list:
             yield zonghe_list_one
 
+    def delay_time(self,delaytime):
+        print("即将等待%s" % delaytime)
+        time.sleep(int(delaytime))
 
     def FirstReader(self):
 
@@ -92,6 +98,9 @@ class ComThread:
         zonghe_list_len = len(zonghe_list)
         #结束循环列表
         end_while_num = 1
+
+        #错误次数计算，预期错误次数达到10次，则结束当前while循环
+        error_expect_while_num = 0
 
 
         for zonghe_list_one in zonghe_list:
@@ -108,6 +117,11 @@ class ComThread:
             is_need_after_expect = zonghe_list_one[3]
             is_just_one = zonghe_list_one[4]
             is_sand_data = False
+            send_wait_time_yuan = int(zonghe_list_one[5])
+            if send_wait_time_yuan == None or send_wait_time_yuan=="" or send_wait_time_yuan==0:
+                send_wait_time = 0
+            else:
+                send_wait_time = send_wait_time_yuan
 
             #处理一条数据的收发
             while self.alive:
@@ -141,11 +155,22 @@ class ComThread:
                             print("发送数据前，会接收到相应指令，发送数据：")
 
                             print(com_send_date_one_bytes)
+                            self.delay_time(send_wait_time)  #发送延时
                             self.SendDate(com_send_date_one_bytes)
                             print("已经处理的个数：")
                             print(end_while_num)
                             end_while_num = end_while_num+1  #加1
                             break #结束while循环
+                        else:
+                            print("实际接收的内容：")
+                            print(data)
+                            print("预期要接收的内容：")
+                            print(com_expect_date_bytes)
+                            error_expect_while_num = error_expect_while_num+1
+                            if error_expect_while_num>=10:  #如果有十次接收内容与预期不符合，则停止接收
+                                print("已经接收10次内容与预期不符合，停止接收")
+                                break
+
 
                 if is_need_after_expect: #如果发送数据后需要接收数据， 则进行发送数据后验证接收的数据
                     if data == com_expect_date_bytes:
@@ -155,16 +180,27 @@ class ComThread:
                         print(end_while_num)
                         end_while_num = end_while_num + 1  # 加1
                         break # 结束while循环
+                    else:
+                        print("实际接收的内容：")
+                        print(data)
+                        print("预期要接收的内容：")
+                        print(com_expect_date_bytes)
+                        error_expect_while_num = error_expect_while_num + 1
+                        if error_expect_while_num >= 10:  # 如果有十次接收内容与预期不符合，则停止接收
+                            print("已经接收10次内容与预期不符合，停止接收")
+                            break
 
                     if is_just_one:  #如果是只发送一次数据
                         if not is_sand_data:   #如果没有发送数据，则发送数据,只发送一次数据
                             print("发送数据后会接收到相应回复，只发送一次数据，发送数据：")
                             print(com_send_date_one_bytes)
+                            self.delay_time(send_wait_time)  # 发送延时
                             self.SendDate(com_send_date_one_bytes)
                             is_sand_data = True  #发送完成后，不再发送
                     else:
                         print("发送数据后会接收到相应回复，连续发送数据，发送数据：")
                         print(com_send_date_one_bytes)
+                        self.delay_time(send_wait_time)  # 发送延时
                         self.SendDate(com_send_date_one_bytes)
 
 
@@ -174,11 +210,13 @@ class ComThread:
                     if is_just_one:
                         print("【纯发送数据，只发送一次数据】，发送数据：")
                         print(com_send_date_one_bytes)
+                        self.delay_time(send_wait_time)  # 发送延时
                         self.SendDate(com_send_date_one_bytes)
                     else:
                         for i in range(1,61,1):
                             print("【纯发送数据，连续60次发送数据之第%s次】，发送数据：" % str(i))
                             print(com_send_date_one_bytes)
+                            self.delay_time(send_wait_time)  # 发送延时
                             self.SendDate(com_send_date_one_bytes)
 
                     print("已经处理的个数：")

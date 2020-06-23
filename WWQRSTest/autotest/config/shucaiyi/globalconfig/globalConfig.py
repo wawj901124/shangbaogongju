@@ -4,11 +4,11 @@ class GlobalConfig(object):
     ONLINE_LOGIN_ACCOUNT = ""
     ONLINE_LOGIN_PASSWORD = ""
 
-    TEST_WEB_YUMING = "http://111.207.18.22:41008/#/LoginWebsite"
-    TEST_LOGIN_ACCOUNT = "中环协1"
-    TEST_LOGIN_PASSWORD = "admin123A"
+    TEST_WEB_YUMING = "http://192.168.101.124/#/login"
+    TEST_LOGIN_ACCOUNT = "管理员"
+    TEST_LOGIN_PASSWORD = "51297180"
 
-    COOKIE_FILE_NAME = "zhonghuanxielogincookie.json"
+    COOKIE_FILE_NAME = "shucaiyilogincookie.json"
 
 gc = GlobalConfig()
 
