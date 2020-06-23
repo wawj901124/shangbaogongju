@@ -1567,6 +1567,16 @@ class  ActiveBrowser(object):
         self.outPutMyLog("退出当前iframe框")
         self.outPutMyLog("切换回进入iframe框之前的内容")
 
+    #切换到alert
+    def swithToAlert(self):
+        now_alert =  self.driver.switch_to.alert
+        self.outPutMyLog("切换到alert框")
+        self.outPutMyLog("alert框文本信息：")
+        self.outPutMyLog(now_alert.text)
+        now_alert.accept()   #alert对话框属于警告对话框，我们这里只能接受弹窗
+        self.outPutMyLog("接受弹窗")
+
+
 
     #关闭浏览器
     def closeBrowse(self):
