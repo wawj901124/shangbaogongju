@@ -1249,8 +1249,16 @@ class AutoModbus(object):
                                                       tcp_receive_delay_min=tcp_receive_delay_min)
             self.tcp_server_object.tcp_server_receive()
             self.tcp_server_object.tcp_server_close()
+            return True
         except Exception as e:
-            self.outPutErrorMyLog("tcp服务器接收数据报错，错误：%s" % str(e))
+            self.outPutErrorMyLog("tcp服务器接收数据报错，错误：【%s】" % str(e))
+            if "[WinError 10049] 在其上下文中，该请求的地址无效。" == str(e):
+                self.outPutErrorMyLog("TCP Server 连接失败，请检查连接 TCP Server 配置的IP及端口号是否正确！！！" )
+                return False
+            elif "list index out of range" == str(e):
+                self.outPutErrorMyLog("出现无‘DataTime=’报文，不影响数据接收")
+                return True
+            return False
 
     #断言tcp_server接受到上报的数据
     def assert_tcp_server_receive_success(self):

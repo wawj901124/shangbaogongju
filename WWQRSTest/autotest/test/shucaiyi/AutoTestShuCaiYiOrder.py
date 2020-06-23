@@ -245,7 +245,8 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
             #是否上报平台
             # if is_tcp_server_receive:
             if is_assert_tcp_server_receive_success:  #是否验证平台上报内容，是，则需要接收上报平台数据
-                am.tcp_server_receive()
+                is_receive_normal = am.tcp_server_receive()  #是否接受数据正常
+                self.assertTrue(is_receive_normal, msg=u"平台接收数据失败")
 
             am.end_work()   #善后工作
 
@@ -273,7 +274,8 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                             tcp_expect_result_one = "%s-Rtd=%s" %(str(jiankongyinzi_list[i]),str(shuju_list[i]))
                             tcp_expect_result_list.append(tcp_expect_result_one)
 
-                        tcp_expect_result_list = ""  # 获取平台断言内容，根据监控因子和断言数据自动拼接而成
+                        print("tcp_expect_result_list:")
+                        print(tcp_expect_result_list)
                         is_in_tcp = am.assert_tcp_server_receive_success_with_param(
                             expect_result_list=tcp_expect_result_list)  # 带参数的断言
                     else:
