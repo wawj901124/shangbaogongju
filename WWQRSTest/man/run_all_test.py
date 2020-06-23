@@ -107,7 +107,7 @@ class RunAllTest(unittest.TestCase):
 if __name__ == '__main__':
     runat = RunAllTest()
     # runat.run()
-    runat.runAllTest(testproject=u"企业用电量",testmodule=u"协议上报")
+    runat.runAllTest(testproject=u"上号雷磁水位",testmodule=u"协议上报")
 
 
 

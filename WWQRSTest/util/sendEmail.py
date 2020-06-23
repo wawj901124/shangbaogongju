@@ -7,7 +7,7 @@ class SendEmail:
 
     globals() ['send_user'] = "xiang_kaizheng@wanweitech.com"  #构建全局变量发送者
     globals() ['email_host'] = "smtp.263.net"    #构建全局变量邮件服务器的email_host（smpt）
-    globals() ['password'] = "wanwei889"    #构建全局变量邮件服务器的password，邮箱服务器发送者的登录密码
+    globals() ['password'] = "wanwei999"    #构建全局变量邮件服务器的password，邮箱服务器发送者的登录密码
     # globals() ['send_user'] = "410287958@qq.com"  #构建全局变量发送者
     # globals() ['email_host'] = "smtp.qq.com"    #构建全局变量邮件服务器的email_host（smpt）
     # globals() ['password'] = "wbfiwwnajhrabijg"    #构建全局变量邮件服务器的password，邮箱服务器发送者的登录密码

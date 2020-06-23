@@ -261,7 +261,28 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
             #是否验证平台上报内容
             if is_assert_tcp_server_receive_success:
-                is_in_tcp = am.assert_tcp_server_receive_success()
+                if is_web_modify_xieyi:  #如果通过web修改协议，则会有监控因子，用监控因子和数据值拼接后断言
+                    jiankongyinzi_list = web_xieyi_yinzi.split(",")
+                    shuju_list = xieyi_jiexi_expect_result_list
+                    tcp_expect_result_list = []
+                    #将因子与数据拼接形成断言内容：
+                    jiankongyinzi_list_len = len(jiankongyinzi_list)
+                    shuju_list_len = len(shuju_list)
+                    if jiankongyinzi_list_len ==shuju_list_len:
+                        for i in range(0,jiankongyinzi_list_len):
+                            tcp_expect_result_one = "%s-Rtd=%s" %(str(jiankongyinzi_list[i]),str(shuju_list[i]))
+                            tcp_expect_result_list.append(tcp_expect_result_one)
+
+                        tcp_expect_result_list = ""  # 获取平台断言内容，根据监控因子和断言数据自动拼接而成
+                        is_in_tcp = am.assert_tcp_server_receive_success_with_param(
+                            expect_result_list=tcp_expect_result_list)  # 带参数的断言
+                    else:
+                        self.assertTrue(False, "平台上报数据断言失败,监控因子与预期验证数据值个数不同")
+                        is_in_tcp = False
+
+                else:  #否则，没有监控因子，只以数据断言
+                    is_in_tcp = am.assert_tcp_server_receive_success()  #不带参数的断言
+
                 self.assertTrue(is_in_tcp,"平台上报数据断言失败")
 
 

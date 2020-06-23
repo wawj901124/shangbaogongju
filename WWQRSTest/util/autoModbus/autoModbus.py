@@ -1250,7 +1250,7 @@ class AutoModbus(object):
             self.tcp_server_object.tcp_server_receive()
             self.tcp_server_object.tcp_server_close()
         except Exception as e:
-            self.outPutErrorMyLog("tcp服务器接收数据报错，错误：%s" % e)
+            self.outPutErrorMyLog("tcp服务器接收数据报错，错误：%s" % str(e))
 
     #断言tcp_server接受到上报的数据
     def assert_tcp_server_receive_success(self):
@@ -1260,6 +1260,39 @@ class AutoModbus(object):
             self.outPutMyLog("获取的内容：")
             self.outPutMyLog(result)
         expect_result_list = self.xieyi_jiexi_expect_result_list
+
+        message_list = []
+        message_error_list = []
+        assert_result_flag_list = []
+        for expect_result in expect_result_list:
+        # expect_result = self.xieyi_jiexi_expect_result
+            if expect_result in result:
+                self.outPutMyLog("查到上报结果：%s" % expect_result)
+                self.outPutMyLog("上报数据正确")
+                assert_result_flag_list.append(True)
+                message_list.append("【%s】在【%s】中。"%(expect_result,result))
+            else:
+                self.outPutErrorMyLog("上报数据失败！！！")
+                # assert False
+                message_error_list.append("【%s】不在【%s】中。" % (expect_result, result))
+                assert_result_flag_list.append(False)
+
+        for assert_result_flag_one in assert_result_flag_list:
+            if not assert_result_flag_one:  #如果有False，则返回False
+                self.outPutErrorMyLog(message_error_list)
+                return False
+
+        self.outPutMyLog(message_list)
+        return True  #否则返回True
+
+    #断言tcp_server接受到上报的数据,断言内容，以参数方式传入
+    def assert_tcp_server_receive_success_with_param(self,expect_result_list):
+        local_file = self.tcp_server_file_name
+        with open(local_file, "r", encoding='utf-8') as f:
+            result = f.read()
+            self.outPutMyLog("获取的内容：")
+            self.outPutMyLog(result)
+        expect_result_list = expect_result_list
 
         message_list = []
         message_error_list = []
