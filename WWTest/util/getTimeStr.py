@@ -36,7 +36,7 @@ class GetTimeStr:
                 self.outPutMyLog("将文件[%s]中第一行内容【%s】返回" % (filename,sxhdmcinputtext))
                 return sxhdmcinputtext
 
-
+    #创建目录
     def createdir(self,filedir):
         filelist = filedir.split("/")
         long = len(filelist)
@@ -48,6 +48,15 @@ class GetTimeStr:
             else:
                 os.mkdir(zuhefiledir)
                 self.outPutMyLog("已经创建目录：%s" % zuhefiledir)
+
+    #处理以半角逗号为分隔符，且去掉列表各项的前后空格
+    def getListFromStr(self,str,splitstr):
+        str_list = str.split(splitstr)
+        str_list_len = len(str_list)
+        for i in range(0, str_list_len):
+            str_list[i] = str_list[i].strip()
+        self.outPutMyLog("转换得出的列表内容：%s" %str(str_list))
+        return str_list
 
 if __name__  == '__main__':
     gettimestr = GetTimeStr()

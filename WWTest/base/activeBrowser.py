@@ -1592,6 +1592,14 @@ class  ActiveBrowser(object):
         self.outPutMyLog(now_alert.text)
         now_alert.accept()   #alert对话框属于警告对话框，我们这里只能接受弹窗
         self.outPutMyLog("接受弹窗")
+        self.delayTime(2)
+
+    #判断input是否被选中
+    def input_is_checked(self,inputele):
+        input_is_chaecked = inputele.is_selected()
+        self.outPutMyLog("input框是否被选中（目前状态）：")
+        self.outPutMyLog(input_is_chaecked)
+        return input_is_chaecked
 
 
 
