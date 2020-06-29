@@ -61,6 +61,14 @@ class GetTimeStr:
     #判断字符串是否只包含在“0123456789.”中
     def is_only_num(self,prestr):
         num_str = "0123456789."
+        if prestr == "":
+            self.outPutMyLog("字符串【%s】为空字符串." % prestr)
+            return False
+        prestr_strip = prestr.strip()  #去掉字符前后空格
+        if prestr == "":
+            self.outPutMyLog("字符串【%s】去掉前后空格后为空字符串." % prestr_strip)
+            return False
+
         for prestr_one in prestr:
             if prestr_one not in num_str:
                 self.outPutMyLog("字符串【%s】不是纯数字型字符串，包含有【%s】." % (prestr,prestr_one))
