@@ -58,6 +58,17 @@ class GetTimeStr:
         self.outPutMyLog("转换得出的列表内容：%s" %str(str_list))
         return str_list
 
+    #判断字符串是否只包含在“0123456789.”中
+    def is_only_num(self,prestr):
+        num_str = "0123456789."
+        for prestr_one in prestr:
+            if prestr_one not in num_str:
+                self.outPutMyLog("字符串【%s】不是纯数字型字符串，包含有【%s】." % (prestr,prestr_one))
+                return False
+        self.outPutMyLog("字符串【%s】是纯数字型字符串." % prestr)
+        return True
+
+
 if __name__  == '__main__':
     gettimestr = GetTimeStr()
     gettimestr.writeText("1.txt",'1')
