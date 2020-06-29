@@ -12,6 +12,7 @@ from WWQRSTest.util.autoModbus.depend.tcpServerReceive import TcpServerReceive
 from WWQRSTest.util.autoModbus.depend.handleTxt import HandleTxt
 from WWQRSTest.util.autoModbus.depend.mysqlite import MySqlite
 from WWQRSTest.util.myLogs import MyLogs
+from WWTest.util.getTimeStr import GetTimeStr
 
 
 
@@ -1200,6 +1201,10 @@ class AutoModbus(object):
         expect_result_list = self.xieyi_jiexi_expect_result_list
         message_list = []
         message_error_list = []
+        exist_expect_result_list = []   #存在的预期结果
+        not_exist_expect_result_list = []  #不存在的预期结果
+        like_not_exist_expect_result_list = []  #与不存在的值相近的值
+        like_not_exist_expect_result_one_list = []
         for expect_result_one in expect_result_list:
             self.outPutMyLog("遍历数据：")
             self.outPutMyLog(expect_result_one)
@@ -1215,6 +1220,7 @@ class AutoModbus(object):
                     if expect_result_one in str(one_ziduan_value):
                         message_one = "验证值【%s】在实际值【%s】中。"%(expect_result_one,one_ziduan_value)
                         message_list.append(message_one)
+                        exist_expect_result_list.append(expect_result_one)
                         self.outPutMyLog("退出从一条数据中查找一个预期结果的循环")
                         assert_result_flag = True
                         break  #退出本次循环
@@ -1228,12 +1234,56 @@ class AutoModbus(object):
                 if assert_result_flag:
                     break
             self.outPutMyLog("开始进入下一个预期结果值的查找的循环")
+
+        #根据存在的结果，找出不存在的值
+        for expect_result_one in expect_result_list:
+            if expect_result_one not in exist_expect_result_list:
+                not_exist_expect_result_list.append(expect_result_one)
+
+        #根据不存在的结果，获取与不存在结果相似的值
+        for not_exist_expect_result_one in not_exist_expect_result_list:
+            for table_content_one in table_content_list:
+                # 遍历一条数据的字段值，如果存在字段值则停止本次验证
+                for one_ziduan_value in table_content_one:
+                    one_ziduan_value_str = str(one_ziduan_value)
+                    not_exist_expect_result_one_float = float(not_exist_expect_result_one)
+                    #判断数据库中的数据是否只包含0123456789.
+                    gts = GetTimeStr()
+                    is_only_num = gts.is_only_num(one_ziduan_value_str)
+                    # print("是否只是数字字符串标志：%s" % str(is_only_num))
+                    if is_only_num:  #如果是数字型字符串，则进行计算
+                        one_ziduan_value_str_float = float(one_ziduan_value_str)
+                        if not_exist_expect_result_one_float>=one_ziduan_value_str_float:
+                            cha_zhi = not_exist_expect_result_one_float - one_ziduan_value_str_float
+                        else:
+                            cha_zhi = one_ziduan_value_str_float - not_exist_expect_result_one_float
+                        # print("差值：%s" %(str(cha_zhi)))
+                        if cha_zhi<=1:
+                            like_not_exist_expect_result_one_list.append(one_ziduan_value)
+                    else:   #否则遍历下一个值
+                        continue
+
+            like_message = "与【%s】相近的值有：【%s】."%(str(not_exist_expect_result_one),str(like_not_exist_expect_result_one_list))
+            self.outPutMyLog(like_message)
+            like_not_exist_expect_result_one_list = []   #like_not_exist_expect_result_one_list数组置空重新添加
+            like_not_exist_expect_result_list.append(like_message)
+
+
+
+
         if assert_result_flag :
             self.outPutMyLog("查找结果信息：")
             self.outPutMyLog(message_list)
+            self.outPutMyLog("预期 %s 应该在数据库中" % str(expect_result_list))
+            self.outPutMyLog("而实际 %s 在数据库中"% str(exist_expect_result_list))
         else:
             self.outPutErrorMyLog("没有在数据库【%s】中的【%s】表中查找到【%s】中的全部数据" % (local_db,table_name,str(expect_result_list)))
-            self.outPutErrorMyLog(message_error_list)
+            # self.outPutErrorMyLog(message_error_list)
+            self.outPutErrorMyLog("预期 %s 应该在数据库中" % str(expect_result_list))
+            self.outPutErrorMyLog("而实际 %s 在数据库中"% str(exist_expect_result_list))
+            self.outPutErrorMyLog("%s 不在数据库中" % str(not_exist_expect_result_list))
+            self.outPutErrorMyLog("%s" % str(like_not_exist_expect_result_list))
+
         return assert_result_flag
 
 

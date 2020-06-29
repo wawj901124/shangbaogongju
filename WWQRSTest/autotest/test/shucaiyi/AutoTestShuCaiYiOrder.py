@@ -111,14 +111,26 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
             print("web_type:")
             print(web_type)
 
+            select_xie_yi = web_xieyi_name
+            gts = GetTimeStr()
+            select_jian_kong_yin_zi_list = gts.getListFromStr(web_xieyi_yinzi,",")
+
+
             #是否通过web修改协议
             if is_web_modify_xieyi:   #如果是，则需要通过web修改协议
                 from depend.shucaiyi.dependwebconfig.webConfigClass import WebVSixConfig
-                if web_type =="P2":  #如果是V6,则走v6的web程序
-                    select_xie_yi = web_xieyi_name
-                    select_jian_kong_yin_zi_list = web_xieyi_yinzi.split(",")
+                from depend.shucaiyi.dependwebconfig.webOldConfigClass import WebOldConfig
+                if web_type =="P0":  #如果是V6,则走v6的web程序
                     wc = WebVSixConfig(select_xie_yi, select_jian_kong_yin_zi_list)
-                    wc.run()
+                    is_web_success = wc.run()
+                elif web_type =="P1": #如果是非V6,则走非V6的web程序
+                    wc = WebOldConfig(select_xie_yi, select_jian_kong_yin_zi_list)
+                    is_web_success = wc.run()
+
+                self.assertTrue(is_web_success,"web端修改协议失败，原因为：因子配置列表中没有全部的监控因子，需要进行添加，添加的因子请查看上面信息！！！")
+
+
+
 
 
 

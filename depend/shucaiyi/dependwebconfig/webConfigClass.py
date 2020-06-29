@@ -193,6 +193,7 @@ class WebVSixConfig(object):
             self.clickRestart()
         #关闭web
         self.closeWeb()
+        return True
 
 
 if __name__ == '__main__':
