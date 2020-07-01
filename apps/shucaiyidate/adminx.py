@@ -180,19 +180,19 @@ class XieyiConfigDateOrderXadmin(object):
         extra = 1
         style = 'tab'    #以标签形式展示
 
-    #设置内联
-    class CloseXieYiCommandOrderInline(object):
-        model = CloseXieYiCommandOrder
-        exclude = ["write_user","add_time","update_time"]
-        extra = 1
-        style = 'tab'    #以标签形式展示
-
-    #设置内联
-    class RestartXieYiCommandOrderInline(object):
-        model = RestartXieYiCommandOrder
-        exclude = ["write_user","add_time","update_time"]
-        extra = 1
-        style = 'tab'    #以标签形式展示
+    # #设置内联
+    # class CloseXieYiCommandOrderInline(object):
+    #     model = CloseXieYiCommandOrder
+    #     exclude = ["write_user","add_time","update_time"]
+    #     extra = 1
+    #     style = 'tab'    #以标签形式展示
+    #
+    # #设置内联
+    # class RestartXieYiCommandOrderInline(object):
+    #     model = RestartXieYiCommandOrder
+    #     exclude = ["write_user","add_time","update_time"]
+    #     extra = 1
+    #     style = 'tab'    #以标签形式展示
 
     # #设置内联
     # class SenderHexDataOrderInline(object):
@@ -202,8 +202,7 @@ class XieyiConfigDateOrderXadmin(object):
     #     style = 'tab'    #以标签形式展示
 
 
-    inlines = [FtpUploadFileOrderInline,CloseXieYiCommandOrderInline,
-               RestartXieYiCommandOrderInline]
+    inlines = [FtpUploadFileOrderInline,]
 
 
     def save_models(self):  # 重载save_models的方法，可以在做了某个动作后，动态重新加载

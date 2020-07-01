@@ -583,7 +583,7 @@ class DefineHelpText(object):
     config_control_send_format_help_text = config_collect_send_format_help_text
 
     config_control_send_cmd_help_text = mark_safe(html_tou+"""
-                                <span>具体下发指令，例如：\"${ID}050001FF00@{SYSTEMTIME}${MODBUS_L_CRC16}\" ,其中中间部分指令内容109C4A00070E0001@{SYSTEMTIME}根据需求而得</span>
+                                <span>具体下发指令，例如：\"${ID}050001FF00@{SYSTEMTIME}${MODBUS_L_CRC16}\" ,其中中间部分指令内容050001FF00@{SYSTEMTIME}根据需求而得</span>
                                 <table class="tabledata"> 
                                     <tr class="tabledataxuxian">
                                         <th class="tabledataxuxian">指令内容</th>

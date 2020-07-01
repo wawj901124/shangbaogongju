@@ -21,8 +21,8 @@ class XieyiConfigDateOrder(models.Model):
 
     is_web_modify_xieyi = models.BooleanField(default=True,verbose_name=u"是否通过web端修改协议")
     web_type = models.CharField(max_length=10,null=True, blank=True,
-                                     choices=(("P0", u"V4"), ("P1", u"V5") , ("P2", u"V6"), ("P3", "other")),
-                                     default="P2",
+                                     choices=(("P0", u"V6"), ("P1", u"非V6")),
+                                     default="P0",
                                      verbose_name=u"web界面类型")
     web_xieyi_name =  models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端选择的协议名称")
     web_xieyi_yinzi = models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端添加的监控因子",
@@ -32,8 +32,8 @@ class XieyiConfigDateOrder(models.Model):
     telnet_username = models.CharField(max_length=100, default="root", verbose_name=u"登录数采仪的用户名")
     telnet_password = models.CharField(max_length=100, default="wwyc8888", verbose_name=u"登录数采仪的密码")
     is_ftp_upload =  models.BooleanField(default=False,verbose_name=u"是否上传配置文件")
-    is_close_xieyi =  models.BooleanField(default=True,verbose_name=u"是否关闭开机自启动时启动的协议")
-    is_restart_xieyi = models.BooleanField(default=True,verbose_name=u"是否重新启动协议")
+    # is_close_xieyi =  models.BooleanField(default=True,verbose_name=u"是否关闭开机自启动时启动的协议")
+    # is_restart_xieyi = models.BooleanField(default=True,verbose_name=u"是否重新启动协议")
     xieyi_bin_dir =  models.CharField(max_length=100, default="/usr/app_install/collect/bin", verbose_name=u"数采仪存放协议二进制文件的bin目录")
     xieyi_name =  models.CharField(max_length=100, default="11020", verbose_name=u"协议二进制文件的名字")
     xieyi_test_port  =  models.CharField(max_length=100, default="4", verbose_name=u"数采仪协议串口号",help_text=u"请填写数字，"
@@ -67,13 +67,14 @@ class XieyiConfigDateOrder(models.Model):
     # com_expect_date = models.CharField(max_length=100, default="01 03 12 2D 00 01 11 7B", verbose_name=u"预期接收到的指令的内容",
     #                                 help_text=u"预期接收到的指令的内容，如预期接收到的指令的内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
 
-    is_ftp_down_xieyi_file = models.BooleanField(default=True,verbose_name=u"是否ftp下载获取解析文件")
+    # is_ftp_down_xieyi_file = models.BooleanField(default=True,verbose_name=u"是否ftp下载获取解析文件")
+    is_with_code_assert = models.BooleanField(default=True,verbose_name=u"断言结果是否带因子代码")
     is_assert_file_success = models.BooleanField(default=True,verbose_name=u"是否断言协议预期解析结果在协议解析文件中")
 
     # xieyi_jiexi_expect_result = models.CharField(max_length=1000, default="0.234", verbose_name=u"协议解析预期结果",
     #                                 help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234，如有多个预期结果，每个结果之间以半角逗号隔开，如:0.234,9.55")
 
-    is_ftp_get_remote_db_file =  models.BooleanField(default=False,verbose_name=u"是否ftp下载远程数据库文件")
+    # is_ftp_get_remote_db_file =  models.BooleanField(default=False,verbose_name=u"是否ftp下载远程数据库文件")
     is_assert_real_db_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在实时数据库的表中")
 
     xieyi_db =  models.CharField(max_length=100, default="real.db", null=True, blank=True, verbose_name=u"协议实时数据存放的数据库名字")
@@ -81,7 +82,7 @@ class XieyiConfigDateOrder(models.Model):
                                              help_text=u"如数据库路径为'/tmp/real.db',则填写'/tmp/real.db'")
     xieyi_db_table_name = models.CharField(max_length=100, default="rttable", null=True, blank=True, verbose_name=u"协议实时数据存放的数据的数据表")
 
-    is_tcp_server_receive = models.BooleanField(default=False,verbose_name=u"是否接收平台报文")
+    # is_tcp_server_receive = models.BooleanField(default=False,verbose_name=u"是否接收平台报文")
     is_assert_tcp_server_receive_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在接收的报文中")
 
     tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", null=True, blank=True,verbose_name=u"数据上报平台的IP地址")
