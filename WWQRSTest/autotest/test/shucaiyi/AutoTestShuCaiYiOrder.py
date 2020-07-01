@@ -68,14 +68,15 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 tcp_server_port = xieyiconfigdateorder_one.tcp_server_port
                 tcp_receive_delay_min = xieyiconfigdateorder_one.tcp_receive_delay_min
                 is_ftp_upload = xieyiconfigdateorder_one.is_ftp_upload
-                is_close_xieyi = xieyiconfigdateorder_one.is_close_xieyi
-                is_restart_xieyi = xieyiconfigdateorder_one.is_restart_xieyi
+                # is_close_xieyi = xieyiconfigdateorder_one.is_close_xieyi
+                # is_restart_xieyi = xieyiconfigdateorder_one.is_restart_xieyi
                 is_com_recive_and_send = xieyiconfigdateorder_one.is_com_recive_and_send
-                is_ftp_down_xieyi_file = xieyiconfigdateorder_one.is_ftp_down_xieyi_file
+                # is_ftp_down_xieyi_file = xieyiconfigdateorder_one.is_ftp_down_xieyi_file
+                is_with_code_assert = xieyiconfigdateorder_one.is_with_code_assert
                 is_assert_file_success = xieyiconfigdateorder_one.is_assert_file_success
-                is_ftp_get_remote_db_file = xieyiconfigdateorder_one.is_ftp_get_remote_db_file
+                # is_ftp_get_remote_db_file = xieyiconfigdateorder_one.is_ftp_get_remote_db_file
                 is_assert_real_db_success = xieyiconfigdateorder_one.is_assert_real_db_success
-                is_tcp_server_receive = xieyiconfigdateorder_one.is_tcp_server_receive
+                # is_tcp_server_receive = xieyiconfigdateorder_one.is_tcp_server_receive
                 is_assert_tcp_server_receive_success = xieyiconfigdateorder_one.is_assert_tcp_server_receive_success
                 break
 
@@ -89,31 +90,22 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
             for sender_hex_data_order_list_one in sender_hex_data_order_list:
                 is_assert_expect = sender_hex_data_order_list_one[9]
                 if is_assert_expect:  #如果进行结果断言
-                    expect_one_list = sender_hex_data_order_list_one[3].split(",")
+                    gts = GetTimeStr()
+                    expect_one_list =gts.getListFromStr(sender_hex_data_order_list_one[3], ",")
                     for expect_one in expect_one_list:
                         xieyi_jiexi_expect_result_list.append(expect_one)  #添加断言结果到预期校验数据列表中
             print("预期校验数据：")
             print(xieyi_jiexi_expect_result_list)
 
 
-            xieyi_txt_file_name = '%s_%s.txt'%(xieyi_name,xieyi_test_port)
-
-            # if com_send_date == None:
-            #     com_send_hex_list = []
-            # else:
-            #     com_send_hex_list = com_send_date.split(",")
-            #
-            # if xieyi_jiexi_expect_result == None:
-            #     xieyi_jiexi_expect_result_list = []
-            # else:
-            #     xieyi_jiexi_expect_result_list = xieyi_jiexi_expect_result.split(",")
 
             print("web_type:")
             print(web_type)
 
             select_xie_yi = web_xieyi_name
-            gts = GetTimeStr()
-            select_jian_kong_yin_zi_list = gts.getListFromStr(web_xieyi_yinzi,",")
+            if web_xieyi_yinzi !=None:
+                gts = GetTimeStr()
+                select_jian_kong_yin_zi_list = gts.getListFromStr(web_xieyi_yinzi,",")
 
 
             #是否通过web修改协议
@@ -131,12 +123,6 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
 
 
-
-
-
-
-
-
             am = AutoModbus(
                 telnet_host_ip=telnet_host_ip,
                 telnet_username=telnet_username,
@@ -150,8 +136,6 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 com_bytesize=com_bytesize,
                 com_parity=com_parity,
                 com_stopbits=com_stopbits,
-                # com_send_date_list=com_send_hex_list ,
-                # com_expect_date=com_expect_date,
 
                 xieyi_jiexi_expect_result_list=xieyi_jiexi_expect_result_list,
 
@@ -178,17 +162,14 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 if is_ftp_upload:   #如果需要上传文件
                     am.run_ftp_up_load_file_list(ftp_up_load_file_list)
 
-            #如果进行web端操作
-
 
             #如果需要验证数据库和平台上报数据，需要先删除原数据库中已经存在的内容
             #然后重启，运行后续操作
-            # 是否ftp下载实时数据
-            # if is_ftp_get_remote_db_file:  #如果需要下载实时数据，那就需要先清除实时数据
+            # 是否验证实时数据
             if is_assert_real_db_success:  # 是否验证实时数据，是，则需要先删除远程实时数据库的内容
                 am.telnet_client_delete_real_or_rtd_db()  #删除原有实时数据库
-            #是否上报平台
-            # if is_tcp_server_receive:  #如果上报平台数据：
+
+            #是否验证平台上报内容
             if is_assert_tcp_server_receive_success:  # 是否验证平台上报内容，是，则需要清除已经存在的平台数据库
                 am.telnet_client_delete_upload_db()   #删除原有上报平台数据
 
@@ -196,55 +177,27 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 am.telnet_client_restart_scy()
 
 
-            #是否关闭默认启动的协议，一定要关闭吗  # 杀死科内特
-            # if is_close_xieyi:
-            if is_assert_file_success:  # 是否在协议文件中找到相应的解析内容,是，则需要关闭原有协议
+            #是否在协议文件中找到相应的解析内容
+            if is_assert_file_success:  # 是否在协议文件中找到相应的解析内容,是，则需要关闭原有协议,重新运行协议，并生成协议解析文件
+                #关闭原有协议
                 am.telnet_client_close_default_start_xieyi_common()  # 执行关闭协议通用命令
-            # #是否关闭默认启动的协议，一定要关闭吗  #杀死科内特
-            # from depend.shucaiyi.closeXieYiCommandDependClass import closexieyicommanddepend
-            # close_xie_yi_commad_list = closexieyicommanddepend.makeCloseXieYiCommandList(depend_id=case_id)  #传入程序的id，获取关闭协议命令
-            # if close_xie_yi_commad_list == []:  #则说明没有关闭命令，不执行关闭命令
-            #     am.telnet_client_close_default_start_xieyi_common()  # 执行关闭协议通用命令
-            #     pass
-            # else:
-            #     if is_close_xieyi:
-            #
-            #         mycommad_list = ['stop_guard','ps aux | grep %s | xargs kill -9 &>/dev/null &' % xieyi_name]
-            #         am.telnet_client_close_default_start_xieyi(close_xie_yi_commad_list)  #执行关闭协议命令
-            # if is_restart_xieyi:
-            if is_assert_file_success:  # 是否在协议文件中找到相应的解析内容,是，则需要重启原有协议，并生成协议解析文件
-                am.telnet_client_rstart_xieyi_common()  # 执行重启通用命令
 
-            # #重启协议
-            # from depend.shucaiyi.restartXieYiCommandDependClass import restartxieyicommanddepend
-            # restart_xie_yi_commad_list = restartxieyicommanddepend.makeRestartXieYiCommandList(depend_id=case_id)
-            # if restart_xie_yi_commad_list == []:  #则说明没有重启命令，不执行重启命令
-            #     am.telnet_client_rstart_xieyi_common()  # 执行重启通用命令
-            #     pass
-            # else:
-            #     if is_restart_xieyi:
-            #         mycommad_list = ['cd /usr/app_install/collect/bin',
-            #                          'rm -rf %s'% xieyi_txt_file_name,
-            #                          './%s --id=com%s_1 --log_level=develop &>%s &'% (xieyi_name,xieyi_test_port,xieyi_txt_file_name)]
-            #         am.telnet_client_rstart_xieyi(restart_xie_yi_commad_list)
-
+                # 重新运行协议，并生成协议解析文件，v6版本与非v6版本重启的命令不同
+                if web_type == "P0":  # 如果是V6,则走v6的web程序
+                    am.telnet_client_rstart_xieyi_common()  # 执行重启通用命令 V6版本协议
+                elif web_type == "P1":  # 如果是非V6,则走非V6的web程序
+                    am.telnet_client_rstart_xieyi_common_not_v6()  # 执行重启通用命令 非V6版本
 
 
             #是否发送数据
             if is_com_recive_and_send:
-                send_data_list = []
-                # am.com_recive_and_send()
-                am.com_recive_and_send_with_params(sender_hex_data_order_list)
+                am.com_recive_and_send_with_params(sender_hex_data_order_list)  #处理收发数据
 
 
-            #是否ftp下载获取解析文件
-            # if is_ftp_down_xieyi_file:
+            #是否在协议文件中找到相应的解析内容
             if is_assert_file_success:  #是否在协议文件中找到相应的解析内容,是，则需要下载解析文件
-                am.ftp_down_xieyi_file_commom()
-                # xieyi_remote_file = xieyi_bin_dir+'/'+xieyi_txt_file_name
-                # xieyi_local_file = xieyi_txt_file_name
-                # am.time_delay(60)
-                # am.run_ftp_down(remote_file=xieyi_remote_file, local_file=xieyi_local_file)
+                am.ftp_down_xieyi_file_commom()  #执行获取解析文件通用函数
+
 
 
             #是否ftp下载实时数据
@@ -265,7 +218,28 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
             #是否在协议文件中找到相应的解析内容
             if is_assert_file_success:
-                am.assert_file_success()
+                if is_with_code_assert:  # 如果断言结果带有因子代码，则用监控因子和数据值拼接后断言
+                    jiankongyinzi_list = select_jian_kong_yin_zi_list
+                    shuju_list = xieyi_jiexi_expect_result_list
+                    jiankongyinzi_list_len = len(jiankongyinzi_list)
+                    shuju_list_len = len(shuju_list)
+                    jiexi_expect_result_list = []
+                    if jiankongyinzi_list_len == shuju_list_len:
+                        # 将因子与数据拼接形成断言内容：
+                        for i in range(0,jiankongyinzi_list_len):
+                            jiexi_expect_result_one = "Save factor(%s) raw value(%s" %(str(jiankongyinzi_list[i]),str(shuju_list[i]))
+                            jiexi_expect_result_list.append(jiexi_expect_result_one)
+
+                        print("jiexi_expect_result_list:")
+                        print(jiexi_expect_result_list)
+                        is_in_file = am.assert_file_success_with_param(
+                            expect_result_list=jiexi_expect_result_list)  # 带参数的断言
+                    else:
+                        self.assertTrue(False, "解析数据断言失败,监控因子与预期验证数据值个数需要相同，而实际不同，请修改保证两者个数相等且互相对应！！！")
+                        is_in_file = False
+                else:
+                    is_in_file = am.assert_file_success()
+                self.assertTrue(is_in_file, "解析数据断言失败")
 
             #是否验证实时数据
             if is_assert_real_db_success:
@@ -274,8 +248,8 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
             #是否验证平台上报内容
             if is_assert_tcp_server_receive_success:
-                if is_web_modify_xieyi:  #如果通过web修改协议，则会有监控因子，用监控因子和数据值拼接后断言
-                    jiankongyinzi_list = web_xieyi_yinzi.split(",")
+                if is_with_code_assert:  #如果断言结果带有因子代码，则用监控因子和数据值拼接后断言
+                    jiankongyinzi_list = select_jian_kong_yin_zi_list
                     shuju_list = xieyi_jiexi_expect_result_list
                     tcp_expect_result_list = []
                     #将因子与数据拼接形成断言内容：
@@ -291,7 +265,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                         is_in_tcp = am.assert_tcp_server_receive_success_with_param(
                             expect_result_list=tcp_expect_result_list)  # 带参数的断言
                     else:
-                        self.assertTrue(False, "平台上报数据断言失败,监控因子与预期验证数据值个数不同")
+                        self.assertTrue(False, "平台上报数据断言失败,监控因子与预期验证数据值个数需要相同，而实际不同，请修改保证两者个数相等且互相对应！！！")
                         is_in_tcp = False
 
                 else:  #否则，没有监控因子，只以数据断言

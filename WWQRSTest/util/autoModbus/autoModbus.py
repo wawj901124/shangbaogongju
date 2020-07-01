@@ -926,6 +926,20 @@ class AutoModbus(object):
         print(mycommad_list)
         self.time_delay(3)
 
+    #关闭默认启动协议进程后，重新启动协议_写死通用,非V6版本的协议重启
+    def telnet_client_rstart_xieyi_common_not_v6(self):
+        mycommad_list = []
+        mycommad_one = "cd %s" % self.xieyi_bin_dir  # 进入到协议二进制程序的bin目录下
+        mycommad_two = "rm -rf %s&>/dev/null &" % self.xieyi_txt_file_name  # 删除已有txt文件
+        mycommad_three = "./%s %s &>%s &" % (self.xieyi_name,self.xieyi_test_port,self.xieyi_txt_file_name)  # 或启动程序
+        mycommad_list.append(mycommad_one)
+        mycommad_list.append(mycommad_two)
+        mycommad_list.append(mycommad_three)
+        self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
+        self.time_delay(3)
+
     #关闭默认启动协议进程后，重新启动协议
     def telnet_client_rstart_xieyi(self,mycommad_list):
         self.run_telnet_command_list(mycommad_list)
@@ -1167,15 +1181,86 @@ class AutoModbus(object):
             self.outPutMyLog("获取到文件【%s】中的内容为：" % str(local_file))
             self.outPutMyLog(result)
         expect_result_list = self.xieyi_jiexi_expect_result_list
+
+        message_list = []
+        message_error_list = []
+        assert_result_flag_list = []
+
         for expect_result in expect_result_list:
         # expect_result = self.xieyi_jiexi_expect_result
             if expect_result in result:
                 self.outPutMyLog("查到解析结果：%s" % expect_result)
                 self.outPutMyLog("解析数据正确")
-                assert True
+                assert_result_flag_list.append(True)
+                message_list.append("【%s】在解析文件中。" % expect_result)
             else:
                 self.outPutErrorMyLog("解析数据失败！！！")
-                assert False
+                assert_result_flag_list.append(False)
+                message_error_list.append("【%s】不在解析文件中。" % expect_result)
+
+        for assert_result_flag_one in assert_result_flag_list:
+            if not assert_result_flag_one:  # 如果有False，则返回False
+                self.outPutErrorMyLog(message_error_list)
+                return False
+
+        self.outPutMyLog(message_list)
+        return True  # 否则返回True
+
+
+    #判断文件中存在正确的解析值,带有参数，预期断言结果
+    def assert_file_success_with_param(self,expect_result_list):
+        local_file = self.xieyi_txt_file_name
+        with open(local_file, "r", encoding='utf-8') as f:
+            result = f.read()
+            self.outPutMyLog("获取到文件【%s】中的内容为：" % str(local_file))
+            self.outPutMyLog(result)
+        expect_result_list = expect_result_list
+
+        message_list = []    #查找到的内容列表
+        message_error_list = []   #未查找到的内容（带描述信息）列表
+        assert_result_flag_list = []    #查找所有数据的结果记录，有False，则判断断言失败
+        error_result_list = []    #未查找到的结果列表
+        like_message_error_list = []   #与未查找项相近的内容
+
+        for expect_result in expect_result_list:
+        # expect_result = self.xieyi_jiexi_expect_result
+            if expect_result in result:
+                self.outPutMyLog("查到解析结果：%s" % expect_result)
+                self.outPutMyLog("解析数据正确")
+                assert_result_flag_list.append(True)
+                message_list.append("【%s】在解析文件中。" % expect_result)
+            else:
+                self.outPutErrorMyLog("解析数据失败！！！")
+                assert_result_flag_list.append(False)
+                error_result_list.append(expect_result)
+                message_error_list.append("【%s】不在解析文件中。" % expect_result)
+
+        # 再次打开文件，此时获取每行的内容
+        with open(local_file, "r", encoding='utf-8') as f:
+            result_list = f.readlines()
+
+        # 根据不存在的项筛选类似的项
+        for error_result_one in error_result_list:
+            # 对错误项进行分割，获取到前半部分
+            error_result_one_zero = error_result_one.split("value(")[0]
+            error_result_one_zero_strip = error_result_one_zero.strip()
+            print("error_result_one_zero_strip:")
+            print(error_result_one_zero_strip)
+            # 根据前半部分信息筛选出相似的内容
+            for result_one in result_list:
+                if error_result_one_zero_strip in  result_one:
+                    like_message_error_one = "与【%s】相近的内容为【%s】"%(error_result_one,result_one)
+                    like_message_error_list.append(like_message_error_one)
+
+
+        for assert_result_flag_one in assert_result_flag_list:
+            if not assert_result_flag_one:  # 如果有False，则返回False
+                self.outPutErrorMyLog(message_error_list)
+                self.outPutErrorMyLog(like_message_error_list)
+                return False
+
+        self.outPutMyLog(message_list)
+        return True  # 否则返回True
 
     #ftp获取串口解析文件
     def ftp_get_remote_db_file(self):
@@ -1328,11 +1413,11 @@ class AutoModbus(object):
                 self.outPutMyLog("查到上报结果：%s" % expect_result)
                 self.outPutMyLog("上报数据正确")
                 assert_result_flag_list.append(True)
-                message_list.append("【%s】在【%s】中。"%(expect_result,result))
+                message_list.append("【%s】在报文中。"%expect_result)
             else:
                 self.outPutErrorMyLog("上报数据失败！！！")
                 # assert False
-                message_error_list.append("【%s】不在【%s】中。" % (expect_result, result))
+                message_error_list.append("【%s】不在报文中。" % expect_result)
                 assert_result_flag_list.append(False)
 
         for assert_result_flag_one in assert_result_flag_list:
@@ -1361,11 +1446,11 @@ class AutoModbus(object):
                 self.outPutMyLog("查到上报结果：%s" % expect_result)
                 self.outPutMyLog("上报数据正确")
                 assert_result_flag_list.append(True)
-                message_list.append("【%s】在【%s】中。"%(expect_result,result))
+                message_list.append("【%s】在报文中。"%expect_result)
             else:
                 self.outPutErrorMyLog("上报数据失败！！！")
                 # assert False
-                message_error_list.append("【%s】不在【%s】中。" % (expect_result, result))
+                message_error_list.append("【%s】不在报文中。" % expect_result)
                 assert_result_flag_list.append(False)
 
         for assert_result_flag_one in assert_result_flag_list:

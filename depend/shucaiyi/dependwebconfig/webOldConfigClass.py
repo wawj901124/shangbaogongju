@@ -74,7 +74,7 @@ class WebOldConfig(object):
         # self.activebrowser.findElementByXpathAndReturnAllOptions(select_xieyi_xpath)
 
         #选择某个协议：
-        self.activebrowser.findElementByXpathAndReturnOptionsNum(0,select_xieyi_xpath,pre_select_option_text)
+        self.activebrowser.findElementByXpathAndSelectOptionsNum(0,select_xieyi_xpath,pre_select_option_text)
 
         #点击保存
         save_xpath = "/html/body/form/div/div[2]/table/tbody/tr[13]/td/input[1]"
@@ -167,7 +167,6 @@ class WebOldConfig(object):
         self.activebrowser.delayTime(2)
         self.handleAlert()  # 处理alert弹框
         self.activebrowser.delayTime(2)
-        #加一个空点（空白点击）
 
 
 
@@ -206,10 +205,26 @@ class WebOldConfig(object):
             self.handleAlert()  # 处理alert弹框
             self.activebrowser.delayTime(5)
 
+        #添加监控因子完成后，设置日志打印级别
+        self.setLogLevel()
+
         #循环完成后，要退出当前frame
         self.quiteCurrentFrame()
 
 
+    #点击监控因子列表中的高级配置设置打印日志级别为develop
+    def setLogLevel(self):
+        #处于监测因子列表页
+        #点击“高级配置”
+        gaojipeizhi_xpath = "/html/body/form/div/div[2]/table[3]/tbody/tr/td/input[1]"
+        self.activebrowser.findEleAndClick(0, "xpath", gaojipeizhi_xpath)  # 点击“高级配置”
+        dayijibie_option_text = "develop"
+        dayinjibie_select_xpath = "/html/body/form/div/div[2]/table[2]/tbody/tr/td[1]/table/tbody/tr/td[2]/select"
+        self.activebrowser.findElementByXpathAndSelectOptionsNum(0, dayinjibie_select_xpath, dayijibie_option_text)  # 选择打印级别为develop
+
+        baocun_xpath = "/html/body/form/div/div[2]/table[3]/tbody/tr/td/input[2]"
+        self.activebrowser.findEleAndClick(0, "xpath", baocun_xpath)  # 点击“保存”
+        self.handleAlert()   #处理弹出的弹框
 
 
     #点击写入设备
