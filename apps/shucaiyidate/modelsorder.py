@@ -34,7 +34,7 @@ class XieyiConfigDateOrder(models.Model):
     is_ftp_upload =  models.BooleanField(default=False,verbose_name=u"是否上传配置文件")
     # is_close_xieyi =  models.BooleanField(default=True,verbose_name=u"是否关闭开机自启动时启动的协议")
     # is_restart_xieyi = models.BooleanField(default=True,verbose_name=u"是否重新启动协议")
-    xieyi_bin_dir =  models.CharField(max_length=100, default="/usr/app_install/collect/bin", verbose_name=u"数采仪存放协议二进制文件的bin目录")
+    # xieyi_bin_dir =  models.CharField(max_length=100, default="/usr/app_install/collect/bin", verbose_name=u"数采仪存放协议二进制文件的bin目录")
     xieyi_name =  models.CharField(max_length=100, default="11020", verbose_name=u"协议二进制文件的名字")
     xieyi_test_port  =  models.CharField(max_length=100, default="4", verbose_name=u"数采仪协议串口号",help_text=u"请填写数字，"
                                                                    u"例如串口为COM4，则填写4")

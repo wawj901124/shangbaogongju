@@ -5,15 +5,15 @@ f=open("wenjian.txt","r",encoding="utf8")
 qianzui = "new_udd."
 houzui = "qs_one."
 expect_list = []
+yuqi = ""
 for i in f:
-    lie_list = i.split(" ")
-    ziduan = lie_list[0]
-    # print(ziduan+",")
-    # yuqi = "%s = ConfigControlSendPorsConvertrule_one.%s" % (ziduan,ziduan)
-    # expect_list.append(ziduan)
-    # print(yuqi)
-    yuqi = """new_configcontrolsendporsconvertrule.%s = configcontrolsendporsconvertrule_old_one.%s""" % (ziduan,ziduan)
+    lie_list = i.split("	")
+    ziduan = lie_list[2].strip()
+    yuqi = yuqi+ziduan + ','
     print(yuqi)
+    # expect_list.append(ziduan)
+
+# print(expect_list)
 
 
 

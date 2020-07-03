@@ -52,7 +52,6 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 telnet_host_ip = xieyiconfigdateorder_one.telnet_host_ip
                 telnet_username = xieyiconfigdateorder_one.telnet_username
                 telnet_password = xieyiconfigdateorder_one.telnet_password
-                xieyi_bin_dir = xieyiconfigdateorder_one.xieyi_bin_dir
                 xieyi_name = xieyiconfigdateorder_one.xieyi_name
                 xieyi_test_port = xieyiconfigdateorder_one.xieyi_test_port
                 xieyi_device_id = xieyiconfigdateorder_one.xieyi_device_id
