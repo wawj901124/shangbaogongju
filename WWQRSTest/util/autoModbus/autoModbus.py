@@ -892,6 +892,22 @@ class AutoModbus(object):
         return command_result_list
 
     # 关闭默认启动协议进程_写死通用
+    def telnet_client_close_default_start_xieyi_common_with_param(self,xieyi_bin_dir):
+        mycommad_list = []
+        mycommad_one = "stop_guard &"   #关闭守护进程，如果有的话
+        mycommad_two = "cd %s" % xieyi_bin_dir  # 进入到协议二进制程序的bin目录下
+        mycommad_three = "./Debug_scrip.sh %s&>/dev/null & " % self.xieyi_name  # 关闭自启动协议
+        mycommad_four = "ps aux | grep %s | xargs kill -9 &>/dev/null &" % self.xieyi_name  #杀死协议进程
+        mycommad_list.append(mycommad_one)
+        mycommad_list.append(mycommad_two)
+        mycommad_list.append(mycommad_three)
+        mycommad_list.append(mycommad_four)
+        self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
+        self.time_delay(15)
+
+    # 关闭默认启动协议进程_写死通用
     def telnet_client_close_default_start_xieyi_common(self):
         mycommad_list = []
         mycommad_one = "stop_guard &"   #关闭守护进程，如果有的话
@@ -912,12 +928,40 @@ class AutoModbus(object):
         self.run_telnet_command_list(mycommad_list)
         self.time_delay(15)
 
+    #关闭默认启动协议进程后，重新启动协议_写死通用_带参数
+    def telnet_client_rstart_xieyi_common_with_param(self,xieyi_bin_dir):
+        mycommad_list = []
+        mycommad_one = "cd %s" % xieyi_bin_dir  # 进入到协议二进制程序的bin目录下
+        mycommad_two = "rm -rf %s&>/dev/null &" % self.xieyi_txt_file_name  # 删除已有txt文件
+        mycommad_three = "./%s --id=com%s_%s --log_level=develop &>%s &" % (self.xieyi_name,self.xieyi_test_port,self.xieyi_device_id ,self.xieyi_txt_file_name)  # 或启动程序
+        mycommad_list.append(mycommad_one)
+        mycommad_list.append(mycommad_two)
+        mycommad_list.append(mycommad_three)
+        self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
+        self.time_delay(3)
+
     #关闭默认启动协议进程后，重新启动协议_写死通用
     def telnet_client_rstart_xieyi_common(self):
         mycommad_list = []
         mycommad_one = "cd %s" % self.xieyi_bin_dir  # 进入到协议二进制程序的bin目录下
         mycommad_two = "rm -rf %s&>/dev/null &" % self.xieyi_txt_file_name  # 删除已有txt文件
         mycommad_three = "./%s --id=com%s_%s --log_level=develop &>%s &" % (self.xieyi_name,self.xieyi_test_port,self.xieyi_device_id ,self.xieyi_txt_file_name)  # 或启动程序
+        mycommad_list.append(mycommad_one)
+        mycommad_list.append(mycommad_two)
+        mycommad_list.append(mycommad_three)
+        self.run_telnet_command_list(mycommad_list)
+        print("执行语句：")
+        print(mycommad_list)
+        self.time_delay(3)
+
+    #关闭默认启动协议进程后，重新启动协议_写死通用,非V6版本的协议重启_带参数
+    def telnet_client_rstart_xieyi_common_not_v6_with_param(self,xieyi_bin_dir):
+        mycommad_list = []
+        mycommad_one = "cd %s" % xieyi_bin_dir  # 进入到协议二进制程序的bin目录下
+        mycommad_two = "rm -rf %s&>/dev/null &" % self.xieyi_txt_file_name  # 删除已有txt文件
+        mycommad_three = "./%s %s &>%s &" % (self.xieyi_name,self.xieyi_test_port,self.xieyi_txt_file_name)  # 或启动程序
         mycommad_list.append(mycommad_one)
         mycommad_list.append(mycommad_two)
         mycommad_list.append(mycommad_three)
@@ -975,9 +1019,9 @@ class AutoModbus(object):
     def telnet_client_delete_real_or_rtd_db(self):
         mycommad_list = []
         mycommad_one = "cd /tmp/database.d"   #进入/tmp/database.d目录下
-        mycommad_two = "rm -rf *.db>/dev/null &"  #删除目录下所有数据库
+        mycommad_two = "rm -rf *.db &>/dev/null &"  #删除目录下所有数据库
         mycommad_three = "cd /tmp"  #进入/tmp目录下
-        mycommad_four = "rm -rf *.db>/dev/null &"  #删除目录下所有数据库
+        mycommad_four = "rm -rf *.db &>/dev/null &"  #删除目录下所有数据库
         mycommad_list.append(mycommad_one)
         mycommad_list.append(mycommad_two)
         mycommad_list.append(mycommad_three)
@@ -991,9 +1035,13 @@ class AutoModbus(object):
     def telnet_client_delete_upload_db(self):
         mycommad_list = []
         mycommad_one = "cd /usr/database/upload_log/"   #进入/usr/database/upload_log/目录下
-        mycommad_two = "rm -rf *.db>/dev/null &"  #删除目录下所有数据库
+        mycommad_two = "rm -rf *.db &>/dev/null &"  #删除目录下所有数据库
+        mycommad_three = "cd /usr/app_install/db/database/upload_cache/"   #进入/usr/app_install/db/database/upload_cache/目录下
+        mycommad_four = "rm -rf *.db &>/dev/null &"  #删除目录下所有数据库
         mycommad_list.append(mycommad_one)
         mycommad_list.append(mycommad_two)
+        mycommad_list.append(mycommad_three)
+        mycommad_list.append(mycommad_four)
         self.run_telnet_command_list(mycommad_list)
         print("执行语句：")
         print(mycommad_list)
@@ -1153,6 +1201,14 @@ class AutoModbus(object):
         del rt
         self.time_delay(30)  #等待30秒
 
+
+    #ftp获取串口解析文件带参数_通用函数
+    def ftp_down_xieyi_file_commom_with_param(self,xieyi_bin_dir):
+        xieyi_remote_file = xieyi_bin_dir + '/' + self.xieyi_txt_file_name
+        xieyi_local_file = self.xieyi_txt_file_name
+        self.time_delay(60)
+        self.run_ftp_down(remote_file=xieyi_remote_file, local_file=xieyi_local_file)
+
     #ftp获取串口解析文件_通用函数
     def ftp_down_xieyi_file_commom(self):
         xieyi_remote_file = self.xieyi_bin_dir + '/' + self.xieyi_txt_file_name
@@ -1262,7 +1318,19 @@ class AutoModbus(object):
         self.outPutMyLog(message_list)
         return True  # 否则返回True
 
-    #ftp获取串口解析文件
+    #ftp获取远程数据库文件_带参数
+    def ftp_get_remote_db_file_with_param(self,xieyi_db_remote_path,xieyi_db):
+        if self.ftp_client_object == None:
+            self.ftp_client_object = self.ftp_connnect()
+        else:
+            self.ftp_client_object = self.ftp_client_object
+
+        remote_file = xieyi_db_remote_path
+        local_file = xieyi_db
+        self.ftp_client_object.ftp_download(remote_file, local_file)
+        self.time_delay(3)
+
+    #ftp获取远程数据库文件
     def ftp_get_remote_db_file(self):
         if self.ftp_client_object == None:
             self.ftp_client_object = self.ftp_connnect()
@@ -1273,6 +1341,103 @@ class AutoModbus(object):
         local_file = self.xieyi_db
         self.ftp_client_object.ftp_download(remote_file, local_file)
         self.time_delay(3)
+
+    #验证远程/tmp/real.db中的实时数据是否与解析值一致，带参数：
+    def assert_real_db_success_with_param(self,xieyi_db,xieyi_db_table_name):
+        local_db = xieyi_db
+        table_name = xieyi_db_table_name
+        ms = MySqlite(sql_name=local_db,table_name=table_name)
+        table_content_list = ms.get_table_content()
+        self.outPutMyLog("表的内容：")
+        self.outPutMyLog(table_content_list)
+        # 循环遍历预期结果
+        expect_result_list = self.xieyi_jiexi_expect_result_list
+        message_list = []
+        message_error_list = []
+        exist_expect_result_list = []   #存在的预期结果
+        not_exist_expect_result_list = []  #不存在的预期结果
+        like_not_exist_expect_result_list = []  #与不存在的值相近的值
+        like_not_exist_expect_result_one_list = []
+        for expect_result_one in expect_result_list:
+            self.outPutMyLog("遍历数据：")
+            self.outPutMyLog(expect_result_one)
+            assert_result_flag = False
+            #遍历数据库查看预期结果是否在数据库中：
+            for table_content_one in table_content_list:
+                self.outPutMyLog("遍历表：")
+                self.outPutMyLog(table_content_one)
+                self.outPutMyLog(table_content_one)
+                #遍历一条数据的字段值，如果存在字段值则停止本次验证
+                for one_ziduan_value in table_content_one:
+                    #如果值在里面，则打印
+                    if expect_result_one in str(one_ziduan_value):
+                        message_one = "验证值【%s】在实际值【%s】中。"%(expect_result_one,one_ziduan_value)
+                        message_list.append(message_one)
+                        exist_expect_result_list.append(expect_result_one)
+                        self.outPutMyLog("退出从一条数据中查找一个预期结果的循环")
+                        assert_result_flag = True
+                        break  #退出本次循环
+                    else:
+                        message_error_one = "验证值【%s】不在实际值【%s】中。"%(expect_result_one,one_ziduan_value)
+                        message_error_list.append( message_error_one)
+                        self.outPutErrorMyLog("退出从一条数据中查找一个预期结果的循环")
+                        assert_result_flag = False
+                        continue  #继续本条数据的循环查找
+                self.outPutMyLog("退出遍历一个表中的每条数据的循环")
+                if assert_result_flag:
+                    break
+            self.outPutMyLog("开始进入下一个预期结果值的查找的循环")
+
+        #根据存在的结果，找出不存在的值
+        for expect_result_one in expect_result_list:
+            if expect_result_one not in exist_expect_result_list:
+                not_exist_expect_result_list.append(expect_result_one)
+
+        #根据不存在的结果，获取与不存在结果相似的值
+        for not_exist_expect_result_one in not_exist_expect_result_list:
+            for table_content_one in table_content_list:
+                # 遍历一条数据的字段值，如果存在字段值则停止本次验证
+                for one_ziduan_value in table_content_one:
+                    one_ziduan_value_str = str(one_ziduan_value)
+                    not_exist_expect_result_one_float = float(not_exist_expect_result_one)
+                    #判断数据库中的数据是否只包含0123456789.
+                    gts = GetTimeStr()
+                    is_only_num = gts.is_only_num(one_ziduan_value_str)
+                    # print("是否只是数字字符串标志：%s" % str(is_only_num))
+                    if is_only_num:  #如果是数字型字符串，则进行计算
+                        one_ziduan_value_str_float = float(one_ziduan_value_str)
+                        if not_exist_expect_result_one_float>=one_ziduan_value_str_float:
+                            cha_zhi = not_exist_expect_result_one_float - one_ziduan_value_str_float
+                        else:
+                            cha_zhi = one_ziduan_value_str_float - not_exist_expect_result_one_float
+                        # print("差值：%s" %(str(cha_zhi)))
+                        if cha_zhi<=1:
+                            like_not_exist_expect_result_one_list.append(one_ziduan_value)
+                    else:   #否则遍历下一个值
+                        continue
+
+            like_message = "与【%s】相近的值有：【%s】."%(str(not_exist_expect_result_one),str(like_not_exist_expect_result_one_list))
+            self.outPutMyLog(like_message)
+            like_not_exist_expect_result_one_list = []   #like_not_exist_expect_result_one_list数组置空重新添加
+            like_not_exist_expect_result_list.append(like_message)
+
+
+
+
+        if assert_result_flag :
+            self.outPutMyLog("查找结果信息：")
+            self.outPutMyLog(message_list)
+            self.outPutMyLog("预期 %s 应该在数据库中" % str(expect_result_list))
+            self.outPutMyLog("而实际 %s 在数据库中"% str(exist_expect_result_list))
+        else:
+            self.outPutErrorMyLog("没有在数据库【%s】中的【%s】表中查找到【%s】中的全部数据" % (local_db,table_name,str(expect_result_list)))
+            # self.outPutErrorMyLog(message_error_list)
+            self.outPutErrorMyLog("预期 %s 应该在数据库中" % str(expect_result_list))
+            self.outPutErrorMyLog("而实际 %s 在数据库中"% str(exist_expect_result_list))
+            self.outPutErrorMyLog("%s 不在数据库中" % str(not_exist_expect_result_list))
+            self.outPutErrorMyLog("%s" % str(like_not_exist_expect_result_list))
+
+        return assert_result_flag
 
     #验证远程/tmp/real.db中的实时数据是否与解析值一致：
     def assert_real_db_success(self):

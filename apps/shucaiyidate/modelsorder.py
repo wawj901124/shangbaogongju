@@ -18,12 +18,12 @@ class XieyiConfigDateOrder(models.Model):
     #                                  verbose_name=u"用例优先级")
     # test_case_title = models.CharField(max_length=200, default="", verbose_name=u"测试内容的名称")
     # is_run_case = models.BooleanField(default=True,verbose_name=u"是否运行")
-
-    is_web_modify_xieyi = models.BooleanField(default=True,verbose_name=u"是否通过web端修改协议")
     web_type = models.CharField(max_length=10,null=True, blank=True,
-                                     choices=(("P0", u"V6"), ("P1", u"非V6")),
+                                     choices=(("P0", u"V5"), ("P1", u"V6")),
                                      default="P0",
-                                     verbose_name=u"web界面类型")
+                                     verbose_name=u"系统类型")
+    is_web_modify_xieyi = models.BooleanField(default=True,verbose_name=u"是否通过web端修改协议")
+
     web_xieyi_name =  models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端选择的协议名称")
     web_xieyi_yinzi = models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端添加的监控因子",
                                        help_text=u"web端添加的监控因子，多个因子之间以半角逗号隔开")
@@ -77,10 +77,10 @@ class XieyiConfigDateOrder(models.Model):
     # is_ftp_get_remote_db_file =  models.BooleanField(default=False,verbose_name=u"是否ftp下载远程数据库文件")
     is_assert_real_db_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在实时数据库的表中")
 
-    xieyi_db =  models.CharField(max_length=100, default="real.db", null=True, blank=True, verbose_name=u"协议实时数据存放的数据库名字")
-    xieyi_db_remote_path =  models.CharField(max_length=100, default="/tmp/real.db", null=True, blank=True, verbose_name=u"协议实时数据存放的数据库在数采仪中的路径",
-                                             help_text=u"如数据库路径为'/tmp/real.db',则填写'/tmp/real.db'")
-    xieyi_db_table_name = models.CharField(max_length=100, default="rttable", null=True, blank=True, verbose_name=u"协议实时数据存放的数据的数据表")
+    # xieyi_db =  models.CharField(max_length=100, default="real.db", null=True, blank=True, verbose_name=u"协议实时数据存放的数据库名字")
+    # xieyi_db_remote_path =  models.CharField(max_length=100, default="/tmp/real.db", null=True, blank=True, verbose_name=u"协议实时数据存放的数据库在数采仪中的路径",
+    #                                          help_text=u"如数据库路径为'/tmp/real.db',则填写'/tmp/real.db'")
+    # xieyi_db_table_name = models.CharField(max_length=100, default="rttable", null=True, blank=True, verbose_name=u"协议实时数据存放的数据的数据表")
 
     # is_tcp_server_receive = models.BooleanField(default=False,verbose_name=u"是否接收平台报文")
     is_assert_tcp_server_receive_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在接收的报文中")

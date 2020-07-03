@@ -92,7 +92,7 @@ class TcpServerReceive(object):
     #获取当前时间N分钟之后的时间串-分钟(后延分钟数为传入的分钟数)
     def get_now_time_after_param_minute(self):
         now_time = datetime.datetime.now()
-        delay_time = int(self.tcp_receive_delay_min)
+        delay_time = int(self.tcp_receive_delay_min)+2  #默认多加2分钟，以防止接收延时情况
         now_plus_n = now_time + datetime.timedelta(minutes= delay_time)
         timestr = now_plus_n.strftime('%Y%m%d%H%M')
         print("当前时间%s分钟后的时间：%s" % (str(delay_time),now_plus_n))
@@ -100,6 +100,7 @@ class TcpServerReceive(object):
         timestr_after_n_minute = '%s00'% timestr
         print("当前时间%s分钟后的时间串（分钟）：%s" % (str(delay_time),timestr_after_n_minute))
         return timestr_after_n_minute
+
 
     def compare_time_str(self,timestrone,timestrtwo):
         if timestrone >=timestrtwo:  #大于等于

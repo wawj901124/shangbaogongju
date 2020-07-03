@@ -3,6 +3,7 @@
 import threading
 import time
 import serial
+import datetime
 
 class ComThread:
     def __init__(self, Port='COM4',Baudrate=9600,Bytesize=8,Parity ="N",Stopbits=1,Timeout=2,
@@ -123,6 +124,10 @@ class ComThread:
             else:
                 send_wait_time = send_wait_time_yuan
 
+            #开始循环前获取一个时间串
+            # 获取每次循环都检查时间，如果时间超过20分钟没有收到有效内容，则终止循环
+            while_run_end_timestr = str(self.get_now_time_after_param_minute(20))  #获取当前时间20分钟后的时间
+
             #处理一条数据的收发
             while self.alive:
                 time.sleep(0.1)
@@ -225,6 +230,21 @@ class ComThread:
                     break  # 结束while循环
 
 
+                #获取当前时间串
+                now_timestr = str(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
+                timestrone = now_timestr
+                timestrtwo =  while_run_end_timestr
+                is_end_by_time = self.compare_time_str(timestrone, timestrtwo)  #是否因为时间超过20分钟没有接收到任何有效数据，则终止循环
+                # print("是否超过20分钟：")
+                # print(is_end_by_time)
+                if is_end_by_time:
+                    print("循环开始20分钟后结束时间：%s" % timestrtwo)
+                    print("当前时间：%s" %timestrone)
+                    print("已经20分钟没有接收到有效数据，终止循环！！！")
+                    break  # 结束while循环
+
+
+
 
 
 
@@ -325,6 +345,26 @@ class ComThread:
         if self.l_serial.isOpen():
             self.l_serial.close()
 
+    # 获取当前时间N分钟之后的时间串-分钟(后延分钟数为传入的分钟数)
+    def get_now_time_after_param_minute(self,delay_min):
+        now_time = datetime.datetime.now()
+        delay_time = int(delay_min)
+        now_plus_n = now_time + datetime.timedelta(minutes=delay_time)
+        timestr = now_plus_n.strftime('%Y%m%d%H%M')
+        print("当前时间%s分钟后的时间：%s" % (str(delay_time), now_plus_n))
+        print("时间串：%s" % timestr)
+        timestr_after_n_minute = '%s00' % timestr
+        print("当前时间%s分钟后的时间串（分钟）：%s" % (str(delay_time), timestr_after_n_minute))
+        return timestr_after_n_minute
+
+    #比较两个时间串大小
+    def compare_time_str(self, timestrone, timestrtwo):
+        if timestrone >= timestrtwo:  # 大于等于
+            print("【%s】大于等于【%s】" % (timestrone, timestrtwo))
+            return True
+        else:
+            # print("【%s】小于【%s】" % (timestrone, timestrtwo))
+            return False
 
 class ComThreadTwo(object):
     def __init__(self, Port='COM4',Baudrate=9600,Bytesize=8,Parity ="N",Stopbits=1,Timeout=2,Senddate=None):
