@@ -76,6 +76,27 @@ class GetTimeStr:
         self.outPutMyLog("字符串【%s】是纯数字型字符串." % prestr)
         return True
 
+    # 获取当前时间N分钟之后的时间串-分钟(后延分钟数为传入的分钟数)
+    def get_now_time_after_param_minute(self,delay_min):
+        now_time = datetime.datetime.now()
+        delay_time = int(delay_min)
+        now_plus_n = now_time + datetime.timedelta(minutes=delay_time)
+        timestr = now_plus_n.strftime('%Y%m%d%H%M')
+        print("当前时间%s分钟后的时间：%s" % (str(delay_time), now_plus_n))
+        print("时间串：%s" % timestr)
+        timestr_after_n_minute = '%s00' % timestr
+        print("当前时间%s分钟后的时间串（分钟）：%s" % (str(delay_time), timestr_after_n_minute))
+        return timestr_after_n_minute
+
+    #比较两个时间串大小
+    def compare_time_str(self, timestrone, timestrtwo):
+        if timestrone >= timestrtwo:  # 大于等于
+            print("【%s】大于等于【%s】" % (timestrone, timestrtwo))
+            return True
+        else:
+            print("【%s】小于【%s】" % (timestrone, timestrtwo))
+            return False
+
 
 if __name__  == '__main__':
     gettimestr = GetTimeStr()
