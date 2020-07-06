@@ -1298,7 +1298,10 @@ class AutoModbus(object):
         # 根据不存在的项筛选类似的项
         for error_result_one in error_result_list:
             # 对错误项进行分割，获取到前半部分
-            error_result_one_zero = error_result_one.split("value(")[0]
+            if "value(" in error_result_one:
+                error_result_one_zero = error_result_one.split("value(")[0]
+            elif "rtd:" in error_result_one:
+                error_result_one_zero = error_result_one.split("rtd:")[0]
             error_result_one_zero_strip = error_result_one_zero.strip()
             print("error_result_one_zero_strip:")
             print(error_result_one_zero_strip)

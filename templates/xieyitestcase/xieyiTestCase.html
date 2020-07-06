@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block title %}
+    xieyitestcase
+{% endblock %}
+{% block action_url %}
+    {% url 'shucaiyidate:new_xie_yi_test_case_id' xieyitestcase.id %}
+{% endblock %}
+{% block box_h1_title %}
+    添加数据
+{% endblock %}
+{% block table_data %}
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <label>测试项目:</label>
+            </td>
+            <td>
+                <input id="test_project" name="test_project" type="text" value="{{ xieyitestcase.test_project|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试模块:</label>
+            </td>
+            <td>
+                <input id="test_module" name="test_module" type="text" value="{{ xieyitestcase.test_module|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试页面:</label>
+            </td>
+            <td>
+                <input id="test_page" name="test_page" type="text" value="{{ xieyitestcase.test_page|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>用例优先级:</label>
+            </td>
+            <td>
+                <input type="radio"  name="case_priority"  value="P0" {% if xieyitestcase.case_priority == 'P0' %}checked="checked"{% endif %}>冒烟用例
+                <input type="radio"  name="case_priority"  value="P1" {% if xieyitestcase.case_priority == 'P1' %}checked="checked"{% endif %}>系统的重要功能用例
+                <input type="radio"  name="case_priority"  value="P2" {% if xieyitestcase.case_priority == 'P2' %}checked="checked"{% endif %}>系统的一般功能用例
+                <input type="radio"  name="case_priority"  value="P3" {% if xieyitestcase.case_priority == 'P3' %}checked="checked"{% endif %}>极低级别的用例
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试内容的名称:</label>
+            </td>
+            <td>
+                <input id="test_case_title" name="test_case_title" type="text"
+                       value="{{ xieyitestcase.test_case_title |default:""}}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否运行:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_run_case" name="is_run_case"  value="true"  {% if xieyitestcase.is_run_case == 1 %} checked="checked"{% endif %}>运行
+                <input type="radio" id="is_run_case" name="is_run_case"  value="false" {% if xieyitestcase.is_run_case == 0 %} checked="checked"{% endif %}>不运行
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>依赖的测试配置:</label>
+            </td>
+            <td>
+                <select id="depend_config" name="depend_config">
+                    <option value=""
+                            {% if xieyitestcase.depend_config_id == None %}
+                                selected="selected"
+                            {% endif %}>
+                            ---请选择
+                    </option>
+                    {%for cab in clickandback_all%}
+                        <option
+                                value={{cab.id}}
+                                        {% if cab.id == xieyitestcase.depend_config_id %}
+                                            selected="selected"
+                                        {% endif %}>
+                            [{{ cab.test_project }}]-[{{ cab.test_module }}]-[{{ cab.test_page }}]_{{cab.test_case_title }}]
+                        </option>
+                    {%endfor%}
+
+                </select>
+
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <label>循环次数:</label>
+            </td>
+            <td>
+                <input id="case_counts" name="case_counts" type="text" value="{{ xieyitestcase.case_counts|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>是否附带复制:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=1 {% if is_withRelevance == 1 %} checked="checked"{% endif %}>附带
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=0 {% if is_withRelevance == 0 %} checked="checked"{% endif %}>不附带
+            </td>
+        </tr>
+
+    </table>
+{% endblock %}
+{% block box2_a %}
+    <a href='{{ django_server_yuming }}/shucaiyidate/xieyitestcase/'>返回数据列表页</a>
+{% endblock %}

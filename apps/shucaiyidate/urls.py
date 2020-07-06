@@ -2,8 +2,10 @@ from django.urls import  path
 
 from .views import TagContentView  #导入TagContentView
 from .views import XieyiConfigDateView
-
 from .views import NodeConfigMakeDevRequest,NodeConfigCopyRequest,NodeConfigReadAndSaveRequest
+from .views import XieyiConfigDateOrderView,XieyiTestCaseView
+
+
 
 
 
@@ -26,6 +28,15 @@ urlpatterns = [
 
     # 节点配置NodeConfig页面的url配置-将上传的文件入库
     path('nodeconfigreadandsave/<path:nodeconfig_id>/', NodeConfigReadAndSaveRequest, name="node_config_read_and_save_id"),
+    # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
+
+    # 协议测试用例之依赖配置url配置
+    path('xieyiconfigdateorder/<path:xieyiconfigdateorder_id>/', XieyiConfigDateOrderView.as_view(), name="xie_yi_config_date_order_id"),
+    # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
+
+    # 协议测试用例之测试用例url配置
+    path('xieyitestcase/<path:xieyitestcase_id>/', XieyiTestCaseView.as_view(),
+         name="new_xie_yi_test_case_id"),
     # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
 
 
