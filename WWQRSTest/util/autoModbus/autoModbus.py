@@ -1355,22 +1355,29 @@ class AutoModbus(object):
         self.outPutMyLog(table_content_list)
         # 循环遍历预期结果
         expect_result_list = self.xieyi_jiexi_expect_result_list
+        if expect_result_list == []:
+            self.outPutMyLog("预期验证数据结果为【%s】,为空，请保证填写【协议解析预期结果】和选中【是否断言预期结果】" % str(expect_result_list))
+            return False
         message_list = []
         message_error_list = []
         exist_expect_result_list = []   #存在的预期结果
         not_exist_expect_result_list = []  #不存在的预期结果
         like_not_exist_expect_result_list = []  #与不存在的值相近的值
         like_not_exist_expect_result_one_list = []
+        #获取验证结果的结果状态
+        expect_result_assert_flag_list = []
         for expect_result_one in expect_result_list:
             self.outPutMyLog("遍历数据：")
             self.outPutMyLog(expect_result_one)
-            assert_result_flag = False
+
             #遍历数据库查看预期结果是否在数据库中：
+            table_content_one_assert_flag = False
             for table_content_one in table_content_list:
                 self.outPutMyLog("遍历表：")
                 self.outPutMyLog(table_content_one)
                 self.outPutMyLog(table_content_one)
                 #遍历一条数据的字段值，如果存在字段值则停止本次验证
+                one_ziduan_value_assert_flag = False
                 for one_ziduan_value in table_content_one:
                     #如果值在里面，则打印
                     if expect_result_one in str(one_ziduan_value):
@@ -1378,18 +1385,17 @@ class AutoModbus(object):
                         message_list.append(message_one)
                         exist_expect_result_list.append(expect_result_one)
                         self.outPutMyLog("退出从一条数据中查找一个预期结果的循环")
-                        assert_result_flag = True
+                        one_ziduan_value_assert_flag = True
                         break  #退出本次循环
-                    else:
-                        message_error_one = "验证值【%s】不在实际值【%s】中。"%(expect_result_one,one_ziduan_value)
-                        message_error_list.append( message_error_one)
-                        self.outPutErrorMyLog("退出从一条数据中查找一个预期结果的循环")
-                        assert_result_flag = False
-                        continue  #继续本条数据的循环查找
-                self.outPutMyLog("退出遍历一个表中的每条数据的循环")
-                if assert_result_flag:
+                if one_ziduan_value_assert_flag:#如果查找到，则退出多条数据查询
+                    table_content_one_assert_flag =True  #说明查找到
                     break
-            self.outPutMyLog("开始进入下一个预期结果值的查找的循环")
+            #保存添加一个数据的验证结果
+            expect_result_assert_flag_list.append(table_content_one_assert_flag)
+
+        self.outPutMyLog("数据的验证结果：")
+        self.outPutMyLog(expect_result_assert_flag_list)
+
 
         #根据存在的结果，找出不存在的值
         for expect_result_one in expect_result_list:
@@ -1425,22 +1431,23 @@ class AutoModbus(object):
             like_not_exist_expect_result_list.append(like_message)
 
 
+        #对验证结果进行分析，如果验证结果中有False状态的则说明失败，返回False状态
+        for expect_result_assert_flag_one in expect_result_assert_flag_list:
+            if not expect_result_assert_flag_one: #如果存在False，则返回False
+                self.outPutErrorMyLog("预期 %s 应该在数据库中" % str(expect_result_list))
+                self.outPutErrorMyLog("而实际 %s 在数据库中" % str(exist_expect_result_list))
+                self.outPutErrorMyLog("%s 不在数据库中" % str(not_exist_expect_result_list))
+                self.outPutErrorMyLog("%s" % str(like_not_exist_expect_result_list))
+                return False
+
+        self.outPutMyLog("查找结果信息：")
+        self.outPutMyLog(message_list)
+        self.outPutMyLog("预期 %s 应该在数据库中" % str(expect_result_list))
+        self.outPutMyLog("而实际 %s 在数据库中" % str(exist_expect_result_list))
+        self.outPutMyLog("实际与预期一致")
+        return True
 
 
-        if assert_result_flag :
-            self.outPutMyLog("查找结果信息：")
-            self.outPutMyLog(message_list)
-            self.outPutMyLog("预期 %s 应该在数据库中" % str(expect_result_list))
-            self.outPutMyLog("而实际 %s 在数据库中"% str(exist_expect_result_list))
-        else:
-            self.outPutErrorMyLog("没有在数据库【%s】中的【%s】表中查找到【%s】中的全部数据" % (local_db,table_name,str(expect_result_list)))
-            # self.outPutErrorMyLog(message_error_list)
-            self.outPutErrorMyLog("预期 %s 应该在数据库中" % str(expect_result_list))
-            self.outPutErrorMyLog("而实际 %s 在数据库中"% str(exist_expect_result_list))
-            self.outPutErrorMyLog("%s 不在数据库中" % str(not_exist_expect_result_list))
-            self.outPutErrorMyLog("%s" % str(like_not_exist_expect_result_list))
-
-        return assert_result_flag
 
     #验证远程/tmp/real.db中的实时数据是否与解析值一致：
     def assert_real_db_success(self):

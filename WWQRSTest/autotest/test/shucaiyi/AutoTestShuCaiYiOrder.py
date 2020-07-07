@@ -49,6 +49,9 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 web_type = xieyiconfigdateorder_one.web_type
                 web_xieyi_name = xieyiconfigdateorder_one.web_xieyi_name
                 web_xieyi_yinzi = xieyiconfigdateorder_one.web_xieyi_yinzi
+                is_upload_dev_config_file = xieyiconfigdateorder_one.is_upload_dev_config_file
+                nodeconfig_id = xieyiconfigdateorder_one.nodeconfig_id
+                dev_config_name = xieyiconfigdateorder_one.dev_config_name
                 telnet_host_ip = xieyiconfigdateorder_one.telnet_host_ip
                 telnet_username = xieyiconfigdateorder_one.telnet_username
                 telnet_password = xieyiconfigdateorder_one.telnet_password
@@ -143,6 +146,41 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 tcp_server_port=tcp_server_port,
                 tcp_receive_delay_min = tcp_receive_delay_min
             )
+
+            if is_upload_dev_config_file:  # 如果上传配置文件，则上传配置文件
+                # 根据 nodeconfig_id获取对应的配置文件
+                print("nodeconfig_id:")
+                print(nodeconfig_id)
+                if nodeconfig_id != None:  # 如果不为空，则上传配置文件
+                    # 根据依赖配置获取相应的配置文件
+                    from shucaiyidate.modelsnewdev import NodeConfig
+                    depend_node_config_list = NodeConfig.objects.filter(id=nodeconfig_id)
+                    for depend_node_config_one in depend_node_config_list:
+                        dev_path = depend_node_config_one.dev_file.path
+                        print("本地dev配置文件的路径：")
+                        print(dev_path)
+                        break  # 退出循环
+
+                    local_dev_path = dev_path
+                    if web_type == "P1":  # 如果是V6,则走v6的关闭原有协议命令
+                        xieyi_bin_dir_fixed_v6 = "/usr/app_install/collect/bin"
+                        remote_dev_path = "%s/devices.cfg/%s" % (xieyi_bin_dir_fixed_v6, dev_config_name)
+                    elif web_type == "P0" or web_type == "P2":  # 如果是V5,则走V5的关闭原有协议命令
+                        xieyi_bin_dir_fixed_v5 = "/usr/app_install/protocol/bin"
+                        remote_dev_path = "%s/devices.cfg/%s" % (xieyi_bin_dir_fixed_v5, dev_config_name)
+                    dev_upload_file_list_all = []
+                    dev_upload_file_list_one = []
+                    dev_upload_file_list_one.append(remote_dev_path)
+                    dev_upload_file_list_one.append(local_dev_path)
+                    dev_upload_file_list_all.append(dev_upload_file_list_one)
+                    # 处理本地文件上传到远程数采仪配置文件目录下
+                    am.run_ftp_up_load_file_list(dev_upload_file_list_all)
+                else:
+                    print("没有依赖配置，请选择相应的dev配置依赖，如需要的话。")
+            else:
+                print("不上传国标配置文件。")
+
+            #处理通用的文件上传
             ftp_up_load_file_list = [['/usr/app_install/collect/bin/text.txt','D:/pycharmproject/shangbaogongju/WWQRSTest/util/text.txt'],
                                      ['/usr/app_install/collect/bin/result1.txt','D:/pycharmproject/shangbaogongju/WWQRSTest/util/result1.txt']]
             from depend.shucaiyi.ftpUploadFileDependClass import ftpuploadfiledepend
@@ -170,7 +208,11 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
             if is_assert_tcp_server_receive_success:  # 是否验证平台上报内容，是，则需要清除已经存在的平台数据库
                 am.telnet_client_delete_upload_db()   #删除原有上报平台数据
 
-            if is_assert_real_db_success or is_assert_tcp_server_receive_success:  #如果需要验证实时数据库中的数据或需要验证平台上报内容，则需要删除原有数据后，重启
+            #如果验证数据库
+            #验证平台接收数据
+            #上传dev配置文件
+            #都需要重启设备
+            if is_assert_real_db_success or is_assert_tcp_server_receive_success or is_upload_dev_config_file:  #如果需要验证实时数据库中的数据或需要验证平台上报内容，则需要删除原有数据后，重启
                 am.telnet_client_restart_scy()
 
 
@@ -270,15 +312,15 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 if web_type == "P1":  # 如果是V6,则走v6的解析文件函数
                     xieyi_db_fixed_v6 = "rtd.db"
                     xieyi_db_table_name_fixed_v6 = "tb_rtd"
-                    assert_result_flag = am.assert_real_db_success_with_param(xieyi_db=xieyi_db_fixed_v6,
+                    assert_result_flag_result = am.assert_real_db_success_with_param(xieyi_db=xieyi_db_fixed_v6,
                                                                               xieyi_db_table_name=xieyi_db_table_name_fixed_v6)# 验证远程数据库中的实时数据是否与解析值一致通用命令 V6版本协议
-                    self.assertTrue(assert_result_flag, msg=u"数据库断言失败")
+                    self.assertTrue(assert_result_flag_result, msg=u"数据库断言失败")
                 elif web_type == "P0" or web_type == "P2":  # 如果是V5,则走V5的重启协议命令
                     xieyi_db_fixed_v5 = "real.db"
                     xieyi_db_table_name_fixed_v5 = "rttable"
-                    assert_result_flag = am.assert_real_db_success_with_param(xieyi_db=xieyi_db_fixed_v5,
+                    assert_result_flag_result = am.assert_real_db_success_with_param(xieyi_db=xieyi_db_fixed_v5,
                                                                               xieyi_db_table_name=xieyi_db_table_name_fixed_v5)# 验证远程数据库中的实时数据是否与解析值一致通用命令 V5版本协议
-                    self.assertTrue(assert_result_flag,msg=u"数据库断言失败")
+                    self.assertTrue(assert_result_flag_result,msg=u"数据库断言失败")
 
             #是否验证平台上报内容
             if is_assert_tcp_server_receive_success:

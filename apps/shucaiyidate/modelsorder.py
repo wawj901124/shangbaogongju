@@ -3,6 +3,7 @@ from datetime import datetime
 from wanwenyc.settings import DJANGO_SERVER_YUMING
 from django.contrib.auth import  get_user_model  #导入get_user_model
 from testupdatadb.models import UpdateDbData
+from .modelsnewdev import NodeConfig
 
 #第三个就是我们自己创建的包
 User = get_user_model()  #get_user_model() 函数直接返回User类，找的是settings.AUTH_USER_MODEL变量的值
@@ -27,6 +28,11 @@ class XieyiConfigDateOrder(models.Model):
     web_xieyi_name =  models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端选择的协议名称")
     web_xieyi_yinzi = models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端添加的监控因子",
                                        help_text=u"web端添加的监控因子，多个因子之间以半角逗号隔开")
+    is_upload_dev_config_file = models.BooleanField(default=True,verbose_name=u"是否上传Dev配置文件")
+    nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
+                                   verbose_name=u"依赖的Dev配置",on_delete=models.PROTECT)
+    dev_config_name = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"dev配置文件的名字",
+                                       help_text =u"dev配置文件的名字，例如：instr_2000_N.dev")
 
     telnet_host_ip = models.CharField(max_length=100, default="192.168.101.133", verbose_name=u"数采仪IP地址")
     telnet_username = models.CharField(max_length=100, default="root", verbose_name=u"登录数采仪的用户名")
