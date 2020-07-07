@@ -18,12 +18,24 @@ class WebVSixConfig(object):
 
     def login(self):   #登录
         lpf.loginwithcookiesauto(self.activebrowser)  #登录
+        print("登录完成")
 
     #点击“采集配置”
     def clickCaijiPeiZhi(self):
         #点击“采集配置”
         caijipeizhi_xpath = "/html/body/div/div/div/div[2]/div[1]/div/div[2]/ul/li[5]/ul/li[1]/span[2]"
         self.activebrowser.findEleAndClick(0, "xpath", caijipeizhi_xpath)  # 点击"采集配置"
+        print("已经点击【采集配置】")
+
+    #查看串口4是否被选中，没有选中，则点击选择，否则，不做任何操作
+    def checkChuanKou(self):
+        #此处的选中路径不一定是input，而是选中前后有选中属性区别的标签
+        chuankou_4_input_xpath = "/html/body/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/section[1]/div[2]/div[3]/table/tbody/tr[4]/td[1]/div/div/div/label/span[1]"
+        chuankou_4_input_ele = self.activebrowser.findELe("xpath",chuankou_4_input_xpath)
+        is_checked = self.activebrowser.input_is_checked(chuankou_4_input_ele)
+        if not is_checked: #如果没有选中， 则点击选中
+            self.activebrowser.findEleAndClick(0,"xpath",chuankou_4_input_xpath)
+            self.activebrowser.outPutMyLog("点击选中串口4")
 
     #选择串口协议
     def selectXieYi(self):
@@ -53,6 +65,7 @@ class WebVSixConfig(object):
         xeiyi_baocun_xpath = "/html/body/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/section/div/button/span"
         self.activebrowser.findEleAndClick(0, "xpath",  xeiyi_baocun_xpath)  # 点击"保存"
         self.activebrowser.delayTime(5)  #等待5秒
+        print("已经点击【保存】按钮")
 
     #根据提供的第一个新增因子选项框自动获取多个新增因子选项框
     def get_auto_xinzeng_yinzi_xpath_list(self,xinzeng_first_xpath, select_jian_kong_yin_zi_list):
@@ -118,12 +131,14 @@ class WebVSixConfig(object):
         yinzipeizhi_xpath = "/html/body/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/section[1]/div[2]/div[3]/table/tbody/tr[4]/td[6]/div/div/button[2]/span"
         #点击因子配置
         self.activebrowser.findEleAndClick(0, "xpath", yinzipeizhi_xpath)
+        print("已经点击【因子配置】")
 
     #点击监控因子配置页面的新增按钮
     def clickYinZiPeiZhiXinZeng(self):
         #点击“新增”
         xinzeng_xpath = "/html/body/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]/div/div/div[1]/div[2]/button/span"
         self.activebrowser.findEleAndClick(0, "xpath", xinzeng_xpath)
+        print("已经点击【新增】按钮")
 
     #选择监控因子
     def selectJianKongYinZi(self):
@@ -146,11 +161,13 @@ class WebVSixConfig(object):
             xinzeng_yinzi_select_ul_xpath = auto_xinzeng_yinzi_select_ul_xpath_list[i]
             pre_select_option_text= select_jian_kong_yin_zi_list[i]
             self.activebrowser.findUlAndClickSelectLi(ul_xpath=xinzeng_yinzi_select_ul_xpath, li_text=pre_select_option_text)
+            print("已经点击新增【%s】监控因子"%pre_select_option_text)
 
 
     def clickJianKongYinZiQueDing(self):
         jiankongyinziqueding_xpath = "/html/body/div[1]/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[2]/div/div/div[2]/button[2]/span"
         self.activebrowser.findEleAndClick(0, "xpath", jiankongyinziqueding_xpath)
+        print("已经点击【确定】按钮")
 
 
     #点击设备重启
@@ -160,15 +177,20 @@ class WebVSixConfig(object):
         shebeichongqi_queding_xpath = "/html/body/div[1]/div/div/div[2]/div[2]/div/div/div[3]/div/div[3]/div/button[2]/span"
         self.activebrowser.findEleAndClick(0, "xpath", shebeichongqi_queding_xpath)
         self.activebrowser.delayTime(60)   #等待60秒
+        print("已经重启设备")
+
 
     def closeWeb(self):
         self.activebrowser.closeBrowse()
+        print("已经关闭浏览器")
 
     def run(self):
         #登录
         self.login()
         #点击“采集配置”
         self.clickCaijiPeiZhi()
+        # 查看串口4是否被选中
+        self.checkChuanKou()
         #选择协议
         is_continue = self.selectXieYi()
         if is_continue: #如果选择的协议不是当前的协议，则继续往下执行，否则，不再继续往下，而是直接关闭web配置
@@ -197,8 +219,8 @@ class WebVSixConfig(object):
 
 
 if __name__ == '__main__':
-    select_xie_yi = "18048"
-    select_jian_kong_yin_zi_list = ["w80004","w80001"]
+    select_xie_yi = "1055"
+    select_jian_kong_yin_zi_list = ['a21005', 'a19001', 'a01012']
     wc = WebVSixConfig(select_xie_yi,select_jian_kong_yin_zi_list)
     wc.run()
 
