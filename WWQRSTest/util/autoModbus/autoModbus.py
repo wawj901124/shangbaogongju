@@ -1055,7 +1055,7 @@ class AutoModbus(object):
         self.run_telnet_command_list(mycommad_list)
         print("执行语句：")
         print(mycommad_list)
-        self.time_delay(60)
+        self.time_delay(120)
 
 
     #处理发送的二进制数据

@@ -280,14 +280,22 @@ class DefineHelpText(object):
                                     
                                     <tr class="tabledataxuxian">
                                         <td class="tabledataxuxian">decode6</td>
-                                        <td class="tabledataxuxian">字符串转换成整形转换宽度由上面len决定；</td>
-                                         <td class="tabledataxuxian">&nbsp;</td>
+                                        <td class="tabledataxuxian">字符串转换成整形转换宽度由上面len决定,如len=2；</td>
+                                         <td class="tabledataxuxian">len=2 &nbsp; “12345.63”-》 12</br>len=7 &nbsp; “12345.63”-》 12345</td>
                                     </tr>
                                     
                                      <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">decode7</td>
-                                        <td class="tabledataxuxian">字符数组转换成短整型；</td>
-                                        <td class="tabledataxuxian">十六进制-》short，解析时间一般都用这个算法；</td>
+                                        <td class="tabledataxuxian">decode7@字节序</br>不传递字节序时，默认为12</td>
+                                        <td class="tabledataxuxian">
+                                            字符数组转换成短整型</br>
+                                            decode7、decode7@12、decode7@21等算法默认解析出的结果是有符号数</br>
+                                            如果现场特殊，需要解析无符号数，可按照如下方式配置：decode7@u12、decode7@u21;
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            规则：decode7@12</br>
+                                            源字节数组(HEX)：31 32</br>
+                                            解析结果：12594；
+                                        </td>
                                     </tr>
                                     
                                     <tr class="tabledataxuxian">
@@ -296,35 +304,76 @@ class DefineHelpText(object):
                                          <td class="tabledataxuxian">0x0a-》10；</td>
                                     </tr>
                                      <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">decode9@bit3</td>
-                                        <td class="tabledataxuxian">取对应字节的比特位，返回0或者1</td>
-                                        <td class="tabledataxuxian">0x04-》1；<br/>0x03-》0；</td>
+                                        <td class="tabledataxuxian">decode9@bitn</br>n为比特位数</td>
+                                        <td class="tabledataxuxian">
+                                            取对应字节的比特位，返回0或者1<br/>
+                                            @后面为参数格式为：@bitn<br/>
+                                            支持解析多位比特位，格式为：<br/>
+                                            decode9@bitEnd-bitStart,比如 decode9@bit1-bit0 
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例 1： <br/>
+                                                deocde9@bit3 <br/>
+                                                0x04-》1 <br/>
+                                                0x03-》0 <br/>
+                                            例 2: <br/>
+                                                decode9@bit1-bit0 <br/>
+                                                0x01-》1 <br/>
+                                                0x02-》2 <br/>
+                                        </td>
                                     </tr>
                                     
                                     <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">decode10@1234</td>
+                                        <td class="tabledataxuxian">
+                                            decode10  @字节序 <br/>
+                                            不传递字节序时，默认为 1234 
+                                        </td>
                                         <td class="tabledataxuxian">将十六进制字符串直接转换成4字节浮点数（可配置顺序）；</td>
-                                         <td class="tabledataxuxian">3F9DF3B6-》3F9DF3B6->1.234；</td>
+                                         <td class="tabledataxuxian">
+                                            规则：decode10@1234 <br/>
+                                            源字符串(ASCII)： <br/>
+                                            449a4000 <br/>
+                                            解析结果：1234.0 <br/>
+                                         </td>
                                     </tr>
                                     
                                      <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">decode11@12</td>
+                                        <td class="tabledataxuxian">
+                                            decode11 @字节序 <br/>
+                                            不传递字节序时，默认为 12
+                                        </td>
                                         <td class="tabledataxuxian">将十六进制字符串直接转换成2字节短整型（可配置顺序）；</td>
-                                        <td class="tabledataxuxian">1235-》1235->4661（5+3*16+2*16*16+1*16*16*16=4661）；</td>
+                                        <td class="tabledataxuxian">
+                                            规则：decode11@12 <br/>
+                                            源字符串(ASCII)：449a <br/>
+                                            解析结果：17562 <br/>
+                                        </td>
                                     </tr>
                                     
                                     <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">decode12@4312</td>
+                                        <td class="tabledataxuxian">
+                                            decode12 @字节序 <br/>
+                                            不传递字节序时，默认为 1234 
+                                        </td>
                                         <td class="tabledataxuxian">将IEEF745格式的4字节数据转成一个float型数值（可配置顺序）；</td>
-                                        <td class="tabledataxuxian">40009a44-》449A4000->1234.0；</td>
+                                        <td class="tabledataxuxian">
+                                            规则：decode12@4312 <br/>
+                                            源字节数组（HEX）：40 00 9a 44 <br/>
+                                            解析结果：1234.0
+                                        </td>
                                     </tr>
                                     
                                      <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">decode13@u 字节序 <br/> decode13@s 字节序</td>
-                                        <td class="tabledataxuxian">16 进制字节数组转化为 4 字节整型数据；<br/>
-                                                                    u 代表无符号数；<br/>
-                                                                    s 代表有符号数；<br/>
-                                                                    注：配置时必须指明符号类型，如果不明确是什么符号类型，请使用 s ；</td>
+                                        <td class="tabledataxuxian">
+                                            decode13@u 字节序 <br/> 
+                                            decode13@s 字节序
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            16 进制字节数组转化为 4 字节整型数据；<br/>
+                                            u 代表无符号数；<br/>
+                                            s 代表有符号数；<br/>
+                                            注：配置时必须指明符号类型，如果不明确是什么符号类型，请使用 s ；
+                                        </td>
                                         <td class="tabledataxuxian"> 
                                                 例 1： 规则：decode13@u1234 ，源字节数组（HEX）：45 1C 30 2F ，解析结果：1159475247（即45 1C 30 2F-》451C302F->1159475247）；<br/>
                                                 例 2： 规则：decode13@s3412 ，源字节数组（HEX）：ff 0b ff ff ，解析结果:-245 （即ff 0b ff ff-》FFFFFF0B->-245）；<br/>
@@ -333,23 +382,39 @@ class DefineHelpText(object):
                                     </tr>
                                     
                                     <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">decode14@u 字节序 <br/>decode14@s 字节序</td>
-                                        <td class="tabledataxuxian">16 进制字节数组转化为 4 字节整型数据；<br/>
-                                                                    u 代表无符号数；<br/>
-                                                                    s 代表有符号数；<br/>
-                                                                    注：配置时必须指明符号类型，如果不明确是什么符号类型，请使用 s ；</td>
+                                        <td class="tabledataxuxian">
+                                            decode14@u 字节序 <br/>
+                                            decode14@s 字节序
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            16 进制字节数组转化为 4 字节整型数据；<br/>
+                                            u 代表无符号数；<br/>
+                                            s 代表有符号数；<br/>
+                                            注：配置时必须指明符号类型，如果不明确是什么符号类型，请使用 s ；</td>
                                          <td class="tabledataxuxian">                                                
-                                                例 1： 规则：decode13@u1234 ，源字节数组（HEX）：45 1C 30 2F ，解析结果：1159475247（即45 1C 30 2F-》451C302F->1159475247）；<br/>
-                                                例 2： 规则：decode13@s3412 ，源字节数组（HEX）：ff 0b ff ff ，解析结果:-245 （即ff 0b ff ff-》FFFFFF0B->-245）；<br/>
-                                                例 3： 规则：decode13@u3412 ，源字节数组（HEX）：ff 0b ff ff ，解析结果: 4294967051（即ff 0b ff ff-》FFFFFF0B->4294967051；<br/>
+                                                例 1： 规则：decode14@u1234 ，源字节数组（ASCII）：45 1C 30 2F ，解析结果：1159475247（即45 1C 30 2F-》451C302F->1159475247）；<br/>
+                                                例 2： 规则：decode14@s3412 ，源字节数组（ASCII）：ff 0b ff ff ，解析结果:-245 （即ff 0b ff ff-》FFFFFF0B->-245）；<br/>
+                                                例 3： 规则：decode14@u3412 ，源字节数组（ASCII）：ff 0b ff ff ，解析结果: 4294967051（即ff 0b ff ff-》FFFFFF0B->4294967051；<br/>
                                                 注：对比例 2 和例 3 可观察有符号和无符号的解析差别；</td>
                                     </tr>
                                     
                                      <tr class="tabledataxuxian">
                                         <td class="tabledataxuxian">decode15@字节序</td>
-                                        <td class="tabledataxuxian">16 进制字节数组转化为 8 字节有符号浮点数；</td>
                                         <td class="tabledataxuxian">
-                                            例 1： 规则：decode15@12345678 ，源字节数组（HEX）： 40aa4875c28f5c29 ，解析结果：3364.23（即40aa4875c28f5c29-》40AA4875C28F5C29->3364.23）；
+                                            16 进制字节数组转化为 8 字节有符号浮点数<br/>
+                                            注意： <br/>
+                                            1、本算法针对 linux 版本为 3.2.0及其以上版本，
+                                                涉及的产品包括动态管控仪及其衍生产品（数采
+                                                仪 6.0、用电量数采仪…..）。 <br/>
+                                            2、如果是 linux 版本为 2.6.0（新国标版本）， 
+                                                字 节 序 相 对linux3.2.0来说需前后4字节整体对调。 
+                                                例如:<br/>
+                                                 linux3.2.0: decode15@12345678 等价于 linux2.6.0: decode15@56781234 
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例 1： 规则：decode15@12345678 ，源字节数组（HEX）： 40aa4875c28f5c29 ，解析结果：3364.23（即40aa4875c28f5c29-》40AA4875C28F5C29->3364.23）<br/>
+                                            注意： <br/>
+                                                linux3.2.0: decode15@12345678 等价于 linux2.6.0: decode15@56781234 
                                         </td>
                                     </tr>
                                     
@@ -360,6 +425,215 @@ class DefineHelpText(object):
                                             例 1： 规则：decode16 ，源字节数组（HEX）： 12 34 56 78 ，解析结果：12345678.0（即12 34 56 78-》12345678.0）；
                                         </td>
                                     </tr>
+                                    
+                                    <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">decode17@ 010203040506 </td>
+                                        <td class="tabledataxuxian">
+                                            16 进制字节数组按权重累加,@符号后传递的是指数，默认底数是 10。指数是 16 进制的，20 表示 32 <br/>
+                                            decode17@010203040506070F 代表 <br/>
+                                                x1*10 的 1 次方 + <br/>
+                                                x2*10 的 2 次方 + <br/>
+                                                x3*10 的 3 次方 + <br/>
+                                                x4*10 的 4 次方 + <br/>
+                                                x5*10 的 5 次方 + <br/>
+                                                x6*10 的 6 次方 + <br/>
+                                                x7*10 的 15 次方 <br/>
+                                            decode17@-1-2-3-4-5-a 代表 <br/>
+                                                x1*10 的 1 次方 + <br/>
+                                                x2*10 的 2 次方 + <br/>
+                                                x3*10 的 3 次方 + <br/>
+                                                x4*10 的 4 次方 + <br/>
+                                                x5*10 的 5 次方 + <br/>
+                                                x6*10 的 6 次方 + <br/>
+                                                x7*10 的 10 次方 <br/>
+                                            正数指数范围是 00 到 FF <br/>
+                                            负数指数范围是-0 到-F <br/>
+
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例 1： <br/>
+                                                规则：decode17@01020304 <br/>
+                                                源字节数组（HEX）： 04 03 02 01 <br/>
+                                                解析结果：12340.0 <br/>
+                                            例 2： <br/>
+                                                规则：decode17@-1-2-3-4 <br/>
+                                                源字节数组（HEX）： 04 03 02 01 <br/>
+                                                解析结果：0.432100 <br/>
+                                        </td>
+                                    </tr>
+                                    
+                                     <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">decode18</td>
+                                        <td class="tabledataxuxian">
+                                            16 进制 3 字节数组转化为 16 进制字符串对应的 float 浮点数,小数点位置从报文读取 <br/>
+                                            第 1 字节标识小数点位置 第 2、3 字节标识有效数据 <br/>
+                                            第 1 字节的第 1 位为整数的符号位 <br/>
+                                            第 1 字节的第 2 位为小数点位，表示向左右移几位 <br/>
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例 1： <br/>
+                                                规则：decode18 <br/>
+                                                源字节数组（HEX）： 03 45 24 <br/>
+                                                解析结果：452.4.0 <br/>
+                                            例 2： <br/>
+                                                规则：decode18 <br/>
+                                                源字节数组（HEX）： 7E 45 24 <br/>
+                                                解析结果：0. 004524 <br/>
+                                        </td>
+                                    </tr>
+                                    
+                                     <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">decode19</td>
+                                        <td class="tabledataxuxian">
+                                            整数部分为16进制4字节数整形数据(字节序 1234), <br/>
+                                            小数部分为16 进制 4 字节浮点型数据（字节序 1234） <br/>
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例 1： 
+                                                规则：decode19 
+                                                源字节数组（HEX）： 00 00 49 1D 3C DE 5A 17 
+                                                解析结果：18717.027143
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">decode20</td>
+                                        <td class="tabledataxuxian">
+                                            16 进制 4 字节数组按权重累加，底数固定为 10， <br/>
+                                            Decode20 <br/>
+                                            源字节数组（HEX） X1 X2 X3 X4 <br/>
+                                            结果=X1 * 10^0 + X2*10^2 + X3*10^4 + X4 * 10 ^6 <br/>
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例 1： <br/>
+                                                规则：decode20 <br/>
+                                                源字节数组(HEX) 00 02 00 01 <br/>
+                                                解析结果： 1000200 <br/>
+                                        </td>
+                                    </tr>
+                                    
+                                     <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">decode21@/1000 </td>
+                                        <td class="tabledataxuxian">
+                                            16 进制 8 字节数组,前部分为 4字节整形数据（字节序 3412）加上后部分为四字节整形数据（字节序 3412） / （可配置为加减乘除）1000（可配置参数）的数值。 <br/>
+                                            decode21 不传任何参数和运算符，<br/>
+                                            或者传递的运算符非以上四种，<br/>
+                                            默认为解析结果为两个四字节整数相加，<br/>
+                                            如果要除以的参数为 0 时，默认为后半部分为 0，得到的结果是前四字节整数数据，<br/>
+                                            如果传递的参数为非数字，默认参数为 0，按以上规则进行运算 <br/>
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例 1： <br/>
+                                                规则：decode21@/1000 <br/>
+                                                源字节数组： <br/>
+                                                    00 02 00 01 02 40 00 00 <br/>
+                                                    00 02 00 01:65538 <br/>
+                                                    02 40 00 00:576 <br/>
+                                                参数：1000 <br/>
+                                                解析结果： 65538.576 <br/>
+                                        </td>
+                                    </tr>
+                                    
+                                     <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">decode22@H/100</td>
+                                        <td class="tabledataxuxian">
+                                            16 机制 2 字节数组，大写 H 代表解析数据 12，大写 L 解析顺序21， /表示操作符，也可以是+， -，*。 <br/>
+                                            100 表示要操作的参数，大写 H不写按照解析顺序 12 数据进行解析，<br/>
+                                            操作符不写，默认得到的数据为 2 字节解析得到的数值，<br/>
+                                            注意：如果除以的参数为 0，则得到的数据默认为 0 <br/>
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例：
+                                                decode22@H/100 <br/>
+                                                源字节数组： 01 72 <br/>
+                                                    按照的解析顺序 12 得到的数值为 370； <br/>
+                                                最终得到的数值为 370/100 = 3.7 <br/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">
+                                            decode23@字节序;ADMin,ADMax;rangMin,rangeMax
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            2 字节整型数据表示 ADC 值， 根据量程上下限进行计算出实时数据：<br/>
+                                                参数格式： <br/>
+                                                    docode23@字节序; ADMin,ADMax; rangeMin,rangeMax  <br/>
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例如：  <br/>
+                                                decode23@12;0,65535;100,200  <br/>
+                                                源字节数组 10 20 <br/>
+                                                解析结果：106.2989  <br/>
+                                                解析结果公式：Y=（（rangeMax-rangeMin）*（X-ADMin））/(ADMax-ADMin)+rangeMin <br/>
+                                                其中X为（10 20 按照字节序12解析出的整数：1020-》4128） <br/>
+                                                Y = （（200-100）*（4128-0））/(65535-0)+100=412800/65535+100=106.2989242389563 <br/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">
+                                            decode24@字节序;ADMin,ADMax;rangMin,rangeMax
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            4 字节浮点数据表示 ADC 值， 根据量程上下限进行计算出实时数据： <br/>
+                                                参数格式： <br/>
+                                                    Decode24@字节序;ADMin,ADMax;rangeMin,rangeMax <br/>
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例如： <br/>
+                                                decode24@3412;0,40;0,4000 <br/>
+                                                源字节数组 00 00 41 a0 <br/>
+                                                解析结果：2000.0 <br/>
+                                                解析结果公式：Y=（（rangeMax-rangeMin）*（X-ADMin））/(ADMax-ADMin)+rangeMin <br/>
+                                                其中X为（ 00 00 41 a0 按照字节序3412解析出的整数：00 00 41 a0-》 41 a0 00 00 ->20.000000） <br/>
+                                                Y = （（4000-0）*（20-0））/(40-0)+0=80000/40+0=2000 <br/>
+                                        </td>
+                                    </tr>
+                                    
+                                     <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">decode25@ 010203040506 </td>
+                                        <td class="tabledataxuxian">
+                                            16进制字节数组对应的1字节字符串按权重累加,@符号后传递的是指数，默认底数是 10。指数是 16 进制的，20 表示 32 <br/>
+                                            decode25@010203040506070F 代表 <br/>
+                                                x1*10 的 1 次方 + <br/>
+                                                x2*10 的 2 次方 + <br/>
+                                                x3*10 的 3 次方 + <br/>
+                                                x4*10 的 4 次方 + <br/>
+                                                x5*10 的 5 次方 + <br/>
+                                                x6*10 的 6 次方 + <br/>
+                                                x7*10 的 15 次方 <br/>
+                                            decode17@-1-2-3-4-5-a 代表 <br/>
+                                                x1*10 的 1 次方 + <br/>
+                                                x2*10 的 2 次方 + <br/>
+                                                x3*10 的 3 次方 + <br/>
+                                                x4*10 的 4 次方 + <br/>
+                                                x5*10 的 5 次方 + <br/>
+                                                x6*10 的 6 次方 + <br/>
+                                                x7*10 的 10 次方 <br/>
+ 
+                                            正数指数范围是 00 到 FF <br/>
+                                            负数指数范围是-0 到-F <br/>
+
+                                        </td>
+                                        <td class="tabledataxuxian">
+                                            例 1： <br/>
+                                                规则：decode25@01020304 <br/>
+                                                源字节数组（HEX）： 04 03 02 01 <br/>
+                                                解析结果：12340.0 <br/>
+ 
+                                            例 2： <br/>
+                                                规则：decode25@000A0B0C <br/>
+                                                源字节数组（HEX）： 10 20 30 40 <br/>
+                                                解析结果： 43200000000010.000000 <br/>
+ 
+                                            例 3： <br/>
+                                                规则：decode25@-1-2-3-4 <br/>
+                                                源字节数组（HEX）： 10 20 30 40 <br/>
+                                                解析结果： 1.234000 <br/>
+                                        </td>
+                                    </tr>
+                                    
                                 </table> 
                                 <span>注意：该算法由算法库提供，当有不满足时，可适当进行扩展。</span>
 

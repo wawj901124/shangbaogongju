@@ -19,7 +19,7 @@ class XieyiConfigDateOrder(models.Model):
     # test_case_title = models.CharField(max_length=200, default="", verbose_name=u"测试内容的名称")
     # is_run_case = models.BooleanField(default=True,verbose_name=u"是否运行")
     web_type = models.CharField(max_length=10,null=True, blank=True,
-                                     choices=(("P0", u"V5"), ("P1", u"V6")),
+                                     choices=(("P0", u"V5.0"),("P2", u"V5.1"),("P1", u"V6.0")),
                                      default="P0",
                                      verbose_name=u"系统类型")
     is_web_modify_xieyi = models.BooleanField(default=True,verbose_name=u"是否通过web端修改协议")

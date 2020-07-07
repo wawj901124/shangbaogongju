@@ -4,7 +4,7 @@ class GlobalConfig(object):
     ONLINE_LOGIN_ACCOUNT = ""
     ONLINE_LOGIN_PASSWORD = ""
 
-    TEST_WEB_YUMING = "http://192.168.101.124/#/login"
+    TEST_WEB_YUMING = "http://192.168.101.124"
     TEST_LOGIN_ACCOUNT = "config"
     TEST_LOGIN_PASSWORD = "config"
 
