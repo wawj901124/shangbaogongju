@@ -410,6 +410,7 @@ def __generateTestCases():
                 forcount_i = '%s' % i
             else:
                 forcount_i = 'Id已经超过5位数，请重新定义'
+                forcount_i = i
 
             args = []
             args.append(xieyitestcase.id)

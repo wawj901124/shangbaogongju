@@ -105,7 +105,7 @@ class  ActiveBrowser(object):
 
         chrome_options = webdriver.ChromeOptions()   #为驱动加入无界面配置
 
-        chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
+        # chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
         chrome_options.add_argument('--no-sandbox')  #“–no - sandbox”参数是让Chrome在root权限下跑
         chrome_options.add_argument("--kiosk") #全屏启动
         chrome_options.add_argument("--start-maximized")  #全屏启动

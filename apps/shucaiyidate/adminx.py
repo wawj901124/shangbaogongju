@@ -1,5 +1,6 @@
 import xadmin
 
+
 from .models import XieyiConfigDate,User,FtpUploadFile,\
     CloseXieYiCommand,RestartXieYiCommand,SenderHexData
 from .modelsorder import XieyiConfigDateOrder,User,XieyiTestCase,FtpUploadFileOrder,\
@@ -759,6 +760,8 @@ class TagContentXadmin(object):
         # 一定不要忘记，否则整个ClickAndBackXAdmin保存都会出错
 
 
+
+
 # 设置内联
 class ConfigCollectFactorInline(object):
     model = ConfigCollectFactor
@@ -767,8 +770,8 @@ class ConfigCollectFactorInline(object):
     style = 'accordion'  # 以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
 
 
-
-class NodeConfigXadmin(object):
+#dev配置
+class NodeConfigXadmin():
     all_zi_duan = ["id",
                    "config_project",
                    "add_time", "update_time"]
@@ -822,11 +825,12 @@ class NodeConfigXadmin(object):
     #     # form = ConfigCollectFactorForm
 
     #设置内联
-    class  ConfigCollectReceivePorsInline(object):
+    class ConfigCollectReceivePorsInline(object):
         model =  ConfigCollectReceivePors
         exclude = ["write_user","add_time","update_time"]
         extra = 1
         style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
+
 
     #设置内联
     class ConfigCollectReceivePorsSectionInline(object):
@@ -882,6 +886,10 @@ class NodeConfigXadmin(object):
                ConfigControlSendParamidInline,
                ConfigControlSendPorsSectionInline,
                ConfigControlSendPorsConvertruleInline,]
+
+
+
+
 
     #批量处理命令
     #批量复制
@@ -1319,6 +1327,9 @@ class ActionDevTagXadmin(object):
             pass
         return super(ActionDevTagXadmin,self).post(request,*args,**kwargs)  # 必须调用clickandbackAdmin父类，再调用post方法，否则会报错
         # 一定不要忘记，否则整个ClickAndBackXAdmin保存都会出错
+
+
+
 
 
 xadmin.site.register(XieyiTestCase, XieyiTestCaseXadmin) #在xadmin中注册XieyiTestCase
