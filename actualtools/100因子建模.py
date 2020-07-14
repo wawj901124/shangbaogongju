@@ -9,10 +9,12 @@ yuqi = ""
 chushizhi = 3
 yinzi_list = []
 for i in f:
-    lie_list = i.split("|")
-    ziduan = lie_list[2].strip()
-    if ziduan not in yinzi_list:
-        yinzi_list.append(ziduan)
+    lie_list = i.split("=")
+    # print(lie_list[0])
+    print("""'%s',""" %str(lie_list[0]))
+    # ziduan = lie_list[2].strip()
+    # if ziduan not in yinzi_list:
+    #     yinzi_list.append(ziduan)
     # ziduanzhi = chushizhi
 
     # yuqi = """<factor factorCode="%s" findMode="OFFSET" offset="%s" mark="" len="4" decodeType="decode2" operator="*" operand="1"/>"""%(str(ziduan),str(ziduanzhi))
@@ -21,21 +23,21 @@ for i in f:
     # chushizhi=chushizhi+4
 
     # expect_list.append(ziduan)
-print(len(yinzi_list))
-for one in yinzi_list:
-    # print(one)
-    ziduan=one
-    ziduanzhi = chushizhi
-    yuqi = """<factor factorCode="%s" findMode="OFFSET" offset="%s" mark="" len="4" decodeType="decode2" operator="*" operand="1"/>"""%(str(ziduan),str(ziduanzhi))
-    print(yuqi)
-    chushizhi = chushizhi + 4
-
-chu_str = "01 03 E4"
-for one in yinzi_list:
-    one_str = " 41 A4 00 00"
-    chu_str = chu_str+one_str
-
-print(chu_str)
+# print(len(yinzi_list))
+# for one in yinzi_list:
+#     # print(one)
+#     ziduan=one
+#     ziduanzhi = chushizhi
+#     yuqi = """<factor factorCode="%s" findMode="OFFSET" offset="%s" mark="" len="4" decodeType="decode2" operator="*" operand="1"/>"""%(str(ziduan),str(ziduanzhi))
+#     print(yuqi)
+#     chushizhi = chushizhi + 4
+#
+# chu_str = "01 03 E4"
+# for one in yinzi_list:
+#     one_str = " 41 A4 00 00"
+#     chu_str = chu_str+one_str
+#
+# print(chu_str)
 
 
 
