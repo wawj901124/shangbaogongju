@@ -21,6 +21,7 @@ class TcpServerReceive(object):
         self.tcp_server_client = self.tcp_server_start()
         self.tcp_receive_delay_min = tcp_receive_delay_min  #tcp服务接收的数据为当前时间后延的时间（以分钟为单位）
 
+
     def start_sock(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         return sock
@@ -116,6 +117,14 @@ class TcpServerReceive(object):
         print(c_num)
         return c_num
 
+    #发送数据
+    def tcp_server_send(self,senddata):
+        #发送数据
+        senddata_str = str(senddata)
+        self.tcp_server_client.sendall(senddata_str)   #发送数据
+        print("发送数据【%s】"% senddata_str)
+
+
     #接受数据
     def tcp_server_receive(self):
         #接受前，先删除之前存在的文件
@@ -133,7 +142,7 @@ class TcpServerReceive(object):
             print("\r\n")
             msg = self.tcp_server_client.recv(16384)
             # print(msg)
-            msg_de = msg.decode('utf-8')
+            msg_de = msg.decode('utf-8')  #传过来的字节流需要用decode()解码
             print("recv len is : [%d]" % len(msg_de))
             print("###############################")
             print(msg_de)

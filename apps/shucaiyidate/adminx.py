@@ -4,7 +4,7 @@ import xadmin
 from .models import XieyiConfigDate,User,FtpUploadFile,\
     CloseXieYiCommand,RestartXieYiCommand,SenderHexData
 from .modelsorder import XieyiConfigDateOrder,User,XieyiTestCase,FtpUploadFileOrder,\
-    CloseXieYiCommandOrder,RestartXieYiCommandOrder,SenderHexDataOrder
+    CloseXieYiCommandOrder,RestartXieYiCommandOrder,SenderHexDataOrder,RecriminatDataOrder
 
 from .modelsdev import TagContent,TagAttrib
 from .modelsactiondev import ActionDevTag
@@ -60,6 +60,13 @@ class XieyiTestCaseXadmin(object):
         exclude = ["write_user","add_time","update_time"]
         extra = 1
         style = 'tab'    #以标签形式展示
+
+    # #设置内联
+    # class RecriminatDataOrderInline(object):
+    #     model = RecriminatDataOrder
+    #     exclude = ["write_user","add_time","update_time"]
+    #     extra = 1
+    #     style = 'tab'    #以标签形式展示
 
 
     inlines = [SenderHexDataOrderInline,]
