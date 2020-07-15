@@ -118,6 +118,34 @@ class XieyiConfigDateOrder(models.Model):
 
     go_to.short_description = u"复制新加"   #为go_to函数名个名字
 
+#反控指令配置
+class XieyiRecriminatConfig(models.Model):
+    test_project = models.CharField(max_length=100, default="", verbose_name=u"配置名称")
+    tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", null=True, blank=True,verbose_name=u"数据上报平台的IP地址")
+    tcp_server_port = models.CharField(max_length=100, default="63503", null=True, blank=True,verbose_name=u"数据上报平台的端口号")
+    tcp_receive_delay_min = models.CharField(max_length=100, default="10", null=True, blank=True,verbose_name=u"tcp服务接收的数据为当前时间后延的时间（以分钟为单位）")
+
+    recriminat_send_date = models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"反控发送指令")
+    recriminat_receive_date = models.CharField(max_length=2000, default="", null=True, blank=True, verbose_name=u"反控响应指令")
+
+    write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"协议测试之反控配置"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.test_project
+
+    def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
+        from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        return mark_safe("<a href='{}/shucaiyidate/xieyiconfigdate/{}/'>复制新加</a>".format(DJANGO_SERVER_YUMING,self.id))
+
+    go_to.short_description = u"复制新加"   #为go_to函数名个名字
 
 
 class XieyiTestCase(models.Model):
@@ -132,7 +160,8 @@ class XieyiTestCase(models.Model):
     is_run_case = models.BooleanField(default=True,verbose_name=u"是否运行")
 
     depend_config = models.ForeignKey(XieyiConfigDateOrder, null=True, blank=True, verbose_name=u"依赖的测试配置", on_delete=models.PROTECT)
-
+    recriminat_config = models.ForeignKey(XieyiRecriminatConfig, null=True, blank=True, verbose_name=u"依赖的反控配置",
+                                      on_delete=models.PROTECT)
 
     case_counts = models.IntegerField(default="1",verbose_name="循环次数",help_text=u"循环次数，请填写数字，"
                                                                    u"例如：1、2、3")
