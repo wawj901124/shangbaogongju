@@ -106,8 +106,9 @@ class WebOldConfig(object):
         exist_code_list = []
         not_exist_code_list = []
         for yinzi_code in self.select_jian_kong_yin_zi_list:
+            yinzi_code = yinzi_code.strip()  #去掉前后空格
             for value in allyinzi_dict.values():
-                if yinzi_code.lower() in value[0].lower():  #如果监控因子在列表中,则加入到列表因子中
+                if yinzi_code == value[0]:  #如果查找的等于监控因子的因子，则保存监控因子到存在的因子列表中
                     exist_code_list.append(yinzi_code)
         print("预期监控因子：")
         print(self.select_jian_kong_yin_zi_list)
@@ -266,8 +267,15 @@ class WebOldConfig(object):
 
 
 if __name__ == '__main__':
-    select_xie_yi = "1985_N"
-    select_jian_kong_yin_zi_list = ['a05002', 'a24087', 'a24088', 'a01016', 'a01011', 'a01012', 'a01013', 'a01014', 'a00000', 'a19001', 'a24088z']
+    select_xie_yi = "2025_E"
+    select_jian_kong_yin_zi_list = [ "a21026",
+ "a21003",
+ "a34013",
+ "a19001",
+ "a01012",
+ "a01013",
+ "a01011",
+ "a01014"]
     # select_jian_kong_yin_zi_list = ['a24087', 'a24088', 'a01016', 'a01011', 'a01012', 'a01013', 'a01014', 'a00000', 'a19001', 'a24088z']
     wc = WebOldConfig(select_xie_yi,select_jian_kong_yin_zi_list)
     wc.run()
