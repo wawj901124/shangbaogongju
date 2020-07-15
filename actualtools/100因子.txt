@@ -1,8 +1,8 @@
-national_standard = models.CharField(max_length=100, default="标准HJ212-2017", verbose_name=u"国标标准")
-table_name =  models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"表名")
-yinzi_code = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"编码")
-yinzi_name = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"中文名称")
-yinzi_original_code = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"原编码")
-yinzi_company_concentration = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"缺省计量单位（浓度）")
-yinzi_company_emissions = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"缺省计量单位（排放量）")
-yinzi_data_type_concentration = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"缺省数据类型（浓度")
+<factor code = "a21026"   adMax = "65535"  adMin = "0"  rangeMax = "100"  rangeMin = "0"/>
+<factor code = "a21003"   adMax = "65535"  adMin = "0"  rangeMax = "200"  rangeMin = "0"/>
+<factor code = "a34013"   adMax = "65535"  adMin = "0"  rangeMax = "40"  rangeMin = "0"/>
+<factor code = "a19001"   adMax = "65535"  adMin = "0"  rangeMax = "25"  rangeMin = "0"/>
+<factor code = "a01012"   adMax = "65535"  adMin = "0"  rangeMax = "400"  rangeMin = "0"/>
+<factor code = "a01013"   adMax = "65535"  adMin = "0"  rangeMax = "200"  rangeMin = "-200"/>
+<factor code = "a01011"   adMax = "65535"  adMin = "0"  rangeMax = "40"  rangeMin = "0"/>
+<factor code = "a01014"   adMax = "65535"  adMin = "0"  rangeMax = "100"  rangeMin = "0"/>

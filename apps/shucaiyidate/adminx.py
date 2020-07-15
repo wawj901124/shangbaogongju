@@ -1348,17 +1348,20 @@ class YinZiCodeXadmin(object):
                     'yinzi_original_code',
                     'yinzi_company_concentration',
                     'yinzi_company_emissions',
-                    'yinzi_data_type_concentration',]  # 定义显示的字段
+                    'yinzi_data_type_concentration',
+                    'yinzi_des']  # 定义显示的字段
     list_filter = [ 'national_standard',
                     'table_name',
                     'yinzi_code',
                     'yinzi_name',
-                    'yinzi_original_code',]  # 定义筛选的字段
+                    'yinzi_original_code',
+                    'yinzi_des',]  # 定义筛选的字段
     search_fields = ['national_standard',
                     'table_name',
                     'yinzi_code',
                     'yinzi_name',
-                    'yinzi_original_code', ]   # 定义搜索字段
+                    'yinzi_original_code',
+                     'yinzi_des',]   # 定义搜索字段
     model_icon = "fa fa-file-text"  # 定义图标显示
     ordering = ["-add_time"]  # 添加默认排序规则显示排序，根据添加时间倒序排序
     readonly_fields = ["write_user", "add_time",
@@ -1371,9 +1374,9 @@ class YinZiCodeXadmin(object):
     refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
     list_per_page = 50  # 每页设置50条数据，默认每页展示100条数据
     # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
-    list_display_links = ["yinzi_code", ]  # 设置点击链接进入编辑页面的字段
+    list_display_links = ["yinzi_name", ]  # 设置点击链接进入编辑页面的字段
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
-    show_detail_fields = ["yinzi_code", ]  # 显示数据详情
+    show_detail_fields = ["yinzi_name", ]  # 显示数据详情
 
     list_export = ('xls',)  # 控制列表页导出数据的可选格式
     show_bookmarks = True  # 控制是否显示书签功能

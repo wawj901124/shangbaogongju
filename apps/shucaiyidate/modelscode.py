@@ -15,7 +15,9 @@ class YinZiCode(models.Model):
     yinzi_original_code = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"原编码")
     yinzi_company_concentration = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"缺省计量单位（浓度）")
     yinzi_company_emissions = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"缺省计量单位（排放量）")
-    yinzi_data_type_concentration = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"缺省数据类型（浓度")
+    yinzi_data_type_concentration = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"缺省数据类型（浓度）")
+    yinzi_des = models.CharField(max_length=100, default="", null=True, blank=True,
+                                                     verbose_name=u"描述")
 
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)

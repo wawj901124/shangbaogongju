@@ -9,9 +9,13 @@ yuqi = ""
 chushizhi = 3
 yinzi_list = []
 for i in f:
-    lie_list = i.split("=")
-    # print(lie_list[0])
-    print("""'%s',""" %str(lie_list[0]))
+    lie_list = i.split("   ")
+    # print(lie_list)
+    one = lie_list[0]
+    one_list = one.split("=")
+    print(one_list[1])
+    # # print(lie_list[0])
+    # print("""'%s',""" %str(lie_list[0]))
     # ziduan = lie_list[2].strip()
     # if ziduan not in yinzi_list:
     #     yinzi_list.append(ziduan)
