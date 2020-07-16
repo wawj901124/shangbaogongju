@@ -105,7 +105,7 @@ class  ActiveBrowser(object):
 
         chrome_options = webdriver.ChromeOptions()   #为驱动加入无界面配置
 
-        # chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
+        chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
         chrome_options.add_argument('--no-sandbox')  #“–no - sandbox”参数是让Chrome在root权限下跑
         chrome_options.add_argument("--kiosk") #全屏启动
         chrome_options.add_argument("--start-maximized")  #全屏启动
@@ -519,6 +519,48 @@ class  ActiveBrowser(object):
             pass
 
 
+    #判断元素是否存在
+    # 存在则返回True，不存在则返回False
+    def is_exist_ele(self, findstyle, findstylevalue):
+        try:
+            if str(findstyle) == "class_name":
+                ele = self.driver.find_element_by_class_name(findstylevalue)
+                self.outPutMyLog("找到class_name为【%s】的元素" % findstylevalue)
+            elif str(findstyle) == "css_selector":
+                ele = self.driver.find_element_by_css_selector(findstylevalue)
+                self.outPutMyLog("找到css_selector为【%s】的元素" % findstylevalue)
+            elif str(findstyle) == "id":
+                ele = self.driver.find_element_by_id(findstylevalue)
+                self.outPutMyLog("找到id为【%s】的元素" % findstylevalue)
+            elif str(findstyle) == "link_text":
+                ele = self.driver.find_element_by_link_text(findstylevalue)
+                self.outPutMyLog("找到link_text为【%s】的元素" % findstylevalue)
+            elif str(findstyle) == "name":
+                ele = self.driver.find_element_by_name(findstylevalue)
+                self.outPutMyLog("找到name为【%s】的元素" % findstylevalue)
+            elif str(findstyle) == "partial_link_text":
+                ele = self.driver.find_element_by_partial_link_text(findstylevalue)
+                self.outPutMyLog("找到link_text为【%s】的元素" % findstylevalue)
+            elif str(findstyle) == "tag_name":
+                ele = self.driver.find_element_by_tag_name(findstylevalue)
+                self.outPutMyLog("找到tag_name为【%s】的元素" % findstylevalue)
+            elif str(findstyle) == "xpath":
+                ele = self.driver.find_element_by_xpath(findstylevalue)
+                self.outPutMyLog("找到xpath为【%s】的元素" % findstylevalue)
+            else:
+                self.outPutErrorMyLog("元素的查找方式不再八类（id、name、class_name、tag_name、"
+                                      "link_text、partial_link_text、css_selector、xpath）之中，"
+                                      "请输入正确的查找方式.")
+            self.driver.execute_script("arguments[0].scrollIntoView();", ele)  # 拖动到可见的元素去，影响截取特定区域的截图，不影响整个页面截图
+            self.driver.execute_script("arguments[0].setAttribute('style',arguments[1]);", ele,
+                                       "background:green;border:2px solid red")  # 高亮显示操作的元素
+            self.outPutMyLog("元素存在")
+            return True
+        except:
+            self.outPutErrorMyLog("元素不存在")
+            return False
+
+
 
 
 
@@ -853,6 +895,12 @@ class  ActiveBrowser(object):
         ele = self.findElementByXpath(path)
         eletext = ele.get_attribute(valuename)
         return eletext
+
+    #通过xpath查找元素，然后返回元素的html信息
+    def findElementByXpathAndReturnHTML(self,path):
+        ele = self.findElementByXpath(path)
+        elehtml = ele.get_attribute("innerHTML")
+        return elehtml
 
 
 
