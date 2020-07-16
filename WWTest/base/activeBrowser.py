@@ -899,7 +899,7 @@ class  ActiveBrowser(object):
     #通过xpath查找元素，然后返回元素的html信息
     def findElementByXpathAndReturnHTML(self,path):
         ele = self.findElementByXpath(path)
-        elehtml = ele.get_attribute("innerHTML")
+        elehtml = ele.get_attribute("innerHTML")  #获取标签的html内容
         return elehtml
 
 
