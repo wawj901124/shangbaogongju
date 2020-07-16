@@ -91,11 +91,12 @@ class XieyiConfigDateOrder(models.Model):
     # is_tcp_server_receive = models.BooleanField(default=False,verbose_name=u"是否接收平台报文")
     is_assert_tcp_server_receive_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在接收的报文中")
 
+    is_recriminat_recive_and_send = models.BooleanField(default=False, verbose_name=u"是否进行反控数据接收和发送")
     tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", null=True, blank=True,verbose_name=u"数据上报平台的IP地址")
     tcp_server_port = models.CharField(max_length=100, default="63503", null=True, blank=True,verbose_name=u"数据上报平台的端口号")
     tcp_receive_delay_min = models.CharField(max_length=100, default="10", null=True, blank=True,verbose_name=u"tcp服务接收的数据为当前时间后延的时间（以分钟为单位）")
 
-    # is_recriminat_recive_and_send = models.BooleanField(default=False, verbose_name=u"是否进行反控数据接收和发送")
+
 
     # case_counts = models.IntegerField(default="1",verbose_name="循环次数",help_text=u"循环次数，请填写数字，"
     #                                                                u"例如：1、2、3")
@@ -160,8 +161,8 @@ class XieyiTestCase(models.Model):
     is_run_case = models.BooleanField(default=True,verbose_name=u"是否运行")
 
     depend_config = models.ForeignKey(XieyiConfigDateOrder, null=True, blank=True, verbose_name=u"依赖的测试配置", on_delete=models.PROTECT)
-    recriminat_config = models.ForeignKey(XieyiRecriminatConfig, null=True, blank=True, verbose_name=u"依赖的反控配置",
-                                      on_delete=models.PROTECT)
+    # recriminat_config = models.ForeignKey(XieyiRecriminatConfig, null=True, blank=True, verbose_name=u"依赖的反控配置",
+    #                                   on_delete=models.PROTECT)
 
     case_counts = models.IntegerField(default="1",verbose_name="循环次数",help_text=u"循环次数，请填写数字，"
                                                                    u"例如：1、2、3")
@@ -276,20 +277,18 @@ class RecriminatDataOrder(models.Model):
     xieyitestcase = models.ForeignKey(XieyiTestCase,default="", null=True, blank=True,
                                         verbose_name=u"依赖的协议测试用例",on_delete=models.PROTECT)
     # sender_hex_data = models.CharField(max_length=1000, default="",null=True, blank=True, verbose_name=u"发送数据命令")
-    is_send_hex = models.BooleanField(default=True,verbose_name=u"发送的数据是否为16进制",help_text="选中则表示发送的数据为16进制，否则表示发送的数据为ASCII字符")
-    send_wait_time = models.CharField(max_length=1000, default="0", verbose_name=u"发送数据前等待时间（单位秒）")
-    com_send_date =  models.CharField(max_length=2000, default="01 03 02 00 EA 39 CB", verbose_name=u"回复指令中的全部内容",
-                                    help_text=u"回复指令中的全部内容，如回复的全部数据为：01 03 02 00 EA 39 CB，则此处填写01 03 02 00 EA 39 CB；")
-    is_need_expect = models.BooleanField(default=False,verbose_name=u"发送数据前是否需要先接收到指令")
-    is_need_after_expect = models.BooleanField(default=False, verbose_name=u"发送数据后是否需要接收到指令")
-    is_just_one =  models.BooleanField(default=True, verbose_name=u"是否只发送一次数据")
-    is_receive_hex = models.BooleanField(default=True, verbose_name=u"接收的数据是否为16进制",
-                                      help_text="选中则表示接收的数据为16进制，否则表示接收的数据为ASCII字符")
-    com_expect_date = models.CharField(max_length=2000, default="01 03 12 2D 00 01 11 7B",null=True, blank=True, verbose_name=u"预期接收到的指令的内容",
-                                    help_text=u"预期接收到的指令的内容，如预期接收到的指令的内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
-    is_assert_expect = models.BooleanField(default=True,verbose_name=u"是否断言预期结果")
-    xieyi_jiexi_expect_result = models.CharField(max_length=2000, default="0.234",null=True, blank=True, verbose_name=u"协议解析预期结果",
-                                    help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234；如需多个预期值，则多个预期值之间以半角逗号隔开，例如：0.234,0.506")
+    # is_send_hex = models.BooleanField(default=True,verbose_name=u"发送的数据是否为16进制",help_text="选中则表示发送的数据为16进制，否则表示发送的数据为ASCII字符")
+    send_wait_time = models.CharField(max_length=1000, default="0", verbose_name=u"发送指令前等待时间（单位秒）")
+    com_send_date =  models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"反控指令内容")
+    # is_need_expect = models.BooleanField(default=False,verbose_name=u"发送数据前是否需要先接收到指令")
+    # is_need_after_expect = models.BooleanField(default=False, verbose_name=u"发送数据后是否需要接收到指令")
+    # is_just_one =  models.BooleanField(default=True, verbose_name=u"是否只发送一次数据")
+    # is_receive_hex = models.BooleanField(default=True, verbose_name=u"接收的数据是否为16进制",
+    #                                   help_text="选中则表示接收的数据为16进制，否则表示接收的数据为ASCII字符")
+    com_expect_date = models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"反控响应内容")
+    # is_assert_expect = models.BooleanField(default=True,verbose_name=u"是否断言预期结果")
+    # xieyi_jiexi_expect_result = models.CharField(max_length=2000, default="0.234",null=True, blank=True, verbose_name=u"协议解析预期结果",
+    #                                 help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234；如需多个预期值，则多个预期值之间以半角逗号隔开，例如：0.234,0.506")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
@@ -302,4 +301,4 @@ class RecriminatDataOrder(models.Model):
         verbose_name_plural=verbose_name
 
     def __str__(self):
-        return self.xieyi_jiexi_expect_result
+        return self.com_send_date

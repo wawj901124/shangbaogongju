@@ -2,6 +2,7 @@ import socket
 import sys
 import struct
 import datetime
+import time
 
 from WWQRSTest.util.autoModbus.depend.handleTxt import HandleTxt
 
@@ -120,9 +121,26 @@ class TcpServerReceive(object):
     #发送数据
     def tcp_server_send(self,senddata):
         #发送数据
-        senddata_str = str(senddata)
-        self.tcp_server_client.sendall(senddata_str)   #发送数据
-        print("发送数据【%s】"% senddata_str)
+        senddata_str = str(senddata).encode("gbk").decode("unicode_escape")  #将字符串先编码后解码，解决单斜杠，变为双斜杠问题
+        senddata_bytes = bytes(senddata_str,'utf-8')   #  字符串转为字节
+        print("字节类型：")
+        print(type(senddata_bytes))
+        self.tcp_server_client.sendall(senddata_bytes)   #发送数据
+        print("发送数据字节内容：")
+        print(senddata_bytes)
+
+    #发送数据,数据为列表数据
+    def tcp_server_send_data_list(self,senddata_list):
+        #发送数据
+        for senddata_one in senddata_list:
+            delay_time = int(senddata_one[0])
+            senddata = senddata_one[1]
+            print("即将等待%s秒"%str(delay_time))
+            time.sleep(delay_time)
+            print("等待%s秒完成" % str(delay_time))
+            self.tcp_server_send(senddata=senddata)
+
+
 
 
     #接受数据
@@ -141,6 +159,7 @@ class TcpServerReceive(object):
         while True:
             print("\r\n")
             msg = self.tcp_server_client.recv(16384)
+            # print("接收的字节内容：")
             # print(msg)
             msg_de = msg.decode('utf-8')  #传过来的字节流需要用decode()解码
             print("recv len is : [%d]" % len(msg_de))

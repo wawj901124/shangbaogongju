@@ -64,15 +64,15 @@ class XieyiTestCaseXadmin(object):
         extra = 1
         style = 'tab'    #以标签形式展示
 
-    # #设置内联
-    # class RecriminatDataOrderInline(object):
-    #     model = RecriminatDataOrder
-    #     exclude = ["write_user","add_time","update_time"]
-    #     extra = 1
-    #     style = 'tab'    #以标签形式展示
+    #设置内联
+    class RecriminatDataOrderInline(object):
+        model = RecriminatDataOrder
+        exclude = ["write_user","add_time","update_time"]
+        extra = 1
+        style = 'tab'    #以标签形式展示
 
 
-    inlines = [SenderHexDataOrderInline,]
+    inlines = [SenderHexDataOrderInline,RecriminatDataOrderInline]
 
 
     def save_models(self):  # 重载save_models的方法，可以在做了某个动作后，动态重新加载
@@ -1448,7 +1448,7 @@ class YinZiCodeXadmin(object):
 
 xadmin.site.register(XieyiTestCase, XieyiTestCaseXadmin) #在xadmin中注册XieyiTestCase
 xadmin.site.register(XieyiConfigDateOrder, XieyiConfigDateOrderXadmin) #在xadmin中注册XieyiConfigDate
-xadmin.site.register(XieyiRecriminatConfig,XieyiRecriminatConfigXadmin)   #在xadmin中注册XieyiRecriminatConfig
+# xadmin.site.register(XieyiRecriminatConfig,XieyiRecriminatConfigXadmin)   #在xadmin中注册XieyiRecriminatConfig
 xadmin.site.register(SenderHexDataOrder, SenderHexDataOrderXadmin) #在xadmin中注册SenderHexDataOrder
 # xadmin.site.register(XieyiConfigDate, XieyiConfigDateXadmin) #在xadmin中注册XieyiConfigDate  #此处注释掉原先一体化的协议测试用例
 # xadmin.site.register(TagContent, TagContentXadmin) #在xadmin中注册TagContent

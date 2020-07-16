@@ -1,4 +1,5 @@
 import unittest
+import datetime
 # ----------------------------------------------------------------------
 import os, django
 
@@ -63,6 +64,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 com_bytesize = xieyiconfigdateorder_one.com_bytesize
                 com_parity = xieyiconfigdateorder_one.com_parity
                 com_stopbits = xieyiconfigdateorder_one.com_stopbits
+                is_recriminat_recive_and_send = xieyiconfigdateorder_one.is_recriminat_recive_and_send
                 tcp_server_ip = xieyiconfigdateorder_one.tcp_server_ip
                 tcp_server_port = xieyiconfigdateorder_one.tcp_server_port
                 tcp_receive_delay_min = xieyiconfigdateorder_one.tcp_receive_delay_min
@@ -275,6 +277,36 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
             am.end_work()   #善后工作
 
+            # 是否发送和接收反控报文
+            if is_recriminat_recive_and_send:  #如果进行反控
+                from WWQRSTest.util.autoModbus.depend.tcpServerReceive import TcpServerReceive
+                now_time_str = str(datetime.datetime.now().strftime('%Y%m%d%H%M%S%f'))  # 格式化到毫秒
+                file_name = "%s_tcp_service_receive.txt" % now_time_str
+                tsr = TcpServerReceive(ip=tcp_server_ip, port=int(tcp_server_port), file_name=file_name,
+                                       tcp_receive_delay_min=int(tcp_receive_delay_min))
+                #反控数据接收和发送
+                from depend.shucaiyi.modelorderdepend.RecriminatDataOrderDependClass import recriminatdataorderdepend
+                recriminat_data_list = recriminatdataorderdepend.makeRecriminatDataOrderList(depend_id=case_id)
+
+                # tsr.tcp_server_send(senddata=recriminat_send_date)  # 发送数据
+                tsr.tcp_server_send_data_list(senddata_list=recriminat_data_list)
+                tsr.tcp_server_receive()  # 接受数据
+                tsr.tcp_server_close()  # 关闭tcp服务
+
+                # 断言反控响应指令在报文中
+                # 读取文件内容
+                with open(file_name, "r", encoding='utf-8') as f:
+                    result = f.read()
+                    print("获取的内容：")
+                    print(result)
+                # 断言响应报文在接受的文件中
+                for recriminat_data_one in  recriminat_data_list:
+                    recriminat_send_date = recriminat_data_one[1]
+                    recriminat_receive_date = recriminat_data_one[2]
+                    self.assertIn(recriminat_receive_date, result, "反控响应内容不在报文中！！！")
+                    print("反控发送的指令内容：%s" % str(recriminat_send_date))
+                    print("反控响应的内容：%s" % str(recriminat_receive_date))
+
 
             #是否在协议文件中找到相应的解析内容
             if is_assert_file_success:
@@ -349,21 +381,24 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
                 self.assertTrue(is_in_tcp,"平台上报数据断言失败")
 
+            if not is_recriminat_recive_and_send:  # 如果不是反控，则打印串口收发数据信息
+                #如果三个断言中没有一个断言启动，则测试用例断言失败
+                if is_assert_file_success or is_assert_real_db_success or is_assert_tcp_server_receive_success :
+                    self.assertTrue(True)
+                else:
+                    self.assertTrue(False,u"测试用例为协议测试用例，没有断言，请至少添加一种断言（解析内容断言、实时数据库断言、平台上报内容断言）")
 
-            #如果三个断言中没有一个断言启动，则测试用例断言失败
-            if is_assert_file_success or is_assert_real_db_success or is_assert_tcp_server_receive_success:
-                self.assertTrue(True)
-            else:
-                self.assertTrue(False,u"测试用例没有断言，请至少添加一种断言（解析内容断言、实时数据库断言、平台上报内容断言）")
 
+                for sender_hex_data_order_list_one in sender_hex_data_order_list:
+                    am.outPutMyLog("="*50)
+                    am.outPutMyLog("接收的数据：%s"% str(sender_hex_data_order_list_one[2]))
+                    am.outPutMyLog("发送的数据：%s" % str(sender_hex_data_order_list_one[0]))
+                    if sender_hex_data_order_list_one[9]:  #如果不断言结果，则不写预期结果
+                        am.outPutMyLog("预期的解析结果：%s" %str(sender_hex_data_order_list_one[3]))
+                    am.outPutMyLog("=" * 50)
+            else:  #如果是反控，则打印反控数据信息
+                pass
 
-            for sender_hex_data_order_list_one in sender_hex_data_order_list:
-                am.outPutMyLog("="*50)
-                am.outPutMyLog("接收的数据：%s"% str(sender_hex_data_order_list_one[2]))
-                am.outPutMyLog("发送的数据：%s" % str(sender_hex_data_order_list_one[0]))
-                if sender_hex_data_order_list_one[9]:  #如果不断言结果，则不写预期结果
-                    am.outPutMyLog("预期的解析结果：%s" %str(sender_hex_data_order_list_one[3]))
-                am.outPutMyLog("=" * 50)
 
 
 
