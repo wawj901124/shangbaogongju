@@ -40,4 +40,7 @@ urlpatterns = [
 
     # 配置爬取数据场景url,namespace指明命名空间，用命名空间做限定
     path('shucaiyidate/', include('shucaiyidate.urls', namespace='shucaiyidate')),
+
+    # 配置RDM日志统计,namespace指明命名空间，用命名空间做限定
+    path('rdmrecode/', include('reportdatas.urls', namespace='rdmrecode')),
 ]

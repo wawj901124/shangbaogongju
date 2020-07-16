@@ -1,1 +1,6 @@
-24-Min=0,24-Max=0,24-Avg=0,24-Cou=0,24-Flag=D;12-Min=0,12-Max=0,12-Avg=0,12-Cou=0,12-Flag=D;a01001-Min=0,a01001-Max=0,a01001-Avg=0,a01001-Cou=0,a01001-Flag=D;a01002-Min=0,a01002-Max=0,a01002-Avg=0,a01002-Cou=0,a01002-Flag=D;a01006-Min=0,a01006-Max=0,a01006-Avg=0,a01006-Cou=0,a01006-Flag=D;a01007-Min=0.000000000000000000000000000000000000000000000000000000000000000,a01007-Max=0.000000000000000000000000000000000000000000000000000000000000000,a01007-Avg=0.000000000000000000000000000000000000000000000000000000000000000,a01007-Cou=0.000,a01007-Flag=D;a01008-Min=0.00000,a01008-Max=0.00000,a01008-Avg=0.00000,a01008-Cou=0.0000000,a01008-Flag=D;37-Min=0,37-Max=0,37-Avg=0,37-Cou=0,37-Flag=D;S06-Min=0,S06-Max=0,S06-Avg=0,S06-Cou=0,S06-Flag=D;a05008-Min=0,a05008-Max=0,a05008-Avg=0,a05008-Cou=0,a05008-Flag=D;a05009-Min=0,a05009-Max=0,a05009-Avg=0,a05009-Cou=0,a05009-Flag=D;a05013-Min=0,a05013-Max=0,a05013-Avg=0,a05013-Cou=0,a&&5780
+people_name = models.CharField(max_length=50, default="", verbose_name=u"人员")
+start_date = models.DateField(null=True, blank=True,verbose_name=u"起始日期")
+end_date = models.DateField(null=True, blank=True, verbose_name=u"结束日期")
+all_task_name = models.TextField(default="",  verbose_name=u"所有任务名称")
+all_task_desc = models.TextField(default="",  verbose_name=u"所有任务详情")
+all_task_quse = models.TextField(default="", verbose_name=u"所有问题详情")

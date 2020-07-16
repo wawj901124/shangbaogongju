@@ -98,4 +98,137 @@ class PageLoadTimeReport(models.Model):
         return self.testcasetitle
 
 
+#RDM日志统计查看
+class RdmStatic(models.Model):
+    people_name = models.CharField(max_length=50, default="", verbose_name=u"人员")
+    rdm_year = models.CharField(max_length=50, default="", verbose_name=u"日志年限")
+    rdm_data_range = models.CharField(max_length=50, default="", verbose_name=u"日志周时间范围")
+    is_week =  models.BooleanField(default=False,verbose_name=u"是否周记")
+    day_date = models.CharField(max_length=50, default="", verbose_name=u"日志日期")
+    day_task_name = models.CharField(max_length=1000, default="", verbose_name=u"日志任务名称")
+    day_task_desc = models.TextField(default="", verbose_name=u"日志任务详情")
+    day_task_quse = models.TextField(default="", verbose_name=u"日志问题详情")
+    week_task_deck = models.TextField(default="", verbose_name=u"周任务简述")
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(null=True, blank=True,auto_now=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"RDM日志统计"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.people_name
+
+    def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
+        from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        return mark_safe("<a href='{}/media/{}'>{}</a>".format(DJANGO_SERVER_YUMING,self.reportfile,self.reportfile))
+        # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
+
+    go_to.short_description = u"报告文件"   #为go_to函数名个名字
+
+    def html_show_week_decs(self):
+        from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        return mark_safe(self.week_task_deck)
+
+    html_show_week_decs.short_description = u"周任务简述"   #为go_to函数名个名字
+
+    def html_show_task_decs(self):
+        from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        return mark_safe(self.day_task_desc)
+
+    html_show_task_decs.short_description = u"日任务详情"   #为go_to函数名个名字
+
+    def html_show_quest_decs(self):
+        from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        return mark_safe(self.day_task_quse)
+
+    html_show_quest_decs.short_description = u"日问题详情"   #为go_to函数名个名字
+
+
+class CopyRdmStatic(RdmStatic):
+
+    class Meta:
+        verbose_name = u"RDM日志统计（去掉空内容）"
+        verbose_name_plural = verbose_name
+        proxy = True  #将proxy设置为True,不会再生成一张表，如果不设置为True,就会再生成一张表
+
+                        #将proxy设置为True,不会再生成一张表，同时具有model的属性
+
+    def __str__(self):
+        return self.people_name
+
+
+#RDM日志统计查看
+class RdmAutoStatic(models.Model):
+    people_name = models.CharField(max_length=50, default="", verbose_name=u"人员")
+    start_date = models.DateField(null=True, blank=True,verbose_name=u"起始日期")
+    end_date = models.DateField(null=True, blank=True, verbose_name=u"结束日期")
+    all_task_name = models.TextField(default="", null=True, blank=True, verbose_name=u"所有任务名称")
+    all_task_desc = models.TextField(default="", null=True, blank=True, verbose_name=u"所有任务详情")
+    all_task_quse = models.TextField(default="", null=True, blank=True, verbose_name=u"所有问题详情")
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(null=True, blank=True,auto_now=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"RDM日志自动统计某个时段间的任务"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.people_name
+
+    def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
+        from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        auto_make = "<a href='{}/rdmrecode/rdmautostatic/{}/'>自动生成简报</a>&nbsp;&nbsp;</br>".format(
+            DJANGO_SERVER_YUMING, self.id)
+
+        return mark_safe(auto_make)
+        # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
+
+    go_to.short_description = u"操作"   #为go_to函数名个名字
+
+    def html_show_all_task_name(self):
+        from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        all_html = ""
+        all_task_name_list = eval(self.all_task_name)
+        for all_task_name_one in all_task_name_list:
+            one_html = "<span>%s</span><br/>"% all_task_name_one
+            all_html = all_html+one_html
+
+        return mark_safe(all_html)
+
+    html_show_all_task_name.short_description = u"所有任务名称"   #为go_to函数名个名字
+
+    def html_show_all_task_desc(self):
+        from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        all_html = ""
+        all_task_name_list = eval(self.all_task_desc)
+        for all_task_name_one in all_task_name_list:
+            one_html = "<span>%s</span><br/>"% all_task_name_one
+            all_html = all_html+one_html
+
+        return mark_safe(all_html)
+
+    html_show_all_task_desc.short_description = u"所有任务详情"   #为go_to函数名个名字
+
+    def html_show_all_task_quse(self):
+        from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        all_html = ""
+        all_task_name_list = eval(self.all_task_quse)
+        for all_task_name_one in all_task_name_list:
+            one_html = "<span>%s</span><br/>"% all_task_name_one
+            all_html = all_html+one_html
+
+        return mark_safe(all_html)
+
+    html_show_all_task_quse.short_description = u"所有问题详情"   #为go_to函数名个名字
+
+
+
+
+
+
 

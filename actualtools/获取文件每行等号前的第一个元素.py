@@ -7,13 +7,16 @@ houzui = "qs_one."
 expect_list = []
 yuqi = ""
 for i in f:
-    lie_list = i.split(";")
-    ziduan = lie_list[2].strip()
-    yuqi = yuqi+ziduan + ','
-    print(yuqi)
+    lie_list = i.split("=")
+    ziduan = lie_list[0].strip()
+    expect_list.append(ziduan)
+    # print(ziduan)
+    # yuqi = """new_rdmstatic.%s = %s"""%(ziduan,ziduan)
+    # print(yuqi)
+
     # expect_list.append(ziduan)
 
-# print(expect_list)
+print(expect_list)
 
 
 
