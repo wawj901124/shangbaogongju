@@ -98,6 +98,35 @@ class PageLoadTimeReport(models.Model):
         return self.testcasetitle
 
 
+#RDM日志统计配置
+class RdmConfig(models.Model):
+    rdm_url = models.CharField(max_length=1000, default="http://192.168.8.98:2000/main.do", verbose_name=u"RDM网址")
+    rdm_account = models.CharField(max_length=50, default="", verbose_name=u"RDM登录账号")
+    rdm_password = models.CharField(max_length=50, default="", verbose_name=u"RDM登录密码")
+    recode_year = models.CharField(max_length=50, default="", verbose_name=u"获取RDM日志年限")
+
+    add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
+                                    verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    update_time = models.DateTimeField(null=True, blank=True,auto_now=True,
+                                    verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+    class Meta:
+        verbose_name = u"RDM日志统计配置"
+        verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.rdm_url
+
+    def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
+        from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        auto_make = "<a href='{}/rdmrecode/rdmconfig/{}/'>自动获取RDM日志</a>&nbsp;&nbsp;</br>".format(
+            DJANGO_SERVER_YUMING, self.id)
+
+        return mark_safe(auto_make)
+
+    go_to.short_description = u"操作"   #为go_to函数名个名字
+
+
 #RDM日志统计查看
 class RdmStatic(models.Model):
     people_name = models.CharField(max_length=50, default="", verbose_name=u"人员")
@@ -121,12 +150,7 @@ class RdmStatic(models.Model):
     def __str__(self):
         return self.people_name
 
-    def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
-        from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
-        return mark_safe("<a href='{}/media/{}'>{}</a>".format(DJANGO_SERVER_YUMING,self.reportfile,self.reportfile))
-        # return  "<a href='http://192.168.212.194:9002/testcase/{}/'>跳转</a>".format(self.id)
 
-    go_to.short_description = u"报告文件"   #为go_to函数名个名字
 
     def html_show_week_decs(self):
         from django.utils.safestring import mark_safe  # 调用mark_safe这个函数，django可以显示成一个文本，而不是html代码

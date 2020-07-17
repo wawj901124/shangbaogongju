@@ -6,7 +6,17 @@ django.setup()
 # ----------------------------------------------------------------------
 # 独运行某一个py文件时会出现如下错误：django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.，以上内容可以解决此问题,加载django中的App
 import datetime
+
 from WWTest.base.activeBrowser import ActiveBrowser
+
+from threading import Thread
+
+
+def async_call(fn):
+    def wrapper(*args, **kwargs):
+        Thread(target=fn, args=args, kwargs=kwargs).start()
+
+    return wrapper
 
 
 class GlobalConfig(object):
@@ -16,8 +26,8 @@ class GlobalConfig(object):
     ONLINE_LOGIN_PASSWORD = ""
 
     TEST_WEB_YUMING = "http://192.168.8.98:2000/main.do"
-    TEST_LOGIN_ACCOUNT = "相开征"
-    TEST_LOGIN_PASSWORD = "xkz190903"
+    TEST_LOGIN_ACCOUNT = "xkz"
+    TEST_LOGIN_PASSWORD = "123456"
 
     COOKIE_FILE_NAME = "zhongshiyoulogincookie.json"
 
@@ -45,7 +55,7 @@ class LoginPageFunction(object):
     def isExistLoginButton(self,activebrowser):
         return self.isExist(activebrowser,loginpage.login_button_xpath)
 
-    def login(self,activebroser):
+    def login(self,activebroser,loginurl,loginaccount,loginpassword):
         # activebroser = ActiveBrowser()
         activebroser = activebroser
         if gc.ISONLINE:
@@ -53,9 +63,9 @@ class LoginPageFunction(object):
             loginaccount = gc.ONLINE_LOGIN_ACCOUNT
             loginpassword = gc.ONLINE_LOGIN_PASSWORD
         else:
-            loginurl = gc.TEST_WEB_YUMING
-            loginaccount = gc.TEST_LOGIN_ACCOUNT
-            loginpassword = gc.TEST_LOGIN_PASSWORD
+            loginurl = loginurl
+            loginaccount = loginaccount
+            loginpassword = loginpassword
 
         activebroser.getUrl(loginurl)
         activebroser.findEleAndInputNum(0,"xpath",loginpage.login_account_input_xpath,loginaccount)   #输入账号
@@ -75,40 +85,30 @@ class LoginPageFunction(object):
         activebroser.writerCookieToJson(gc.COOKIE_FILE_NAME)  #写入cookie
 
 
-    def loginwithcookiesauto(self,activebroser):
-        # activebroser = ActiveBrowser()
-        activebroser = activebroser
-        if gc.ISONLINE:
-            loginurl = gc.ONLINE_WEB_YUMING
-            loginaccount = gc.ONLINE_LOGIN_ACCOUNT
-            loginpassword = gc.ONLINE_LOGIN_PASSWORD
-        else:
-            loginurl = gc.TEST_WEB_YUMING
-            loginaccount = gc.TEST_LOGIN_ACCOUNT
-            loginpassword = gc.TEST_LOGIN_PASSWORD
-
-        cookies = activebroser.readCookieFromJsonFile(gc.COOKIE_FILE_NAME)
-
-        activebroser.writerCookiesWithOneUrl(cookies,loginurl)
-        if self.isExistLoginButton(activebroser):   #如果登录按钮存在，则进行登录命令
-            self.login(activebroser)
-
 lpf = LoginPageFunction()
 
 class WebRemoteUphild(object):
 
-    def __init__(self,predate=None):
+    def __init__(self,loginurl,loginaccount,loginpassword,predate=None):
         self.activebrowser = ActiveBrowser()  # 实例化
+        self.loginurl = loginurl
+        self.loginaccount = loginaccount
+        self.loginpassword = loginpassword
         if predate ==None:
             self.predate = str(datetime.datetime.now().strftime('%Y'))
         else:
             self.predate = predate
+
         # self.select_xie_yi = select_xie_yi
         # self.select_jian_kong_yin_zi_list = select_jian_kong_yin_zi_list
 
     def login(self):   #登录
         # lpf.loginwithcookiesauto(self.activebrowser)  #登录
-        lpf.login(self.activebrowser)  #登录
+        lpf.login(activebroser=self.activebrowser,
+                  loginurl=self.loginurl,
+                  loginaccount=self.loginaccount,
+                  loginpassword=self.loginpassword
+            )  #登录
         print("登录完成")
         # self.activebrowser.delayTime(20)  #等待20秒，等待页面刷新出来
 
@@ -174,12 +174,12 @@ class WebRemoteUphild(object):
         self.activebrowser.swithToIframe(frame_ele)  #切换到串口参数配置所在frame
 
     #获取日期，进行日期判断
-    def checkData(self,predata):
+    def checkData(self):
         self.jinRuIframe()
         self.jinRuIframeAboutZhouBaoTwo()
         self.jinRuIframeAboutZhouBaoThree()
 
-        print("需要获取的信息的年限是【%s】年"% predate)
+        print("需要获取的信息的年限是【%s】年"% self.predate)
         #获取日期
         date_xpath = "/html/body[1]/div[1]/ul/li[2]/div[2]/span"
         date_text = self.activebrowser.findEleAndReturnText(0,"xpath",date_xpath)
@@ -187,7 +187,7 @@ class WebRemoteUphild(object):
         print("日期：%s"% date_text)
         date_year = date_text.split("-")[0].strip()
         print("年：%s" % date_year)
-        if str(date_year)== str(predata):
+        if str(date_year)== str(self.predate):
             return True
         else:
             print("需要获取的信息的年限是【%s】年,而实际为【%s】年，停止获取"% (predate,date_year))
@@ -319,7 +319,7 @@ class WebRemoteUphild(object):
 
     def closeWeb(self):
         self.activebrowser.closeBrowse()
-
+    @async_call
     def run(self):
         #登录
         self.login()
@@ -331,14 +331,14 @@ class WebRemoteUphild(object):
         self.clickMyWorkLog()
         #点击上周
         self.clickShangZhou()
-        is_continue = self.checkData(predata=self.predate)
+        is_continue = self.checkData()
         while_num = 1
         while is_continue:  #如果不等于预设年限，则
             # 获取一周即一个周页面的内容信息
             one_week_info_dict = self.getWeekInfo()
             # 点击上周
             self.clickShangZhou()
-            is_continue = self.checkData(predata=self.predate)
+            is_continue = self.checkData()
             print("获取数据【%s】次,获取的数据为：【%s】"% (str(while_num),str(one_week_info_dict)))
 
             people_name = one_week_info_dict['name']
@@ -397,10 +397,18 @@ class WebRemoteUphild(object):
             while_num = while_num+1
 
 
+
+
+
 if __name__ == '__main__':
+    loginurl="http://192.168.8.98:2000/main.do"
+    loginaccount="相开征"
+    loginpassword="xkz190903"
     predate = "2020"
-    wc = WebRemoteUphild()
+
+    wc = WebRemoteUphild(loginurl=loginurl,loginaccount=loginaccount,loginpassword=loginpassword,predate=predate)
     wc.run()
+
 
 
 

@@ -1,7 +1,7 @@
 import xadmin
 
 from .models import  Report,RequestReport,PageLoadTimeReport
-from .models import RdmStatic,CopyRdmStatic,RdmAutoStatic
+from .models import RdmStatic,CopyRdmStatic,RdmAutoStatic,RdmConfig
 
 
 
@@ -125,6 +125,26 @@ class PageLoadTimeReportAdmin(object):
             qs = qs.filter(write_user=self.request.user)  #否则只显示本用户数据
             return qs   #返回qs
 
+class RdmConfigAdmin(object):
+    ziduan = ['rdm_url', 'rdm_account', 'rdm_password', 'recode_year']
+
+    list_display =['rdm_url', 'rdm_account', 'rdm_password', 'recode_year',
+                   'go_to']#定义显示的字段
+    search_fields =  ['rdm_url', 'rdm_account', 'rdm_password', 'recode_year']  #定义搜索字段
+    list_filter = ['rdm_url', 'rdm_account', 'rdm_password', 'recode_year'] #定义筛选的字段
+    model_icon = 'fa fa-bars '  # 定义图标显示
+    ordering = ['-add_time']  # 添加默认排序规则显示排序，根据添加时间倒序排序
+    readonly_fields = ['add_time','update_time',]  # 设置某些字段为只为可读  #设置了readonly_fields，再设置exclude，exclude对该字段无效，
+    # exclude = ['case_step']  # 设置某些字段为不显示，即隐藏  #readonly_fields和exclude设置会有冲突
+    # inlines = [TestCaseInline]  # inlines配和TestCaseInline使用，可以直接在项目页面添加测试用例#只能做一层嵌套，不能进行两层嵌套
+    # list_editable = ziduan   # 可以在列表页对字段进行编辑
+    refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
+    list_per_page = 50   #每页设置50条数据，默认每页展示100条数据
+    # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
+    list_display_links = []   #设置点击链接进入编辑页面的字段
+    # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
+    # show_detail_fields = []   #显示数据详情
+    list_export = ('xls',)  # 控制列表页导出数据的可选格式
 
 class RdmStaticAdmin(object):
     ziduan = ['reportname', 'reportfile']
@@ -213,6 +233,7 @@ class RdmAutoStaticAdmin(object):
 xadmin.site.register(Report, ReportAdmin) #在xadmin中注册Report
 xadmin.site.register(RequestReport, RequestReportAdmin) #在xadmin中注册RequestReport
 xadmin.site.register(PageLoadTimeReport, PageLoadTimeReportAdmin) #在xadmin中注册PageLoadTimeReport
+xadmin.site.register(RdmConfig, RdmConfigAdmin) #在xadmin中注册RdmConfig
 xadmin.site.register(RdmStatic, RdmStaticAdmin) #在xadmin中注册RdmStatic
 xadmin.site.register(CopyRdmStatic, CopyRdmStaticAdmin) #在xadmin中注册CopyRdmStatic
 xadmin.site.register(RdmAutoStatic, RdmAutoStaticAdmin) #在xadmin中注册RdmAutoStatic

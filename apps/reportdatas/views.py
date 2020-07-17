@@ -4,10 +4,10 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 
 from wanwenyc.settings import DJANGO_SERVER_YUMING,MEDIA_ROOT
-from .models import RdmAutoStatic,RdmStatic
+from .models import RdmAutoStatic,RdmStatic,RdmConfig
 # Create your views here.
 
-#根据数据库内容s生成dev文件
+#根据数据库内容自动合并生成任务名称和任务详情及问题详情
 def RdmAutoStaticRequest(request, rdmautostatic_id, trackback=None):
     rdmautostatic = RdmAutoStatic.objects.get(id=int(rdmautostatic_id))  # 获取用例
     people_name = rdmautostatic.people_name
@@ -74,3 +74,31 @@ def RdmAutoStaticRequest(request, rdmautostatic_id, trackback=None):
     rdmautostatic.save()  #保存入库
     print("重定向返回'/reportdatas/rdmautostatic/'")
     return HttpResponseRedirect('/reportdatas/rdmautostatic/')  #重定向到该页面
+
+
+
+#根据数据库内容自动合并生成任务名称和任务详情及问题详情
+def RdmConfigRequest(request, rdmconfig_id, trackback=None):
+    rdmconfig = RdmConfig.objects.get(id=int(rdmconfig_id))  # 获取用例
+    rdm_url = rdmconfig.rdm_url
+    rdm_account = rdmconfig.rdm_account
+    rdm_password = rdmconfig.rdm_password
+    recode_year = rdmconfig.recode_year
+    print("RDM网址：%s" % rdm_url)
+    print("RDM登录账号：%s" % rdm_account)
+    print("RDM登录密码：%s" % rdm_password)
+    print("RDM统计日志年限：%s" % recode_year)
+
+    from .autoStaticRDMTask import WebRemoteUphild
+    loginurl= rdm_url
+    loginaccount= rdm_account
+    loginpassword= rdm_password
+    predate = recode_year
+    print("开始执行异步函数")
+    wc = WebRemoteUphild(loginurl=loginurl,loginaccount=loginaccount,loginpassword=loginpassword,predate=predate)
+    wc.run()
+    print("函数开始运行完成后")
+
+
+    print("重定向返回'/reportdatas/rdmconfig/'")
+    return HttpResponseRedirect('/reportdatas/rdmconfig/')  #重定向到该页面
