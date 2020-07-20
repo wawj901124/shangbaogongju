@@ -185,6 +185,8 @@ class XieyiTestCase(models.Model):
 
     go_to.short_description = u"复制新加"   #为go_to函数名个名字
 
+
+
 class FtpUploadFileOrder(models.Model):
     xieyiconfigdateorder = models.ForeignKey(XieyiConfigDateOrder,default="", null=True, blank=True,
                                         verbose_name=u"依赖的协议测试",on_delete=models.PROTECT)

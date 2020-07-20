@@ -11,7 +11,7 @@ for i in f:
     ziduan = lie_list[0].strip()
     expect_list.append(ziduan)
     # print(ziduan)
-    yuqi = """%s = rdmconfig.%s"""%(ziduan,ziduan)
+    yuqi = """recriminatdataorder_new.%s = recriminatdataorder_old.%s"""%(ziduan,ziduan)
     print(yuqi)
 
     # expect_list.append(ziduan)

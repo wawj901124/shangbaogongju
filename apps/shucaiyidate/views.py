@@ -12,12 +12,12 @@ from .modelsnewdev import NodeConfig,ConfigCollectSendCmd,ConfigCollectFactor,\
     ConfigCollectReceivePors,ConfigCollectReceivePorsSection,ConfigCollectReceivePorsConvertrule,\
     ConfigControlSendCmd,ConfigControlSendParamid,ConfigControlSendPorsSection,ConfigControlSendPorsConvertrule
 
-from .modelsorder import XieyiConfigDateOrder,XieyiTestCase,SenderHexDataOrder
+from .modelsorder import XieyiConfigDateOrder,XieyiTestCase,SenderHexDataOrder,RecriminatDataOrder
 
 
 from .forms import TagContentForm
 from .forms import XieyiConfigDateForm
-
+from .forms import XieyiTestCaseForm
 
 #节点配置View
 class TagContentView(View):
@@ -520,10 +520,15 @@ class XieyiTestCaseView(View):
             })
         elif request.user.is_active:
             xieyitestcase = XieyiTestCase.objects.get(id=int(xieyitestcase_id))  # 获取数据
+            #获取配置所有内容
+            xieyiconfigdateorder_all = XieyiConfigDateOrder.objects.order_by("-id")
+
+
             is_with_relevance = 1
 
             return render(request, "xieyitestcase/xieyiTestCase.html",
                           {"xieyitestcase":  xieyitestcase,
+                           "xieyiconfigdateorder_all":xieyiconfigdateorder_all,
                            "django_server_yuming": DJANGO_SERVER_YUMING,
                            "is_withRelevance": is_with_relevance,
                            })
@@ -532,84 +537,91 @@ class XieyiTestCaseView(View):
                 "django_server_yuming": DJANGO_SERVER_YUMING
             })
 
-    # def post(self, request,xieyiconfigdate_id):
-    #     username = request.user.username
-    #
-    #     xieyiconfigdate_form = XieyiConfigDateForm(request.POST)  # 实例化NewAddAndCheckForm()
-    #     xieyiconfigdate = XieyiConfigDate.objects.get(id=int(xieyiconfigdate_id))  # 获取内容
-    #
-    #     # 处理附带复制内容
-    #     is_with_relevance = request.POST.get('is_withRelevance', '')
-    #     print("is_withRelevance:%s" % is_with_relevance)
-    #     print("is_withRelevance类型:%s" % type(is_with_relevance))
-    #     is_with_relevance =int(is_with_relevance)
-    #     print("is_withRelevance:%s" % is_with_relevance)
-    #     print("is_withRelevance类型:%s" % type(is_with_relevance))
-    #     # 结束处理
-    #
-    #     if xieyiconfigdate_form.is_valid():  # is_valid()判断是否有错
-    #
-    #         xieyiconfigdate_form.save(commit=True)  # 将信息保存到数据库中
-    #
-    #         zj = XieyiConfigDate.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
-    #         user = User.objects.get(username=username)
-    #         zj.write_user_id = user.id
-    #         zj.save()
-    #
-    #         xieyiconfigdateid = zj.id
-    #         xieyiconfigdateadd = XieyiConfigDate.objects.get(id=int(xieyiconfigdateid))  # 获取用例
-    #
-    #         # 如果增加附带
-    #         if is_with_relevance == 1:
-    #             print("处理附带内容")
-    #             #处理FTP上传文件
-    #             ftpuploadfile_old_all = FtpUploadFile.objects.filter(
-    #                 xieyiconfigdate_id=xieyiconfigdate_id).order_by("id")
-    #             ftpuploadfile_old_all_count = ftpuploadfile_old_all.count()
-    #             if ftpuploadfile_old_all_count != 0:
-    #                 for ftpuploadfile_old in ftpuploadfile_old_all:
-    #                     ftpuploadfile_new = FtpUploadFile()
-    #                     ftpuploadfile_new.xieyiconfigdate_id = zj.id
-    #                     ftpuploadfile_new.up_remote_file = ftpuploadfile_old.up_remote_file
-    #                     ftpuploadfile_new.up_local_file = ftpuploadfile_old.up_local_file
-    #                     ftpuploadfile_new.save()
-    #
-    #             # 处理关闭协议命令
-    #             closexieyicommand_old_all = CloseXieYiCommand.objects.filter(
-    #                 xieyiconfigdate_id=xieyiconfigdate_id).order_by("id")
-    #             closexieyicommand_old_all_count = closexieyicommand_old_all.count()
-    #             if closexieyicommand_old_all_count != 0:
-    #                 for closexieyicommand_old in closexieyicommand_old_all:
-    #                     closexieyicommand_new = CloseXieYiCommand()
-    #                     closexieyicommand_new.xieyiconfigdate_id = zj.id
-    #                     closexieyicommand_new.close_command = closexieyicommand_old.close_command
-    #                     closexieyicommand_new.save()
-    #
-    #             # 处理重启协议命令
-    #             restartxieyicommand_old_all =  RestartXieYiCommand.objects.filter(
-    #                 xieyiconfigdate_id=xieyiconfigdate_id).order_by("id")
-    #             restartxieyicommand_old_all_count =  restartxieyicommand_old_all.count()
-    #             if  restartxieyicommand_old_all_count != 0:
-    #                 for  restartxieyicommand_old in  restartxieyicommand_old_all:
-    #                      restartxieyicommand_new =  RestartXieYiCommand()
-    #                      restartxieyicommand_new.xieyiconfigdate_id = zj.id
-    #                      restartxieyicommand_new.restart_command =  restartxieyicommand_old.restart_command
-    #                      restartxieyicommand_new.save()
-    #
-    #
-    #
-    #         return render(request, "xieyiconfigdate/xieyiConfigDate.html", {
-    #             "xieyiconfigdate": xieyiconfigdateadd,
-    #             "sumsg":u"添加数据---【{}】---成功,请继续添加".format(xieyiconfigdateadd.test_case_title),
-    #             "django_server_yuming": DJANGO_SERVER_YUMING,
-    #         })
-    #     else:
-    #         return render(request, 'xieyiconfigdate/xieyiConfigDateForm.html', {
-    #             "xieyiconfigdate": xieyiconfigdate,
-    #             "xieyiconfigdateform": xieyiconfigdate_form ,
-    #             "errmsg":u"添加失败，请重新添加，添加时请检查各个字段是否填写",
-    #             "django_server_yuming": DJANGO_SERVER_YUMING,
-    #         })  # 返回页面，回填信息
+    def post(self, request,xieyitestcase_id):
+        username = request.user.username
+        # 获取配置所有内容
+        xieyiconfigdateorder_all = XieyiConfigDateOrder.objects.order_by("-id")
+        xieyitestcase_form = XieyiTestCaseForm(request.POST)  # 实例化NewAddAndCheckForm()
+        xieyitestcase = XieyiTestCase.objects.get(id=int(xieyitestcase_id))  # 获取内容
+
+
+        # 处理附带复制内容
+        is_with_relevance = request.POST.get('is_withRelevance', '')  #获取is_withRelevance属性的值
+        print("is_withRelevance:%s" % is_with_relevance)
+        print("is_withRelevance类型:%s" % type(is_with_relevance))
+        is_with_relevance =int(is_with_relevance)
+        print("is_withRelevance:%s" % is_with_relevance)
+        print("is_withRelevance类型:%s" % type(is_with_relevance))
+        # 结束处理
+
+        if xieyitestcase_form.is_valid():  # is_valid()判断是否有错
+
+            xieyitestcase_form.save(commit=True)  # 将信息保存到数据库中
+
+            zj = XieyiTestCase.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+            user = User.objects.get(username=username)
+            zj.write_user_id = user.id
+            zj.save()
+
+            xieyitestcaseid = zj.id
+            xieyitestcaseadd = XieyiTestCase.objects.get(id=int(xieyitestcaseid))  # 获取用例
+
+            # 如果增加附带
+            if is_with_relevance == 1:
+                print("处理附带内容")
+                #处理协议测试之测试数据，端口发送和接收数据
+                senderhexdataorder_old_all = SenderHexDataOrder.objects.filter(
+                    xieyitestcase_id=xieyitestcase_id).order_by("id")
+                senderhexdataorder_old_all_count = senderhexdataorder_old_all.count()
+                if senderhexdataorder_old_all_count != 0:
+                    for senderhexdataorder_old in senderhexdataorder_old_all:
+                        senderhexdataorder_new = SenderHexDataOrder()
+                        senderhexdataorder_new.xieyitestcase_id = zj.id
+                        senderhexdataorder_new.is_send_hex = senderhexdataorder_old.is_send_hex
+                        senderhexdataorder_new.send_wait_time = senderhexdataorder_old.send_wait_time
+                        senderhexdataorder_new.com_send_date = senderhexdataorder_old.com_send_date
+                        senderhexdataorder_new.is_need_expect = senderhexdataorder_old.is_need_expect
+                        senderhexdataorder_new.is_need_after_expect = senderhexdataorder_old.is_need_after_expect
+                        senderhexdataorder_new.is_just_one = senderhexdataorder_old.is_just_one
+                        senderhexdataorder_new.is_receive_hex = senderhexdataorder_old.is_receive_hex
+                        senderhexdataorder_new.com_expect_date = senderhexdataorder_old.com_expect_date
+                        senderhexdataorder_new.is_assert_expect = senderhexdataorder_old.is_assert_expect
+                        senderhexdataorder_new.xieyi_jiexi_expect_result = senderhexdataorder_old.xieyi_jiexi_expect_result
+                        senderhexdataorder_new.save()  #保存
+
+
+                # 处理反控数据
+                recriminatdataorder_old_all = RecriminatDataOrder.objects.filter(
+                    xieyitestcase_id=xieyitestcase_id).order_by("id")
+                recriminatdataorder_old_all_count = recriminatdataorder_old_all.count()
+                if recriminatdataorder_old_all_count != 0:
+                    for recriminatdataorder_old in recriminatdataorder_old_all:
+                        recriminatdataorder_new = RecriminatDataOrder()
+                        recriminatdataorder_new.xieyitestcase_id = zj.id
+                        recriminatdataorder_new.send_wait_time = recriminatdataorder_old.send_wait_time
+                        recriminatdataorder_new.com_send_date = recriminatdataorder_old.com_send_date
+                        recriminatdataorder_new.com_expect_date = recriminatdataorder_old.com_expect_date
+                        recriminatdataorder_new.save()
+
+
+
+
+            return render(request, "xieyitestcase/xieyiTestCase.html", {
+                "xieyitestcase": xieyitestcaseadd,
+                "xieyiconfigdateorder_all": xieyiconfigdateorder_all,
+                "sumsg":u"添加数据---【{}】---成功,请继续添加".format(xieyitestcaseadd.test_case_title),
+                "django_server_yuming": DJANGO_SERVER_YUMING,
+                "is_withRelevance": is_with_relevance,
+            })
+        else:
+            return render(request, 'xieyitestcase/xieyiTestCaseForm.html', {
+                "xieyitestcase": xieyitestcase,
+                "xieyiconfigdateorder_all": xieyiconfigdateorder_all,
+                "xieyitestcaseform": xieyitestcase_form ,
+                "errmsg":u"添加失败，请重新添加，添加时请检查各个字段是否填写",
+                "django_server_yuming": DJANGO_SERVER_YUMING,
+                "is_withRelevance": is_with_relevance,
+            })  # 返回页面，回填信息
 
 
 #协议测试用例之配置View

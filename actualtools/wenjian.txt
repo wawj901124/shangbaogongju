@@ -1,4 +1,4 @@
-rdm_url = models.CharField(max_length=1000, default="http://192.168.8.98:2000/main.do", verbose_name=u"RDM网址")
-rdm_account = models.CharField(max_length=50, default="", verbose_name=u"RDM登录账号")
-rdm_password = models.CharField(max_length=50, default="", verbose_name=u"RDM登录密码")
-recode_year = models.CharField(max_length=50, default="", verbose_name=u"获取RDM日志年限")
+xieyitestcase = models.ForeignKey(XieyiTestCase,default="", null=True, blank=True,
+send_wait_time = models.CharField(max_length=1000, default="0", verbose_name=u"发送指令前等待时间（单位秒）")
+com_send_date =  models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"反控指令内容")
+com_expect_date = models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"反控响应内容")

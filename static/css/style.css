@@ -64,7 +64,7 @@
 		}
 
 
-		.smart-green input[type="text"], .smart-green input[type="email"], .smart-green textarea, .smart-green select {
+		.smart-green input[type="text"], .smart-green input[type="email"], .smart-green textarea {
 			/*margin-right: 200px;*/
 			color: #555;
 			height: 30px;
@@ -80,6 +80,11 @@
 			text-align: left;
             width: 400px;
 			table-layout:fixed;  /*设置table表格宽度固定，同时td内容过长也不会被撑开*/
+		}
+
+		.smart-green select{
+			height: 30px;
+			padding: 0 0;
 		}
 
 

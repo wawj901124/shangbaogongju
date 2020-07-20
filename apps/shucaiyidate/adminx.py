@@ -74,6 +74,91 @@ class XieyiTestCaseXadmin(object):
 
     inlines = [SenderHexDataOrderInline,RecriminatDataOrderInline]
 
+    #批量处理命令
+    #批量复制
+    def patch_copy(self,request,querset):  #此处的querset为选中的数据
+        querset = querset.order_by('id')  #按照id顺序排序
+        for qs_one in querset:
+            #先复制本体
+            from .comonxadmin import CommonXadmin
+            cx = CommonXadmin()
+            sql_model_name = XieyiTestCase
+            old_object = qs_one
+            filter_name_list = None
+            #新加数据并返回它的id
+            newadd_id = cx.sql_model_copy_old_and_return_new_id_common(sql_model_name=sql_model_name,
+                                                           old_object=old_object,
+                                                           filter_name_list=filter_name_list)
+            #在复制关联
+            #复制串口接收和发送数据
+            sql_model_name = SenderHexDataOrder
+            neiqianwaijian_name = "xieyitestcase"
+            neiqian_id = qs_one.id
+            neiqian_new_id =  newadd_id
+            filter_name_list = None
+            cx.sql_model_copy_common(sql_model_name=sql_model_name,
+                                     neiqianwaijian_name=neiqianwaijian_name,
+                                     neiqian_id=neiqian_id,
+                                     neiqian_new_id = neiqian_new_id,
+                                     filter_name_list=filter_name_list)
+
+            #复制反控收发数据
+            sql_model_name = RecriminatDataOrder
+            neiqianwaijian_name = "xieyitestcase"
+            neiqian_id = qs_one.id
+            neiqian_new_id =  newadd_id
+            filter_name_list = None
+            cx.sql_model_copy_common(sql_model_name=sql_model_name,
+                                     neiqianwaijian_name=neiqianwaijian_name,
+                                     neiqian_id=neiqian_id,
+                                     neiqian_new_id = neiqian_new_id,
+                                     filter_name_list=filter_name_list)
+
+
+
+    #批量删除
+    def patch_delete(self,request,querset):
+        for qs_one in querset:
+            from .comonxadmin import CommonXadmin
+            cx = CommonXadmin()
+            #先删除关联
+            #删除串口测试收发数据内容
+            sql_model_name=SenderHexDataOrder
+            neiqian_id = qs_one.id
+            neiqianwaijian_name = "xieyitestcase"
+
+            cx.sql_model_delete_common(sql_model_name=sql_model_name,
+                                         neiqianwaijian_name = neiqianwaijian_name,
+                                         neiqian_id=neiqian_id)
+
+            #删除反控收发数据内容
+            sql_model_name = RecriminatDataOrder
+            cx.sql_model_delete_common(sql_model_name=sql_model_name,
+                                         neiqianwaijian_name=neiqianwaijian_name,
+                                         neiqian_id=neiqian_id)
+            #再删除本体
+            qs_one.delete()
+
+
+
+    # #批量设置用户名
+    # def patch_set_user(self,request,querset):
+    #     for qs_one in querset:
+    #         #先设置关联用户名
+    #         old_sjyzs = ShuJuYinZi.objects.filter(shangbaoshuju_id=qs_one.id)
+    #         for old_tagattrib_one in old_sjyzs:
+    #             old_tagattrib_one.w
+    #         #再删除本体
+    #         qs_one.delete()
+
+
+    patch_copy.short_description = "批量复制"
+    patch_delete.short_description = "批量删除"
+
+    #
+    actions=[patch_copy,patch_delete,]
+    # actions = [patch_handle_export, ]
+
 
     def save_models(self):  # 重载save_models的方法，可以在做了某个动作后，动态重新加载
         obj = self.new_obj  # 取得当前用例的实例
