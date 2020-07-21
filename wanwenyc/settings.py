@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'testupdatadb.apps.TestupdatadbConfig',#注册testupdatadb
     'shangbaoshuju.apps.ShangbaoshujuConfig', #注册shangbaoshuju
     'spiderdata.apps.SpiderdataConfig',  # 注册spiderdata
-    'shucaiyidate.apps.ShucaiyidateConfig'  #注册shucaiyidate
+    'shucaiyidate.apps.ShucaiyidateConfig',  #注册shucaiyidate
 ]
 
 MIDDLEWARE = [

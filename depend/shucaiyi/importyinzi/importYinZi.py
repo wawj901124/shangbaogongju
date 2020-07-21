@@ -8,8 +8,8 @@ django.setup()
 
 class AutoImportYinZi(object):
 
-    def autoimportyinzi(self,biaoming,guobiao):
-        f = open("all_yinzi.txt", "r", encoding="utf8")
+    def autoimportyinzi(self,biaoming,guobiao,file_name):
+        f = open(file_name, "r", encoding="utf8")
         data_id_list = []
         data_id_dict = {}
         num_count = 0
@@ -72,11 +72,22 @@ autoimportyinzi = AutoImportYinZi()
 
 if __name__ == '__main__':
     guobiao = "标准HJ212-2017"
-    # biaoming = "表 B.1 水监测因子编码表（引用 HJ 525-2009）"
-    # biaoming = '表 B.2 气监测因子编码表（引用 HJ 524-2009）'
-    # biaoming = '表 B.3 声环境监测因子编码表 '
-    # biaoming = '表 B.5 污水排放过程（工况）监控监测因子编码表  '
-    # biaoming = '表 B.7 烟气排放过程（工况）监控监测因子编码表 '
+    biaoming = "表 B.1 水监测因子编码表（引用 HJ 525-2009）"
+    file_name = "水监测因子编码表.txt"
+    autoimportyinzi.autoimportyinzi(biaoming=biaoming,guobiao=guobiao,file_name=file_name)
+    biaoming = '表 B.2 气监测因子编码表（引用 HJ 524-2009）'
+    file_name = "气监测因子编码表.txt"
+    autoimportyinzi.autoimportyinzi(biaoming=biaoming,guobiao=guobiao,file_name=file_name)
+    biaoming = '表 B.3 声环境监测因子编码表 '
+    file_name = "声环境监测因子编码表.txt"
+    autoimportyinzi.autoimportyinzi(biaoming=biaoming,guobiao=guobiao,file_name=file_name)
+    biaoming = '表 B.5 污水排放过程（工况）监控监测因子编码表  '
+    file_name = "污水排放过程（工况）监控监测因子编码表.txt"
+    autoimportyinzi.autoimportyinzi(biaoming=biaoming,guobiao=guobiao,file_name=file_name)
+    biaoming = '表 B.7 烟气排放过程（工况）监控监测因子编码表 '
+    file_name = "烟气排放过程（工况）监控监测因子编码表.txt"
+    autoimportyinzi.autoimportyinzi(biaoming=biaoming,guobiao=guobiao,file_name=file_name)
     biaoming = '表 B.10 现场端信息编码表 '
-    autoimportyinzi.autoimportyinzi(biaoming=biaoming,guobiao=guobiao)
+    file_name = "现场端信息编码表.txt"
+    autoimportyinzi.autoimportyinzi(biaoming=biaoming,guobiao=guobiao,file_name=file_name)
 
