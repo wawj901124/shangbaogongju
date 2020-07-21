@@ -38,10 +38,13 @@ for tihuan_one_list in tihuan_list:
             wc[i] = wc[i].replace(old,new)
 
 print("替换后的wc:")
-os.remove("new.txt")
-with open("new.txt", "a+") as f:
+new_file_name = "new.txt"
+if os.path.exists(new_file_name):
+    os.remove(new_file_name)
+with open(new_file_name, "w",encoding='utf-8') as f:
     for one in wc:
         f.write(one)
+        print(one)
 
 
 

@@ -25,7 +25,7 @@
             </td>
             <td>
                 <input type="radio"  name="web_type"  value="P0" {% if xieyiconfigdateorder.web_type == 'P0' %}checked="checked"{% endif %}>V5.0
-                <input type="radio"  name="cweb_type" value="P2" {% if xieyiconfigdateorder.web_type == 'P2' %}checked="checked"{% endif %}>V5.1
+                <input type="radio"  name="web_type" value="P2" {% if xieyiconfigdateorder.web_type == 'P2' %}checked="checked"{% endif %}>V5.1
                 <input type="radio"  name="web_type"  value="P1" {% if xieyiconfigdateorder.web_type == 'P1' %}checked="checked"{% endif %}>V6.0
 {#                <input type="radio"  name="web_type"  value="P3" {% if xieyiconfigdateorder.web_type == 'P3' %}checked="checked"{% endif %}>极低级别的用例#}
             </td>
@@ -36,8 +36,8 @@
                 <label>是否通过web端修改协议:</label>
             </td>
             <td>
-                <input type="radio" id="is_web_modify_xieyi" name="is_web_modify_xieyi"  value="true"  {% if xieyiconfigdateorder.is_run_case == 1 %} checked="checked"{% endif %}>是
-                <input type="radio" id="is_web_modify_xieyi" name="is_web_modify_xieyi"  value="false" {% if xieyiconfigdateorder.is_run_case == 0 %} checked="checked"{% endif %}>否
+                <input type="radio" id="is_web_modify_xieyi" name="is_web_modify_xieyi"  value="true"  {% if xieyiconfigdateorder.is_web_modify_xieyi == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_web_modify_xieyi" name="is_web_modify_xieyi"  value="false" {% if xieyiconfigdateorder.is_web_modify_xieyi == 0 %} checked="checked"{% endif %}>否
             </td>
         </tr>
 

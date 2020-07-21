@@ -231,9 +231,9 @@ class RdmAutoStaticAdmin(object):
     list_export = ('xls',)  # 控制列表页导出数据的可选格式
 
 xadmin.site.register(Report, ReportAdmin) #在xadmin中注册Report
-xadmin.site.register(RequestReport, RequestReportAdmin) #在xadmin中注册RequestReport
-xadmin.site.register(PageLoadTimeReport, PageLoadTimeReportAdmin) #在xadmin中注册PageLoadTimeReport
-xadmin.site.register(RdmConfig, RdmConfigAdmin) #在xadmin中注册RdmConfig
-xadmin.site.register(RdmStatic, RdmStaticAdmin) #在xadmin中注册RdmStatic
-xadmin.site.register(CopyRdmStatic, CopyRdmStaticAdmin) #在xadmin中注册CopyRdmStatic
-xadmin.site.register(RdmAutoStatic, RdmAutoStaticAdmin) #在xadmin中注册RdmAutoStatic
+# xadmin.site.register(RequestReport, RequestReportAdmin) #在xadmin中注册RequestReport
+# xadmin.site.register(PageLoadTimeReport, PageLoadTimeReportAdmin) #在xadmin中注册PageLoadTimeReport
+# xadmin.site.register(RdmConfig, RdmConfigAdmin) #在xadmin中注册RdmConfig
+# xadmin.site.register(RdmStatic, RdmStaticAdmin) #在xadmin中注册RdmStatic
+# xadmin.site.register(CopyRdmStatic, CopyRdmStaticAdmin) #在xadmin中注册CopyRdmStatic
+# xadmin.site.register(RdmAutoStatic, RdmAutoStaticAdmin) #在xadmin中注册RdmAutoStatic

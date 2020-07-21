@@ -262,8 +262,8 @@ class PageLoadTimeReportFiveSecondAdmin(object):
 
 
 
-xadmin.site.register(PageLoadTimeReportOneSecond, PageLoadTimeReportOneSecondAdmin) #在xadmin中注册PageLoadTimeReport
-xadmin.site.register(PageLoadTimeReportTwoSecond, PageLoadTimeReportTwoSecondAdmin) #在xadmin中注册PageLoadTimeReport
-xadmin.site.register(PageLoadTimeReportThereSecond, PageLoadTimeReportThereSecondAdmin) #在xadmin中注册PageLoadTimeReport
-xadmin.site.register(PageLoadTimeReportFourSecond, PageLoadTimeReportFourSecondAdmin) #在xadmin中注册PageLoadTimeReport
-xadmin.site.register(PageLoadTimeReportFiveSecond, PageLoadTimeReportFiveSecondAdmin) #在xadmin中注册PageLoadTimeReport
+# xadmin.site.register(PageLoadTimeReportOneSecond, PageLoadTimeReportOneSecondAdmin) #在xadmin中注册PageLoadTimeReport
+# xadmin.site.register(PageLoadTimeReportTwoSecond, PageLoadTimeReportTwoSecondAdmin) #在xadmin中注册PageLoadTimeReport
+# xadmin.site.register(PageLoadTimeReportThereSecond, PageLoadTimeReportThereSecondAdmin) #在xadmin中注册PageLoadTimeReport
+# xadmin.site.register(PageLoadTimeReportFourSecond, PageLoadTimeReportFourSecondAdmin) #在xadmin中注册PageLoadTimeReport
+# xadmin.site.register(PageLoadTimeReportFiveSecond, PageLoadTimeReportFiveSecondAdmin) #在xadmin中注册PageLoadTimeReport

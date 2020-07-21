@@ -193,7 +193,7 @@ class UpdateDbDataXadmin(object):
 
 
 
-xadmin.site.register(UpdateDbData,UpdateDbDataXadmin) #在xadmin中注册DeleteAndCheckXadmin
+# xadmin.site.register(UpdateDbData,UpdateDbDataXadmin) #在xadmin中注册DeleteAndCheckXadmin
 
 
 

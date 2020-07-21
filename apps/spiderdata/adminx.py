@@ -142,5 +142,5 @@ class SpiderHMBookAdmin(object):
 
 
 
-xadmin.site.register(SpiderData, SpiderDataAdmin) #在xadmin中注册SpiderDate
-xadmin.site.register(SpiderHMBook, SpiderHMBookAdmin) #在xadmin中注册SpiderHMBook
+# xadmin.site.register(SpiderData, SpiderDataAdmin) #在xadmin中注册SpiderDate
+# xadmin.site.register(SpiderHMBook, SpiderHMBookAdmin) #在xadmin中注册SpiderHMBook

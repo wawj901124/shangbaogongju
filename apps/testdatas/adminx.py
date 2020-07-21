@@ -1063,13 +1063,13 @@ class EditAndCheckXadmin(object):
         return super(EditAndCheckXadmin,self).post(request,*args,**kwargs)  # 必须调用clickandbackAdmin父类，再调用post方法，否则会报错
         # 一定不要忘记，否则整个ClickAndBackXAdmin保存都会出错
 
-xadmin.site.register(LoginAndCheck,LoginAndCheckXadmin) #在xadmin中注册LoginAndCheckXAdmin
+# xadmin.site.register(LoginAndCheck,LoginAndCheckXadmin) #在xadmin中注册LoginAndCheckXAdmin
 
-xadmin.site.register(ClickAndBack, ClickAndBackXAdmin) #在xadmin中注册ClickAndBackXAdmin
-xadmin.site.register(NewAddAndCheck,NewAddAndCheckXadmin)  #在xadmin中注册NewAddAndCheckXadmin
-xadmin.site.register(SearchAndCheck,SearchAndCheckXadmin) #在xadmin中注册SearchAndCheckXadmin
-xadmin.site.register(DeleteAndCheck,DeleteAndCheckXadmin) #在xadmin中注册DeleteAndCheckXadmin
-xadmin.site.register(EditAndCheck,EditAndCheckXadmin) #在xadmin中注册DeleteAndCheckXadmin
+# xadmin.site.register(ClickAndBack, ClickAndBackXAdmin) #在xadmin中注册ClickAndBackXAdmin
+# xadmin.site.register(NewAddAndCheck,NewAddAndCheckXadmin)  #在xadmin中注册NewAddAndCheckXadmin
+# xadmin.site.register(SearchAndCheck,SearchAndCheckXadmin) #在xadmin中注册SearchAndCheckXadmin
+# xadmin.site.register(DeleteAndCheck,DeleteAndCheckXadmin) #在xadmin中注册DeleteAndCheckXadmin
+# xadmin.site.register(EditAndCheck,EditAndCheckXadmin) #在xadmin中注册DeleteAndCheckXadmin
 
 
 
