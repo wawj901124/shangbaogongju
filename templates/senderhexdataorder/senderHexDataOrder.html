@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}
+    senderhexdataorder
+{% endblock %}
+{% block action_url %}
+    {% url 'shucaiyidate:sender_hex_date_order_id' senderhexdataorder.id %}
+{% endblock %}
+{% block box_h1_title %}
+    添加数据
+{% endblock %}
+{% block table_data %}
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <label>依赖的测试配置:</label>
+            </td>
+            <td>
+                <select id="xieyitestcase" name="xieyitestcase">
+                    <option value=""
+                            {% if senderhexdataorder.xieyitestcase_id == None %}
+                                selected="selected"
+                            {% endif %}>
+                            ---请选择
+                    </option>
+                    {%for cab in xieyitestcase_all%}
+                        <option
+                                value={{cab.id}}
+                                        {% if cab.id == senderhexdataorder.xieyitestcase_id %}
+                                            selected="selected"
+                                        {% endif %}>
+                            [{{ cab.test_project }}]-[{{ cab.test_module }}]-[{{ cab.test_page }}]_{{cab.test_case_title }}]
+                        </option>
+                    {%endfor%}
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>发送的数据是否为16进制:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_send_hex" name="is_send_hex"  value="true"  {% if senderhexdataorder.is_send_hex == 1 %} checked="checked"{% endif %}>16进制
+                <input type="radio" id="is_send_hex" name="is_send_hex"  value="false" {% if senderhexdataorder.is_send_hex == 0 %} checked="checked"{% endif %}>字符串
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>发送数据前等待时间（单位秒）:</label>
+            </td>
+            <td>
+                <input id="send_wait_time" name="send_wait_time" type="text" value="{{ senderhexdataorder.send_wait_time|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>回复指令中的全部内容:</label>
+            </td>
+            <td>
+                <input id="com_send_date" name="com_send_date" type="text" value="{{ senderhexdataorder.com_send_date|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>发送数据前是否需要先接收到指令:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_need_expect" name="is_need_expect"  value="true"  {% if senderhexdataorder.is_need_expect == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_need_expect" name="is_need_expect"  value="false" {% if senderhexdataorder.is_need_expect == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>发送数据后是否需要接收到指令:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_need_after_expect" name="is_need_after_expect"  value="true"  {% if senderhexdataorder.is_need_after_expect == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_need_after_expect" name="is_need_after_expect"  value="false" {% if senderhexdataorder.is_need_after_expect == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否只发送一次数据:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_just_one" name="is_just_one"  value="true"  {% if senderhexdataorder.is_just_one == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_just_one" name="is_just_one"  value="false" {% if senderhexdataorder.is_just_one == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>接收的数据是否为16进制:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_receive_hex" name="is_receive_hex"  value="true"  {% if senderhexdataorder.is_receive_hex == 1 %} checked="checked"{% endif %}>16进制
+                <input type="radio" id="is_receive_hex" name="is_receive_hex"  value="false" {% if senderhexdataorder.is_receive_hex == 0 %} checked="checked"{% endif %}>字符串
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>预期接收到的指令的内容:</label>
+            </td>
+            <td>
+                <input id="com_expect_date" name="com_expect_date" type="text" value="{{ senderhexdataorder.com_expect_date|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否断言预期结果:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_assert_expect" name="is_assert_expect"  value="true"  {% if senderhexdataorder.is_assert_expect == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_assert_expect" name="is_assert_expect"  value="false" {% if senderhexdataorder.is_assert_expect == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>协议解析预期结果:</label>
+            </td>
+            <td>
+                <input id="xieyi_jiexi_expect_result" name="xieyi_jiexi_expect_result" type="text"
+                       value="{{ senderhexdataorder.xieyi_jiexi_expect_result |default:""}}"/>
+            </td>
+        </tr>
+    </table>
+{% endblock %}
+{% block box2_a %}
+    <a href='{{ django_server_yuming }}/shucaiyidate/senderhexdataorder/'>返回数据列表页</a>
+{% endblock %}

@@ -21,10 +21,10 @@ for i in f:
     ziduan = lie_list[0].strip()
     expect_list.append(ziduan)
     # print(ziduan)
-    yuqi = """xieyiconfigdateorderform.%s"""% ziduan
+    yuqi = """senderhexdataorderform.%s"""% ziduan
     print(yuqi)
     b = yuqi
-    c = """xieyiconfigdateorderform.%s.value"""% ziduan
+    c = """senderhexdataorderform.%s.value"""% ziduan
     tihuan_one_list.append(b)
     tihuan_one_list.append(c)
     tihuan_list.append(tihuan_one_list)
