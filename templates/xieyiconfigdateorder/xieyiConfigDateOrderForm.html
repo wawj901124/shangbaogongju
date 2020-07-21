@@ -272,6 +272,16 @@
 
         <tr>
             <td>
+                <label>是否进行反控数据接收和发送:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_recriminat_recive_and_send" name="is_recriminat_recive_and_send"  value="true"  {% if xieyiconfigdateorderform.is_recriminat_recive_and_send.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_recriminat_recive_and_send" name="is_recriminat_recive_and_send"  value="false" {% if xieyiconfigdateorderform.is_recriminat_recive_and_send.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
                 <label>数据上报平台的IP地址:</label>
             </td>
             <td>
