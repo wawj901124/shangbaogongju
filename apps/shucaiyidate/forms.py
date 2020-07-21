@@ -42,10 +42,16 @@ class ConfigCollectFactorForm(forms.ModelForm):
         # exclude = ('user', 'recurring',)
         fields = "__all__"
 
-
+#测试用例表单
 class XieyiTestCaseForm(forms.ModelForm):#定义处理前段“我要学习”表单类,继承ModelForm,ModelForm可以直接save,这个save调用的就是model的save，可以直接保存到数据库
     class Meta:
         model = XieyiTestCase   #指明转换的XieyiTestCase
+        fields = "__all__"
+
+#测试用例依赖配置表单
+class XieyiConfigDateOrderForm(forms.ModelForm):#定义处理前段“我要学习”表单类,继承ModelForm,ModelForm可以直接save,这个save调用的就是model的save，可以直接保存到数据库
+    class Meta:
+        model = XieyiConfigDateOrder   #指明转换的XieyiConfigDateOrder
         fields = "__all__"
 
 

@@ -12,12 +12,14 @@ from .modelsnewdev import NodeConfig,ConfigCollectSendCmd,ConfigCollectFactor,\
     ConfigCollectReceivePors,ConfigCollectReceivePorsSection,ConfigCollectReceivePorsConvertrule,\
     ConfigControlSendCmd,ConfigControlSendParamid,ConfigControlSendPorsSection,ConfigControlSendPorsConvertrule
 
-from .modelsorder import XieyiConfigDateOrder,XieyiTestCase,SenderHexDataOrder,RecriminatDataOrder
+from .modelsorder import XieyiConfigDateOrder,\
+    XieyiTestCase,SenderHexDataOrder,RecriminatDataOrder,\
+    FtpUploadFileOrder
 
 
 from .forms import TagContentForm
 from .forms import XieyiConfigDateForm
-from .forms import XieyiTestCaseForm
+from .forms import XieyiTestCaseForm,XieyiConfigDateOrderForm
 
 #节点配置View
 class TagContentView(View):
@@ -636,12 +638,15 @@ class XieyiConfigDateOrderView(View):
                 "django_server_yuming": DJANGO_SERVER_YUMING
             })
         elif request.user.is_active:
-            xieyiconfigdate = XieyiConfigDate.objects.get(id=int(xieyiconfigdateorder_id))  # 获取数据
+            xieyiconfigdateorder = XieyiConfigDateOrder.objects.get(id=int(xieyiconfigdateorder_id))  # 获取数据
+            nodeconfig_all = NodeConfig.objects.all().order_by("-id")   #dev配置依赖
+
             is_with_relevance = 1
 
-            return render(request, "xieyiconfigdate/xieyiConfigDate.html",
-                          {"xieyiconfigdate": xieyiconfigdate,
+            return render(request, "xieyiconfigdateorder/xieyiConfigDateOrder.html",
+                          {"xieyiconfigdateorder": xieyiconfigdateorder,
                            "django_server_yuming": DJANGO_SERVER_YUMING,
+                           "nodeconfig_all":nodeconfig_all,
                            "is_withRelevance": is_with_relevance,
                            })
         else:
@@ -649,11 +654,12 @@ class XieyiConfigDateOrderView(View):
                 "django_server_yuming": DJANGO_SERVER_YUMING
             })
 
-    def post(self, request,xieyiconfigdate_id):
+    def post(self, request,xieyiconfigdateorder_id):
         username = request.user.username
 
-        xieyiconfigdate_form = XieyiConfigDateForm(request.POST)  # 实例化NewAddAndCheckForm()
-        xieyiconfigdate = XieyiConfigDate.objects.get(id=int(xieyiconfigdate_id))  # 获取内容
+        xieyiconfigdateorder_form = XieyiConfigDateOrderForm(request.POST)  # 实例化NewAddAndCheckForm()
+        xieyiconfigdateorder = XieyiConfigDateOrder.objects.get(id=int(xieyiconfigdateorder_id))  # 获取内容
+        nodeconfig_all = NodeConfig.objects.all().order_by("-id")  # dev配置依赖
 
         # 处理附带复制内容
         is_with_relevance = request.POST.get('is_withRelevance', '')
@@ -664,68 +670,53 @@ class XieyiConfigDateOrderView(View):
         print("is_withRelevance类型:%s" % type(is_with_relevance))
         # 结束处理
 
-        if xieyiconfigdate_form.is_valid():  # is_valid()判断是否有错
+        if xieyiconfigdateorder_form.is_valid():  # is_valid()判断是否有错
 
-            xieyiconfigdate_form.save(commit=True)  # 将信息保存到数据库中
+            xieyiconfigdateorder_form.save(commit=True)  # 将信息保存到数据库中
 
-            zj = XieyiConfigDate.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+            zj = XieyiConfigDateOrder.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
             user = User.objects.get(username=username)
             zj.write_user_id = user.id
             zj.save()
 
-            xieyiconfigdateid = zj.id
-            xieyiconfigdateadd = XieyiConfigDate.objects.get(id=int(xieyiconfigdateid))  # 获取用例
+            xieyiconfigdateorderid = zj.id
+            xieyiconfigdateorderadd = XieyiConfigDateOrder.objects.get(id=int(xieyiconfigdateorderid))  # 获取用例
 
             # 如果增加附带
             if is_with_relevance == 1:
                 print("处理附带内容")
                 #处理FTP上传文件
-                ftpuploadfile_old_all = FtpUploadFile.objects.filter(
-                    xieyiconfigdate_id=xieyiconfigdate_id).order_by("id")
-                ftpuploadfile_old_all_count = ftpuploadfile_old_all.count()
-                if ftpuploadfile_old_all_count != 0:
-                    for ftpuploadfile_old in ftpuploadfile_old_all:
-                        ftpuploadfile_new = FtpUploadFile()
-                        ftpuploadfile_new.xieyiconfigdate_id = zj.id
-                        ftpuploadfile_new.up_remote_file = ftpuploadfile_old.up_remote_file
-                        ftpuploadfile_new.up_local_file = ftpuploadfile_old.up_local_file
-                        ftpuploadfile_new.save()
-
-                # 处理关闭协议命令
-                closexieyicommand_old_all = CloseXieYiCommand.objects.filter(
-                    xieyiconfigdate_id=xieyiconfigdate_id).order_by("id")
-                closexieyicommand_old_all_count = closexieyicommand_old_all.count()
-                if closexieyicommand_old_all_count != 0:
-                    for closexieyicommand_old in closexieyicommand_old_all:
-                        closexieyicommand_new = CloseXieYiCommand()
-                        closexieyicommand_new.xieyiconfigdate_id = zj.id
-                        closexieyicommand_new.close_command = closexieyicommand_old.close_command
-                        closexieyicommand_new.save()
-
-                # 处理重启协议命令
-                restartxieyicommand_old_all =  RestartXieYiCommand.objects.filter(
-                    xieyiconfigdate_id=xieyiconfigdate_id).order_by("id")
-                restartxieyicommand_old_all_count =  restartxieyicommand_old_all.count()
-                if  restartxieyicommand_old_all_count != 0:
-                    for  restartxieyicommand_old in  restartxieyicommand_old_all:
-                         restartxieyicommand_new =  RestartXieYiCommand()
-                         restartxieyicommand_new.xieyiconfigdate_id = zj.id
-                         restartxieyicommand_new.restart_command =  restartxieyicommand_old.restart_command
-                         restartxieyicommand_new.save()
+                from .comonxadmin import CommonXadmin
+                cx = CommonXadmin()
+                sql_model_name= FtpUploadFileOrder
+                neiqianwaijian_name = "xieyiconfigdateorder"
+                neiqian_id = xieyiconfigdateorder_id
+                neiqian_new_id = zj.id
+                filter_name_list = None
+                cx.sql_model_copy_common(sql_model_name=sql_model_name,
+                                         neiqianwaijian_name=neiqianwaijian_name,
+                                         neiqian_id=neiqian_id,
+                                         neiqian_new_id=neiqian_new_id,
+                                         filter_name_list=filter_name_list)
 
 
 
-            return render(request, "xieyiconfigdate/xieyiConfigDate.html", {
-                "xieyiconfigdate": xieyiconfigdateadd,
-                "sumsg":u"添加数据---【{}】---成功,请继续添加".format(xieyiconfigdateadd.test_case_title),
+
+            return render(request, "xieyiconfigdateorder/xieyiConfigDateOrder.html", {
+                "xieyiconfigdateorder": xieyiconfigdateorderadd,
+                "sumsg":u"添加数据---【{}】---成功,请继续添加".format(xieyiconfigdateorderadd.test_project),
                 "django_server_yuming": DJANGO_SERVER_YUMING,
+                "nodeconfig_all": nodeconfig_all,
+                "is_withRelevance": is_with_relevance,
             })
         else:
-            return render(request, 'xieyiconfigdate/xieyiConfigDateForm.html', {
-                "xieyiconfigdate": xieyiconfigdate,
-                "xieyiconfigdateform": xieyiconfigdate_form ,
+            return render(request, 'xieyiconfigdateorder/xieyiConfigDateOrderForm.html', {
+                "xieyiconfigdateorder": xieyiconfigdateorder,
+                "xieyiconfigdateorderform": xieyiconfigdateorder_form ,
                 "errmsg":u"添加失败，请重新添加，添加时请检查各个字段是否填写",
                 "django_server_yuming": DJANGO_SERVER_YUMING,
+                "nodeconfig_all": nodeconfig_all,
+                "is_withRelevance": is_with_relevance,
             })  # 返回页面，回填信息
 
 

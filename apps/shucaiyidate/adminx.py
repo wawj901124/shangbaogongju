@@ -1210,7 +1210,7 @@ class NodeConfigXadmin():
             ConfigCollectReceivePorsConvertrule_all = ConfigCollectReceivePorsConvertrule.objects.filter(nodeconfig_id=qs_one.id)
             for ConfigCollectReceivePorsConvertrule_one in ConfigCollectReceivePorsConvertrule_all:
                 ConfigCollectReceivePorsConvertrule_one.nodeconfig_id = ""  #置空依赖
-                ConfigCollectReceivePorsConvertrule_one.configcollectreceiveporssection = ""  #置空依赖
+                ConfigCollectReceivePorsConvertrule_one.configcollectreceiveporssection_id = ""  #置空依赖
                 ConfigCollectReceivePorsConvertrule_one.delete()  #删除
 
             #关联之 ConfigCollectReceivePorsSection 去掉依赖
@@ -1224,7 +1224,7 @@ class NodeConfigXadmin():
             ConfigCollectReceivePors_all = ConfigCollectReceivePors.objects.filter(nodeconfig_id=qs_one.id)
             for ConfigCollectReceivePors_one in ConfigCollectReceivePors_all:
                 ConfigCollectReceivePors_one.nodeconfig_id = ""  #置空依赖
-                ConfigCollectReceivePors_one.configcollectsendcmd = ""   #置空依赖
+                ConfigCollectReceivePors_one.configcollectsendcmd_id = ""   #置空依赖
                 ConfigCollectReceivePors_one.delete()  #删除
 
             #关联之 ConfigCollectFactor 去掉依赖

@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+{% block title %}
+    xieyiconfigdateorder
+{% endblock %}
+{% block action_url %}
+    {% url 'shucaiyidate:xie_yi_config_date_order_id' xieyiconfigdateorder.id %}
+{% endblock %}
+{% block box_h1_title %}
+    添加数据
+{% endblock %}
+{% block table_data %}
+       <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <label>测试项目:</label>
+            </td>
+            <td>
+                <input id="test_project" name="test_project" type="text" value="{{ xieyiconfigdateorderform.test_project.value|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试模块:</label>
+            </td>
+            <td>
+                <input id="test_module" name="test_module" type="text" value="{{ xieyiconfigdateorderform.test_module.value|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试页面:</label>
+            </td>
+            <td>
+                <input id="test_page" name="test_page" type="text" value="{{ xieyiconfigdateorderform.test_page.value|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>用例优先级:</label>
+            </td>
+            <td>
+                <input type="radio"  name="case_priority"  value="P0" {% if xieyiconfigdateorderform.case_priority.value == 'P0' %}checked="checked"{% endif %}>冒烟用例
+                <input type="radio"  name="case_priority"  value="P1" {% if xieyiconfigdateorderform.case_priority.value == 'P1' %}checked="checked"{% endif %}>系统的重要功能用例
+                <input type="radio"  name="case_priority"  value="P2" {% if xieyiconfigdateorderform.case_priority.value == 'P2' %}checked="checked"{% endif %}>系统的一般功能用例
+                <input type="radio"  name="case_priority"  value="P3" {% if xieyiconfigdateorderform.case_priority.value == 'P3' %}checked="checked"{% endif %}>极低级别的用例
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>测试内容的名称:</label>
+            </td>
+            <td>
+                <input id="test_case_title" name="test_case_title" type="text"
+                       value="{{ xieyiconfigdateorderform.test_case_title.value|default:""  }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否运行:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_run_case" name="is_run_case"  value="true"  {% if xieyiconfigdateorderform.is_run_case.value == 1 %} checked="checked"{% endif %}>运行
+                <input type="radio" id="is_run_case" name="is_run_case"  value="false" {% if xieyiconfigdateorderform.is_run_case.value == 0 %} checked="checked"{% endif %}>不运行
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数采仪IP地址:</label>
+            </td>
+            <td>
+                <input id="telnet_host_ip" name="telnet_host_ip" type="text" value="{{ xieyiconfigdateorderform.telnet_host_ip.value|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>登录数采仪的用户名:</label>
+            </td>
+            <td>
+                <input id="telnet_username" name="telnet_username" type="text" value="{{ xieyiconfigdateorderform.telnet_username.value|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>登录数采仪的密码:</label>
+            </td>
+            <td>
+                <input id="telnet_password" name="telnet_password" type="text" value="{{ xieyiconfigdateorderform.telnet_password.value|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否上传配置文件:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_ftp_upload" name="is_ftp_upload"  value="true"  {% if xieyiconfigdateorderform.is_ftp_upload.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_ftp_upload" name="is_ftp_upload"  value="false" {% if xieyiconfigdateorderform.is_ftp_upload.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+            <tr>
+            <td>
+                <label>是否关闭开机自启动时启动的协议:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_close_xieyi" name="is_close_xieyi"  value="true"  {% if xieyiconfigdateorderform.is_close_xieyi.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_close_xieyi" name="is_close_xieyi"  value="false" {% if xieyiconfigdateorderform.is_close_xieyi.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否重新启动协议:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_restart_xieyi" name="is_restart_xieyi"  value="true"  {% if xieyiconfigdateorderform.is_restart_xieyi.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_restart_xieyi" name="is_restart_xieyi"  value="false" {% if xieyiconfigdateorderform.is_restart_xieyi.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数采仪存放协议二进制文件的bin目录:</label>
+            </td>
+            <td>
+                <input id="xieyi_bin_dir" name="xieyi_bin_dir" type="text" value="{{ xieyiconfigdateorderform.xieyi_bin_dir.value|default:"" }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>协议二进制文件的名字:</label>
+            </td>
+            <td>
+                <input id="xieyi_name" name="xieyi_name" type="text" value="{{ xieyiconfigdateorderform.xieyi_name.value|default:""  }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数采仪协议串口号:</label>
+            </td>
+            <td>
+                <input id="xieyi_test_port" name="xieyi_test_port" type="text" value="{{ xieyiconfigdateorderform.xieyi_test_port.value|default:""  }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否进行数据接收和发送:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_com_recive_and_send" name="is_com_recive_and_send"  value="true"  {% if xieyiconfigdateorderform.is_com_recive_and_send.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_com_recive_and_send" name="is_com_recive_and_send"  value="false" {% if xieyiconfigdateorderform.is_com_recive_and_send.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>电脑与数采仪连接的USB口:</label>
+            </td>
+            <td>
+                <input id="com_port" name="com_port" type="text" value="{{ xieyiconfigdateorderform.com_port.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>协议波特率:</label>
+            </td>
+            <td>
+                <input id="com_baudrate" name="com_baudrate" type="text" value="{{ xieyiconfigdateorderform.com_baudrate.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>协议数据位:</label>
+            </td>
+            <td>
+                <input id="com_bytesize" name="com_bytesize" type="text" value="{{ xieyiconfigdateorderform.com_bytesize.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>协议校验位:</label>
+            </td>
+            <td>
+                <input id="com_parity" name="com_parity" type="text" value="{{ xieyiconfigdateorderform.com_parity.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>协议停止位:</label>
+            </td>
+            <td>
+                <input id="com_stopbits" name="com_stopbits" type="text" value="{{ xieyiconfigdateorderform.com_stopbits.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>回复指令中的全部内容:</label>
+            </td>
+            <td>
+                <input id="com_send_date" name="com_send_date" type="text" value="{{ xieyiconfigdateorderform.com_send_date.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>预期接收到的指令的内容:</label>
+            </td>
+            <td>
+                <input id="com_expect_date" name="com_expect_date" type="text" value="{{ xieyiconfigdateorderform.com_expect_date.value|default:""  }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否ftp下载获取解析文件:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_ftp_down_xieyi_file" name="is_ftp_down_xieyi_file"  value="true"  {% if xieyiconfigdateorderform.is_ftp_down_xieyi_file.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_ftp_down_xieyi_file" name="is_ftp_down_xieyi_file"  value="false" {% if xieyiconfigdateorderform.is_ftp_down_xieyi_file.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否断言协议预期解析结果在协议解析文件中:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_assert_file_success" name="is_assert_file_success"  value="true"  {% if xieyiconfigdateorderform.is_assert_file_success.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_assert_file_success" name="is_assert_file_success"  value="false" {% if xieyiconfigdateorderform.is_assert_file_success.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>协议解析预期结果:</label>
+            </td>
+            <td>
+                <input id="xieyi_jiexi_expect_result" name="xieyi_jiexi_expect_result" type="text" value="{{ xieyiconfigdateorderform.xieyi_jiexi_expect_result.value|default:""  }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否ftp下载远程数据库文件:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_ftp_get_remote_db_file" name="is_ftp_get_remote_db_file"  value="true"  {% if xieyiconfigdateorderform.is_ftp_get_remote_db_file.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_ftp_get_remote_db_file" name="is_ftp_get_remote_db_file"  value="false" {% if xieyiconfigdateorderform.is_ftp_get_remote_db_file.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>是否断言协议预期解析结果在实时数据库的表中:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_assert_real_db_success" name="is_assert_real_db_success"  value="true"  {% if xieyiconfigdateorderform.is_assert_real_db_success.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_assert_real_db_success" name="is_assert_real_db_success"  value="false" {% if xieyiconfigdateorderform.is_assert_real_db_success.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>协议实时数据存放的数据库名字:</label>
+            </td>
+            <td>
+                <input id="xieyi_db" name="xieyi_db" type="text" value="{{ xieyiconfigdateorderform.xieyi_db.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>协议实时数据存放的数据库在数采仪中的路径:</label>
+            </td>
+            <td>
+                <input id="xieyi_db_remote_path" name="xieyi_db_remote_path" type="text" value="{{ xieyiconfigdateorderform.xieyi_db_remote_path.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>协议实时数据存放的数据的数据表:</label>
+            </td>
+            <td>
+                <input id="xieyi_db_table_name" name="xieyi_db_table_name" type="text" value="{{ xieyiconfigdateorderform.xieyi_db_table_name.value|default:""  }}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>是否接收平台报文:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_tcp_server_receive" name="is_tcp_server_receive"  value="true"  {% if xieyiconfigdateorderform.is_tcp_server_receive.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_tcp_server_receive" name="is_tcp_server_receive"  value="false" {% if xieyiconfigdateorderform.is_tcp_server_receive.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>是否断言协议预期解析结果在接收的报文中:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_assert_tcp_server_receive_success" name="is_assert_tcp_server_receive_success"  value="true"  {% if xieyiconfigdateorderform.is_assert_tcp_server_receive_success.value == 1 %} checked="checked"{% endif %}>是
+                <input type="radio" id="is_assert_tcp_server_receive_success" name="is_assert_tcp_server_receive_success"  value="false" {% if xieyiconfigdateorderform.is_assert_tcp_server_receive_success.value == 0 %} checked="checked"{% endif %}>否
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>数据上报平台的IP地址:</label>
+            </td>
+            <td>
+                <input id="tcp_server_ip" name="tcp_server_ip" type="text" value="{{ xieyiconfigdateorderform.tcp_server_ip.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>数据上报平台的端口号:</label>
+            </td>
+            <td>
+                <input id="tcp_server_port" name="tcp_server_port" type="text" value="{{ xieyiconfigdateorderform.tcp_server_port.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>循环次数:</label>
+            </td>
+            <td>
+                <input id="case_counts" name="case_counts" type="text" value="{{ xieyiconfigdateorderform.case_counts.value|default:""  }}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label>是否附带复制:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=1 {% if is_withRelevance == 1 %} checked="checked"{% endif %}>附带
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=0 {% if is_withRelevance == 0 %} checked="checked"{% endif %}>不附带
+            </td>
+        </tr>
+
+    </table>
+{% endblock %}
+{% block box2_a %}
+    <a href='{{ django_server_yuming }}/shucaiyidate/xieyiconfigdateorderform/'>返回数据列表页</a>
+{% endblock %}
