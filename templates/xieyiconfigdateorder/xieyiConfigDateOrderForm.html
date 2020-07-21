@@ -78,7 +78,7 @@
             <td>
                 <select id="nodeconfig" name="nodeconfig">
                     <option value=""
-                            {% if xieyiconfigdateorderform.nodeconfig.value_id == None %}
+                            {% if xieyiconfigdateorder.nodeconfig_id == None %}
                                 selected="selected"
                             {% endif %}>
                             ---请选择
@@ -86,7 +86,7 @@
                     {%for cab in nodeconfig_all%}
                         <option
                                 value={{cab.id}}
-                                        {% if cab.id == xieyiconfigdateorderform.nodeconfig.value_id %}
+                                        {% if cab.id == xieyiconfigdateorder.nodeconfig_id %}
                                             selected="selected"
                                         {% endif %}>
                             [{{ cab.id }}]-【{{ cab.config_project }}】]
