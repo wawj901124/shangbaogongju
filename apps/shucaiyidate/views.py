@@ -19,7 +19,8 @@ from .modelsorder import XieyiConfigDateOrder,\
 
 from .forms import TagContentForm
 from .forms import XieyiConfigDateForm
-from .forms import XieyiTestCaseForm,XieyiConfigDateOrderForm
+from .forms import XieyiTestCaseForm,XieyiConfigDateOrderForm,\
+    SenderHexDataOrderForm,RecriminatDataOrderForm
 
 #节点配置View
 class TagContentView(View):
@@ -720,3 +721,129 @@ class XieyiConfigDateOrderView(View):
             })  # 返回页面，回填信息
 
 
+#协议测试用例之串口测试数据View
+class SenderHexDataOrderView(View):
+    """
+    串口收发数据复制编写页面处理
+    """
+
+    def get(self, request, senderhexdataorder_id):
+        if request.user.username == 'check':
+            return render(request, "canNotAddclickAndBack.html", {
+                "django_server_yuming": DJANGO_SERVER_YUMING
+            })
+        elif request.user.is_active:
+            senderhexdataorder = SenderHexDataOrder.objects.get(id=int(senderhexdataorder_id))  # 获取数据
+            xieyitestcase_all = XieyiTestCase.objects.all().order_by("-id")   #dev配置依赖
+
+
+            return render(request, "senderhexdataorder/senderHexDataOrder.html",
+                          {"senderhexdataorder": senderhexdataorder,
+                           "django_server_yuming": DJANGO_SERVER_YUMING,
+                           "xieyitestcase_all":xieyitestcase_all,
+                           })
+        else:
+            return render(request, "addContentError.html", {
+                "django_server_yuming": DJANGO_SERVER_YUMING
+            })
+
+    def post(self, request,senderhexdataorder_id):
+        username = request.user.username
+
+        senderhexdataorder_form = SenderHexDataOrderForm(request.POST)  # 实例化NewAddAndCheckForm()
+        senderhexdataorder = SenderHexDataOrder.objects.get(id=int(senderhexdataorder_id))  # 获取内容
+        xieyitestcase_all = XieyiTestCase.objects.all().order_by("-id")  # dev配置依赖
+
+
+
+        if senderhexdataorder_form.is_valid():  # is_valid()判断是否有错
+
+            senderhexdataorder_form.save(commit=True)  # 将信息保存到数据库中
+
+            zj = SenderHexDataOrder.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+            user = User.objects.get(username=username)
+            zj.write_user_id = user.id
+            zj.save()
+
+            senderhexdataorderid = zj.id
+            senderhexdataorderadd = SenderHexDataOrder.objects.get(id=int(senderhexdataorderid))  # 获取用例
+
+
+            return render(request, "senderhexdataorder/senderHexDataOrder.html", {
+                "senderhexdataorder": senderhexdataorderadd,
+                "sumsg":u"添加数据---【{}】---成功,请继续添加".format(senderhexdataorderadd.com_send_date),
+                "django_server_yuming": DJANGO_SERVER_YUMING,
+                "xieyitestcase_all": xieyitestcase_all,
+            })
+        else:
+            return render(request, 'senderhexdataorder/senderHexDataOrderForm.html', {
+                "senderhexdataorder": senderhexdataorder,
+                "senderhexdataorderform": senderhexdataorder_form ,
+                "errmsg":u"添加失败，请重新添加，添加时请检查各个字段是否填写",
+                "django_server_yuming": DJANGO_SERVER_YUMING,
+                "xieyitestcase_all": xieyitestcase_all,
+            })  # 返回页面，回填信息
+
+
+#协议测试用例之反控测试数据View
+class RecriminatDataOrderView(View):
+    """
+    串口收发数据复制编写页面处理
+    """
+
+    def get(self, request, recriminatdataorder_id):
+        if request.user.username == 'check':
+            return render(request, "canNotAddclickAndBack.html", {
+                "django_server_yuming": DJANGO_SERVER_YUMING
+            })
+        elif request.user.is_active:
+            recriminatdataorder = RecriminatDataOrder.objects.get(id=int(recriminatdataorder_id))  # 获取数据
+            xieyitestcase_all = XieyiTestCase.objects.all().order_by("-id")   #dev配置依赖
+
+
+            return render(request, "recriminatdataorder/recriminatDataOrder.html",
+                          {"recriminatdataorder": recriminatdataorder,
+                           "django_server_yuming": DJANGO_SERVER_YUMING,
+                           "xieyitestcase_all":xieyitestcase_all,
+                           })
+        else:
+            return render(request, "addContentError.html", {
+                "django_server_yuming": DJANGO_SERVER_YUMING
+            })
+
+    def post(self, request,senderhexdataorder_id):
+        username = request.user.username
+
+        senderhexdataorder_form = SenderHexDataOrderForm(request.POST)  # 实例化NewAddAndCheckForm()
+        senderhexdataorder = SenderHexDataOrder.objects.get(id=int(senderhexdataorder_id))  # 获取内容
+        xieyitestcase_all = XieyiTestCase.objects.all().order_by("-id")  # dev配置依赖
+
+
+
+        if senderhexdataorder_form.is_valid():  # is_valid()判断是否有错
+
+            senderhexdataorder_form.save(commit=True)  # 将信息保存到数据库中
+
+            zj = SenderHexDataOrder.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+            user = User.objects.get(username=username)
+            zj.write_user_id = user.id
+            zj.save()
+
+            senderhexdataorderid = zj.id
+            senderhexdataorderadd = SenderHexDataOrder.objects.get(id=int(senderhexdataorderid))  # 获取用例
+
+
+            return render(request, "senderhexdataorder/senderHexDataOrder.html", {
+                "senderhexdataorder": senderhexdataorderadd,
+                "sumsg":u"添加数据---【{}】---成功,请继续添加".format(senderhexdataorderadd.com_send_date),
+                "django_server_yuming": DJANGO_SERVER_YUMING,
+                "xieyitestcase_all": xieyitestcase_all,
+            })
+        else:
+            return render(request, 'senderhexdataorder/senderHexDataOrderForm.html', {
+                "senderhexdataorder": senderhexdataorder,
+                "senderhexdataorderform": senderhexdataorder_form ,
+                "errmsg":u"添加失败，请重新添加，添加时请检查各个字段是否填写",
+                "django_server_yuming": DJANGO_SERVER_YUMING,
+                "xieyitestcase_all": xieyitestcase_all,
+            })  # 返回页面，回填信息

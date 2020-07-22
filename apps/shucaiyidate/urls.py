@@ -3,7 +3,7 @@ from django.urls import  path
 from .views import TagContentView  #导入TagContentView
 from .views import XieyiConfigDateView
 from .views import NodeConfigMakeDevRequest,NodeConfigCopyRequest,NodeConfigReadAndSaveRequest
-from .views import XieyiConfigDateOrderView,XieyiTestCaseView
+from .views import XieyiConfigDateOrderView,XieyiTestCaseView,SenderHexDataOrderView,RecriminatDataOrderView
 
 
 
@@ -37,6 +37,15 @@ urlpatterns = [
     # 协议测试用例之测试用例url配置
     path('xieyitestcase/<path:xieyitestcase_id>/', XieyiTestCaseView.as_view(),
          name="new_xie_yi_test_case_id"),
+    # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
+
+    # 协议测试用例之串口收发数据url配置
+    path('senderhexdataorder/<path:senderhexdataorder_id>/', SenderHexDataOrderView.as_view(),name="sender_hex_date_order_id"),
+    # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
+
+    # 协议测试用例之反控收发数据url配置
+    path('recriminatdataorder/<path:recriminatdataorder_id>/', RecriminatDataOrderView.as_view(),
+         name="recriminat_data_order_id"),
     # 配置复制新增测试用例url,namespace指明命名空间，用命名空间做限定
 
 

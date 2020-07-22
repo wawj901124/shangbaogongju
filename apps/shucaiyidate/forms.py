@@ -55,5 +55,18 @@ class XieyiConfigDateOrderForm(forms.ModelForm):#定义处理前段“我要学�
         fields = "__all__"
 
 
+#测试用例串口收发数据表单配置
+class SenderHexDataOrderForm(forms.ModelForm):#定义处理前段“我要学习”表单类,继承ModelForm,ModelForm可以直接save,这个save调用的就是model的save，可以直接保存到数据库
+    class Meta:
+        model = SenderHexDataOrder   #指明转换的SenderHexDataOrder
+        fields = "__all__"
+
+#测试用例反控收发数据表单配置
+class RecriminatDataOrderForm(forms.ModelForm):#定义处理前段“我要学习”表单类,继承ModelForm,ModelForm可以直接save,这个save调用的就是model的save，可以直接保存到数据库
+    class Meta:
+        model = RecriminatDataOrder   #指明转换的RecriminatDataOrder
+        fields = "__all__"
+
+
 
 

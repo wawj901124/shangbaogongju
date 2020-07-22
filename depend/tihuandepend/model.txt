@@ -1,0 +1,4 @@
+xieyitestcase = models.ForeignKey(XieyiTestCase,default="", null=True, blank=True,verbose_name=u"依赖的协议测试用例",on_delete=models.PROTECT)
+send_wait_time = models.CharField(max_length=1000, default="0", verbose_name=u"发送指令前等待时间（单位秒）")
+com_send_date =  models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"反控指令内容")
+com_expect_date = models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"反控响应内容")

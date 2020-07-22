@@ -274,6 +274,14 @@ class SenderHexDataOrder(models.Model):
     def __str__(self):
         return self.xieyi_jiexi_expect_result
 
+    def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
+        from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
+        return mark_safe("<a href='{}/shucaiyidate/senderhexdataorder/{}/'>复制新加</a>".format(DJANGO_SERVER_YUMING,self.id))
+
+    go_to.short_description = u"复制新加"   #为go_to函数名个名字
+
+
+
 #反控数据
 class RecriminatDataOrder(models.Model):
     xieyitestcase = models.ForeignKey(XieyiTestCase,default="", null=True, blank=True,

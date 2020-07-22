@@ -473,14 +473,14 @@ class XieyiRecriminatConfigXadmin(object):
             return qs  # 返回qs
 
 
-
+#串口收发数据
 class SenderHexDataOrderXadmin(object):
     all_zi_duan = ["id", "xieyitestcase",
                    "com_send_date ",
                    "com_expect_date",
                    "write_user",
                    "add_time", "update_time"]
-    list_display = ["com_send_date",]  # 定义显示的字段
+    list_display = ["com_send_date","go_to",]  # 定义显示的字段
     list_filter = ["com_send_date",
                    "write_user"]  # 定义筛选的字段
     search_fields = ["com_send_date"]   # 定义搜索字段
@@ -505,6 +505,29 @@ class SenderHexDataOrderXadmin(object):
 
     # 设置是否加入导入插件
     import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
+
+    #批量处理命令
+    #批量复制
+    def patch_copy(self,request,querset):  #此处的querset为选中的数据
+        querset = querset.order_by('id')  #按照id顺序排序
+        for qs_one in querset:
+            #先复制本体
+            from .comonxadmin import CommonXadmin
+            cx = CommonXadmin()
+            sql_model_name = SenderHexDataOrder
+            old_object = qs_one
+            filter_name_list = None
+            #新加数据并返回它的id
+            newadd_id = cx.sql_model_copy_old_and_return_new_id_common(sql_model_name=sql_model_name,
+                                                           old_object=old_object,
+                                                           filter_name_list=filter_name_list)
+
+    patch_copy.short_description = "批量复制"
+
+
+    #注册批量动作
+    actions=[patch_copy,]
+
 
 
     # #设置内联
@@ -630,7 +653,6 @@ class RecriminatDataOrderXadmin(object):
     # 设置是否加入导入插件
     import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
 
-
     # #设置内联
     # class SenderHexDataOrderInline(object):
     #     model = SenderHexDataOrder
@@ -640,6 +662,28 @@ class RecriminatDataOrderXadmin(object):
     #
     #
     # inlines = [SenderHexDataOrderInline,]
+
+    #批量处理命令
+    #批量复制
+    def patch_copy(self,request,querset):  #此处的querset为选中的数据
+        querset = querset.order_by('id')  #按照id顺序排序
+        for qs_one in querset:
+            #先复制本体
+            from .comonxadmin import CommonXadmin
+            cx = CommonXadmin()
+            sql_model_name = RecriminatDataOrder
+            old_object = qs_one
+            filter_name_list = None
+            #新加数据并返回它的id
+            newadd_id = cx.sql_model_copy_old_and_return_new_id_common(sql_model_name=sql_model_name,
+                                                           old_object=old_object,
+                                                           filter_name_list=filter_name_list)
+
+    patch_copy.short_description = "批量复制"
+
+
+    #注册批量动作
+    actions=[patch_copy,]
 
 
     def save_models(self):  # 重载save_models的方法，可以在做了某个动作后，动态重新加载
@@ -718,8 +762,8 @@ class RecriminatDataOrderXadmin(object):
             #
             #         i = i + 1
             pass
-        return super(SenderHexDataOrderXadmin,self).post(request,*args,**kwargs)  # 必须调用clickandbackAdmin父类，再调用post方法，否则会报错
-        # 一定不要忘记，否则整个ClickAndBackXAdmin保存都会出错
+        return super(RecriminatDataOrderXadmin,self).post(request,*args,**kwargs)  # 必须调用RecriminatDataOrderXadmin父类，再调用post方法，否则会报错
+        # 一定不要忘记，否则整个RecriminatDataOrderXadmin保存都会出错
 
 
 class XieyiConfigDateXadmin(object):
