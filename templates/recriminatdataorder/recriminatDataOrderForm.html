@@ -9,7 +9,7 @@
     添加数据
 {% endblock %}
 {% block table_data %}
-       <table cellpadding="0" cellspacing="0">
+    <table cellpadding="0" cellspacing="0">
         <tr>
             <td>
                 <label>依赖的协议测试用例:</label>
@@ -17,7 +17,7 @@
             <td>
                 <select id="xieyitestcase" name="xieyitestcase">
                     <option value=""
-                            {% if recriminatdataorder.xieyitestcase_id == None %}
+                            {% if recriminatdataorderform.xieyitestcase.value_id == None %}
                                 selected="selected"
                             {% endif %}>
                             ---请选择
@@ -25,7 +25,7 @@
                     {%for cab in xieyitestcase_all%}
                         <option
                                 value={{cab.id}}
-                                        {% if cab.id == recriminatdataorder.xieyitestcase_id %}
+                                        {% if cab.id == recriminatdataorderform.xieyitestcase.value_id %}
                                             selected="selected"
                                         {% endif %}>
                             [{{ cab.test_project }}]-[{{ cab.test_module }}]-[{{ cab.test_page }}]_{{cab.test_case_title }}]
