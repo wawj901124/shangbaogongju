@@ -1,13 +1,78 @@
+import os
 
-
+#根据输入的model内容自动生成view和temple
 class TiHuanDenpend(object):
-    def __init__(self,modeltxt,modelname,table_html_file_name,table_html_form_file_name):
+    def __init__(self,modeltxt,modelname,
+                 table_html_file_name,
+                 table_html_form_file_name,
+                 url_root_name,
+                 url_name_name,
+                 is_with_relevance=False
+                 ):
         self.modeltxt = modeltxt
         self.modelname = modelname.lower()  #转为小写
         self.table_html_file_name = table_html_file_name
         self.table_html_form_file_name = table_html_form_file_name
+        self.url_root_name = url_root_name   #url根目录名字
+        self.url_name_name = url_name_name  #url的name字段的内容
+        self.is_with_relevance= is_with_relevance
         self.tihuan_list = self.get_tihuan_list()
         self.table_html = self.get_table_html()
+        self.temple_path = self.get_templates_path()
+
+
+    #创建目录
+    def createdir(self,filedir):
+        filelist = filedir.split("/")
+        long = len(filelist)
+        zuhefiledir = filelist[0]
+        for i in range(1,long):
+            zuhefiledir = zuhefiledir+"/"+filelist[i]
+            if os.path.exists(zuhefiledir):
+                print("已经存在目录：%s" % zuhefiledir)
+            else:
+                os.mkdir(zuhefiledir)
+                print("已经创建目录：%s" % zuhefiledir)
+
+    #从当前文件获取模板（templates）路径
+    def get_templates_path(self):
+        templates_path = (os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+        print(templates_path)
+        #table html和table_form html模板路径
+        pre_path = templates_path + "/" +"templates"+"/"+self.modelname
+        self.createdir(filedir=pre_path)
+        print(pre_path)
+        return pre_path
+
+
+    #模板共用部分头
+    def temple_common_tou(self):
+        temple_tou = """{%% extends 'base.html' %%}
+{%% block title %%}
+    %s
+{%% endblock %%}
+{%% block action_url %%}
+    {%% url '%s:%s' %s.id %%}
+{%% endblock %%}
+{%% block box_h1_title %%}
+    添加数据
+{%% endblock %%}
+{%% block table_data %%}""" % (self.modelname,self.url_root_name,self.url_name_name,self.modelname)
+        temple_tou = temple_tou+"\n"
+        print(temple_tou)
+        return temple_tou
+
+    #模板共用部分尾
+    def templw_commom_wei(self):
+        temple_wei = """{%% endblock %%}
+{%% block box2_a %%}
+    <a href='{{ django_server_yuming }}/%s/%s/'>返回数据列表页</a>
+{%% endblock %%}"""%(self.url_root_name,self.modelname)
+        temple_wei = "\n"+temple_wei+"\n"
+        print(temple_wei)
+        return temple_wei
+
+
 
 
     #从modeltxt中获取到字段名和字段类型
@@ -107,6 +172,17 @@ class TiHuanDenpend(object):
         </tr>""" % (str(ziduan_des), str(ziduan_name), str(ziduan_name), str(self.modelname), str(ziduan_name),str(ziduan_name),str(self.modelname),str(ziduan_name))
                 table_html_content = table_html_content + content_one_ziduan + "\n"
 
+        if self.is_with_relevance: #如果附带
+            content_one_ziduan = """        <tr>
+            <td>
+                <label>是否附带复制:</label>
+            </td>
+            <td>
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=1 {% if is_withRelevance == 1 %} checked="checked"{% endif %}>附带
+                <input type="radio" id="is_withRelevance" name="is_withRelevance"  value=0 {% if is_withRelevance == 0 %} checked="checked"{% endif %}>不附带
+            </td>
+        </tr>"""
+            table_html_content = table_html_content + content_one_ziduan + "\n"
 
         table_html = table_html_tou+table_html_content+table_html_wei
         print("table_html:")
@@ -155,15 +231,50 @@ class TiHuanDenpend(object):
             for one in table_html_form_list:
                 f.write(one)
 
+
+    #拼接获取table模板
+    def get_temple_table(self):
+        temple_tou = self.temple_common_tou()
+        temple_table_html = self.get_table_html()
+        temple_wei = self.templw_commom_wei()
+        temple_table = temple_tou+temple_table_html+ temple_wei
+        print(temple_table)
+        return temple_table
+
+    #将temple_table写入html文件中
+    def write_temple_table_to_file(self):
+        import os
+        temple_table = self.get_temple_table()
+        new_file_name ="%s/%s.html"% (self.temple_path,self.modelname)
+        if os.path.exists(new_file_name):
+            os.remove(new_file_name)
+        with open(new_file_name, "w", encoding='utf-8') as f:
+                f.write(temple_table)
+
+    #拼接获取table_form模板
+    def get_temple_table_form(self):
+        temple_tou = self.temple_common_tou()
+        temple_table_html_form = "".join(self.get_table_html_form())  #获取table_form内容
+        temple_wei = self.templw_commom_wei()
+        temple_table_form = temple_tou+temple_table_html_form+ temple_wei
+        print(temple_table_form)
+        return temple_table_form
+
+    # 将temple_table_form写入html文件中
+    def write_temple_table_form_to_file(self):
+        import os
+        temple_table_form = self.get_temple_table_form()
+        new_file_name ="%s/%sform.html"% (self.temple_path,self.modelname)
+        if os.path.exists(new_file_name):
+            os.remove(new_file_name)
+        with open(new_file_name, "w", encoding='utf-8') as f:
+                f.write(temple_table_form)
+
+
     def run(self):
-        self. write_table_html_form_to_file()
-
-
-
-
-
-
-
+        self.write_table_html_form_to_file()  #写入table和table_form到txt
+        self.write_temple_table_to_file()  #写入temple_table到html
+        self.write_temple_table_form_to_file()  #写入temple_table_form到html
 
 
 
@@ -172,8 +283,15 @@ if __name__ == '__main__':
     modelname = "RecriminatDataOrder"
     table_html_file_name = "table_html.txt"
     table_html_form_file_name = "table_form_html.txt"
+    url_root_name = "shucaiyidate"
+    url_name_name = "recriminat_data_order_id"
+    is_with_relevance = False
 
     thd = TiHuanDenpend(modeltxt=modeltxt,modelname=modelname,
                         table_html_file_name=table_html_file_name,
-                        table_html_form_file_name=table_html_form_file_name)
+                        table_html_form_file_name=table_html_form_file_name,
+                        url_root_name=url_root_name,
+                        url_name_name=url_name_name,
+                        is_with_relevance=is_with_relevance
+                        )
     thd.run()
