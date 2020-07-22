@@ -1156,25 +1156,33 @@ class  ActiveBrowser(object):
     #通过xpath查找到select元素,选择要选择的项
     def findElementByXpathAndSelectOptionsNum(self,num,path,optiontext):
         optionlist = self.findElementByXpathAndReturnAllOptions(path)
-
+        optiontext = optiontext.strip()  #去掉前后空格
         acturl_optiontext_list = []
         for optionone in optionlist:
-            if optiontext in optionone :  #如果文本在选项中，则将选项内容赋值给文本
+            if optiontext in optionone:  #如果文本在选项中，则将选项内容赋值给文本
                 acturl_optiontext_list.append(optionone)
+        self.outPutMyLog("相同或相似的选项：")
+        self.outPutMyLog(acturl_optiontext_list)
         acturl_optiontext_list_len = len(acturl_optiontext_list)
         if acturl_optiontext_list_len == 0: #如果没有，则还用传入值
             optiontext = optiontext
+            self.outPutErrorMyLog("没有查找到相同或相似的选项，还用原值（去掉前后空格）")
         elif acturl_optiontext_list_len == 1: #如果只有一项，则将该项作为选项
             optiontext = acturl_optiontext_list[0]
+            self.outPutMyLog("查找到相同或相似一项，直接使用查找到的项")
         else : #如果有好几项，则说明有包含的内容，则优先选择相等的内容
             is_equal = False
             optiontext = optiontext
+            self.outPutMyLog("查找到多项相同或相似的值，先使用原值（去掉前后空格）")
             for acturl_optiontext_one in acturl_optiontext_list:
-                if optiontext == acturl_optiontext_one: #有相等的则说明存在,选相等的
+                if optiontext == acturl_optiontext_one.strip(): #有相等的则说明存在,选相等的
+                    optiontext = acturl_optiontext_one
+                    self.outPutMyLog("从多项相同或相似的值中查找到相等的一项(去掉前后空格后)，将该项作为选项值")
                     is_equal = True
                     break  #退出循环
             if not is_equal: #如果没有找到相等的，且有包含的，则选择第一项作为
                 optiontext = acturl_optiontext_list[0]
+                self.outPutErrorMyLog("从多项相同或相似的值中没有查找到相等的一项，将第一项内容作为选项值")
 
         ele = Select(self.getEleImage(num,path))
         try:
