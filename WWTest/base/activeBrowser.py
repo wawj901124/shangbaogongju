@@ -1157,9 +1157,24 @@ class  ActiveBrowser(object):
     def findElementByXpathAndSelectOptionsNum(self,num,path,optiontext):
         optionlist = self.findElementByXpathAndReturnAllOptions(path)
 
+        acturl_optiontext_list = []
         for optionone in optionlist:
             if optiontext in optionone :  #如果文本在选项中，则将选项内容赋值给文本
-                optiontext = optionone
+                acturl_optiontext_list.append(optionone)
+        acturl_optiontext_list_len = len(acturl_optiontext_list)
+        if acturl_optiontext_list_len == 0: #如果没有，则还用传入值
+            optiontext = optiontext
+        elif acturl_optiontext_list_len == 1: #如果只有一项，则将该项作为选项
+            optiontext = acturl_optiontext_list[0]
+        else : #如果有好几项，则说明有包含的内容，则优先选择相等的内容
+            is_equal = False
+            optiontext = optiontext
+            for acturl_optiontext_one in acturl_optiontext_list:
+                if optiontext == acturl_optiontext_one: #有相等的则说明存在,选相等的
+                    is_equal = True
+                    break  #退出循环
+            if not is_equal: #如果没有找到相等的，且有包含的，则选择第一项作为
+                optiontext = acturl_optiontext_list[0]
 
         ele = Select(self.getEleImage(num,path))
         try:
