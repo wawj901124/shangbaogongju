@@ -678,11 +678,19 @@ class DefineHelpText(object):
                                         <td class="tabledataxuxian">将解析到的值以浮点数的形式存储成字符串；</td>
                                     </tr>
                                 </table> 
-
     """ + html_wei)
 
     config_collect_receive_pors_section_findmode_help_text = config_collect_factor_findmode_help_text
     config_collect_receive_pors_section_decodetype_help_text = config_collect_factor_decodetype_help_text
+    config_collect_receive_pors_section_strformat_help_text = mark_safe(html_tou + """
+                                                    为空时默认为'%d'或'%f',
+                                                    <br/>具体根据dataType（数据类型）决定，
+                                                    <br/>数据类型为INT时，则为'%d'；
+                                                    <br/>数据类型为FLOAT时，则为'%f'。
+                                                    <br/>注意：</br>
+                                                    1.对于时间的数据是整形时，需要加字节个数的限制，如%02d（限制2个字节）或%04d（限制4个字节） ,如果没有加限制，时间格式会出现数字不够的现象，例如：7月1号展示为71 ，但正确需展示应为0701；<br/>
+                                                    2.对于非时间的数据是整形时，一般不需要加字节个数的限制，否则会出现数据不对应的问题,例如： 2500 如果是%02d限制后为25，数据错误；</br>    
+    """+ html_wei)
 
     #采集指令_回复指令中的参数或状态_数据解析配置_特殊规则
     config_collect_receive_pors_convertrule_ruletype_help_text = mark_safe(html_tou + """
@@ -941,6 +949,7 @@ class DefineHelpText(object):
     config_control_send_pors_section_datatype_help_text = config_collect_receive_pors_section_datatype_help_text
     config_control_send_pors_section_findmode_help_text = config_collect_receive_pors_section_findmode_help_text
     config_control_send_pors_section_decodetype_help_text = config_collect_receive_pors_section_decodetype_help_text
+    config_control_send_pors_section_strformat_help_text = config_collect_receive_pors_section_strformat_help_text
 
     # 反控指令_下发指令_参数_配置_特殊规则
     config_control_send_pors_convertrule_ruletype_help_text = config_collect_receive_pors_convertrule_ruletype_help_text

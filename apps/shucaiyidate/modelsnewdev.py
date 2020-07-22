@@ -219,11 +219,7 @@ class ConfigCollectReceivePorsSection(models.Model):
 
     config_collect_receive_pors_section_strformat = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                      verbose_name=u"采集指令-回复指令_采集的参数或者状态_数据转换为字符串的格式",
-                                                                     help_text=u"采集指令-回复指令_采集的参数或者状态_数据转换为字符串的格式，"
-                                                                               u"符合printf函数格式化规则,为空时默认为'%d'或'%f'；"
-                                                                               u"<br/>具体根据dataType（数据类型）决定，"
-                                                                               u"数据类型为INT时，则为'%d'；"
-                                                                               u"数据类型为FLOAT时，则为'%f'。")
+                                                                     help_text=definehelptext.config_collect_receive_pors_section_strformat_help_text)
     config_collect_receive_pors_section_findmode = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                     verbose_name=u"采集指令-回复指令_采集的参数或者状态_查找模式",
                                                                     help_text=definehelptext.config_collect_receive_pors_section_findmode_help_text)
@@ -406,22 +402,12 @@ class ConfigControlSendPorsSection(models.Model):
     config_control_send_pors_section_datatype = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                  verbose_name=u"反控指令-下发指令_下发参数_数据类型",
                                                                  help_text=definehelptext.config_control_send_pors_section_datatype_help_text)
-                                                                 # help_text=u"反控指令-下发指令_下发参数_数据类型，不写默认为INT,有："
-                                                                 #           u"INT：将解析到的值以整形的形式存储成字符串；"
-                                                                 #           u"FLOAT:将解析到的值以浮点数的形式存储成字符串。")
     config_control_send_pors_section_strformat = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                   verbose_name=u"反控指令-下发指令_下发参数_数据转换为字符串的格式",
-                                                                  help_text=u"反控指令-下发指令_下发参数_数据转换为字符串的格式，"
-                                                                            u"<br/>符合printf函数格式化规则,为空时默认为'%d'或'%f',"
-                                                                            u"<br/>具体根据dataType（数据类型）决定，"
-                                                                            u"<br/>数据类型为INT时，则为'%d'；"
-                                                                            u"<br/>数据类型为FLOAT时，则为'%f'。")
+                                                                  help_text= definehelptext.config_collect_receive_pors_section_strformat_help_text)
     config_control_send_pors_section_findmode = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                  verbose_name=u"反控指令-下发指令_下发参数_查找模式",
                                                                  help_text=definehelptext.config_control_send_pors_section_findmode_help_text)
-                                                                 # help_text=u"反控指令-下发指令_下发参数_查找模式，有："
-                                                                 #           u"OFFSET（固定偏移）：相对包头的偏移量；"
-                                                                 #           u"MARK（固定标识）：所有的固定标识，不能有包含与被包含的关系，否则没法解析")
     config_control_send_pors_section_offset = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                verbose_name=u"反控指令-下发指令_下发参数_偏移量",
                                                                help_text=u"反控指令-下发指令_下发参数_偏移量，相对包头的，只针对固定偏移模式；")

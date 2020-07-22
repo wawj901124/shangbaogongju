@@ -6,18 +6,90 @@ django.setup()
 # ----------------------------------------------------------------------
 # 独运行某一个py文件时会出现如下错误：django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.，以上内容可以解决此问题,加载django中的App
 
-from WWQRSTest.autotest.config.shucaiyiold.page.loginPage import *
+
+from WWTest.base.activeBrowser import ActiveBrowser
+
+class GlobalConfig(object):
+    ISONLINE = False
+    ONLINE_WEB_YUMING= ""
+    ONLINE_LOGIN_ACCOUNT = ""
+    ONLINE_LOGIN_PASSWORD = ""
+
+    TEST_WEB_YUMING = "http://192.168.101.124"
+    TEST_LOGIN_ACCOUNT = "config"
+    TEST_LOGIN_PASSWORD = "config"
+
+    COOKIE_FILE_NAME = "shucaiyioldlogincookie.json"
+
+gc = GlobalConfig()
 
 
-class WebOldConfig(object):
 
-    def __init__(self,select_xie_yi,select_jian_kong_yin_zi_list):
+class LoginPage(object):
+    login_account_input_xpath = "/html/body/div/div/div/form/table/tbody/tr[2]/td[2]/input"
+    login_password_input_xpath = "/html/body/div/div/div/form/table/tbody/tr[3]/td[2]/input"
+    # login_code_xpath = "/html/body/div[1]/div/div[3]/div[1]/div/form/div[3]/div/div/div[2]/img"
+    # login_code_input_xpath = "/html/body/div/div/div[3]/div[1]/div/form/div[3]/div/div/div[1]/div/input"
+    login_button_xpath = "/html/body/div/div/div/form/table/tbody/tr[4]/td/input[1]"
+
+
+loginpage = LoginPage()
+
+class LoginPageFunction(object):
+    def isExist(self,activebrowser,x_xpath):
+        try:
+            activebrowser.driver.find_element_by_xpath(x_xpath)
+            return True
+        except:
+            return False
+
+    def isExistLoginButton(self,activebrowser):
+        return self.isExist(activebrowser,loginpage.login_button_xpath)
+
+    def login(self,activebroser,loginurl):
+        # activebroser = ActiveBrowser()
+        activebroser = activebroser
+        if gc.ISONLINE:
+            loginurl = gc.ONLINE_WEB_YUMING
+            loginaccount = gc.ONLINE_LOGIN_ACCOUNT
+            loginpassword = gc.ONLINE_LOGIN_PASSWORD
+        else:
+            loginurl = loginurl
+            loginaccount = gc.TEST_LOGIN_ACCOUNT
+            loginpassword = gc.TEST_LOGIN_PASSWORD
+
+        activebroser.getUrl(loginurl)
+        activebroser.findEleAndInputNum(0,"xpath",loginpage.login_account_input_xpath,loginaccount)   #输入账号
+        activebroser.findEleAndInputNum(0,"xpath",loginpage.login_password_input_xpath,loginpassword)  #输入密码
+        # code = activebroser.getcodetext(loginpage.login_code_xpath)
+        # code = activebroser.getCodeTextByThreeInterfase(loginpage.login_code_xpath)
+        # print("code:%s" %code)
+        # activebroser.findEleAndInputNum(0, "xpath",loginpage.login_code_input_xpath,code)
+        activebroser.findEleAndClick(0,"xpath",loginpage.login_button_xpath)  #点击登录
+        try:
+            activebroser.swithToAlert()
+            activebroser.delayTime(3)
+            activebroser.swithToAlert()
+        except:
+            pass
+        activebroser.writerCookieToJson(gc.COOKIE_FILE_NAME)  #写入cookie
+
+
+lpf = LoginPageFunction()
+
+
+class WebEFourConfig(object):
+
+    def __init__(self,select_xie_yi,select_jian_kong_yin_zi_list,ip,service_ip,service_port):
         self.activebrowser = ActiveBrowser()  # 实例化
         self.select_xie_yi = select_xie_yi
         self.select_jian_kong_yin_zi_list = select_jian_kong_yin_zi_list
+        self.loginurl = "http://%s"% ip
+        self.service_ip = service_ip
+        self.service_port = service_port
 
     def login(self):   #登录
-        lpf.loginwithcookiesauto(self.activebrowser)  #登录
+        lpf.login(self.activebrowser,self.loginurl)  #登录
         self.activebrowser.delayTime(20)  #等待20秒，等待页面刷新出来
 
     #切换到第一个frame
@@ -206,8 +278,8 @@ class WebOldConfig(object):
             self.handleAlert()  # 处理alert弹框
             self.activebrowser.delayTime(5)
 
-        #添加监控因子完成后，设置日志打印级别
-        self.setLogLevel()
+        # #添加监控因子完成后，设置日志打印级别
+        # self.setLogLevel()
 
         #循环完成后，要退出当前frame
         self.quiteCurrentFrame()
@@ -228,10 +300,32 @@ class WebOldConfig(object):
         self.handleAlert()   #处理弹出的弹框
 
 
+    #设置上报平台
+    #点击“网络参数配置”
+    def clickWangLuoCanShuPeiZhi(self):
+        self.switchToOneFrame()
+        wangluocanshupeizhi_link_text = "网络参数配置"
+        self.activebrowser.findEleAndClick(0, "link_text", wangluocanshupeizhi_link_text )  # 点击“网络参数配置”
+        print("已经点击【网络参数配置】")
+        self.quiteCurrentFrame()
+
+    #添加上报平台,默认写有线网络第一个服务器地址
+    def addServiceConfig(self):
+        self.switchToTwoFrame()
+        fuwuqidizhi_xpath = "/html/body/form/div/div[4]/div[2]/table/tbody/tr[2]/td[2]/input"
+        fuwuqidizhi_input_text = self.service_ip
+        self.activebroser.findEleAndInputNum(0, "xpath", fuwuqidizhi_xpath, fuwuqidizhi_input_text)  # 输入密码
+        fuwuqiduankou_xpath = "/html/body/form/div/div[4]/div[2]/table/tbody/tr[2]/td[4]/input"
+
+
+
+
+
+
     #点击写入设备
     def clickXieRuSheBei(self):
         self.switchToOneFrame()
-        xierushebei_xpath = "/html/body/div/div[5]/input"
+        xierushebei_xpath = "/html/body/div/div[4]/input"
         self.activebrowser.findEleAndClick(0, "xpath", xierushebei_xpath)
         self.handleAlert()   #处理处理alert弹框
         self.activebrowser.delayTime(60)   #等待60秒，保证机子重启完成
@@ -259,6 +353,10 @@ class WebOldConfig(object):
             self.clickDeleteAllYinZi()
             #添加监测因子
             self.addJianCeYinZi()
+            # 点击“网络参数配置”
+            self.clickWangLuoCanShuPeiZhi()
+            #添加平台
+
             #点击写入设备
             self.clickXieRuSheBei()
         #关闭web
@@ -269,8 +367,11 @@ class WebOldConfig(object):
 if __name__ == '__main__':
     select_xie_yi = "134_E"
     select_jian_kong_yin_zi_list = [ "S01"]
+    ip = "192.168.101.124"
+    service_ip = "192.168.101.123"
+    service_port = "65321"
     # select_jian_kong_yin_zi_list = ['a24087', 'a24088', 'a01016', 'a01011', 'a01012', 'a01013', 'a01014', 'a00000', 'a19001', 'a24088z']
-    wc = WebOldConfig(select_xie_yi,select_jian_kong_yin_zi_list)
+    wc = WebEFourConfig(select_xie_yi,select_jian_kong_yin_zi_list,ip,service_ip,service_port)
     wc.run()
 
 
