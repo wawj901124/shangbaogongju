@@ -811,38 +811,38 @@ class RecriminatDataOrderView(View):
                 "django_server_yuming": DJANGO_SERVER_YUMING
             })
 
-    def post(self, request,senderhexdataorder_id):
+    def post(self, request,recriminatdataorder_id):
         username = request.user.username
 
-        senderhexdataorder_form = SenderHexDataOrderForm(request.POST)  # 实例化NewAddAndCheckForm()
-        senderhexdataorder = SenderHexDataOrder.objects.get(id=int(senderhexdataorder_id))  # 获取内容
+        recriminatdataorder_form = RecriminatDataOrderForm(request.POST)  # 实例化RecriminatDataOrderForm()
+        recriminatdataorder = RecriminatDataOrder.objects.get(id=int(recriminatdataorder_id))  # 获取内容
         xieyitestcase_all = XieyiTestCase.objects.all().order_by("-id")  # dev配置依赖
 
 
 
-        if senderhexdataorder_form.is_valid():  # is_valid()判断是否有错
+        if recriminatdataorder_form.is_valid():  # is_valid()判断是否有错
 
-            senderhexdataorder_form.save(commit=True)  # 将信息保存到数据库中
+            recriminatdataorder_form.save(commit=True)  # 将信息保存到数据库中
 
-            zj = SenderHexDataOrder.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
+            zj = RecriminatDataOrder.objects.all().order_by('-id')[:1][0]  # 根据添加时间查询最新的
             user = User.objects.get(username=username)
             zj.write_user_id = user.id
             zj.save()
 
-            senderhexdataorderid = zj.id
-            senderhexdataorderadd = SenderHexDataOrder.objects.get(id=int(senderhexdataorderid))  # 获取用例
+            recriminatdataorderid = zj.id
+            recriminatdataorderadd = RecriminatDataOrder.objects.get(id=int(recriminatdataorderid))  # 获取用例
 
 
-            return render(request, "senderhexdataorder/senderHexDataOrder.html", {
-                "senderhexdataorder": senderhexdataorderadd,
-                "sumsg":u"添加数据---【{}】---成功,请继续添加".format(senderhexdataorderadd.com_send_date),
+            return render(request, "recriminatdataorder/recriminatDataOrder.html", {
+                "recriminatdataorder": recriminatdataorderadd,
+                "sumsg":u"添加数据---【{}】---成功,请继续添加".format(recriminatdataorderadd.com_send_date),
                 "django_server_yuming": DJANGO_SERVER_YUMING,
                 "xieyitestcase_all": xieyitestcase_all,
             })
         else:
-            return render(request, 'senderhexdataorder/senderHexDataOrderForm.html', {
-                "senderhexdataorder": senderhexdataorder,
-                "senderhexdataorderform": senderhexdataorder_form ,
+            return render(request, 'recriminatdataorder/recriminatDataOrderForm.html', {
+                "recriminatdataorder": recriminatdataorder,
+                "recriminatdataorderform": recriminatdataorder_form ,
                 "errmsg":u"添加失败，请重新添加，添加时请检查各个字段是否填写",
                 "django_server_yuming": DJANGO_SERVER_YUMING,
                 "xieyitestcase_all": xieyitestcase_all,

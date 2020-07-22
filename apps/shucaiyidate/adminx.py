@@ -627,7 +627,7 @@ class RecriminatDataOrderXadmin(object):
                    "com_expect_date",
                    "write_user",
                    "add_time", "update_time"]
-    list_display = ["com_send_date",]  # 定义显示的字段
+    list_display = ["com_send_date",'go_to',]  # 定义显示的字段
     list_filter = ["com_send_date",
                    "write_user"]  # 定义筛选的字段
     search_fields = ["com_send_date"]   # 定义搜索字段
