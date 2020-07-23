@@ -326,7 +326,6 @@ class  ActiveBrowser(object):
             self.findEleAndClick(0, "xpath", li_xpath_one)  # 点击
             return True
 
-
     #获取元素
     def findELesList(self,findstyle,findstylevalue):
         issecond = False
