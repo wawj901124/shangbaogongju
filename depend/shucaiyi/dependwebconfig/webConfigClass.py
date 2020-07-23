@@ -66,7 +66,7 @@ class LoginPageFunction(object):
         # print("code:%s" %code)
         # activebroser.findEleAndInputNum(0, "xpath",loginpage.login_code_input_xpath,code)
         activebroser.findEleAndClick(0,"xpath",loginpage.login_button_xpath)  #点击登录
-        activebroser.writerCookieToJson(gc.COOKIE_FILE_NAME)  #写入cookie
+        # activebroser.writerCookieToJson(gc.COOKIE_FILE_NAME)  #写入cookie
 
 
 lpf = LoginPageFunction()
@@ -307,7 +307,12 @@ class WebVSixConfig(object):
         #选择上报协议
         shangbao_pingtai_xieyi_option_text = self.select_shangbao_xieyi
         select_ul_xpath = "/html/body/div[2]/div[1]/div[1]/ul"
-        self.activebrowser.findUlAndClickSelectLi(ul_xpath=select_ul_xpath, li_text=shangbao_pingtai_xieyi_option_text)
+        is_exist_xiyi = self.activebrowser.findUlAndClickSelectLi(ul_xpath=select_ul_xpath, li_text=shangbao_pingtai_xieyi_option_text)
+        if not is_exist_xiyi: #如果不存在
+            self.activebrowser.outPutErrorMyLog("在协议列表中不存在协议【%s】,请确认协议列表"% shangbao_pingtai_xieyi_option_text )
+            assert False  #说明不存在协议，断言失败
+
+
 
         #固定写死平台名称
         pingtaimingcheng_xpath = "/html/body/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div/div/section[2]/div/div/div[3]/table/tbody/tr[1]/td[5]/div/div/div/input"
