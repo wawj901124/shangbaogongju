@@ -41,7 +41,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
         xieyiconfigdateorder = XieyiConfigDateOrder.objects.filter(id=depend_config_id)
         xieyiconfigdateorder_count = xieyiconfigdateorder.count()
         if xieyiconfigdateorder_count == 0:
-            print("没有选择相关配置依赖，请选择相关配置依赖")
+            print("测试用例没有选择相关配置依赖，请选择相关配置依赖")
             assert False
         else:
             #获取配置信息
@@ -67,6 +67,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 is_recriminat_recive_and_send = xieyiconfigdateorder_one.is_recriminat_recive_and_send
                 tcp_server_ip = xieyiconfigdateorder_one.tcp_server_ip
                 tcp_server_port = xieyiconfigdateorder_one.tcp_server_port
+                tcp_server_xieyi = xieyiconfigdateorder_one.tcp_server_xieyi
                 tcp_receive_delay_min = xieyiconfigdateorder_one.tcp_receive_delay_min
                 is_ftp_upload = xieyiconfigdateorder_one.is_ftp_upload
                 is_com_recive_and_send = xieyiconfigdateorder_one.is_com_recive_and_send
@@ -106,17 +107,44 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
 
             #是否通过web修改协议
             if is_web_modify_xieyi:   #如果是，则需要通过web修改协议
-                from depend.shucaiyi.dependwebconfig.webConfigClass import WebVSixConfig
-                from depend.shucaiyi.dependwebconfig.webOldConfigClass import WebOldConfig
-                from depend.shucaiyi.dependwebconfig.webV51ConfigClass import WebVFiveOneConfig
                 if web_type =="P1":  #如果是V6,则走V6的web程序
-                    wc = WebVSixConfig(select_xie_yi, select_jian_kong_yin_zi_list)
+                    from depend.shucaiyi.dependwebconfig.webConfigClass import WebVSixConfig
+                    wc = WebVSixConfig(select_xie_yi=select_xie_yi,
+                                       select_jian_kong_yin_zi_list=select_jian_kong_yin_zi_list,
+                                       ip=telnet_host_ip,
+                                       service_ip=tcp_server_ip,
+                                       service_port=tcp_server_port,
+                                       device_id=xieyi_device_id,
+                                       select_shangbao_xieyi=tcp_server_xieyi)
                     is_web_success = wc.run()
                 elif web_type =="P0" : #如果是V5,则走V5web程序
-                    wc = WebOldConfig(select_xie_yi, select_jian_kong_yin_zi_list)
+                    from depend.shucaiyi.dependwebconfig.webOldConfigClass import WebOldConfig
+                    wc = WebOldConfig(select_xie_yi=select_xie_yi,
+                                      select_jian_kong_yin_zi_list=select_jian_kong_yin_zi_list,
+                                      ip=telnet_host_ip,
+                                      service_ip=tcp_server_ip,
+                                      service_port=tcp_server_port,
+                                      device_id=xieyi_device_id,
+                                      select_shangbao_xieyi=tcp_server_xieyi)
                     is_web_success = wc.run()
                 elif web_type =="P2" : #如果是V5.1,则走V5.1web程序
-                    wc = WebVFiveOneConfig(select_xie_yi, select_jian_kong_yin_zi_list)
+                    from depend.shucaiyi.dependwebconfig.webV51ConfigClass import WebVFiveOneConfig
+                    wc = WebVFiveOneConfig(select_xie_yi=select_xie_yi,
+                                           select_jian_kong_yin_zi_list=select_jian_kong_yin_zi_list,
+                                           ip=telnet_host_ip,
+                                           service_ip=tcp_server_ip,
+                                           service_port=tcp_server_port,
+                                           device_id=xieyi_device_id,
+                                           select_shangbao_xieyi=tcp_server_xieyi)
+                    is_web_success = wc.run()
+                elif web_type =="P3" : #如果是E4,则走E4web程序
+                    from depend.shucaiyi.dependwebconfig.webE4ConfigClass import WebEFourConfig
+                    wc = WebEFourConfig(select_xie_yi=select_xie_yi,
+                                        select_jian_kong_yin_zi_list=select_jian_kong_yin_zi_list,
+                                        ip=telnet_host_ip,
+                                        service_ip=tcp_server_ip,
+                                        service_port=tcp_server_port,
+                                        device_id=xieyi_device_id)
                     is_web_success = wc.run()
 
 
@@ -224,7 +252,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 if web_type == "P1":  # 如果是V6,则走v6的关闭原有协议命令
                     xieyi_bin_dir_fixed_v6 = "/usr/app_install/collect/bin"
                     am.telnet_client_close_default_start_xieyi_common_with_param(xieyi_bin_dir=xieyi_bin_dir_fixed_v6)  # 执行关闭协议通用命令 V6版本协议
-                elif web_type == "P0" or web_type == "P2":  # 如果是V5,则走V5的关闭原有协议命令
+                elif web_type == "P0" or web_type == "P2" or web_type =="P3":  # 如果是V5,则走V5的关闭原有协议命令
                     xieyi_bin_dir_fixed_v5 = "/usr/app_install/protocol/bin"
                     am.telnet_client_close_default_start_xieyi_common_with_param(xieyi_bin_dir=xieyi_bin_dir_fixed_v5)  # 执行关闭协议通用命令 V5版本协议
 
@@ -232,7 +260,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 if web_type == "P1":  # 如果是V6,则走v6的重启协议命令
                     xieyi_bin_dir_fixed_v6 = "/usr/app_install/collect/bin"
                     am.telnet_client_rstart_xieyi_common_with_param(xieyi_bin_dir=xieyi_bin_dir_fixed_v6)  # 执行重启通用命令 V6版本协议
-                elif web_type == "P0" or web_type == "P2":  # 如果是V5,则走V5的重启协议命令
+                elif web_type == "P0" or web_type == "P2" or web_type =="P3":  # 如果是V5,则走V5的重启协议命令
                     xieyi_bin_dir_fixed_v5 = "/usr/app_install/protocol/bin"
                     am.telnet_client_rstart_xieyi_common_not_v6_with_param(xieyi_bin_dir=xieyi_bin_dir_fixed_v5)  # 执行重启通用命令 非V6版本
 
@@ -248,7 +276,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                 if web_type == "P1":  # 如果是V6,则走v6的解析文件函数
                     xieyi_bin_dir_fixed_v6 = "/usr/app_install/collect/bin"
                     am.ftp_down_xieyi_file_commom_with_param(xieyi_bin_dir_fixed_v6)  # 获取解析文件通用命令 V6版本协议
-                elif web_type == "P0" or web_type == "P2":  # 如果是V5,则走V5的重启协议命令
+                elif web_type == "P0" or web_type == "P2" or web_type =="P3":  # 如果是V5,则走V5的重启协议命令
                     xieyi_bin_dir_fixed_v5 = "/usr/app_install/protocol/bin"
                     am.ftp_down_xieyi_file_commom_with_param(xieyi_bin_dir_fixed_v5)  # 获取解析文件通用命令 V5版本协议
 
@@ -261,7 +289,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                     xieyi_db_fixed_v6 = "rtd.db"
                     am.ftp_get_remote_db_file_with_param(xieyi_db_remote_path=xieyi_db_remote_path_fixed_v6,
                                                          xieyi_db=xieyi_db_fixed_v6) # 获取远程实时数据库通用命令 V6版本协议
-                elif web_type == "P0" or web_type == "P2":  # 如果是V5,则走V5的重启协议命令
+                elif web_type == "P0" or web_type == "P2" or web_type =="P3":  # 如果是V5,则走V5的重启协议命令
                     xieyi_db_remote_path_fixed_v5 = "/tmp/real.db"
                     xieyi_db_fixed_v5 = "real.db"
                     am.ftp_get_remote_db_file_with_param(xieyi_db_remote_path=xieyi_db_remote_path_fixed_v5,
@@ -322,7 +350,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                             if web_type == "P1" or web_type == "P2":  # 如果是V6,则走v6的日志拼接
                                 jiexi_expect_result_one = "code:%s, rtd:%s" % (
                                 str(jiankongyinzi_list[i]), str(shuju_list[i]))
-                            elif web_type == "P0":  # 如果是V5,则走V5的日志拼接
+                            elif web_type == "P0" or web_type =="P3":  # 如果是V5,则走V5的日志拼接
                                 jiexi_expect_result_one = "Save factor(%s) raw value(%s" % (
                                 str(jiankongyinzi_list[i]), str(shuju_list[i]))
 
@@ -347,7 +375,7 @@ class TestShuCaiYiClass(unittest.TestCase):  # 创建测试类
                     assert_result_flag_result = am.assert_real_db_success_with_param(xieyi_db=xieyi_db_fixed_v6,
                                                                               xieyi_db_table_name=xieyi_db_table_name_fixed_v6)# 验证远程数据库中的实时数据是否与解析值一致通用命令 V6版本协议
                     self.assertTrue(assert_result_flag_result, msg=u"数据库断言失败")
-                elif web_type == "P0" or web_type == "P2":  # 如果是V5,则走V5的重启协议命令
+                elif web_type == "P0" or web_type == "P2" or web_type =="P3":  # 如果是V5,则走V5的重启协议命令
                     xieyi_db_fixed_v5 = "real.db"
                     xieyi_db_table_name_fixed_v5 = "rttable"
                     assert_result_flag_result = am.assert_real_db_success_with_param(xieyi_db=xieyi_db_fixed_v5,

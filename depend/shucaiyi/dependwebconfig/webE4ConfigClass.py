@@ -80,13 +80,15 @@ lpf = LoginPageFunction()
 
 class WebEFourConfig(object):
 
-    def __init__(self,select_xie_yi,select_jian_kong_yin_zi_list,ip,service_ip,service_port):
+    def __init__(self,select_xie_yi,select_jian_kong_yin_zi_list,
+                 ip,service_ip,service_port,device_id):
         self.activebrowser = ActiveBrowser()  # 实例化
         self.select_xie_yi = select_xie_yi
         self.select_jian_kong_yin_zi_list = select_jian_kong_yin_zi_list
         self.loginurl = "http://%s"% ip
         self.service_ip = service_ip
         self.service_port = service_port
+        self.device_id = device_id
 
     def login(self):   #登录
         lpf.login(self.activebrowser,self.loginurl)  #登录
@@ -147,6 +149,11 @@ class WebEFourConfig(object):
 
         #选择某个协议：
         self.activebrowser.findElementByXpathAndSelectOptionsNum(0,select_xieyi_xpath,pre_select_option_text)
+
+        #输入设备ID
+        device_id_xpath = "/html/body/form/div/div[2]/table/tbody/tr[6]/td[9]/input"
+        device_id_input_text = self.device_id
+        self.activebrowser.findEleAndInputNum(0,"xpath",device_id_xpath,device_id_input_text)
 
         #点击保存
         save_xpath = "/html/body/form/div/div[2]/table/tbody/tr[13]/td/input[1]"
@@ -314,12 +321,16 @@ class WebEFourConfig(object):
         self.switchToTwoFrame()
         fuwuqidizhi_xpath = "/html/body/form/div/div[4]/div[2]/table/tbody/tr[2]/td[2]/input"
         fuwuqidizhi_input_text = self.service_ip
-        self.activebroser.findEleAndInputNum(0, "xpath", fuwuqidizhi_xpath, fuwuqidizhi_input_text)  # 输入密码
+        self.activebrowser.findEleAndInputNum(0, "xpath", fuwuqidizhi_xpath, fuwuqidizhi_input_text)  # 输入服务器IP
         fuwuqiduankou_xpath = "/html/body/form/div/div[4]/div[2]/table/tbody/tr[2]/td[4]/input"
+        fuwuqiduankou_input_text = self.service_port
+        self.activebrowser.findEleAndInputNum(0, "xpath", fuwuqiduankou_xpath, fuwuqiduankou_input_text)  # 输入服务器端口
 
-
-
-
+        #点击“保存”
+        baocun_xpath = "/html/body/form/div/table/tbody/tr/td/input[2]"
+        self.activebrowser.findEleAndClick(0,"xpath",baocun_xpath)
+        self.handleAlert()
+        self.quiteCurrentFrame() #退出
 
 
     #点击写入设备
@@ -356,7 +367,7 @@ class WebEFourConfig(object):
             # 点击“网络参数配置”
             self.clickWangLuoCanShuPeiZhi()
             #添加平台
-
+            self.addServiceConfig()
             #点击写入设备
             self.clickXieRuSheBei()
         #关闭web
@@ -365,13 +376,14 @@ class WebEFourConfig(object):
 
 
 if __name__ == '__main__':
-    select_xie_yi = "134_E"
-    select_jian_kong_yin_zi_list = [ "S01"]
+    select_xie_yi = "496_E"
+    select_jian_kong_yin_zi_list = [ "S02"]
     ip = "192.168.101.124"
     service_ip = "192.168.101.123"
     service_port = "65321"
+    device_id = "5"
     # select_jian_kong_yin_zi_list = ['a24087', 'a24088', 'a01016', 'a01011', 'a01012', 'a01013', 'a01014', 'a00000', 'a19001', 'a24088z']
-    wc = WebEFourConfig(select_xie_yi,select_jian_kong_yin_zi_list,ip,service_ip,service_port)
+    wc = WebEFourConfig(select_xie_yi,select_jian_kong_yin_zi_list,ip,service_ip,service_port,device_id)
     wc.run()
 
 

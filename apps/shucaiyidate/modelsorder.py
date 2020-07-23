@@ -20,15 +20,15 @@ class XieyiConfigDateOrder(models.Model):
     # test_case_title = models.CharField(max_length=200, default="", verbose_name=u"测试内容的名称")
     # is_run_case = models.BooleanField(default=True,verbose_name=u"是否运行")
     web_type = models.CharField(max_length=10,null=True, blank=True,
-                                     choices=(("P0", u"V5.0"),("P2", u"V5.1"),("P1", u"V6.0")),
+                                     choices=(("P3", u"E4"),("P0", u"V5.0"),("P2", u"V5.1"),("P1", u"V6.0")),
                                      default="P0",
                                      verbose_name=u"系统类型")
-    is_web_modify_xieyi = models.BooleanField(default=True,verbose_name=u"是否通过web端修改协议")
+    is_web_modify_xieyi = models.BooleanField(default=False,verbose_name=u"是否通过web端修改协议")
 
     web_xieyi_name =  models.CharField(max_length=100, default="",  null=True, blank=True,verbose_name=u"web端选择的协议名称")
     web_xieyi_yinzi = models.CharField(max_length=2000, default="",  null=True, blank=True,verbose_name=u"web端添加的监控因子",
                                        help_text=u"web端添加的监控因子，多个因子之间以半角逗号隔开")
-    is_upload_dev_config_file = models.BooleanField(default=True,verbose_name=u"是否上传Dev配置文件")
+    is_upload_dev_config_file = models.BooleanField(default=False,verbose_name=u"是否上传Dev配置文件")
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
                                    verbose_name=u"依赖的Dev配置",on_delete=models.PROTECT)
     dev_config_name = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"dev配置文件的名字",
@@ -47,7 +47,7 @@ class XieyiConfigDateOrder(models.Model):
     xieyi_device_id = models.CharField(max_length=100, default="1",  null=True, blank=True,verbose_name=u"设备ID号",
                                  help_text=u"下发或接收指令的设备ID号或站地址")
 
-    is_com_recive_and_send =  models.BooleanField(default=True,verbose_name=u"是否进行数据接收和发送")
+    is_com_recive_and_send =  models.BooleanField(default=False,verbose_name=u"是否进行数据接收和发送")
 
     com_port = models.CharField(max_length=100, default="COM3", verbose_name=u"电脑与数采仪连接的USB口",
                                 help_text=u"电脑与数采仪连接的USB口，例如USB口为COM4，则填写COM4")
@@ -74,8 +74,8 @@ class XieyiConfigDateOrder(models.Model):
     #                                 help_text=u"预期接收到的指令的内容，如预期接收到的指令的内容为：01 03 12 2D 00 01 11 7B，则此处填写01 03 12 2D 00 01 11 7B")
 
     # is_ftp_down_xieyi_file = models.BooleanField(default=True,verbose_name=u"是否ftp下载获取解析文件")
-    is_with_code_assert = models.BooleanField(default=True,verbose_name=u"断言结果是否带因子代码")
-    is_assert_file_success = models.BooleanField(default=True,verbose_name=u"是否断言协议预期解析结果在协议解析文件中")
+    is_with_code_assert = models.BooleanField(default=False,verbose_name=u"断言结果是否带因子代码")
+    is_assert_file_success = models.BooleanField(default=False,verbose_name=u"是否断言协议预期解析结果在协议解析文件中")
 
     # xieyi_jiexi_expect_result = models.CharField(max_length=1000, default="0.234", verbose_name=u"协议解析预期结果",
     #                                 help_text=u"协议解析预期结果，如预期结果为0.234，则此处填写0.234，如有多个预期结果，每个结果之间以半角逗号隔开，如:0.234,9.55")
@@ -94,6 +94,7 @@ class XieyiConfigDateOrder(models.Model):
     is_recriminat_recive_and_send = models.BooleanField(default=False, verbose_name=u"是否进行反控数据接收和发送")
     tcp_server_ip = models.CharField(max_length=100, default="192.168.101.123", null=True, blank=True,verbose_name=u"数据上报平台的IP地址")
     tcp_server_port = models.CharField(max_length=100, default="63503", null=True, blank=True,verbose_name=u"数据上报平台的端口号")
+    tcp_server_xieyi = models.CharField(max_length=100, default="2007", null=True, blank=True,verbose_name=u"数据上报平台的协议")
     tcp_receive_delay_min = models.CharField(max_length=100, default="10", null=True, blank=True,verbose_name=u"tcp服务接收的数据为当前时间后延的时间（以分钟为单位）")
 
 
