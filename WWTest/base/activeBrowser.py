@@ -105,7 +105,7 @@ class  ActiveBrowser(object):
 
         chrome_options = webdriver.ChromeOptions()   #为驱动加入无界面配置
 
-        chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
+        # chrome_options.add_argument('--headless')   #–headless”参数是不用打开图形界面
         chrome_options.add_argument('--no-sandbox')  #“–no - sandbox”参数是让Chrome在root权限下跑
         chrome_options.add_argument("--kiosk") #全屏启动
         chrome_options.add_argument("--start-maximized")  #全屏启动
@@ -271,6 +271,7 @@ class  ActiveBrowser(object):
     #查找ul中对应的li元素并点击
     def findUlAndClickSelectLi(self,ul_xpath,li_text):
         li_text_list = []
+        li_like_text_list = []
         son_ele_s = self.getFatherSonElesList("xpath", ul_xpath, "tag_name", "li")  # 获取选项的所有li元素
         son_count = len(son_ele_s)
         for son_count_one in range(1, son_count + 1, 1):
@@ -279,12 +280,63 @@ class  ActiveBrowser(object):
             li_one_text = self.findElementByXpathAndReturnTextNotNum(li_xpath_one)
             print(li_one_text)
             li_text_list.append(li_one_text)
-            if li_text in li_one_text:  # 如果元素文本包含预期，则进行点击选择
-                self.findEleAndClick(0, "xpath", li_xpath_one)  # 点击
-                break  # 退出循环
 
-        self.outPutMyLog("已经获取到的列表的选项内容：")
+            if li_text in li_one_text:  # 如果元素文本包含预期，则进行点击选择
+                li_like_text_list.append(li_one_text)
+                # self.findEleAndClick(0, "xpath", li_xpath_one)  # 点击
+                # break  # 退出循环
+
+        self.outPutMyLog("已经获取到的列表的所有选项内容：")
         self.outPutMyLog(li_text_list)
+        self.outPutMyLog("已经获取到的列表中与预期相同或相似的选项内容：")
+        self.outPutMyLog(li_like_text_list)
+        li_like_text_list_len = len(li_like_text_list)
+        if li_like_text_list_len == 0:  #说明不存在内容
+            self.outPutErrorMyLog("【%s】不在列表选项【%s】中" % (str(li_text), str(li_text_list)))
+            return False
+        elif li_like_text_list_len == 1: #说明找到一个相似的
+            #找到该内容在li_text_list中的位置，并点击该内容
+            li_text = li_like_text_list[0]
+            xiabiao = li_text_list.index(li_text)
+            print("xiabiao:")
+            print(xiabiao)
+            xiabiao = int(xiabiao)+1
+            li_xpath_one = "%s/%s[%s]" % (ul_xpath, "li", xiabiao)
+            self.findEleAndClick(0, "xpath", li_xpath_one)  # 点击
+            return True
+        else:  #如果大于等于1，则说明有多个
+            #先找有没有相等的，有，则选择相等的一项，无则选择第一项作为选项
+            for li_like_text_one in li_like_text_list:  #遍历
+                if li_text.strip().lower() == li_like_text_one.strip().lower(): #如果去掉空格后且小写匹配，则赋值
+                    li_text = li_like_text_one
+                    xiabiao = li_text_list.index(li_text)
+                    print("xiabiao:")
+                    print(xiabiao)
+                    xiabiao = int(xiabiao) + 1
+                    li_xpath_one = "%s/%s[%s]" % (ul_xpath, "li", xiabiao)
+                    self.findEleAndClick(0, "xpath", li_xpath_one)  # 点击
+                    return True
+            #如果没有找到相等项，则赋值第一项内容
+            li_text = li_like_text_list[0]
+            xiabiao = li_text_list.index(li_text)
+            print("xiabiao:")
+            print(xiabiao)
+            xiabiao = int(xiabiao) + 1
+            li_xpath_one = "%s/%s[%s]" % (ul_xpath, "li", xiabiao)
+            self.findEleAndClick(0, "xpath", li_xpath_one)  # 点击
+            return True
+
+
+
+
+
+
+
+
+
+
+
+
 
         is_exist_flag = False
         for li_text_one in li_text_list:
@@ -879,7 +931,7 @@ class  ActiveBrowser(object):
         ele = self.findElementByXpath(path)
         eletext = ele.text
         self.outPutMyLog("元素的Xpath路径为：%s;对应的文本信息为：%s"%(path,eletext))
-        self.delayTime(3)
+        # self.delayTime(1)
         return eletext
 
 
