@@ -327,29 +327,6 @@ class  ActiveBrowser(object):
             return True
 
 
-
-
-
-
-
-
-
-
-
-
-
-        is_exist_flag = False
-        for li_text_one in li_text_list:
-            if li_text in li_text_one:
-                self.outPutMyLog("【%s】在列表选项【%s】中" % (str(li_text), str(li_text_one)))
-                is_exist_flag = True
-                break
-        if is_exist_flag:
-            self.outPutMyLog("【%s】在列表选项【%s】中" % (str(li_text), str(li_text_list)))
-        else:
-            self.outPutErrorMyLog("【%s】不在列表选项【%s】中" % (str(li_text), str(li_text_list)))
-        return is_exist_flag
-
     #获取元素
     def findELesList(self,findstyle,findstylevalue):
         issecond = False
