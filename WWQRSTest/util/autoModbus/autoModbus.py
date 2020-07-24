@@ -1263,6 +1263,25 @@ class AutoModbus(object):
         return True  # 否则返回True
 
 
+    #判断文件中存在正确的解析值,带有参数，预期断言结果，预期结果有多个列表系列
+    def assert_file_success_with_param_more_list(self,expect_result_list_more_list):
+        expect_result_list_more_list_assert_result_list = []
+        for expect_result_list in expect_result_list_more_list:
+            expect_result_list_aseert_result =  self.assert_file_success_with_param(expect_result_list)
+            expect_result_list_more_list_assert_result_list.append(expect_result_list_aseert_result)
+
+        for expect_result_list_more_list_assert_result_one in expect_result_list_more_list_assert_result_list:
+            if not expect_result_list_more_list_assert_result_one:  # 如果有False，则返回False
+                return False
+
+        return True  # 否则返回True
+
+
+
+
+
+
+
     #判断文件中存在正确的解析值,带有参数，预期断言结果
     def assert_file_success_with_param(self,expect_result_list):
         local_file = self.xieyi_txt_file_name

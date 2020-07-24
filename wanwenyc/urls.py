@@ -13,13 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
+from django.contrib import admin  #导入admin
 from django.urls import path,include
 import xadmin
 from django.views.static import serve   #导入django处理静态文件的包serve ,用于处理midia路径下的文件
 from .settings import MEDIA_ROOT    #导入Settings中配置的MEDIA_ROOT
 
 urlpatterns = [
+    path('admin/', admin.site.urls),  # 配置上传文件的访问处理函数,配置admin入口
     path('', xadmin.site.urls),       # 配置上传文件的访问处理函数
 
     # 配置处理引用midia路径下文件的路径,调用serve方法,需要传入参数{"document_root":MEDIA_ROOT}

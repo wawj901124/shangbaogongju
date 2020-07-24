@@ -53,6 +53,11 @@ class GuideHelp(models.Model):
     def __str__(self):
         return "{}-【{}】".format(self.id,self.guide_project)
 
+    #model的save函数，关联保存
+    def save(self, *args, **kwargs):
+        self.guide_project = self.guide_file.name
+        super().save(*args, **kwargs)
+
     def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
         all_html = ""

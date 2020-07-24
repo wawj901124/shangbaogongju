@@ -18,7 +18,7 @@ class ComThread:
         self.port = Port
         self.baudrate = Baudrate   # 设置波特率
         self.bytesize = Bytesize  # 设置数据位
-        self.parity = Parity  # 设置校验位
+        self.parity = Parity.upper()  # 设置校验位,无论大小写都转为大写
         self.stopbits = Stopbits  # 设置停止位
         self.timeout = Timeout   #超时设置
         self.expectdatebytes=ExpectDateBytes

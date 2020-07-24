@@ -1746,8 +1746,7 @@ class GuideHelpXadmin(object):
     search_fields = ['guide_project',]   # 定义搜索字段
     model_icon = "fa fa-file-text"  # 定义图标显示
     ordering = ["-add_time"]  # 添加默认排序规则显示排序，根据添加时间倒序排序
-    readonly_fields = ["write_user", "add_time",
-                       "update_time"]  # 设置某些字段为只为可读  #设置了readonly_fields，再设置exclude，exclude对该字段无效，
+    # readonly_fields = ['write_user','add_time','update_time'] # 设置某些字段为只为可读  #设置了readonly_fields，再设置exclude，exclude对该字段无效，
 
     # exclude = ['case_step']  # 设置某些字段为不显示，即隐藏  #readonly_fields和exclude设置会有冲突
     # inlines = [TestCaseInline]  # inlines配和TestCaseInline使用，可以直接在项目页面添加测试用例#只能做一层嵌套，不能进行两层嵌套
@@ -1765,6 +1764,19 @@ class GuideHelpXadmin(object):
 
     # 设置是否加入导入插件
     # import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
+
+
+    #可以根据是否为超级用户，设置某些字段为可读，即超级管理员可以进行编辑，而普通用户不可以进行编辑的字段设置
+    def get_readonly_fields(self):
+        fields = []
+        if self.request.user.is_superuser:  #
+            fields = ['add_time', 'update_time']
+            return fields
+        else:
+            fields = ['write_user','add_time','update_time']   #例如，用户，超级管理员可以分配用户，而普通不可以编辑用户
+            return fields
+
+
 
 
 
