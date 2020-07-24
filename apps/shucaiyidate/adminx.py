@@ -1133,13 +1133,25 @@ class NodeConfigXadmin():
     all_zi_duan = ["id",
                    "config_project",
                    "add_time", "update_time"]
-    list_display = ["id",
-                    "config_project",
+    list_display = ["config_project",
                     "config_file_name",
+                    "config_xieyi_num",
+                    "config_xieyi_type",
+                    "config_version",
+                    "config_device",
                     "go_to"]  # 定义显示的字段
     list_filter = ["config_project",
+                   "config_file_name",
+                   "config_xieyi_num",
+                   "config_xieyi_type",
+                   "config_version",
+                   "config_device",
                    "write_user"]  # 定义筛选的字段
-    search_fields = ["config_project", ]   # 定义搜索字段
+    search_fields = ["config_project",
+                     "config_file_name",
+                     "config_version",
+                     "config_device",
+                     "config_xieyi_num",]   # 定义搜索字段
     model_icon = "fa fa-file-text"  # 定义图标显示
     ordering = ["-add_time"]  # 添加默认排序规则显示排序，根据添加时间倒序排序
     # readonly_fields = ["write_user", "add_time",
@@ -1157,7 +1169,7 @@ class NodeConfigXadmin():
     show_detail_fields = ["config_project", ]  # 显示数据详情
 
     # 编辑页的字段显示
-    fields=['config_project','config_version','config_device','config_collect_packet_len','local_file',]   #添加页的字段显示
+    fields=['config_project','config_xieyi_num','config_xieyi_type','config_version','config_device','config_collect_packet_len','local_file',]   #添加页的字段显示
 
     list_export = ('xls',)  # 控制列表页导出数据的可选格式
     show_bookmarks = True  # 控制是否显示书签功能

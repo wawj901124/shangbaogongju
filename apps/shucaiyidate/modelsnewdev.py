@@ -27,6 +27,11 @@ def upload_local_file_path(instance, filename):  #instance代表模式示例，f
 class NodeConfig(models.Model):
     config_project = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"项目名称")
     config_file_name = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"文件名称")
+    config_xieyi_num = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"协议编号")
+    config_xieyi_type = models.CharField(max_length=10,null=True, blank=True,
+                                     choices=(("HEX", "HEX"), ("ASCII", "ASCII")),
+                                     default="HEX",
+                                     verbose_name=u"协议类型")
     config_version = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"版本号",
                                       help_text=u" 版本号配置，每次修改配置都需要更新，一般取配置日期作为版本号,例如：v20180423")
     config_device = models.CharField(max_length=100, default="", null=True, blank=True, verbose_name=u"设备名称",
@@ -76,11 +81,16 @@ class ConfigCollectSendCmd(models.Model):
                                    verbose_name=u"依赖的节点配置",on_delete=models.PROTECT)
     config_collect_send_id = models.CharField(max_length=100, default="rtdCollect", null=True, blank=True,
                                               verbose_name=u"采集指令-下发指令_下发指令ID",
-                                              help_text=u"采集指令-下发指令_下发指令ID，下发指令ID，可以为空，起到一个说明作用")
+                                              help_text=u"可以为空，起到一个说明作用")
 
-    config_collect_send_format = models.CharField(max_length=100, default="", null=True, blank=True,
+    config_collect_send_format = models.CharField(max_length=10,null=True, blank=True,
+                                                  choices=(("HEX", "HEX"), ("ASCII", "ASCII")),
+                                                  default="HEX",
                                                   verbose_name=u"采集指令-下发指令_下发指令类型",
                                                   help_text=definehelptext.config_collect_send_format_help_text)
+        # models.CharField(max_length=100, default="", null=True, blank=True,
+        #                                           verbose_name=u"采集指令-下发指令_下发指令类型",
+        #                                           help_text=definehelptext.config_collect_send_format_help_text)
 
     config_collect_send_cmd = models.CharField(max_length=1000, default="", null=True, blank=True,
                                                verbose_name=u"具体下发指令",
@@ -92,26 +102,28 @@ class ConfigCollectSendCmd(models.Model):
 
     config_collect_send_ackhead = models.CharField(max_length=100, default="", null=True, blank=True,
                                                    verbose_name=u"采集指令-下发指令_回复数据的包头",
-                                                   help_text=u"采集指令-下发指令_回复数据的包头，支持宏定义，”${}”,"
-                                                             u"只有在R_HEAD_TAIL和R_HEAD_LEN这两种报文格式下才有意义，其他为空即可。")
+                                                   help_text=u"支持宏定义，”${}”,</br>"
+                                                             u"只有在R_HEAD_TAIL和R_HEAD_LEN这两种报文格式下才有意义，</br>"
+                                                             u"其他为空即可。")
     config_collect_send_acktail = models.CharField(max_length=100, default="", null=True, blank=True,
                                                    verbose_name=u"采集指令-下发指令_回复报文的包尾",
-                                                   help_text=u"采集指令-下发指令_回复报文的包尾，也支持宏定义，"
-                                                             u"只有在R_HEAD_TAIL和R_TAIL_ONLY这两种报文格式下才有意义，其他为空即可。")
+                                                   help_text=u"也支持宏定义，</br>"
+                                                             u"只有在R_HEAD_TAIL和R_TAIL_ONLY这两种报文格式下才有意义，</br>"
+                                                             u"其他为空即可。")
     config_collect_send_acklen = models.CharField(max_length=100, default="", null=True, blank=True,
                                                   verbose_name=u"采集指令-下发指令_回复报文的总长度",
-                                                  help_text=u"采集指令-下发指令_回复报文的总长度，"
-                                                            u"只有在R_HEAD_LEN和R_LEN_ONLY这两种报文格式下才有意义，其他为空即可。")
+                                                  help_text=u"只有在R_HEAD_LEN和R_LEN_ONLY这两种报文格式下才有意义，</br>"
+                                                            u"其他为空即可。")
     config_collect_send_ackgap = models.CharField(max_length=100, default="", null=True, blank=True,
                                                   verbose_name=u"采集指令-下发指令_回复报文的分包间隔",
-                                                  help_text=u"采集指令-下发指令_回复报文的分包间隔，一般为空即可")
+                                                  help_text=u"一般为空即可")
     config_collect_send_ackcheckmode = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"采集指令-下发指令_回复报文的检验",
                                                         help_text=definehelptext.config_collect_send_ackcheckmode_help_text)
 
     config_collect_send_ackcheckarg = models.CharField(max_length=100, default="", null=True, blank=True,
                                                        verbose_name=u"采集指令-下发指令_回复报文的固定标识检验参数",
-                                                       help_text=u"采集指令-下发指令_回复报文的固定标识检验参数，只有固定标识才有意义，一般为空。")
+                                                       help_text=u"只有固定标识才有意义，一般为空。")
 
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
@@ -135,23 +147,28 @@ class ConfigCollectFactor(models.Model):
 
     config_collect_factor_factorcode = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"采集指令-监测因子_监测因子代码",
-                                                        help_text=u"采集指令-下发指令_监测因子代码，例如：w01018")
+                                                        help_text=u"例如：w01018")
 
-    config_collect_factor_findmode = models.CharField(max_length=100, default="", null=True, blank=True,
+    config_collect_factor_findmode = models.CharField(max_length=10,null=True, blank=True,
+                                                      choices=(("OFFSET", "OFFSET"), ("MARK", "MARK")),
+                                                      default="OFFSET",
                                                       verbose_name=u"采集指令-监测因子_查找模式",
                                                       help_text=definehelptext.config_collect_factor_findmode_help_text)
+        # models.CharField(max_length=100, default="", null=True, blank=True,
+        #                                               verbose_name=u"采集指令-监测因子_查找模式",
+        #                                               help_text=definehelptext.config_collect_factor_findmode_help_text)
+
 
     config_collect_factor_offset = models.CharField(max_length=100, default="", null=True, blank=True,
                                                     verbose_name=u"采集指令-监测因子_偏移量",
-                                                    help_text=u"采集指令-监测因子_偏移量，相对包头的，只针对固定偏移模式；")
+                                                    help_text=u"相对包头的，只针对固定偏移模式；")
 
     config_collect_factor_mark = models.CharField(max_length=100, default="", null=True, blank=True,
                                                   verbose_name=u"采集指令-监测因子_固定标识",
-                                                  help_text=u"采集指令-监测因子_固定标识，针对固定标识模式；")
+                                                  help_text=u"针对固定标识模式；")
 
     config_collect_factor_len = models.CharField(max_length=100, default="", null=True, blank=True,
-                                                 verbose_name=u"采集指令-监测因子_解析的宽度",
-                                                 help_text=u"采集指令-监测因子_解析的宽度；")
+                                                 verbose_name=u"采集指令-监测因子_解析的宽度")
 
     config_collect_factor_decodetype = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"采集指令-监测因子_数据解析算法",
@@ -159,10 +176,10 @@ class ConfigCollectFactor(models.Model):
 
     config_collect_factor_operator = models.CharField(max_length=100, default="*", null=True, blank=True,
                                                       verbose_name=u"采集指令-监测因子_操作符",
-                                                      help_text=u"采集指令-监测因子_操作符，无特殊需求写*即可")
+                                                      help_text=u"无特殊需求写*即可")
     config_collect_factor_operand = models.CharField(max_length=100, default="1", null=True, blank=True,
                                                      verbose_name=u"采集指令-监测因子_操作数",
-                                                     help_text=u"采集指令-监测因子_操作数，无特殊需求写1即可")
+                                                     help_text=u"无特殊需求写1即可")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
@@ -185,13 +202,18 @@ class ConfigCollectReceivePors(models.Model):
 
     config_collect_receive_pors_factorcode=models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"采集指令-回复指令_采集的参数或者状态的代码",
-                                                        help_text=u"采集指令-监测因子_采集的参数或者状态的代码，例如：i1210A；"
-                                                                  u"<br/>注意：当参数或者状态代码为SampleTime时，为特殊参数或者状态，"
-                                                                  u"该参数或者状态代表前端仪器的采样时间，在发送给数据库时该参数或者状态是不发送的，"
+                                                        help_text=u"例如：i1210A；"
+                                                                  u"<br/>注意：当参数或者状态代码为SampleTime时，为特殊参数或者状态，</br>"
+                                                                  u"该参数或者状态代表前端仪器的采样时间，在发送给数据库时该参数或者状态是不发送的，</br>"
                                                                   u"而是在实时数据发送时将该参数的值赋值给采样时间发送。")
-    config_collect_receive_pors_factortype=models.CharField(max_length=100, default="", null=True, blank=True,
-                                                        verbose_name=u"采集指令-回复指令_采集的参数或者状态的类型",
-                                                        help_text=definehelptext.config_collect_receive_pors_factortype_help_text)
+    config_collect_receive_pors_factortype= models.CharField(max_length=10,null=True, blank=True,
+                                                             choices=(("PARAM", "PARAM"), ("STATE", "STATE")),
+                                                             default="PARAM",
+                                                             verbose_name=u"采集指令-回复指令_采集的参数或者状态的类型",
+                                                             help_text=definehelptext.config_collect_receive_pors_factortype_help_text)
+        # models.CharField(max_length=100, default="", null=True, blank=True,
+        #                                                 verbose_name=u"采集指令-回复指令_采集的参数或者状态的类型",
+        #                                                 help_text=definehelptext.config_collect_receive_pors_factortype_help_text)
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
@@ -213,28 +235,37 @@ class ConfigCollectReceivePorsSection(models.Model):
     configcollectreceivepors = models.ForeignKey( ConfigCollectReceivePors,default="", null=True, blank=True,
                                    verbose_name=u"依赖的采集指令之回复指令中的参数或状态",on_delete=models.PROTECT)
 
-    config_collect_receive_pors_section_datatype = models.CharField(max_length=100, default="", null=True, blank=True,
+    config_collect_receive_pors_section_datatype = models.CharField(max_length=10,null=True, blank=True,
+                                                                    choices=(("FLOAT", "FLOAT"), ("INT", "INT")),
+                                                                    default="FLOAT",
                                                                     verbose_name=u"采集指令-回复指令_采集的参数或者状态_数据类型",
                                                                     help_text=definehelptext.config_collect_receive_pors_section_datatype_help_text)
+        # models.CharField(max_length=100, default="", null=True, blank=True,
+        #                                                             verbose_name=u"采集指令-回复指令_采集的参数或者状态_数据类型",
+        #                                                             help_text=definehelptext.config_collect_receive_pors_section_datatype_help_text)
 
     config_collect_receive_pors_section_strformat = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                      verbose_name=u"采集指令-回复指令_采集的参数或者状态_数据转换为字符串的格式",
                                                                      help_text=definehelptext.config_collect_receive_pors_section_strformat_help_text)
-    config_collect_receive_pors_section_findmode = models.CharField(max_length=100, default="", null=True, blank=True,
+    config_collect_receive_pors_section_findmode = models.CharField(max_length=10,null=True, blank=True,
+                                                                    choices=(("OFFSET", "OFFSET"), ("MARK", "MARK")),
+                                                                    default="OFFSET",
                                                                     verbose_name=u"采集指令-回复指令_采集的参数或者状态_查找模式",
                                                                     help_text=definehelptext.config_collect_receive_pors_section_findmode_help_text)
+        # models.CharField(max_length=100, default="", null=True, blank=True,
+        #                                                             verbose_name=u"采集指令-回复指令_采集的参数或者状态_查找模式",
+        #                                                             help_text=definehelptext.config_collect_receive_pors_section_findmode_help_text)
 
     config_collect_receive_pors_section_offset = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                   verbose_name=u"采集指令-回复指令_采集的参数或者状态_偏移量",
-                                                                  help_text=u"采集指令-回复指令_采集的参数或者状态_偏移量，相对包头的，只针对固定偏移模式；")
+                                                                  help_text=u"相对包头的，只针对固定偏移模式；")
 
     config_collect_receive_pors_section_mark = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                 verbose_name=u"采集指令-回复指令_采集的参数或者状态_固定标识",
-                                                                help_text=u"采集指令-回复指令_采集的参数或者状态_固定标识，针对固定标识模式；")
+                                                                help_text=u"针对固定标识模式；")
 
     config_collect_receive_pors_section_len = models.CharField(max_length=100, default="", null=True, blank=True,
-                                                               verbose_name=u"采集指令-回复指令_采集的参数或者状态_解析的宽度",
-                                                               help_text=u"采集指令-回复指令_采集的参数或者状态_解析的宽度；")
+                                                               verbose_name=u"采集指令-回复指令_采集的参数或者状态_解析的宽度")
 
     config_collect_receive_pors_section_decodetype = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                       verbose_name=u"采集指令-回复指令_采集的参数或者状态_数据解析算法",
@@ -242,10 +273,10 @@ class ConfigCollectReceivePorsSection(models.Model):
 
     config_collect_receive_pors_section_operator = models.CharField(max_length=100, default="*", null=True, blank=True,
                                                                     verbose_name=u"采集指令-回复指令_采集的参数或者状态_操作符",
-                                                                    help_text=u"采集指令-回复指令_采集的参数或者状态_操作符，无特殊需求写*即可")
+                                                                    help_text=u"无特殊需求写*即可")
     config_collect_receive_pors_section_operand = models.CharField(max_length=100, default="1", null=True, blank=True,
                                                                    verbose_name=u"采集指令-回复指令_采集的参数或者状态_操作数",
-                                                                   help_text=u"采集指令-回复指令_采集的参数或者状态_操作数，无特殊需求写1即可")
+                                                                   help_text=u"无特殊需求写1即可")
 
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
@@ -277,25 +308,21 @@ class ConfigCollectReceivePorsConvertrule(models.Model):
 
     config_collect_receive_pors_convertrule_enumvalue = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"采集指令-回复指令_采集的参数或者状态-特殊转换规则_枚举值",
-                                                        help_text=u"采集指令-回复指令_采集的参数或者状态-特殊转换规则_枚举值，"
-                                                                  u"<br/>多个值之间用分号隔开，如：2;5;78,只针对特殊规则类型为1（即枚举类型），"
+                                                        help_text=u"多个值之间用分号隔开，如：2;5;78,只针对特殊规则类型为1（即枚举类型），"
                                                                   u"<br/>当取值为枚举值其中之一时，将resultValue的值存起来；")
     config_collect_receive_pors_convertrule_minvalue = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"采集指令-回复指令_采集的参数或者状态-特殊转换规则_最小值",
-                                                        help_text=u"采集指令-回复指令_采集的参数或者状态-特殊转换规则_最小值，"
-                                                                  u"<br/>针对特殊规则类型为2（即小于最小值类型）或特殊规则类型为4(即最大值最小值之间类型)，"
+                                                        help_text=u"针对特殊规则类型为2（即小于最小值类型）或特殊规则类型为4(即最大值最小值之间类型)，"
                                                                   u"<br/>取值小于最小值时，将resultValue的值存起来；"
                                                                   u"<br/>或者取值在最大值和最小值之间，将resultValue的值存起来；")
     config_collect_receive_pors_convertrule_maxvalue = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"采集指令-回复指令_采集的参数或者状态-特殊转换规则_最大值",
-                                                        help_text=u"采集指令-回复指令_采集的参数或者状态-特殊转换规则_最大值，"
-                                                                  u"<br/>针对特殊规则类型为3（即大于最大值类型）或特殊规则类型为4(即最大值最小值之间类型)，"
+                                                        help_text=u"针对特殊规则类型为3（即大于最大值类型）或特殊规则类型为4(即最大值最小值之间类型)，"
                                                                   u"<br/>取值大于最大值时，将resultValue的值存起来；"
                                                                   u"<br/>或者取值在最大值和最小值之间，将resultValue的值存起来；")
     config_collect_receive_pors_convertrule_resultvalue = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"采集指令-回复指令_采集的参数或者状态-特殊转换规则_最终保存的值",
-                                                        help_text=u"采集指令-回复指令_采集的参数或者状态-特殊转换规则_最终保存的值，"
-                                                                  u"与设置的规则和数值相对应的值")
+                                                        help_text=u"与设置的规则和数值相对应的值")
 
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
@@ -319,9 +346,14 @@ class ConfigControlSendCmd(models.Model):
                                               verbose_name=u"反控指令-下发指令_下发指令ID",
                                               help_text=definehelptext.config_control_send_id_help_text)
 
-    config_control_send_format = models.CharField(max_length=100, default="", null=True, blank=True,
+    config_control_send_format = models.CharField(max_length=10,null=True, blank=True,
+                                                  choices=(("HEX", "HEX"), ("ASCII", "ASCII")),
+                                                  default="HEX",
                                                   verbose_name=u"反控指令-下发指令_下发指令类型",
                                                   help_text=definehelptext.config_control_send_format_help_text)
+        # models.CharField(max_length=100, default="", null=True, blank=True,
+        #                                           verbose_name=u"反控指令-下发指令_下发指令类型",
+        #                                           help_text=definehelptext.config_control_send_format_help_text)
 
     config_control_send_cmd = models.CharField(max_length=1000, default="", null=True, blank=True,
                                                verbose_name=u"反控指令-下发指令_具体下发指令",
@@ -333,26 +365,28 @@ class ConfigControlSendCmd(models.Model):
 
     config_control_send_ackhead = models.CharField(max_length=100, default="", null=True, blank=True,
                                                    verbose_name=u"反控指令-下发指令_回复数据的包头",
-                                                   help_text=u"反控指令-下发指令_回复数据的包头，支持宏定义，”${}”,"
-                                                             u"只有在R_HEAD_TAIL和R_HEAD_LEN这两种报文格式下才有意义，其他为空即可。")
+                                                   help_text=u"支持宏定义，”${}”,</br>"
+                                                             u"只有在R_HEAD_TAIL和R_HEAD_LEN这两种报文格式下才有意义，</br>"
+                                                             u"其他为空即可。")
     config_control_send_acktail = models.CharField(max_length=100, default="", null=True, blank=True,
                                                    verbose_name=u"反控指令-下发指令_回复报文的包尾",
-                                                   help_text=u"反控指令-下发指令_回复报文的包尾，也支持宏定义，"
-                                                             u"只有在R_HEAD_TAIL和R_TAIL_ONLY这两种报文格式下才有意义，其他为空即可。")
+                                                   help_text=u"也支持宏定义，</br>"
+                                                             u"只有在R_HEAD_TAIL和R_TAIL_ONLY这两种报文格式下才有意义，</br>"
+                                                             u"其他为空即可。")
     config_control_send_acklen = models.CharField(max_length=100, default="", null=True, blank=True,
                                                   verbose_name=u"反控指令-下发指令_回复报文的总长度",
-                                                  help_text=u"反控指令-下发指令_回复报文的总长度，"
-                                                            u"只有在R_HEAD_LEN和R_LEN_ONLY这两种报文格式下才有意义，其他为空即可。")
+                                                  help_text=u"只有在R_HEAD_LEN和R_LEN_ONLY这两种报文格式下才有意义，</br>"
+                                                            u"其他为空即可。")
     config_control_send_ackgap = models.CharField(max_length=100, default="", null=True, blank=True,
                                                   verbose_name=u"反控指令-下发指令_回复报文的分包间隔",
-                                                  help_text=u"反控指令-下发指令_回复报文的分包间隔，一般为空即可")
+                                                  help_text=u"一般为空即可")
     config_control_send_ackcheckmode = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"反控指令-下发指令_回复报文的检验",
                                                         help_text=definehelptext.config_control_send_ackcheckmode__help_text)
 
     config_control_send_ackcheckarg = models.CharField(max_length=100, default="", null=True, blank=True,
                                                        verbose_name=u"反控指令-下发指令_回复报文的固定标识检验参数",
-                                                       help_text=u"反控指令-下发指令_回复报文的固定标识检验参数，只有固定标识才有意义，一般为空。")
+                                                       help_text=u"只有固定标识才有意义，一般为空。")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
@@ -375,8 +409,7 @@ class ConfigControlSendParamid(models.Model):
 
     config_control_send_paramid = models.CharField(max_length=100, default="", null=True, blank=True,
                                                        verbose_name=u"反控指令-下发指令_下发参数名",
-                                                       help_text=u"反控指令-下发指令_下发参数名，"
-                                                                 u"<br/>反控指令中的参数适用于平台反控前端仪器时有参数需要下发到前端仪器中，"
+                                                       help_text=u"反控指令中的参数适用于平台反控前端仪器时有参数需要下发到前端仪器中，"
                                                                  u"<br/>此时需要将参数处理并加入反控指令中。"
                                                                  u"<br/>paramId='SYSTEMTIME' 参数名，跟上面定义的参数名(即@{}中的参数名)必须一致。")
 
@@ -399,26 +432,35 @@ class ConfigControlSendPorsSection(models.Model):
     configcontrolsendparamid = models.ForeignKey(ConfigControlSendParamid,default="", null=True, blank=True,
                                    verbose_name=u"依赖的反控下发指令参数",on_delete=models.PROTECT)
 
-    config_control_send_pors_section_datatype = models.CharField(max_length=100, default="", null=True, blank=True,
+    config_control_send_pors_section_datatype = models.CharField(max_length=10,null=True, blank=True,
+                                                                 choices=(("FLOAT", "FLOAT"), ("INT", "INT")),
+                                                                 default="FLOAT",
                                                                  verbose_name=u"反控指令-下发指令_下发参数_数据类型",
                                                                  help_text=definehelptext.config_control_send_pors_section_datatype_help_text)
+        # models.CharField(max_length=100, default="", null=True, blank=True,
+        #                                                          verbose_name=u"反控指令-下发指令_下发参数_数据类型",
+        #                                                          help_text=definehelptext.config_control_send_pors_section_datatype_help_text)
     config_control_send_pors_section_strformat = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                   verbose_name=u"反控指令-下发指令_下发参数_数据转换为字符串的格式",
                                                                   help_text= definehelptext.config_collect_receive_pors_section_strformat_help_text)
-    config_control_send_pors_section_findmode = models.CharField(max_length=100, default="", null=True, blank=True,
+    config_control_send_pors_section_findmode = models.CharField(max_length=10,null=True, blank=True,
+                                                                 choices=(("OFFSET", "OFFSET"), ("MARK", "MARK")),
+                                                                 default="OFFSET",
                                                                  verbose_name=u"反控指令-下发指令_下发参数_查找模式",
                                                                  help_text=definehelptext.config_control_send_pors_section_findmode_help_text)
+        # models.CharField(max_length=100, default="", null=True, blank=True,
+        #                                                          verbose_name=u"反控指令-下发指令_下发参数_查找模式",
+        #                                                          help_text=definehelptext.config_control_send_pors_section_findmode_help_text)
     config_control_send_pors_section_offset = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                verbose_name=u"反控指令-下发指令_下发参数_偏移量",
-                                                               help_text=u"反控指令-下发指令_下发参数_偏移量，相对包头的，只针对固定偏移模式；")
+                                                               help_text=u"相对包头的，只针对固定偏移模式；")
 
     config_control_send_pors_section_mark = models.CharField(max_length=100, default="", null=True, blank=True,
                                                              verbose_name=u"反控指令-下发指令_下发参数_固定标识",
-                                                             help_text=u"反控指令-下发指令_下发参数_固定标识，针对固定标识模式；")
+                                                             help_text=u"针对固定标识模式；")
 
     config_control_send_pors_section_len = models.CharField(max_length=100, default="", null=True, blank=True,
-                                                            verbose_name=u"反控指令-下发指令_下发参数_解析的宽度",
-                                                            help_text=u"反控指令-下发指令_下发参数_解析的宽度；")
+                                                            verbose_name=u"反控指令-下发指令_下发参数_解析的宽度")
 
     config_control_send_pors_section_decodetype = models.CharField(max_length=100, default="", null=True, blank=True,
                                                                    verbose_name=u"反控指令-下发指令_下发参数_数据解析算法",
@@ -426,10 +468,10 @@ class ConfigControlSendPorsSection(models.Model):
 
     config_control_send_pors_section_operator = models.CharField(max_length=100, default="*", null=True, blank=True,
                                                                  verbose_name=u"反控指令-下发指令_下发参数_操作符",
-                                                                 help_text=u"反控指令-下发指令_下发参数_操作符，无特殊需求写*即可")
+                                                                 help_text=u"无特殊需求写*即可")
     config_control_send_pors_section_operand = models.CharField(max_length=100, default="1", null=True, blank=True,
                                                                 verbose_name=u"反控指令-下发指令_下发参数_操作数",
-                                                                help_text=u"反控指令-下发指令_下发参数_操作数，无特殊需求写1即可")
+                                                                help_text=u"无特殊需求写1即可")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
@@ -459,25 +501,21 @@ class ConfigControlSendPorsConvertrule(models.Model):
 
     config_control_send_pors_convertrule_enumvalue = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"反控指令-下发指令_下发参数的状态-特殊转换规则_枚举值",
-                                                        help_text=u"反控指令-下发指令_下发参数的状态-特殊转换规则_枚举值，"
-                                                                  u"<br/>多个值之间用分号隔开，如：2;5;78,只针对特殊规则类型为1（即枚举类型），"
+                                                        help_text=u"多个值之间用分号隔开，如：2;5;78,只针对特殊规则类型为1（即枚举类型），"
                                                                   u"<br/>当取值为枚举值其中之一时，将resultValue的值存起来；")
     config_control_send_pors_convertrule_minvalue = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"反控指令-下发指令_下发参数的状态-特殊转换规则_最小值",
-                                                        help_text=u"反控指令-下发指令_下发参数的状态-特殊转换规则_最小值，"
-                                                                  u"<br/>针对特殊规则类型为2（即小于最小值类型）或特殊规则类型为4(即最大值最小值之间类型)，"
+                                                        help_text=u"针对特殊规则类型为2（即小于最小值类型）或特殊规则类型为4(即最大值最小值之间类型)，"
                                                                   u"<br/>取值小于最小值时，将resultValue的之存起来；"
                                                                   u"<br/>或者取值在最大值和最小值之间，将resultValue的值存起来；")
     config_control_send_pors_convertrule_maxvalue = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"反控指令-下发指令_下发参数的状态-特殊转换规则_最大值",
-                                                        help_text=u"反控指令-下发指令_下发参数的状态-特殊转换规则_最大值，"
-                                                                  u"<br/>针对特殊规则类型为3（即大于最大值类型）或特殊规则类型为4(即最大值最小值之间类型)，"
+                                                        help_text=u"针对特殊规则类型为3（即大于最大值类型）或特殊规则类型为4(即最大值最小值之间类型)，"
                                                                   u"<br/>取值大于最大值时，将resultValue的值存起来；"
                                                                   u"<br/>或者取值在最大值和最小值之间，将resultValue的值存起来；")
     config_control_send_pors_convertrule_resultvalue = models.CharField(max_length=100, default="", null=True, blank=True,
                                                         verbose_name=u"反控指令-下发指令_下发参数的状态-特殊转换规则_最终保存的值",
-                                                        help_text=u"反控指令-下发指令_下发参数的状态-特殊转换规则_最终保存的值，"
-                                                                  u"与设置的规则和数值相对应的值")
+                                                        help_text=u"与设置的规则和数值相对应的值")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
