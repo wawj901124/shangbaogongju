@@ -6,6 +6,7 @@ django.setup()
 #独运行某一个py文件时会出现如下错误：django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.，以上内容可以解决此问题,加载django中的App
 
 from xml.etree import ElementTree as ET
+import time
 
 
 class MakeNodeConfig(object):
@@ -22,6 +23,7 @@ class MakeNodeConfig(object):
             NodeConfigObject = None
         else:
             for NodeConfig_one in NodeConfig_list:
+                time.sleep(1)
                 NodeConfigObject = NodeConfig_one
                 break
         return NodeConfigObject
@@ -66,6 +68,7 @@ class MakeNodeConfig(object):
 
             collect_xml_content = ""
             for ConfigCollectSendCmd_one in ConfigCollectSendCmd_list:
+                time.sleep(1)
                 config_collect_send_id = ConfigCollectSendCmd_one.config_collect_send_id
                 config_collect_send_format = ConfigCollectSendCmd_one.config_collect_send_format
                 config_collect_send_cmd = ConfigCollectSendCmd_one.config_collect_send_cmd
@@ -144,6 +147,7 @@ class MakeNodeConfig(object):
                     pollutant_xml = ""
                 else:
                     for ConfigCollectFactor_one in ConfigCollectFactor_list:
+                        time.sleep(1)
                         config_collect_factor_factorcode = ConfigCollectFactor_one.config_collect_factor_factorcode
                         config_collect_factor_findmode = ConfigCollectFactor_one.config_collect_factor_findmode
                         config_collect_factor_offset = ConfigCollectFactor_one.config_collect_factor_offset
@@ -222,6 +226,7 @@ class MakeNodeConfig(object):
                 else:
                     collect_state_xml_content = ""
                     for ConfigCollectReceivePors_one in ConfigCollectReceivePors_list:
+                        time.sleep(1)
                         config_collect_receive_pors_factorcode = ConfigCollectReceivePors_one.config_collect_receive_pors_factorcode
                         config_collect_receive_pors_factortype = ConfigCollectReceivePors_one.config_collect_receive_pors_factortype
 
@@ -249,6 +254,7 @@ class MakeNodeConfig(object):
                         else:
                             collect_state_factor_xml_content = ""
                             for ConfigCollectReceivePorsSection_one in ConfigCollectReceivePorsSection_list:
+                                time.sleep(1)
                                 config_collect_receive_pors_section_datatype = ConfigCollectReceivePorsSection_one.config_collect_receive_pors_section_datatype
                                 config_collect_receive_pors_section_strformat = ConfigCollectReceivePorsSection_one.config_collect_receive_pors_section_strformat
                                 config_collect_receive_pors_section_findmode = ConfigCollectReceivePorsSection_one.config_collect_receive_pors_section_findmode
@@ -326,6 +332,7 @@ class MakeNodeConfig(object):
                                 else:
                                     collect_state_factor_session_xml_content = ""
                                     for ConfigCollectReceivePorsConvertrule_one in ConfigCollectReceivePorsConvertrule_list:
+                                        time.sleep(1)
                                         config_collect_receive_pors_convertrule_ruletype = ConfigCollectReceivePorsConvertrule_one.config_collect_receive_pors_convertrule_ruletype
                                         config_collect_receive_pors_convertrule_enumvalue = ConfigCollectReceivePorsConvertrule_one.config_collect_receive_pors_convertrule_enumvalue
                                         config_collect_receive_pors_convertrule_minvalue = ConfigCollectReceivePorsConvertrule_one.config_collect_receive_pors_convertrule_minvalue
@@ -411,6 +418,7 @@ class MakeNodeConfig(object):
             control_xml_tou = """\t<controlCmds>\n"""
             control_xml_content = ""
             for ConfigControlSendCmd_one in ConfigControlSendCmd_list:
+                time.sleep(1)
                 # 建立反控指令的cmd
                 config_control_send_id = ConfigControlSendCmd_one.config_control_send_id
                 config_control_send_format = ConfigControlSendCmd_one.config_control_send_format
@@ -492,6 +500,7 @@ class MakeNodeConfig(object):
                 else:
                     control_cmd_xml_content = ""
                     for ConfigControlSendParamid_one in ConfigControlSendParamid_list:
+                        time.sleep(1)
                         config_control_send_paramid = ConfigControlSendParamid_one.config_control_send_paramid
 
                         if config_control_send_paramid == None:
@@ -511,6 +520,7 @@ class MakeNodeConfig(object):
                             control_param_xml_content = ""
                             control_param_factor_xml_content = ""
                             for ConfigControlSendPorsSection_one in ConfigControlSendPorsSection_list:
+                                time.sleep(1)
                                 config_control_send_pors_section_datatype = ConfigControlSendPorsSection_one.config_control_send_pors_section_datatype
                                 config_control_send_pors_section_strformat = ConfigControlSendPorsSection_one.config_control_send_pors_section_strformat
                                 config_control_send_pors_section_findmode = ConfigControlSendPorsSection_one.config_control_send_pors_section_findmode
@@ -588,6 +598,7 @@ class MakeNodeConfig(object):
                                 else:
                                     control_param_session_xml_content = ""
                                     for ConfigControlSendPorsConvertrule_one in ConfigControlSendPorsConvertrule_list:
+                                        time.sleep(1)
                                         config_control_send_pors_convertrule_ruletype = ConfigControlSendPorsConvertrule_one.config_control_send_pors_convertrule_ruletype
                                         config_control_send_pors_convertrule_enumvalue = ConfigControlSendPorsConvertrule_one.config_control_send_pors_convertrule_enumvalue
                                         config_control_send_pors_convertrule_minvalue = ConfigControlSendPorsConvertrule_one.config_control_send_pors_convertrule_minvalue
@@ -707,6 +718,7 @@ class MakeNodeConfig(object):
             pass
         else:
             for NodeConfig_one in NodeConfig_list:
+                time.sleep(1)
                 #版本
                 version = NodeConfig_one.config_version
                 version_xml = """\t<version>%s</version>\n""" % str(version)
@@ -733,6 +745,7 @@ class MakeNodeConfig(object):
 
                     collect_xml_content = ""
                     for ConfigCollectSendCmd_one in ConfigCollectSendCmd_list:
+                        time.sleep(1)
                         config_collect_send_id = ConfigCollectSendCmd_one.config_collect_send_id
                         config_collect_send_format = ConfigCollectSendCmd_one.config_collect_send_format
                         config_collect_send_cmd = ConfigCollectSendCmd_one.config_collect_send_cmd
@@ -808,6 +821,7 @@ class MakeNodeConfig(object):
                             pollutant_xml = ""
                         else:
                             for ConfigCollectFactor_one in ConfigCollectFactor_list:
+                                time.sleep(1)
                                 config_collect_factor_factorcode = ConfigCollectFactor_one.config_collect_factor_factorcode
                                 config_collect_factor_findmode = ConfigCollectFactor_one.config_collect_factor_findmode
                                 config_collect_factor_offset = ConfigCollectFactor_one.config_collect_factor_offset
@@ -842,6 +856,7 @@ class MakeNodeConfig(object):
                         else:
                             collect_state_xml_content = ""
                             for ConfigCollectReceivePors_one in ConfigCollectReceivePors_list:
+                                time.sleep(1)
                                 config_collect_receive_pors_factorcode = ConfigCollectReceivePors_one.config_collect_receive_pors_factorcode
                                 config_collect_receive_pors_factortype = ConfigCollectReceivePors_one.config_collect_receive_pors_factortype
                                 collect_state_factor_xml_tou ="""\t\t\t\t<factor factorCode="%s" factorType="%s">\n""" %(
@@ -856,6 +871,7 @@ class MakeNodeConfig(object):
                                 else:
                                     collect_state_factor_xml_content = ""
                                     for ConfigCollectReceivePorsSection_one in ConfigCollectReceivePorsSection_list:
+                                        time.sleep(1)
                                         config_collect_receive_pors_section_datatype = ConfigCollectReceivePorsSection_one.config_collect_receive_pors_section_datatype
                                         config_collect_receive_pors_section_strformat = ConfigCollectReceivePorsSection_one.config_collect_receive_pors_section_strformat
                                         config_collect_receive_pors_section_findmode = ConfigCollectReceivePorsSection_one.config_collect_receive_pors_section_findmode
@@ -885,6 +901,7 @@ class MakeNodeConfig(object):
                                         else:
                                             collect_state_factor_session_xml_content = ""
                                             for ConfigCollectReceivePorsConvertrule_one in ConfigCollectReceivePorsConvertrule_list:
+                                                time.sleep(1)
                                                 config_collect_receive_pors_convertrule_ruletype = ConfigCollectReceivePorsConvertrule_one.config_collect_receive_pors_convertrule_ruletype
                                                 config_collect_receive_pors_convertrule_enumvalue = ConfigCollectReceivePorsConvertrule_one.config_collect_receive_pors_convertrule_enumvalue
                                                 config_collect_receive_pors_convertrule_minvalue = ConfigCollectReceivePorsConvertrule_one.config_collect_receive_pors_convertrule_minvalue
@@ -945,6 +962,7 @@ class MakeNodeConfig(object):
                     control_xml_tou = """\t<controlCmds>\n"""
                     control_xml_content = ""
                     for ConfigControlSendCmd_one in ConfigControlSendCmd_list:
+                        time.sleep(1)
                         #建立反控指令的cmd
                         config_control_send_id = ConfigControlSendCmd_one.config_control_send_id
                         config_control_send_format = ConfigControlSendCmd_one.config_control_send_format
@@ -972,6 +990,7 @@ class MakeNodeConfig(object):
                         else:
                             control_cmd_xml_content = ""
                             for ConfigControlSendParamid_one in ConfigControlSendParamid_list:
+                                time.sleep(1)
                                 config_control_send_paramid = ConfigControlSendParamid_one.config_control_send_paramid
                                 control_param_xml_tou ="""\t\t\t<cmdParam paramId="%s">\n""" % config_control_send_paramid
                                 #获取cmdParam下的section
@@ -984,6 +1003,7 @@ class MakeNodeConfig(object):
                                     control_param_xml_content = ""
                                     control_param_factor_xml_content = ""
                                     for ConfigControlSendPorsSection_one in ConfigControlSendPorsSection_list:
+                                        time.sleep(1)
                                         config_control_send_pors_section_datatype = ConfigControlSendPorsSection_one.config_control_send_pors_section_datatype
                                         config_control_send_pors_section_strformat = ConfigControlSendPorsSection_one.config_control_send_pors_section_strformat
                                         config_control_send_pors_section_findmode = ConfigControlSendPorsSection_one.config_control_send_pors_section_findmode
@@ -1015,6 +1035,7 @@ class MakeNodeConfig(object):
                                         else:
                                             control_param_session_xml_content = ""
                                             for ConfigControlSendPorsConvertrule_one in ConfigControlSendPorsConvertrule_list:
+                                                time.sleep(1)
                                                 config_control_send_pors_convertrule_ruletype = ConfigControlSendPorsConvertrule_one.config_control_send_pors_convertrule_ruletype
                                                 config_control_send_pors_convertrule_enumvalue = ConfigControlSendPorsConvertrule_one.config_control_send_pors_convertrule_enumvalue
                                                 config_control_send_pors_convertrule_minvalue = ConfigControlSendPorsConvertrule_one.config_control_send_pors_convertrule_minvalue
@@ -1137,6 +1158,7 @@ class ReadNodeConfig(object):
     def saveVersionFromXml(self):
         version_node_list = self.xml_tree.getiterator("version")
         for version_node_one in version_node_list:
+            time.sleep(1)
             version_content = version_node_one.text
             #保存 version
             self.node_config.config_version = version_content
@@ -1147,6 +1169,7 @@ class ReadNodeConfig(object):
     def saveDeviceFromXml(self):
         device_node_list = self.xml_tree.getiterator("deviceModel")
         for device_node_one in device_node_list:
+            time.sleep(1)
             device_content = device_node_one.text
             #保存 device
             self.node_config.config_device = device_content
@@ -1161,6 +1184,7 @@ class ReadNodeConfig(object):
             pass
         else: #否则返回节点
             for collect_node_one in collect_node_list:
+                    time.sleep(1)
                     #保存节点属性
                     collect_attrib_dict = collect_node_one.attrib
                     print(collect_attrib_dict)
@@ -1175,6 +1199,7 @@ class ReadNodeConfig(object):
                         pass
                     else:
                         for collect_cmd_one in collect_cmd_list:
+                            time.sleep(1)
                             collect_cmd_one_attrib_dict = collect_cmd_one.attrib
                             print(collect_cmd_one_attrib_dict)
                             collect_cmd_one_id = collect_cmd_one_attrib_dict["id"]
@@ -1212,6 +1237,7 @@ class ReadNodeConfig(object):
                                 zx_configcollectsendcmd = ConfigCollectSendCmd.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
                             else:  #否则筛选到这个对象
                                 for check_ConfigCollectSendCmd_one in check_ConfigCollectSendCmd_list:
+                                    time.sleep(1)
                                     zx_configcollectsendcmd = check_ConfigCollectSendCmd_one
                                     break  #只取第一个
 
@@ -1223,6 +1249,7 @@ class ReadNodeConfig(object):
                                 pass
                             else: #否则进行保存
                                 for collect_cmd_one_children_one in collect_cmd_one_children_list:
+                                    time.sleep(1)
                                     # 获取下发指令中的监测因子
                                     if 'pollutantFactor' in str(collect_cmd_one_children_one):  #说明是监测因子
                                         pollutantfactor_factor_list = collect_cmd_one_children_one.getchildren()   #获取子节点
@@ -1231,6 +1258,7 @@ class ReadNodeConfig(object):
                                             pass
                                         else:  #否则，遍历保存因子
                                             for pollutantfactor_factor_one in pollutantfactor_factor_list:
+                                                time.sleep(1)
                                                 pollutantfactor_factor_one_attrib_dict = pollutantfactor_factor_one.attrib
                                                 print("监测因子属性字典：")
                                                 print(pollutantfactor_factor_one_attrib_dict)
@@ -1277,6 +1305,7 @@ class ReadNodeConfig(object):
                                             pass
                                         else:  #否则保存子节点
                                             for statefactor_factor_one in statefactor_factor_list:
+                                                time.sleep(1)
                                                 statefactor_factor_one_attrib_dict = statefactor_factor_one.attrib
                                                 print("采集指令_回复指令中的参数或状态属性字典：")
                                                 print(statefactor_factor_one_attrib_dict)
@@ -1301,6 +1330,7 @@ class ReadNodeConfig(object):
                                                     zx_configcollectreceivepors = ConfigCollectReceivePors.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
                                                 else:  #否则获取查询到的数据
                                                     for check_ConfigCollectReceivePors_one in check_ConfigCollectReceivePors_list:
+                                                        time.sleep(1)
                                                         zx_configcollectreceivepors = check_ConfigCollectReceivePors_one
                                                         break  #只获取第一条
 
@@ -1311,6 +1341,7 @@ class ReadNodeConfig(object):
                                                     pass
                                                 else:  #否则需要保存
                                                     for collect_section_one in collect_section_list:
+                                                        time.sleep(1)
                                                         collect_section_one_attrib_dict = collect_section_one.attrib
                                                         print("采集指令_回复指令中的参数或状态_数据解析配置属性字典:")
                                                         print(collect_section_one_attrib_dict)
@@ -1353,6 +1384,7 @@ class ReadNodeConfig(object):
                                                             zx_configcollectreceiveporssection = ConfigCollectReceivePorsSection.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
                                                         else:  #否则，获取最新的筛选到一条数据
                                                             for check_ConfigCollectReceivePorsSection_one in check_ConfigCollectReceivePorsSection_list:
+                                                                time.sleep(1)
                                                                 zx_configcollectreceiveporssection = check_ConfigCollectReceivePorsSection_one
                                                                 break  #只获取第一条
 
@@ -1363,6 +1395,7 @@ class ReadNodeConfig(object):
                                                             pass
                                                         else: #否则，保存节点数据
                                                             for collect_convertrule_one in collect_convertrule_list:
+                                                                time.sleep(1)
                                                                 collect_convertrule_one_attrib_dict = collect_convertrule_one.attrib
                                                                 print("采集指令_回复指令中的参数或状态_数据解析配置_特殊规则属性字典:")
                                                                 print(collect_convertrule_one_attrib_dict)
@@ -1406,6 +1439,7 @@ class ReadNodeConfig(object):
             pass
         else:  #否则，保存数据
             for control_node_one in control_node_list:
+                time.sleep(1)
                 #获取反控指令cmd节点
                 control_cmd_list = control_node_one.findall("cmd")
                 control_cmd_list_len = len(control_cmd_list)
@@ -1413,6 +1447,7 @@ class ReadNodeConfig(object):
                     pass
                 else:
                     for control_cmd_one in control_cmd_list:
+                        time.sleep(1)
                         control_cmd_one_attrib_dict = control_cmd_one.attrib
                         print(control_cmd_one_attrib_dict)
                         control_cmd_one_id = control_cmd_one_attrib_dict["id"]
@@ -1449,6 +1484,7 @@ class ReadNodeConfig(object):
                             zx_configcontrolsendcmd = ConfigControlSendCmd.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
                         else:  #获取筛选到的数据
                             for check_ConfigControlSendCmd_one  in check_ConfigControlSendCmd_list:
+                                time.sleep(1)
                                 zx_configcontrolsendcmd = check_ConfigControlSendCmd_one
                                 break  #只获取第一项
 
@@ -1459,6 +1495,7 @@ class ReadNodeConfig(object):
                             pass
                         else: #否则保存节点数据
                             for control_cmdParam_one in control_cmdParam_list:
+                                time.sleep(1)
                                 control_cmdParam_one_attrib_dict = control_cmdParam_one.attrib   #获取属性字典
                                 print("反控指令_下发指令_参数字典属性：")
                                 print(control_cmdParam_one_attrib_dict)
@@ -1483,6 +1520,7 @@ class ReadNodeConfig(object):
 
                                 else:
                                     for check_ConfigControlSendParamid_one in check_ConfigControlSendParamid_list:
+                                        time.sleep(1)
                                         zx_configcontrolsendparamid = check_ConfigControlSendParamid_one
                                         break   #只获取第一条数据
 
@@ -1494,6 +1532,7 @@ class ReadNodeConfig(object):
                                     pass
                                 else:  #保存节点内容
                                     for control_section_one in control_section_list:
+                                        time.sleep(1)
                                         control_section_one_attrib_dict = control_section_one.attrib  #获取属性字典内容
                                         print("反控指令_下发指令_参数_配置字典属性:")
                                         print(control_section_one_attrib_dict)
@@ -1536,6 +1575,7 @@ class ReadNodeConfig(object):
                                             zx_configcontrolsendporssection = ConfigControlSendPorsSection.objects.all().order_by('-add_time')[:1][0]  # 根据添加时间查询最新的
                                         else: #否则，说明筛选到数据，获取筛选到的内容
                                             for check_ConfigControlSendPorsSection_one in check_ConfigControlSendPorsSection_list:
+                                                time.sleep(1)
                                                 zx_configcontrolsendporssection = check_ConfigControlSendPorsSection_one
                                                 break  #只获取一条数据
 
@@ -1547,6 +1587,7 @@ class ReadNodeConfig(object):
                                             pass
                                         else:  #否则保存节点数据
                                             for control_convertRule_one in control_convertRule_list:
+                                                time.sleep(1)
                                                 control_convertRule_one_attrib_dict = control_convertRule_one.attrib  #获取节点属性字典内容\
                                                 print("反控指令_下发指令_参数_配置_特殊规则字典属性:")
                                                 print(control_convertRule_one_attrib_dict)

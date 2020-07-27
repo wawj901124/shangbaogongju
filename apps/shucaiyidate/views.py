@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View   #导入View
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+import time
 
 from wanwenyc.settings import DJANGO_SERVER_YUMING,MEDIA_ROOT
 
@@ -176,6 +177,7 @@ class XieyiConfigDateView(View):
                 ftpuploadfile_old_all_count = ftpuploadfile_old_all.count()
                 if ftpuploadfile_old_all_count != 0:
                     for ftpuploadfile_old in ftpuploadfile_old_all:
+                        time.sleep(1)
                         ftpuploadfile_new = FtpUploadFile()
                         ftpuploadfile_new.xieyiconfigdate_id = zj.id
                         ftpuploadfile_new.up_remote_file = ftpuploadfile_old.up_remote_file
@@ -188,6 +190,7 @@ class XieyiConfigDateView(View):
                 closexieyicommand_old_all_count = closexieyicommand_old_all.count()
                 if closexieyicommand_old_all_count != 0:
                     for closexieyicommand_old in closexieyicommand_old_all:
+                        time.sleep(1)
                         closexieyicommand_new = CloseXieYiCommand()
                         closexieyicommand_new.xieyiconfigdate_id = zj.id
                         closexieyicommand_new.close_command = closexieyicommand_old.close_command
@@ -198,11 +201,12 @@ class XieyiConfigDateView(View):
                     xieyiconfigdate_id=xieyiconfigdate_id).order_by("id")
                 restartxieyicommand_old_all_count =  restartxieyicommand_old_all.count()
                 if  restartxieyicommand_old_all_count != 0:
-                    for  restartxieyicommand_old in  restartxieyicommand_old_all:
-                         restartxieyicommand_new =  RestartXieYiCommand()
-                         restartxieyicommand_new.xieyiconfigdate_id = zj.id
-                         restartxieyicommand_new.restart_command =  restartxieyicommand_old.restart_command
-                         restartxieyicommand_new.save()
+                    for restartxieyicommand_old in restartxieyicommand_old_all:
+                        time.sleep(1)
+                        restartxieyicommand_new =  RestartXieYiCommand()
+                        restartxieyicommand_new.xieyiconfigdate_id = zj.id
+                        restartxieyicommand_new.restart_command =  restartxieyicommand_old.restart_command
+                        restartxieyicommand_new.save()
 
 
 
@@ -309,6 +313,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
         pass
     else:
         for configcollectsendcmd_old_one in configcollectsendcmd_old_all:
+            time.sleep(1)
             new_configcollectsendcmd =  ConfigCollectSendCmd()
             new_configcollectsendcmd.nodeconfig_id = zx_nodeconfig.id
             new_configcollectsendcmd.config_collect_send_id = configcollectsendcmd_old_one.config_collect_send_id
@@ -331,6 +336,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
                 pass
             else:
                 for configcollectfactor_old_one in configcollectfactor_old_all:
+                    time.sleep(1)
                     new_configcollectfactor = ConfigCollectFactor()
                     new_configcollectfactor.nodeconfig_id = zx_nodeconfig.id
                     new_configcollectfactor.configcollectsendcmd_id = zx_configcollectsendcmd.id
@@ -351,6 +357,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
                 pass
             else:
                 for configcollectreceivepors_old_one in configcollectreceivepors_old_all:
+                    time.sleep(1)
                     new_configcollectreceivepors = ConfigCollectReceivePors()
                     new_configcollectreceivepors.nodeconfig_id = zx_nodeconfig.id
                     new_configcollectreceivepors.configcollectsendcmd_id = zx_configcollectsendcmd.id
@@ -367,6 +374,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
                         pass
                     else:
                         for configcollectreceiveporssection_old_one in configcollectreceiveporssection_old_all:
+                            time.sleep(1)
                             new_configcollectreceiveporssection = ConfigCollectReceivePorsSection()
                             new_configcollectreceiveporssection.nodeconfig_id = zx_nodeconfig.id
                             new_configcollectreceiveporssection.configcollectreceivepors_id = zx_configcollectreceivepors.id
@@ -390,6 +398,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
                                 pass
                             else:
                                 for configcollectreceiveporsconvertrule_old_one in configcollectreceiveporsconvertrule_old_all:
+                                    time.sleep(1)
                                     new_configcollectreceiveporsconvertrule = ConfigCollectReceivePorsConvertrule()
                                     new_configcollectreceiveporsconvertrule.nodeconfig_id = zx_nodeconfig.id
                                     new_configcollectreceiveporsconvertrule.configcollectreceiveporssection_id = zx_configcollectreceiveporssection.id
@@ -408,6 +417,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
         pass
     else:
         for configcontrolsendcmd_old_one in configcontrolsendcmd_old_all:
+            time.sleep(1)
             new_configcontrolsendcmd = ConfigControlSendCmd()
             new_configcontrolsendcmd.nodeconfig_id = zx_nodeconfig.id
             new_configcontrolsendcmd.config_control_send_id = configcontrolsendcmd_old_one.config_control_send_id
@@ -431,6 +441,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
                 pass
             else:
                 for configcontrolsendparamid_old_one in configcontrolsendparamid_old_all:
+                    time.sleep(1)
                     new_configcontrolsendparamid = ConfigControlSendParamid()
                     new_configcontrolsendparamid.nodeconfig_id = zx_nodeconfig.id
                     new_configcontrolsendparamid.configcontrolsendcmd_id = zx_configcontrolsendcmd.id
@@ -446,6 +457,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
                         pass
                     else:
                         for configcontrolsendporssection_old_one in configcontrolsendporssection_old_all:
+                            time.sleep(1)
                             new_configcontrolsendporssection = ConfigControlSendPorsSection()
                             new_configcontrolsendporssection.nodeconfig_id = zx_nodeconfig.id
                             new_configcontrolsendporssection.configcontrolsendparamid_id = zx_configcontrolsendparamid.id
@@ -469,6 +481,7 @@ def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
                                 pass
                             else:
                                 for configcontrolsendporsconvertrule_old_one in configcontrolsendporsconvertrule_old_all:
+                                    time.sleep(1)
                                     new_configcontrolsendporsconvertrule=ConfigControlSendPorsConvertrule()
                                     new_configcontrolsendporsconvertrule.nodeconfig_id = zx_nodeconfig.id
                                     new_configcontrolsendporsconvertrule.configcontrolsendporssection_id = zx_configcontrolsendporssection.id
