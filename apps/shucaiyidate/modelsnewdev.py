@@ -92,7 +92,10 @@ class ConfigCollectSendCmd(models.Model):
         #                                           verbose_name=u"采集指令-下发指令_下发指令类型",
         #                                           help_text=definehelptext.config_collect_send_format_help_text)
 
-    config_collect_send_cmd = models.CharField(max_length=1000, default="", null=True, blank=True,
+    # config_collect_send_cmd = models.CharField(max_length=1000, default="", null=True, blank=True,
+    #                                            verbose_name=u"具体下发指令",
+    #                                            help_text=definehelptext.config_collect_send_cmd_help_text)
+    config_collect_send_cmd = models.TextField(max_length=1000, default="", null=True, blank=True,
                                                verbose_name=u"具体下发指令",
                                                help_text=definehelptext.config_collect_send_cmd_help_text)
 
@@ -355,7 +358,10 @@ class ConfigControlSendCmd(models.Model):
         #                                           verbose_name=u"反控指令-下发指令_下发指令类型",
         #                                           help_text=definehelptext.config_control_send_format_help_text)
 
-    config_control_send_cmd = models.CharField(max_length=1000, default="", null=True, blank=True,
+    # config_control_send_cmd = models.CharField(max_length=1000, default="", null=True, blank=True,
+    #                                            verbose_name=u"反控指令-下发指令_具体下发指令",
+    #                                            help_text=definehelptext.config_control_send_cmd_help_text)
+    config_control_send_cmd = models.TextField(max_length=1000,default="", null=True, blank=True,
                                                verbose_name=u"反控指令-下发指令_具体下发指令",
                                                help_text=definehelptext.config_control_send_cmd_help_text)
 

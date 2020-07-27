@@ -20,11 +20,29 @@ class DefineHelpText(object):
 	                                    border:1px dashed #F00;
 	                                    }
                                 </style> 
+                                <script language="javascript">
+                                    function show_div(){
+                                    var obj_div_s=document.getElementsByClassName("starlist");
+                                    for (var i=0,obj_div;obj_div=obj_div_s[i];i++){
+                                            obj_div.style.display=(obj_div.style.display=='none')?'block':'none';
+                                        }
+                                    }
+                                    function hide_div(){
+                                    var obj_div_s=document.getElementsByClassName("starlist");
+                                    for (var i=0,obj_div;obj_div=obj_div_s[i];i++){
+                                            obj_div.style.display=(obj_div.style.display=='none')?'block':'none';
+                                        }
+
+                                    }
+                                </script>
                             </head> 
                             <body> 
+                                <a href="javascript:hide_div()" >字段详情说明</a>
+                                <div class="starlist">
     """
 
     html_wei = """
+                                </div>
                                 </body> 
                         </html>
     """

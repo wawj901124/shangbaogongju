@@ -18,6 +18,7 @@ from django.urls import path,include
 import xadmin
 from django.views.static import serve   #导入django处理静态文件的包serve ,用于处理midia路径下的文件
 from .settings import MEDIA_ROOT    #导入Settings中配置的MEDIA_ROOT
+from django.conf import settings   #debug_toolbar url配置-1-导入设置
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # 配置上传文件的访问处理函数,配置admin入口
@@ -45,3 +46,12 @@ urlpatterns = [
     # 配置RDM日志统计,namespace指明命名空间，用命名空间做限定
     path('rdmrecode/', include('reportdatas.urls', namespace='rdmrecode')),
 ]
+
+#debug_toolbar url配置-2-设置url
+if settings.DEBUG:  #判断是否为调试模式
+    import debug_toolbar
+    # urlpatterns = [
+    #     path('__debug__/', include(debug_toolbar.urls)),  # 配置debug_toolbar 的url,其中‘__debug__/’可以为任何未使用的路径名
+    # ]+urlpatterns
+    urlpatterns.append(path('__debug__/', include(debug_toolbar.urls))) #  # 配置debug_toolbar 的url,其中‘__debug__/’可以为任何未使用的路径名
+

@@ -57,9 +57,11 @@ INSTALLED_APPS = [
     'shangbaoshuju.apps.ShangbaoshujuConfig', #注册shangbaoshuju
     'spiderdata.apps.SpiderdataConfig',  # 注册spiderdata
     'shucaiyidate.apps.ShucaiyidateConfig',  #注册shucaiyidate
+    'debug_toolbar',  # 注册debug_toolbar，放在django.contrib.staticfiles后面
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',  #debug_toolbar中间件配置，尽可能配置到最前面，但是，必须要要放在处理编码和响应内容的中间件后面，比如我们要是使用了GZipMiddleware，就要把DebugToolbarMiddleware放在GZipMiddleware后面
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -195,4 +197,22 @@ MEDIA_URL = '/media/'   #配置上传文件跟目录
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    #MEDIA_ROOT只能设置一个，根目录,把media与根目录BASE_DIR连接起来
 
 DJANGO_SERVER_YUMING = "http://192.168.9.77:8000"   #配置服务域名，用于某些页面跳转配置，此处定义便于统一管理
+
+INTERNAL_IPS = ['192.168.9.77']   #debug_toolbar设置访问的IP地址，只有这个IP地址访问网站时，才会展示，其他任何IP访问都会不展示
+DEBUG_TOOLBAR_PANELS = [   #debug_toolbar 面板显示设置
+    'debug_toolbar.panels.versions.VersionsPanel', # 代表是哪个django版本
+    'debug_toolbar.panels.timer.TimerPanel',# 用来计时的，判断加载当前页面总共花的时间
+    'debug_toolbar.panels.settings.SettingsPanel', # 读取django中的配置信息
+    'debug_toolbar.panels.headers.HeadersPanel', #看到当前请求头和响应头信息
+    'debug_toolbar.panels.request.RequestPanel', #当前请求的想信息（视图函数，Cookie信息，Session信息等）
+    'debug_toolbar.panels.sql.SQLPanel', # 查看SQL语句
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',# 静态文件
+    'debug_toolbar.panels.templates.TemplatesPanel',# 模板文件
+    'debug_toolbar.panels.cache.CachePanel',# 缓存
+    'debug_toolbar.panels.signals.SignalsPanel',# 信号
+    'debug_toolbar.panels.logging.LoggingPanel',# 日志
+    'debug_toolbar.panels.redirects.RedirectsPanel',# 重定向
+
+    'pympler.panels.MemoryPanel'  # 内存统计
+]
 
