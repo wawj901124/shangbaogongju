@@ -134,14 +134,20 @@ class DefineHelpText(object):
                                     <tr class="tabledataxuxian">
                                         <td class="tabledataxuxian">${HJ212_CRC}</td>
                                         <td class="tabledataxuxian">HJ212国标校验，用校验结果替换宏；</td>
-                                        <td class="tabledataxuxian">指令中直接写${ HJ212_CRC }；</td>
+                                        <td class="tabledataxuxian">指令中直接写${HJ212_CRC}；</td>
                                     </tr>
                                     <tr class="tabledataxuxian">
                                         <td class="tabledataxuxian">${HJ212_JG_CRC}</td>
                                         <td class="tabledataxuxian">聚光校验，用校验结果替换宏；</td>
-                                        <td class="tabledataxuxian">指令中直接写${ HJ212_JG_CRC }；</td>
+                                        <td class="tabledataxuxian">指令中直接写${HJ212_JG_CRC}；</td>
+                                    </tr>
+                                    <tr class="tabledataxuxian">
+                                        <td class="tabledataxuxian">${CHECK_SUM}</td>
+                                        <td class="tabledataxuxian">累加和校验，用校验结果替换宏；</td>
+                                        <td class="tabledataxuxian">指令中直接写${CHECK_SUM} ；</td>
                                     </tr>
                                 </table> 
+                                <span>注意：如有新的规则或者校验算法可在动态管控仪的算法库中实现相应的宏。 </span>
 
     """ + html_wei)
 
@@ -154,40 +160,37 @@ class DefineHelpText(object):
                                         <th class="tabledataxuxian">备注</th>
                                     </tr>
                                     <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">R_NO_RULE</td>
+                                        <td class="tabledataxuxian">NO_RULE</td>
                                         <td class="tabledataxuxian">没有规则：取走buffer中已存在的所有数据；</td>
-                                        <td class="tabledataxuxian">该规则代表的是前端仪器回复的数据包的类型；</td>
+                                        <td class="tabledataxuxian">
+                                            该规则代表的是前端仪器回复的数据包的类型；</br>
+                                            当配置无规则时，会用到以下的回复报文的分包间隔（ackGap）;
+                                        </td>
                                     </tr>
                                     <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">R_HEAD_TAIL</td>
+                                        <td class="tabledataxuxian">HEAD_TAIL</td>
                                         <td class="tabledataxuxian">满足指定包头和包尾的数据帧；</td>
                                         <td class="tabledataxuxian">该规则代表的是前端仪器回复的数据包的类型；</td>
                                     
                                     </tr>
                                     <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">R_HEAD_LEN</td>
+                                        <td class="tabledataxuxian">HEAD_LEN</td>
                                         <td class="tabledataxuxian">满足指定包头和长度的数据帧；</td>
                                         <td class="tabledataxuxian">该规则代表的是前端仪器回复的数据包的类型；</td>
                                     </tr>
                                     <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">R_LEN_ONLY</td>
+                                        <td class="tabledataxuxian">LEN_ONLY</td>
                                         <td class="tabledataxuxian">满足指定长度的数据帧；</td>
                                         <td class="tabledataxuxian">该规则代表的是前端仪器回复的数据包的类型；</td>
                                     </tr>
                                     <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">R_TAIL_ONLY</td>
-                                        <td class="tabledataxuxian">满足指定包尾的数据帧；</td>
-                                        <td class="tabledataxuxian">该规则代表的是前端仪器回复的数据包的类型；</td>
-                                    </tr>
-                                    
-                                    <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">R_CUSTOM_RULE</td>
+                                        <td class="tabledataxuxian">TAIL_ONLY</td>
                                         <td class="tabledataxuxian">满足指定包尾的数据帧；</td>
                                         <td class="tabledataxuxian">该规则代表的是前端仪器回复的数据包的类型；</td>
                                     </tr>
                                     
                                      <tr class="tabledataxuxian">
-                                        <td class="tabledataxuxian">R_TAIL_ONLY</td>
+                                        <td class="tabledataxuxian">CUSTOM_RULE</td>
                                         <td class="tabledataxuxian">定制规则，由上层定义匹配函数matchFunc；</td>
                                         <td class="tabledataxuxian">定制规则目前不支持；</td>
                                     </tr>
@@ -198,7 +201,6 @@ class DefineHelpText(object):
                                         <td class="tabledataxuxian">该规则下，不处理串口数据，一般用在反控中；</td>
                                     </tr>
                                 </table> 
-                                <span>说明:带有R的，例如R_NO_RULE使用时常可以去掉R，比如R_NO_RULE，则可以为NO_RULE；</span>
     """ + html_wei)
 
     config_collect_send_ackcheckmode_help_text = mark_safe(html_tou + """
