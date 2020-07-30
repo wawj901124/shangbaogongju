@@ -13,6 +13,8 @@ def simple_middleware(get_response):  #自定义类中间件
             ip = request.META['REMOTE_ADDR']
         print('用户的请求ip是', ip)
         print(request.META['USERNAME'])
+        print("当前的服务器域名：")
+        print(request.META['HTTP_HOST'])
         response = get_response(request)
 
         # 此处编写的代码会在每个请求处理视图之后被调用。

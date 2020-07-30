@@ -61,8 +61,10 @@ INSTALLED_APPS = [
 ]
 
 
+
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',  #debug_toolbar中间件配置，尽可能配置到最前面，但是，必须要要放在处理编码和响应内容的中间件后面，比如我们要是使用了GZipMiddleware，就要把DebugToolbarMiddleware放在GZipMiddleware后面
+    'django.middleware.cache.UpdateCacheMiddleware',   #缓存全站之开始缓存 注意： update中间件必须放在列表的开始位置，而fectch中间件，必须放在最后。 这是Django使用中间件的规则，它们是有顺序关系的。
     'shucaiyidate.localuser.middleware.simple_middleware',  #自定义中间键获取IP内容
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -71,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',#缓存全站之结束缓存 注意： update中间件必须放在列表的开始位置，而fectch中间件，必须放在最后。 这是Django使用中间件的规则，它们是有顺序关系的。
 ]
 
 ROOT_URLCONF = 'wanwenyc.urls'
@@ -227,3 +230,65 @@ DEBUG_TOOLBAR_PANELS = [   #debug_toolbar 面板显示设置
 ]
 
 GUOLVNAME = "wanwei"
+
+#缓存值常配置
+# CACHE_MIDDLEWARE_ALIAS = "quanzhanhuancun"               #用于存储的缓存的别名
+CACHE_MIDDLEWARE_SECONDS = 300            #每个page需要被缓存多少秒.,超时时间设定为300秒
+# CACHE_MIDDLEWARE_KEY_PREFIX=         #密钥前缀
+
+# #基于本地（服务器）内存的缓存，缓存保存在服务器的内存中
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#         'LOCATION': 'unique-snowflake',
+#         'TIMEOUT': 600,
+#         'OPTIONS': {
+#             'MAX_ENTRIES': 2000
+#         }
+#     }
+# }
+
+# #将数据缓存在指定的目录中
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+#         # 'LOCATION': '/var/tmp/django_cache',    #linux路径
+#         'LOCATION': 'E:\djangocache',   #windows路径
+#         'TIMEOUT': 600,
+#         'OPTIONS': {
+#             'MAX_ENTRIES': 1000
+#         }
+#     }
+# }
+
+#利用数据库来缓存
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',   #利用 python manage.py createcachetable my_cache_table 创建的“my_cache_table”表
+        'TIMEOUT': 600,
+        'OPTIONS': {
+            'MAX_ENTRIES': 2000
+        }
+    }
+}
+
+# #Memcache来缓存之settings配置
+# #使用前需要安装一些内容：
+# #1.  sudo apt-get install libevent ibevent-dev         自动下载安装（Ubuntu/Debian）
+# #    yum install libevent libevent-devel                    自动下载安装（Redhat/Fedora/Centos）
+# #2.  sudo apt-get install memcached             Ubuntu/Debian
+# #    yum install memcached                     Redhat/Fedora/Centos
+# # 3. pip安装Memcached的插件Python-mencached和pylibmc
+# #         pip install python-memcached
+# #        pip install pylibmc
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',  #根据你安装的Python依赖库不同，将CACHES的BACKEND设置为django.core.cache.backends.memcached.MemcachedCache或者django.core.cache.backends.memcached.PyLibMCCache
+#         'LOCATION': '127.0.0.1:11211',   #设置LOCATION为你的Memecached守护进程所在的主机IP和进程端口，格式为ip:port的字符串。或者unix:path的形式，在Unix操作系统中。
+#         'TIMEOUT': 600,
+#         'OPTIONS': {
+#             'MAX_ENTRIES': 2000
+#         }
+#     }
+# }
