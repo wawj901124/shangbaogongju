@@ -3,11 +3,19 @@ from django import forms    #导入django中的forms
 from .modelsdev import TagContent
 from .models import XieyiConfigDate
 from .modelsnewdev import NodeConfig,ConfigCollectSendCmd,\
-    ConfigCollectFactor
+    ConfigCollectFactor, \
+    ConfigControlSendPorsSection,\
+    ConfigControlSendPorsConvertrule
 from .modelsorder import XieyiConfigDateOrder,\
     XieyiTestCase,FtpUploadFileOrder,\
     SenderHexDataOrder,\
     RecriminatDataOrder
+
+global guolu_name_id
+guolu_name_id = 1
+print(guolu_name_id)
+
+
 
 
 class TagContentForm(forms.ModelForm):#定义处理前段“我要学习”表单类,继承ModelForm,ModelForm可以直接save,这个save调用的就是model的save，可以直接保存到数据库
@@ -65,6 +73,23 @@ class SenderHexDataOrderForm(forms.ModelForm):#定义处理前段“我要学习
 class RecriminatDataOrderForm(forms.ModelForm):#定义处理前段“我要学习”表单类,继承ModelForm,ModelForm可以直接save,这个save调用的就是model的save，可以直接保存到数据库
     class Meta:
         model = RecriminatDataOrder   #指明转换的RecriminatDataOrder
+        fields = "__all__"
+
+
+#测试用例反控收发数据表单配置
+class ConfigControlSendPorsConvertruleForm(forms.ModelForm):#定义处理前段“我要学习”表单类,继承ModelForm,ModelForm可以直接save,这个save调用的就是model的save，可以直接保存到数据库
+
+    print(" ConfigControlSendPorsConvertruleForm初始化")
+
+    # configcontrolsendporssection = forms.ModelChoiceField(ConfigControlSendPorsSection.objects.filter(write_user_id=guolu_name_id))
+
+    # def __init__(self,*args, **kwargs):
+    #     super(ConfigControlSendPorsConvertruleForm,self).__init__(*args, **kwargs)
+    #
+    #     self.fields['configcontrolsendporssection'].queryset = ConfigControlSendPorsSection.objects.filter(write_user_id=self.instance.writer_user_id)
+
+    class Meta:
+        model = ConfigControlSendPorsConvertrule  #指明转换的RecriminatDataOrder
         fields = "__all__"
 
 

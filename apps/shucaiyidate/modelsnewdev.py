@@ -54,6 +54,7 @@ class NodeConfig(models.Model):
     def __str__(self):
         return "{}-【{}】".format(self.id,self.config_project)
 
+
     def go_to(self):   #定义点击后跳转到某一个地方（可以加html代码）
         from django.utils.safestring import mark_safe   #调用mark_safe这个函数，django可以显示成一个文本，而不是html代码
         save_local_to_db_html = "<a href='{}/shucaiyidate/nodeconfigreadandsave/{}/'>入库原上传Dev文件</a>&nbsp;&nbsp;</br>".format(DJANGO_SERVER_YUMING, self.id)
@@ -153,6 +154,11 @@ class ConfigCollectSendCmd(models.Model):
     def __str__(self):
         return "{}-{}".format(self.nodeconfig,self.config_collect_send_cmd)
 
+    # #model的save函数，关联保存用户
+    # def save(self, *args, **kwargs):
+    #     self.write_user_id = self.nodeconfig.write_user_id
+    #     super().save(*args, **kwargs)
+
 class ConfigCollectFactor(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
                                    verbose_name=u"依赖的节点配置",on_delete=models.PROTECT)
@@ -210,6 +216,11 @@ class ConfigCollectFactor(models.Model):
     def __str__(self):
         return self.config_collect_factor_factorcode
 
+    # #model的save函数，关联保存用户
+    # def save(self, *args, **kwargs):
+    #     self.write_user_id = self.nodeconfig.write_user_id
+    #     super().save(*args, **kwargs)
+
 class ConfigCollectReceivePors(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
                                    verbose_name=u"依赖的节点配置",on_delete=models.PROTECT)
@@ -243,6 +254,11 @@ class ConfigCollectReceivePors(models.Model):
 
     def __str__(self):
         return "{}-{}".format(self.configcollectsendcmd,self.config_collect_receive_pors_factorcode)
+
+    # #model的save函数，关联保存用户
+    # def save(self, *args, **kwargs):
+    #     self.write_user_id = self.nodeconfig.write_user_id
+    #     super().save(*args, **kwargs)
 
 class ConfigCollectReceivePorsSection(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -315,6 +331,10 @@ class ConfigCollectReceivePorsSection(models.Model):
                                     self.config_collect_receive_pors_section_findmode,
                                     self.config_collect_receive_pors_section_offset,
                                     self.config_collect_receive_pors_section_mark)
+    # #model的save函数，关联保存用户
+    # def save(self, *args, **kwargs):
+    #     self.write_user_id = self.nodeconfig.write_user_id
+    #     super().save(*args, **kwargs)
 
 class ConfigCollectReceivePorsConvertrule(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -366,6 +386,11 @@ class ConfigCollectReceivePorsConvertrule(models.Model):
 
     def __str__(self):
         return self.config_collect_receive_pors_convertrule_resultvalue
+
+    # #model的save函数，关联保存用户
+    # def save(self, *args, **kwargs):
+    #     self.write_user_id = self.nodeconfig.write_user_id
+    #     super().save(*args, **kwargs)
 
 class ConfigControlSendCmd(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -456,6 +481,11 @@ class ConfigControlSendCmd(models.Model):
     def __str__(self):
         return "{}-{}".format(self.nodeconfig,self.get_config_control_send_id_display())
 
+    # #model的save函数，关联保存用户
+    # def save(self, *args, **kwargs):
+    #     self.write_user_id = self.nodeconfig.write_user_id
+    #     super().save(*args, **kwargs)
+
 class ConfigControlSendParamid(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
                                    verbose_name=u"依赖的节点配置",on_delete=models.PROTECT)
@@ -480,6 +510,11 @@ class ConfigControlSendParamid(models.Model):
 
     def __str__(self):
         return "{}-{}".format(self.configcontrolsendcmd,self.config_control_send_paramid)
+
+    # #model的save函数，关联保存用户
+    # def save(self, *args, **kwargs):
+    #     self.write_user_id = self.nodeconfig.write_user_id
+    #     super().save(*args, **kwargs)
 
 class ConfigControlSendPorsSection(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -548,6 +583,10 @@ class ConfigControlSendPorsSection(models.Model):
                              self.config_control_send_pors_section_findmode,
                              self.config_control_send_pors_section_offset,
                              self.config_control_send_pors_section_mark)
+    # #model的save函数，关联保存用户
+    # def save(self, *args, **kwargs):
+    #     self.write_user_id = self.nodeconfig.write_user_id
+    #     super().save(*args, **kwargs)
 
 class ConfigControlSendPorsConvertrule(models.Model):
     nodeconfig = models.ForeignKey(NodeConfig,default="", null=True, blank=True,
@@ -586,10 +625,25 @@ class ConfigControlSendPorsConvertrule(models.Model):
                                                         help_text=u"与设置的规则和数值相对应的值")
 
     write_user = models.ForeignKey(User, null=True, blank=True, verbose_name=u"用户名", on_delete=models.PROTECT)
+
+    # user_name = models.ManyToManyField(User, verbose_name=u"名称")  #满足同一功能谋一跳数据可以多个用户访问和操作
+
     add_time = models.DateTimeField(null=True, blank=True,auto_now_add=True,
                                     verbose_name=u"添加时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
     update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+
+
+
+    class ConfigControlSendPorsConvertruleXadmin(object):
+
+        ## 需要重写instance_forms方法，此方法作用是生成表单实例
+        def instance_forms(self):
+            super().instance_forms()
+            # 判断是否为新建操作，新建操作才会设置write_user的默认值
+            if not self.org_obj:
+                self.form_obj.initial['write_user'] = self.request.user.id
+
 
     class Meta:
         verbose_name = u"反控指令_参数的处理（convertRule）"
@@ -597,3 +651,13 @@ class ConfigControlSendPorsConvertrule(models.Model):
 
     def __str__(self):
         return self.config_control_send_pors_convertrule_resultvalue
+
+    #model的save函数，关联保存用户
+    def save(self, *args, **kwargs):
+        self.write_user_id = self.nodeconfig.write_user_id
+        super().save(*args, **kwargs)
+
+
+
+
+

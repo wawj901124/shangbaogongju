@@ -20,6 +20,8 @@ from .modelscode import YinZiCode
 from .modelsguide import GuideHelp
 
 from .forms import ConfigCollectFactorForm
+from .forms import ConfigControlSendPorsConvertruleForm
+from .formsset import ConfigControlSendPorsConvertruleFormset
 
 
 #协议测试用例
@@ -1169,7 +1171,7 @@ class NodeConfigXadmin():
     show_detail_fields = ["config_project", ]  # 显示数据详情
 
     # 编辑页的字段显示
-    fields=['config_project','config_xieyi_num','config_xieyi_type','config_version','config_device','config_collect_packet_len','local_file',]   #添加页的字段显示
+    fields=['config_project','config_xieyi_num','config_xieyi_type','config_version','config_device','config_collect_packet_len','local_file','write_user']   #添加页的字段显示
 
     list_export = ('xls',)  # 控制列表页导出数据的可选格式
     show_bookmarks = True  # 控制是否显示书签功能
@@ -1238,13 +1240,28 @@ class NodeConfigXadmin():
         extra = 1
         style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
 
+
+
     #设置内联
     class ConfigControlSendPorsConvertruleInline(object):
         model = ConfigControlSendPorsConvertrule
-        exclude = ["write_user","add_time","update_time"]
+        fk_name = 'nodeconfig'
+        form = ConfigControlSendPorsConvertruleForm
+        # formset = ConfigControlSendPorsConvertruleFormset
+        exclude = ["add_time","update_time"]
         extra = 1
         style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
 
+        # def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        #     print("db_field.name:")
+        #     print(db_field.name)
+        #
+        #     if db_field.name == 'configcontrolsendporssection':
+        #         kwargs['queryset'] = ConfigControlSendPorsSection.objects.filter(write_user=request.user)
+        #     else:
+        #         pass
+        #
+        #     return super(ConfigControlSendPorsConvertruleInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
     inlines = [ConfigCollectSendCmdInline,
@@ -1257,46 +1274,60 @@ class NodeConfigXadmin():
                ConfigControlSendPorsSectionInline,
                ConfigControlSendPorsConvertruleInline,]
 
+    # #内联过滤
+    # def change_view(self, request, object_id, extra_context=None):
+    #     def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #         if db_field.name == 'configcontrolsendporssection':
+    #             kwargs['queryset'] = ConfigControlSendPorsSection.objects.filter(write_user=request.user)
+    #         return super(ItemInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+    #
+    #     ItemInline.formfield_for_foreignkey = formfield_for_foreignkey
+    #
+    #     self.inline_instances = [ItemInline(self.model, self.admin_site)]
+    #
+    #     return super(NodeConfigXadmin, self).change_view(request, object_id,
+    #                                                 extra_context=extra_context)
+
 
 
 
 
     #批量处理命令
-    #批量复制
-    def patch_copy(self,request,querset):  #此处的querset为选中的数据
-        querset = querset.order_by('id')  #按照id顺序排序
-        for qs_one in querset:
-            #新建实体并复制选中的内容
-            new_tagcontent = TagContent()
-            new_tagcontent.config_project = qs_one.config_project
-            new_tagcontent.tag_name = qs_one.tag_name
-            new_tagcontent.is_root = qs_one.is_root
-            new_tagcontent.tag_level = qs_one.tag_level
-            new_tagcontent.tag_text = qs_one.tag_text
-            new_tagcontent.tag_father = qs_one.tag_father
-            if self.request.user.is_superuser:  # 超级用户则不保存user
-                pass
-            else: #否则保存user为当前用户
-                new_tagcontent.write_user = self.request.user
-            new_tagcontent.save()      #保存数据
-            #获取刚保存的数据的id
-            newadd = TagContent.objects.filter(config_project = qs_one.config_project).order_by('-add_time')
-            for new_last in newadd:
-                newaddid = new_last.id
-                break
-
-            #获取TagAttrib中相应的内容
-            old_tagattrib_all =TagAttrib.objects.filter(tagcontent_id=qs_one.id).order_by('add_time')
-            for old_tagattrib_one in old_tagattrib_all:
-                new_tagattrib = TagAttrib()
-                new_tagattrib.tagcontent_id = newaddid
-                new_tagattrib.tag_value_name = old_tagattrib_one.tag_value_name
-                new_tagattrib.tag_value_text = old_tagattrib_one.tag_value_text
-                if self.request.user.is_superuser:  # 超级用户则不保存user
-                    pass
-                else:  # 否则保存user为当前用户
-                    new_tagattrib.write_user = self.request.user
-                new_tagattrib.save()   #保存数据库
+    # #批量复制
+    # def patch_copy(self,request,querset):  #此处的querset为选中的数据
+    #     querset = querset.order_by('id')  #按照id顺序排序
+    #     for qs_one in querset:
+    #         #新建实体并复制选中的内容
+    #         new_tagcontent = TagContent()
+    #         new_tagcontent.config_project = qs_one.config_project
+    #         new_tagcontent.tag_name = qs_one.tag_name
+    #         new_tagcontent.is_root = qs_one.is_root
+    #         new_tagcontent.tag_level = qs_one.tag_level
+    #         new_tagcontent.tag_text = qs_one.tag_text
+    #         new_tagcontent.tag_father = qs_one.tag_father
+    #         if self.request.user.is_superuser:  # 超级用户则不保存user
+    #             pass
+    #         else: #否则保存user为当前用户
+    #             new_tagcontent.write_user = self.request.user
+    #         new_tagcontent.save()      #保存数据
+    #         #获取刚保存的数据的id
+    #         newadd = TagContent.objects.filter(config_project = qs_one.config_project).order_by('-add_time')
+    #         for new_last in newadd:
+    #             newaddid = new_last.id
+    #             break
+    #
+    #         #获取TagAttrib中相应的内容
+    #         old_tagattrib_all =TagAttrib.objects.filter(tagcontent_id=qs_one.id).order_by('add_time')
+    #         for old_tagattrib_one in old_tagattrib_all:
+    #             new_tagattrib = TagAttrib()
+    #             new_tagattrib.tagcontent_id = newaddid
+    #             new_tagattrib.tag_value_name = old_tagattrib_one.tag_value_name
+    #             new_tagattrib.tag_value_text = old_tagattrib_one.tag_value_text
+    #             if self.request.user.is_superuser:  # 超级用户则不保存user
+    #                 pass
+    #             else:  # 否则保存user为当前用户
+    #                 new_tagattrib.write_user = self.request.user
+    #             new_tagattrib.save()   #保存数据库
 
 
     #批量删除
@@ -1382,7 +1413,7 @@ class NodeConfigXadmin():
     #         qs_one.delete()
 
 
-    patch_copy.short_description = "批量复制"
+    # patch_copy.short_description = "批量复制"
     patch_delete.short_description = "批量删除"
 
     actions=[patch_delete,]
@@ -1393,6 +1424,20 @@ class NodeConfigXadmin():
     #     context['adminform'].form.fields['blog'].queryset = Team.objects.filter(user=request.user)
     #     return super(NodeConfigXadmin, self).render_change_form(request, context, add, change, form_url, obj)
 
+    def changelist_view(self, request, extra_context=None):   #根据用户权限不同显示不同数据
+        user = request.user
+        if user.is_superuser:
+            self.list_display = ['', '']
+        else:
+            self.list_display = ['']
+            return super(NodeConfigXadmin, self).changelist_view(request, extra_context=None)
+
+
+    def instance_forms(self):  # 需要重写instance_forms方法，此方法作用是生成表单实例
+        super().instance_forms()
+        # 判断是否为新建操作，新建操作才会设置write_user的默认值
+        if not self.org_obj:
+            self.form_obj.initial['write_user'] = self.request.user.id
 
 
     def save_models(self):  # 重载save_models的方法，可以在做了某个动作后，动态重新加载
@@ -1404,13 +1449,25 @@ class NodeConfigXadmin():
             obj.write_user_id = user.id  # 保存当前的write_user为用户登录的user
             obj.save()  # 保存当前用例
 
-    def queryset(self):  # 重载queryset方法，用来做到不同的admin取出的数据不同
-        qs = super(NodeConfigXadmin, self).queryset()  # 调用父类
-        if self.request.user.is_superuser:  # 超级用户可查看所有数据
-            return qs
+    # #条件过滤
+    # def queryset(self):  # 重载queryset方法，用来做到不同的admin取出的数据不同
+    #     qs = super(NodeConfigXadmin, self).queryset()  # 调用父类
+    #     if self.request.user.is_superuser:  # 超级用户可查看所有数据
+    #         return qs
+    #     else:
+    #         qs = qs.filter(write_user=self.request.user)  # 否则只显示本用户数据
+    #         return qs  # 返回qs
+
+    #外键过滤
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            if db_field.name == "nodeconfig":
+                # shop = Shop.objects.get(username=request.user.username)
+                kwargs["queryset"] = NodeConfig.objects.filter(write_user=request.user)
         else:
-            qs = qs.filter(write_user=self.request.user)  # 否则只显示本用户数据
-            return qs  # 返回qs
+            kwargs["queryset"] = NodeConfig.objects.all()
+        return super(NodeConfigXadmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
 
     def post(self, request, *args, **kwargs):  # 重载post函数，用于判断导入的逻辑
         if 'excel' in request.FILES:  # 如果excel在request.FILES中
@@ -1806,6 +1863,7 @@ xadmin.site.register(NodeConfig,NodeConfigXadmin)   #在xadmin中注册NodeConfi
 
 xadmin.site.register(YinZiCode,YinZiCodeXadmin)   #在xadmin中注册YinZiCode
 xadmin.site.register(GuideHelp,GuideHelpXadmin)   #在xadmin中注册YinZiCode
+xadmin.site.register(ConfigControlSendPorsConvertrule,ConfigControlSendPorsConvertrule.ConfigControlSendPorsConvertruleXadmin)
 
 
 

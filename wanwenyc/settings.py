@@ -60,8 +60,10 @@ INSTALLED_APPS = [
     'debug_toolbar',  # 注册debug_toolbar，放在django.contrib.staticfiles后面
 ]
 
+
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',  #debug_toolbar中间件配置，尽可能配置到最前面，但是，必须要要放在处理编码和响应内容的中间件后面，比如我们要是使用了GZipMiddleware，就要把DebugToolbarMiddleware放在GZipMiddleware后面
+    'shucaiyidate.localuser.middleware.simple_middleware',  #自定义中间键获取IP内容
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,6 +92,14 @@ TEMPLATES = [
         },
     },
 ]
+
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+
+    "django.core.context_processors.request",
+
+)
+
 
 WSGI_APPLICATION = 'wanwenyc.wsgi.application'
 
@@ -216,3 +226,4 @@ DEBUG_TOOLBAR_PANELS = [   #debug_toolbar 面板显示设置
     'pympler.panels.MemoryPanel'  # 内存统计
 ]
 
+GUOLVNAME = "wanwei"
