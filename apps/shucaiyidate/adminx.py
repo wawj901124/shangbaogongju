@@ -19,9 +19,9 @@ from .modelscode import YinZiCode
 
 from .modelsguide import GuideHelp
 
-from .forms import ConfigCollectFactorForm
-from .forms import ConfigControlSendPorsConvertruleForm
-from .formsset import ConfigControlSendPorsConvertruleFormset
+# from .forms import ConfigCollectFactorForm
+# from .forms import ConfigControlSendPorsConvertruleForm
+# from .formsset import ConfigControlSendPorsConvertruleFormset
 
 
 #协议测试用例
@@ -1246,7 +1246,7 @@ class NodeConfigXadmin():
     class ConfigControlSendPorsConvertruleInline(object):
         model = ConfigControlSendPorsConvertrule
         fk_name = 'nodeconfig'
-        form = ConfigControlSendPorsConvertruleForm
+        # form = ConfigControlSendPorsConvertruleForm
         # formset = ConfigControlSendPorsConvertruleFormset
         exclude = ["add_time","update_time"]
         extra = 1
@@ -1424,13 +1424,13 @@ class NodeConfigXadmin():
     #     context['adminform'].form.fields['blog'].queryset = Team.objects.filter(user=request.user)
     #     return super(NodeConfigXadmin, self).render_change_form(request, context, add, change, form_url, obj)
 
-    def changelist_view(self, request, extra_context=None):   #根据用户权限不同显示不同数据
-        user = request.user
-        if user.is_superuser:
-            self.list_display = ['', '']
-        else:
-            self.list_display = ['']
-            return super(NodeConfigXadmin, self).changelist_view(request, extra_context=None)
+    # def changelist_view(self, request, extra_context=None):   #根据用户权限不同显示不同数据
+    #     user = request.user
+    #     if user.is_superuser:
+    #         self.list_display = ['', '']
+    #     else:
+    #         self.list_display = ['']
+    #         return super(NodeConfigXadmin, self).changelist_view(request, extra_context=None)
 
 
     def instance_forms(self):  # 需要重写instance_forms方法，此方法作用是生成表单实例
@@ -1863,7 +1863,7 @@ xadmin.site.register(NodeConfig,NodeConfigXadmin)   #在xadmin中注册NodeConfi
 
 xadmin.site.register(YinZiCode,YinZiCodeXadmin)   #在xadmin中注册YinZiCode
 xadmin.site.register(GuideHelp,GuideHelpXadmin)   #在xadmin中注册YinZiCode
-xadmin.site.register(ConfigControlSendPorsConvertrule,ConfigControlSendPorsConvertrule.ConfigControlSendPorsConvertruleXadmin)
+
 
 
 
