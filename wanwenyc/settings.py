@@ -239,11 +239,12 @@ CACHE_MIDDLEWARE_SECONDS = 300            #每个page需要被缓存多少秒.,�
 # #基于本地（服务器）内存的缓存，缓存保存在服务器的内存中
 # CACHES = {
 #     'default': {
-#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-#         'LOCATION': 'unique-snowflake',
-#         'TIMEOUT': 600,
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # 指定缓存使用的引擎
+#         'LOCATION': 'unique-snowflake',   # 写在内存中的变量的唯一值
+#         'TIMEOUT': 600,   # 缓存超时时间(默认为300秒,None表示永不过期)
 #         'OPTIONS': {
-#             'MAX_ENTRIES': 2000
+#             'MAX_ENTRIES': 2000,     # 最大缓存记录的数量（默认300）
+#             'CULL_FREQUENCY': 3,          # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
 #         }
 #     }
 # }
@@ -251,12 +252,13 @@ CACHE_MIDDLEWARE_SECONDS = 300            #每个page需要被缓存多少秒.,�
 # #将数据缓存在指定的目录中
 # CACHES = {
 #     'default': {
-#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-#         # 'LOCATION': '/var/tmp/django_cache',    #linux路径
-#         'LOCATION': 'E:\djangocache',   #windows路径
-#         'TIMEOUT': 600,
+#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',   #指定缓存使用的引擎
+#         # 'LOCATION': '/var/tmp/django_cache',    #linux路径    #指定缓存的路径
+#         'LOCATION': 'E:\djangocache',   #windows路径    #指定缓存的路径
+#         'TIMEOUT': 600,   #缓存超时时间(默认为300秒,None表示永不过期)
 #         'OPTIONS': {
-#             'MAX_ENTRIES': 1000
+#             'MAX_ENTRIES': 1000, # 最大缓存记录的数量（默认300）
+#             'CULL_FREQUENCY': 3,           # 缓存到达最大个数之后，剔除缓存个数的比例，即：
 #         }
 #     }
 # }
@@ -264,11 +266,12 @@ CACHE_MIDDLEWARE_SECONDS = 300            #每个page需要被缓存多少秒.,�
 #利用数据库来缓存
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'my_cache_table',   #利用 python manage.py createcachetable my_cache_table 创建的“my_cache_table”表
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',   # 指定缓存使用的引擎
+        'LOCATION': 'my_cache_table',   # 数据库表  #利用 python manage.py createcachetable my_cache_table 创建的“my_cache_table”表
         'TIMEOUT': 600,
         'OPTIONS': {
-            'MAX_ENTRIES': 2000
+            'MAX_ENTRIES': 2000,    # 最大缓存记录的数量（默认300）
+            'CULL_FREQUENCY': 3,          # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
         }
     }
 }
@@ -284,11 +287,25 @@ CACHES = {
 # #        pip install pylibmc
 # CACHES = {
 #     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',  #根据你安装的Python依赖库不同，将CACHES的BACKEND设置为django.core.cache.backends.memcached.MemcachedCache或者django.core.cache.backends.memcached.PyLibMCCache
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',  # 指定缓存使用的引擎 #根据你安装的Python依赖库不同，将CACHES的BACKEND设置为django.core.cache.backends.memcached.MemcachedCache或者django.core.cache.backends.memcached.PyLibMCCache
+#        # 'LOCATION': '192.168.10.100:11211',         # 指定Memcache缓存服务器的IP地址和端口
 #         'LOCATION': '127.0.0.1:11211',   #设置LOCATION为你的Memecached守护进程所在的主机IP和进程端口，格式为ip:port的字符串。或者unix:path的形式，在Unix操作系统中。
 #         'TIMEOUT': 600,
 #         'OPTIONS': {
-#             'MAX_ENTRIES': 2000
+#             'MAX_ENTRIES': 2000,   # 最大缓存记录的数量（默认300）
+#             'CULL_FREQUENCY': 3,      # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
 #         }
 #     }
 # }
+
+# #使用pylibmc模块连接memcache
+# CACHES = {
+#   'default': {
+#    'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',  # 指定缓存使用的引擎
+#    'LOCATION':'192.168.10.100:11211',         # 指定本机的11211端口为Memcache缓存服务器
+#    'OPTIONS':{
+#     'MAX_ENTRIES': 300,            # 最大缓存记录的数量（默认300）
+#     'CULL_FREQUENCY': 3,           # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+#    },
+#   }
+#  }
