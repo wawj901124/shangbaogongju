@@ -1699,12 +1699,13 @@ class ReadNodeConfig(object):
 
 #复制生成一条新数据
 class CopyNodeConfig(object):
-    def __init__(self,caseId):
+    def __init__(self,request,caseId):
         self.case_id = int(caseId)
+        self.request = request
     #复制保存数据
     @async_call
     def saveCopy(self):
-        from shucaiyidate.modelsnewdev import NodeConfig, ConfigCollectSendCmd, ConfigCollectFactor, \
+        from shucaiyidate.modelsnewdev import User,NodeConfig, ConfigCollectSendCmd, ConfigCollectFactor, \
             ConfigCollectReceivePors, ConfigCollectReceivePorsSection, ConfigCollectReceivePorsConvertrule, \
             ConfigControlSendCmd, ConfigControlSendParamid, ConfigControlSendPorsSection, \
             ConfigControlSendPorsConvertrule
@@ -1716,6 +1717,9 @@ class CopyNodeConfig(object):
         new_nodeconfig.config_version = nodeconfig_old.config_version
         new_nodeconfig.config_device = nodeconfig_old.config_device
         new_nodeconfig.config_collect_packet_len = nodeconfig_old.config_collect_packet_len
+        username = self.request.user.username
+        user = User.objects.get(username=username)
+        new_nodeconfig.write_user_id = user.id   #保存当前用户的user
         new_nodeconfig.save()  # 保存
 
         # 获取最新的的数据

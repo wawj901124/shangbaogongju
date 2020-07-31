@@ -387,7 +387,7 @@ class ConfigCollectReceivePorsConvertrule(models.Model):
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
 
     class Meta:
-        verbose_name = u"特殊转换规则（convertRule） "
+        verbose_name = u"特殊转换规则（convertRule）"
         verbose_name_plural=verbose_name
 
     def __str__(self):
@@ -481,7 +481,7 @@ class ConfigControlSendCmd(models.Model):
                                     verbose_name=u"更新时间")  # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
 
     class Meta:
-        verbose_name = u"反控指令配置（cmd） "
+        verbose_name = u"反控指令配置（cmd）"
         verbose_name_plural=verbose_name
 
     def __str__(self):

@@ -1171,7 +1171,7 @@ class NodeConfigXadmin():
     show_detail_fields = ["config_project", ]  # 显示数据详情
 
     # 编辑页的字段显示
-    fields=['config_project','config_xieyi_num','config_xieyi_type','config_version','config_device','config_collect_packet_len','local_file','write_user']   #添加页的字段显示
+    fields=['config_project','config_xieyi_num','config_xieyi_type','config_version','config_device','config_collect_packet_len','local_file']   #添加页的字段显示
 
     list_export = ('xls',)  # 控制列表页导出数据的可选格式
     show_bookmarks = True  # 控制是否显示书签功能
@@ -1248,7 +1248,7 @@ class NodeConfigXadmin():
         fk_name = 'nodeconfig'
         # form = ConfigControlSendPorsConvertruleForm
         # formset = ConfigControlSendPorsConvertruleFormset
-        exclude = ["add_time","update_time"]
+        exclude = ["write_user","add_time","update_time"]
         extra = 1
         style = 'accordion'    #以标签形式展示 ，形式有：stacked，one，accordion（折叠），tab（标签），table（表格）
 
@@ -1449,24 +1449,24 @@ class NodeConfigXadmin():
             obj.write_user_id = user.id  # 保存当前的write_user为用户登录的user
             obj.save()  # 保存当前用例
 
-    # #条件过滤
-    # def queryset(self):  # 重载queryset方法，用来做到不同的admin取出的数据不同
-    #     qs = super(NodeConfigXadmin, self).queryset()  # 调用父类
-    #     if self.request.user.is_superuser:  # 超级用户可查看所有数据
-    #         return qs
-    #     else:
-    #         qs = qs.filter(write_user=self.request.user)  # 否则只显示本用户数据
-    #         return qs  # 返回qs
-
-    #外键过滤
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if not request.user.is_superuser:
-            if db_field.name == "nodeconfig":
-                # shop = Shop.objects.get(username=request.user.username)
-                kwargs["queryset"] = NodeConfig.objects.filter(write_user=request.user)
+    #条件过滤
+    def queryset(self):  # 重载queryset方法，用来做到不同的admin取出的数据不同
+        qs = super(NodeConfigXadmin, self).queryset()  # 调用父类
+        if self.request.user.is_superuser:  # 超级用户可查看所有数据
+            return qs
         else:
-            kwargs["queryset"] = NodeConfig.objects.all()
-        return super(NodeConfigXadmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+            qs = qs.filter(write_user=self.request.user)  # 否则只显示本用户数据
+            return qs  # 返回qs
+
+    # #外键过滤
+    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #     if not request.user.is_superuser:
+    #         if db_field.name == "nodeconfig":
+    #             # shop = Shop.objects.get(username=request.user.username)
+    #             kwargs["queryset"] = NodeConfig.objects.filter(write_user=request.user)
+    #     else:
+    #         kwargs["queryset"] = NodeConfig.objects.all()
+    #     return super(NodeConfigXadmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
     def post(self, request, *args, **kwargs):  # 重载post函数，用于判断导入的逻辑
@@ -1839,11 +1839,17 @@ class GuideHelpXadmin(object):
     def get_readonly_fields(self):
         fields = []
         if self.request.user.is_superuser:  #
-            fields = ['add_time', 'update_time']
+            fields = ['write_user','add_time', 'update_time']
             return fields
         else:
             fields = ['write_user','add_time','update_time']   #例如，用户，超级管理员可以分配用户，而普通不可以编辑用户
             return fields
+
+    def instance_forms(self):  # 需要重写instance_forms方法，此方法作用是生成表单实例
+        super().instance_forms()
+        # 判断是否为新建操作，新建操作才会设置write_user的默认值
+        if not self.org_obj:
+            self.form_obj.initial['write_user'] = self.request.user.id
 
 
 

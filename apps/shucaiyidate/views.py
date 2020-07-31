@@ -237,8 +237,7 @@ def NodeConfigMakeDevRequest(request, nodeconfig_id, trackback=None):
 #根据已有内容复制一条数据
 def NodeConfigCopyRequest(request, nodeconfig_id, trackback=None):
     from depend.shucaiyi.modelsnewdevdepend.nodeConfigDependClass import CopyNodeConfig
-    cnc = CopyNodeConfig(caseId=nodeconfig_id)
-
+    cnc = CopyNodeConfig(request=request,caseId=nodeconfig_id)
     print("即将异步调用根据现有数据生成新数据函数" )
     cnc.saveCopy()
     print("已经异步调起根据现有数据生成新数据函数，但程序什么时候完成未知，继续后续操作")
