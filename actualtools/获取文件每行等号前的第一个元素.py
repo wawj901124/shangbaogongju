@@ -6,25 +6,23 @@ qianzui = "new_udd."
 houzui = "qs_one."
 expect_list = []
 yuqi = ""
+num_count = 0
 for i in f:
-    tup_one = ()
-    lie_list = i.split(",")
+    # tup_one = ()
+    lie_list = i.split("=")
     # print(lie_list)
     ziduan = lie_list[0].strip()
-    hanzi = lie_list[1].strip().split("；")[0]
-    # expect_list.append(ziduan)
-    # print(ziduan)
-    tup_one = tup_one+(ziduan,)
-    tup_one = tup_one + (hanzi,)
-    print(tup_one)
+
+    yuqi = """ vsixxieyiduizhao.%s = all_list_1[i][%s]""" % (ziduan,str(num_count))
+    num_count = num_count+1
+    print(yuqi)
 
 
     # yuqi = "(%s, %s)"%(ziduan,hanzi)
     # print(yuqi)
 
-    expect_list.append(tup_one)
-
-print(expect_list)
+    # expect_list.append(ziduan)
+#print(expect_list)
 
 
 

@@ -15,7 +15,7 @@ class Analyzexls(object):
                 one_list.append(cell_value)
 
             all_list.append(one_list)
-            print("one_list_%s:%s" % (i,one_list))
+            print("one_list_%s:%s" % (i+1,one_list))
         del (all_list[0])  # 删除标题   如果Excel文件中第一行是标题可删除掉，如果没有就不需要这行代码
 
         return all_list

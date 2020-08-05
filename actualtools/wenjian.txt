@@ -1,27 +1,22 @@
-zeroAndFull,         校零校满；
-adjustTime,	          校时；
-immediateSample,	   及时采样；
-remoteQualityCtrl,	远程质控；
-startTest,	仪器启动测试；
-stopTest,	仪器停止测试；
-autoCorrection,	仪器自动校准；
-init,	仪器初始化；
-checkStdSample,	仪器进行标样核查；
-setMeasureMode,	仪器修改测量模式；
-setMeasureInterval,	仪器修改周期测量间隔；
-setAutoCorrectInterval,	仪器修改自动校准间隔；
-setCheckStdSampleInterval,	仪器修改自动标样核查间隔；
-setOneLevelPasswd	,修改一级密码；
-setTwoLevelPasswd,	修改二级密码；
-setThreeLevelPasswd,	修改三级密码；
-zeroCorrectRange,	零点校准量程校准；
-startClean,	启动清洗/反吹；
-compareSample,	比对采样；
-overproofSample,	超标留样；
-setSampleCycle,	设置采样时间周期；
-getSampleCycle,	提取采样时间周期；
-getLastSampleTime,	提取出样时间；
-getEquipmentId,	提取设备唯一标识；
-getEquipmentTime,	提取现场机时间；
-setEquipmentTime,	设置现场机时间；
-setEquipmentParam,	设置现场机参数；
+v6_xiyihao = models.CharField(max_length=100, default="", verbose_name=u"协议号")
+v6_jianceleixing = models.CharField(max_length=100, default="", verbose_name=u"监测类型")
+v6_yiqifenlei = models.CharField(max_length=100, default="", verbose_name=u"仪器分类")
+v6_zhenglihouxieyimingcheng = models.CharField(max_length=100, default="", verbose_name=u"整理后协议名称")
+v6_yuanxieyimingcheng = models.CharField(max_length=100, default="", verbose_name=u"原协议名称")
+v6_syybxydcjyqxh = models.CharField(max_length=100, default="", verbose_name=u"适用于本协议的厂家仪器型号")
+v6_status = models.CharField(max_length=100, default="", verbose_name=u"状态")
+v6_yuanshucaiyiduiyingxieyihao = models.CharField(max_length=100, default="", verbose_name=u"原数采仪对应协议号")
+v6_shujuzhiling = models.CharField(max_length=100, default="", verbose_name=u"数据指令")
+v6_zhuangtaicanshuzhiling = models.CharField(max_length=100, default="", verbose_name=u"状态参数指令")
+v6_erjinzhimingcheng = models.CharField(max_length=100, default="", verbose_name=u"二进制名称")
+v6_teshupeizhiwenjian = models.CharField(max_length=100, default="", verbose_name=u"特殊配置文件")
+v6_shifoucaijizhuangtai = models.CharField(max_length=100, default="", verbose_name=u"是否采集状态")
+v6_yijifenlei = models.CharField(max_length=100, default="", verbose_name=u"一级分类")
+v6_shiyongquyu = models.CharField(max_length=100, default="", verbose_name=u"使用区域")
+v6_jiekouleixing = models.CharField(max_length=100, default="", verbose_name=u"接口类型")
+v6_chengxuleixing = models.CharField(max_length=100, default="", verbose_name=u"程序类型")
+v6_kaifaren = models.CharField(max_length=100, default="", verbose_name=u"开发人")
+v6_ceshiren = models.CharField(max_length=100, default="", verbose_name=u"测试人")
+v6_xiugaineirong = models.CharField(max_length=100, default="", verbose_name=u"修改内容")
+v6_guidangshijian = models.CharField(max_length=100, default="", verbose_name=u"归档时间")
+v6_gengxinren = models.CharField(max_length=100, default="", verbose_name=u"更新人")

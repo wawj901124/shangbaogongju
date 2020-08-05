@@ -18,6 +18,7 @@ from .modelsnewdev import NodeConfig,ConfigCollectSendCmd,ConfigCollectFactor, \
 from .modelscode import YinZiCode
 
 from .modelsguide import GuideHelp
+from .modelsv6xieyi import VSixXieYiDuiZhao
 
 # from .forms import ConfigCollectFactorForm
 # from .forms import ConfigControlSendPorsConvertruleForm
@@ -1853,6 +1854,128 @@ class GuideHelpXadmin(object):
 
 
 
+#V6协议对照
+class VSixXieYiDuiZhaoXadmin(object):
+    all_zi_duan = ["id",
+                   "add_time", "update_time"]
+    list_display = ['v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei', 'v6_zhenglihouxieyimingcheng',
+                    'v6_yuanxieyimingcheng', 'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
+                    'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_erjinzhimingcheng', 'v6_teshupeizhiwenjian',
+                    'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing', 'v6_chengxuleixing',
+                    'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong', 'v6_guidangshijian', 'v6_gengxinren'] # 定义显示的字段
+
+    list_filter = ['v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei', 'v6_zhenglihouxieyimingcheng',
+                   'v6_yuanxieyimingcheng', 'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
+                   'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_erjinzhimingcheng', 'v6_teshupeizhiwenjian',
+                   'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing', 'v6_chengxuleixing',
+                   'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong', 'v6_guidangshijian', 'v6_gengxinren'] # 定义筛选的字段
+    search_fields = ['v6_xiyihao',]   # 定义搜索字段
+    model_icon = "fa fa-file-text"  # 定义图标显示
+    ordering = ["-add_time"]  # 添加默认排序规则显示排序，根据添加时间倒序排序
+    # readonly_fields = ['write_user','add_time','update_time'] # 设置某些字段为只为可读  #设置了readonly_fields，再设置exclude，exclude对该字段无效，
+
+    # exclude = ['case_step']  # 设置某些字段为不显示，即隐藏  #readonly_fields和exclude设置会有冲突
+    # inlines = [TestCaseInline]  # inlines配和TestCaseInline使用，可以直接在项目页面添加测试用例#只能做一层嵌套，不能进行两层嵌套
+
+    list_editable = all_zi_duan  # 可以在列表页对字段进行编辑
+    refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
+    list_per_page = 50  # 每页设置50条数据，默认每页展示100条数据
+    # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
+    list_display_links = ["v6_xiyihao", ]  # 设置点击链接进入编辑页面的字段
+    # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
+    show_detail_fields = ["v6_xiyihao", ]  # 显示数据详情
+
+    list_export = ('xls',)  # 控制列表页导出数据的可选格式
+    show_bookmarks = True  # 控制是否显示书签功能
+
+    # 设置是否加入导入插件
+    import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
+
+
+    #可以根据是否为超级用户，设置某些字段为可读，即超级管理员可以进行编辑，而普通用户不可以进行编辑的字段设置
+    def get_readonly_fields(self):
+        fields = []
+        if self.request.user.is_superuser:  #
+            fields = ['write_user','add_time', 'update_time']
+            return fields
+        else:
+            fields = ['write_user','add_time','update_time']   #例如，用户，超级管理员可以分配用户，而普通不可以编辑用户
+            return fields
+
+    def instance_forms(self):  # 需要重写instance_forms方法，此方法作用是生成表单实例
+        super().instance_forms()
+        # 判断是否为新建操作，新建操作才会设置write_user的默认值
+        if not self.org_obj:
+            self.form_obj.initial['write_user'] = self.request.user.id
+
+    #post处理导入数据
+    def post(self, request, *args, **kwargs):  # 重载post函数，用于判断导入的逻辑
+        if 'excel' in request.FILES:  # 如果excel在request.FILES中
+            excel_file = request.FILES.get('excel', '')
+
+            import xlrd  # 导入xlrd
+            # 常用的Excel文件有.xls和.xls两种，.xls文件读取时需要设置formatting_info = True
+            # data = xlrd.open_workbook(filename=None, file_contents=excel_file.read())  # xlsx文件
+
+            exceldata = xlrd.open_workbook(filename=None, file_contents=excel_file.read(),
+                                           formatting_info=True)  # xls文件
+
+            from .analyzexls import Analyzexls
+            analyzexls = Analyzexls()
+            # 将获取的数据循环导入数据库中
+            all_list_1 = analyzexls.get_sheets_mg(exceldata, 0)
+            i = 0
+            if len(all_list_1[0]) >= 22:  #如果大于等于22列
+                while i < len(all_list_1):
+                    xieyihao = all_list_1[i][0]
+                    zhenglihouxieyimingcheng = all_list_1[i][3]
+                    status = all_list_1[i][6]
+                    old_vsixxieyiduizhao_count = VSixXieYiDuiZhao.objects.filter(v6_xiyihao=xieyihao).\
+                        filter(v6_zhenglihouxieyimingcheng=zhenglihouxieyimingcheng).\
+                        filter(v6_status=status).count()
+                    if old_vsixxieyiduizhao_count == 0:  #如果不存在则导入，否则不导入
+                        if xieyihao == None:
+                            print("表格中第%s行的协议号为空,此行不进行数据录入"%(i+1))
+                            pass
+                        else:
+                            xieyihao = str(xieyihao).strip()
+                            if "." in xieyihao:  #如果点在协议号中说明协议号为数据型存在小数点
+                                xieyihao = xieyihao.split(".")[0]
+                            else:
+                                xieyihao = xieyihao
+                            print("录入协议号：%s" % xieyihao)
+                            vsixxieyiduizhao = VSixXieYiDuiZhao()  # 数据库的对象等于ClickAndBack,实例化
+                            vsixxieyiduizhao.v6_xiyihao = xieyihao
+                            vsixxieyiduizhao.v6_jianceleixing = all_list_1[i][1]
+                            vsixxieyiduizhao.v6_yiqifenlei = all_list_1[i][2]
+                            vsixxieyiduizhao.v6_zhenglihouxieyimingcheng = zhenglihouxieyimingcheng
+                            vsixxieyiduizhao.v6_yuanxieyimingcheng = all_list_1[i][4]
+                            vsixxieyiduizhao.v6_syybxydcjyqxh = all_list_1[i][5]
+                            vsixxieyiduizhao.v6_status = status
+                            vsixxieyiduizhao.v6_yuanshucaiyiduiyingxieyihao = all_list_1[i][7]
+                            vsixxieyiduizhao.v6_shujuzhiling = all_list_1[i][8]
+                            vsixxieyiduizhao.v6_zhuangtaicanshuzhiling = all_list_1[i][9]
+                            vsixxieyiduizhao.v6_erjinzhimingcheng = all_list_1[i][10]
+                            vsixxieyiduizhao.v6_teshupeizhiwenjian = all_list_1[i][11]
+                            vsixxieyiduizhao.v6_shifoucaijizhuangtai = all_list_1[i][12]
+                            vsixxieyiduizhao.v6_yijifenlei = all_list_1[i][13]
+                            vsixxieyiduizhao.v6_shiyongquyu = all_list_1[i][14]
+                            vsixxieyiduizhao.v6_jiekouleixing = all_list_1[i][15]
+                            vsixxieyiduizhao.v6_chengxuleixing = all_list_1[i][16]
+                            vsixxieyiduizhao.v6_kaifaren = all_list_1[i][17]
+                            vsixxieyiduizhao.v6_ceshiren = all_list_1[i][18]
+                            vsixxieyiduizhao.v6_xiugaineirong = all_list_1[i][19]
+                            vsixxieyiduizhao.v6_guidangshijian = all_list_1[i][20]
+                            vsixxieyiduizhao.v6_gengxinren = all_list_1[i][21]
+                            # vsixxieyiduizhao.write_user_id = request.user.id
+                            vsixxieyiduizhao.save()  # 保存到数据库
+                    else:
+                        print("第%s行不录入数据：【%s_%s】" % (str(i),xieyihao,zhenglihouxieyimingcheng))
+                    i = i + 1
+            pass
+        return super(VSixXieYiDuiZhaoXadmin,self).post(request,*args,**kwargs)  # 必须调用VSixXieYiDuiZhaoXadmin父类，再调用post方法，否则会报错
+        # 一定不要忘记，否则整个ClickAndBackXAdmin保存都会出错
+
 
 
 
@@ -1869,6 +1992,7 @@ xadmin.site.register(NodeConfig,NodeConfigXadmin)   #在xadmin中注册NodeConfi
 
 xadmin.site.register(YinZiCode,YinZiCodeXadmin)   #在xadmin中注册YinZiCode
 xadmin.site.register(GuideHelp,GuideHelpXadmin)   #在xadmin中注册YinZiCode
+xadmin.site.register(VSixXieYiDuiZhao,VSixXieYiDuiZhaoXadmin)   #在xadmin中注册VSixXieYiDuiZhao
 
 
 

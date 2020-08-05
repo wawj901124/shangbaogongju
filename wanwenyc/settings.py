@@ -27,7 +27,7 @@ sys.path.insert(0,os.path.join(BASE_DIR, 'extra_apps'))  #配置extra_apps路径
 SECRET_KEY = '5tjx38wld=d74vhdm9l42tv625f5^fkd)=p4=ctdo5ztkimp-='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True    #DEBUG为True，静态资源可以用，例如js样式，DEBUG为False则所有静态样式均不可用
+DEBUG = True   #DEBUG为True，静态资源可以用，例如js样式，DEBUG为False则所有静态样式均不可用
 # DEBUG = False
 
 # ALLOWED_HOSTS = []
@@ -204,7 +204,10 @@ USE_TZ = False   #默认是Ture，时间是utc时间，由于我们要用本地�
 # STATIC_URL = '/static/'
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]   #将static加入python根搜索路径
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticall')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),
+                    os.path.join(BASE_DIR,'extra_apps/xadmin/static'),
+                    ]   #将static加入python根搜索路径
 
 MEDIA_URL = '/media/'   #配置上传文件跟目录
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    #MEDIA_ROOT只能设置一个，根目录,把media与根目录BASE_DIR连接起来
@@ -263,18 +266,18 @@ CACHE_MIDDLEWARE_SECONDS = 300            #每个page需要被缓存多少秒.,�
 #     }
 # }
 
-#利用数据库来缓存
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',   # 指定缓存使用的引擎
-        'LOCATION': 'my_cache_table',   # 数据库表  #利用 python manage.py createcachetable my_cache_table 创建的“my_cache_table”表
-        'TIMEOUT': 600,
-        'OPTIONS': {
-            'MAX_ENTRIES': 2000,    # 最大缓存记录的数量（默认300）
-            'CULL_FREQUENCY': 3,          # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
-        }
-    }
-}
+# #利用数据库来缓存
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',   # 指定缓存使用的引擎
+#         'LOCATION': 'my_cache_table',   # 数据库表  #利用 python manage.py createcachetable my_cache_table 创建的“my_cache_table”表
+#         'TIMEOUT': 600,
+#         'OPTIONS': {
+#             'MAX_ENTRIES': 2000,    # 最大缓存记录的数量（默认300）
+#             'CULL_FREQUENCY': 3,          # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+#         }
+#     }
+# }
 
 # #Memcache来缓存之settings配置
 # #使用前需要安装一些内容：
