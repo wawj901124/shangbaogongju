@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<version>v20200608</version>
+	<deviceModel>1和因子分析仪</deviceModel>
+	<collectCmds ackPacketMaxLen="">
+		<cmd id="rtdCollect" format="" cmd="" ackType="" ackHead="" ackTail="" ackLen="" ackGap="" ackCheckMode="MODBUS_L_CRC16" ackCheckArg="">
+			<pollutantFactor>
+				<factor factorCode="a01901" findMode="OFFSET" offset="43" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+			</pollutantFactor>
+		</cmd>
+	</collectCmds>
+</root>

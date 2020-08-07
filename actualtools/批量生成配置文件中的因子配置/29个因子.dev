@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<version>v20200608</version>
+	<deviceModel>1和因子分析仪</deviceModel>
+	<collectCmds ackPacketMaxLen="">
+		<cmd id="rtdCollect" format="" cmd="" ackType="" ackHead="" ackTail="" ackLen="" ackGap="" ackCheckMode="MODBUS_L_CRC16" ackCheckArg="">
+			<pollutantFactor>
+				<factor factorCode="a00000" findMode="OFFSET" offset="3" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01001" findMode="OFFSET" offset="7" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01002" findMode="OFFSET" offset="11" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01006" findMode="OFFSET" offset="15" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01007" findMode="OFFSET" offset="19" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01008" findMode="OFFSET" offset="23" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01010" findMode="OFFSET" offset="27" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01011" findMode="OFFSET" offset="31" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01012" findMode="OFFSET" offset="35" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01013" findMode="OFFSET" offset="39" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01014" findMode="OFFSET" offset="43" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01015" findMode="OFFSET" offset="47" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01016" findMode="OFFSET" offset="51" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01017" findMode="OFFSET" offset="55" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01901" findMode="OFFSET" offset="59" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a01902" findMode="OFFSET" offset="63" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a05001" findMode="OFFSET" offset="67" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a05002" findMode="OFFSET" offset="71" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a05008" findMode="OFFSET" offset="75" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a05009" findMode="OFFSET" offset="79" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a05013" findMode="OFFSET" offset="83" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a19001" findMode="OFFSET" offset="87" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a20007" findMode="OFFSET" offset="91" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a20016" findMode="OFFSET" offset="95" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a20025" findMode="OFFSET" offset="99" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a20026" findMode="OFFSET" offset="103" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a20043" findMode="OFFSET" offset="107" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a20044" findMode="OFFSET" offset="111" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a20057" findMode="OFFSET" offset="115" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+			</pollutantFactor>
+		</cmd>
+	</collectCmds>
+</root>

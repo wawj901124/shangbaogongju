@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'spiderdata.apps.SpiderdataConfig',  # 注册spiderdata
     'shucaiyidate.apps.ShucaiyidateConfig',  #注册shucaiyidate
     'debug_toolbar',  # 注册debug_toolbar，放在django.contrib.staticfiles后面
+    'import_export',  #导入导出，放在xadmin之后
 ]
 
 
@@ -141,7 +142,18 @@ DATABASES = {
         'HOST':'127.0.0.1',
         'PORT': '3306',         # 数据库使用的端口
         'OPTIONS':{'init_command':'SET sql_mode="STRICT_TRANS_TABLES",storage_engine=INNODB;'}  #设置数据库为INNODB，为第三方数据库登录用
-    }
+    },
+
+    # 'slave': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'congku',
+    #     'USER':'root',
+    #     'PASSWORD':'',
+    #     'HOST':'192.168.100.198',
+    #     'PORT': '3306',         # 数据库使用的端口
+    #     'OPTIONS':{'init_command':'SET sql_mode="STRICT_TRANS_TABLES",storage_engine=INNODB;'}  #设置数据库为INNODB，为第三方数据库登录用
+    # },
+
 }
 
 
@@ -312,3 +324,9 @@ CACHE_MIDDLEWARE_SECONDS = 300            #每个page需要被缓存多少秒.,�
 #    },
 #   }
 #  }
+
+
+# 数据库配置读写分离
+# DATABASE_ROUTERS = ['db_router.MasterSlaveDBRouter',]  # 指定你的路由分发类,读都在"slave"上，写都在"default"上m
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True  # 在导入数据时使用数据库事务，默认False

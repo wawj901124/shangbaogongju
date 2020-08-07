@@ -12,17 +12,18 @@ for i in f:
     lie_list = i.split("=")
     # print(lie_list)
     ziduan = lie_list[0].strip()
-
-    yuqi = """ vsixxieyiduizhao.%s = all_list_1[i][%s]""" % (ziduan,str(num_count))
+    #
+    yuqi = """vsixxieyiduizhao.%s = %s""" % (ziduan,ziduan)
     num_count = num_count+1
+    # print(yuqi)
     print(yuqi)
 
 
     # yuqi = "(%s, %s)"%(ziduan,hanzi)
     # print(yuqi)
 
-    # expect_list.append(ziduan)
-#print(expect_list)
+    expect_list.append(ziduan)
+print(expect_list)
 
 
 

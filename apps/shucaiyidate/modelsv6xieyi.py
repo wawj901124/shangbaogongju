@@ -2,8 +2,6 @@ from django.db import models
 from datetime import datetime
 from wanwenyc.settings import DJANGO_SERVER_YUMING
 from django.contrib.auth import  get_user_model  #导入get_user_model
-from testupdatadb.models import UpdateDbData
-from .modelsnewdev import NodeConfig
 
 #第三个就是我们自己创建的包
 User = get_user_model()  #get_user_model() 函数直接返回User类，找的是settings.AUTH_USER_MODEL变量的值
@@ -18,13 +16,9 @@ class VSixXieYiDuiZhao(models.Model):
     v6_syybxydcjyqxh = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"适用于本协议的厂家仪器型号")
     v6_status = models.CharField(max_length=100, default="", null=True, blank=True,verbose_name=u"状态")
     v6_yuanshucaiyiduiyingxieyihao = models.CharField(max_length=100,null=True, blank=True, default="", verbose_name=u"原数采仪对应协议号")
-    # v6_shujuzhiling = models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"数据指令")
-    v6_shujuzhiling = models.TextField(max_length=2000, default="",null=True, blank=True, verbose_name=u"数据指令")
-    # v6_zhuangtaicanshuzhiling = models.CharField(max_length=2000, default="",null=True, blank=True, verbose_name=u"状态参数指令")
-    v6_zhuangtaicanshuzhiling = models.TextField(max_length=2000, default="",null=True, blank=True, verbose_name=u"状态参数指令")
-    v6_erjinzhimingcheng = models.CharField(max_length=100, default="", null=True, blank=True,verbose_name=u"二进制名称")
-    # v6_teshupeizhiwenjian = models.CharField(max_length=2000, default="", null=True, blank=True,verbose_name=u"特殊配置文件")
-    v6_teshupeizhiwenjian = models.TextField(max_length=2000, default="", null=True, blank=True,verbose_name=u"特殊配置文件")
+    v6_shujuzhiling = models.TextField(max_length=1500, default="",null=True, blank=True, verbose_name=u"数据指令")
+    v6_zhuangtaicanshuzhiling = models.TextField(max_length=1500, default="",null=True, blank=True, verbose_name=u"状态参数指令")
+    v6_chuchangshengjibao = models.CharField(max_length=100, default="", null=True, blank=True,verbose_name=u"出厂升级包")
     v6_shifoucaijizhuangtai = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"是否采集状态")
     v6_yijifenlei = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"一级分类")
     v6_shiyongquyu = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"使用区域")
@@ -32,9 +26,12 @@ class VSixXieYiDuiZhao(models.Model):
     v6_chengxuleixing = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"程序类型")
     v6_kaifaren = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"开发人")
     v6_ceshiren = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"测试人")
-    v6_xiugaineirong = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"修改内容")
+    v6_xiugaineirong = models.TextField(max_length=1500, default="",null=True, blank=True, verbose_name=u"修改内容")
+    v6_erjinzhimingcheng = models.TextField(max_length=500, default="", null=True, blank=True,verbose_name=u"二进制名称")
+    v6_teshupeizhiwenjian = models.TextField(max_length=1500, default="", null=True, blank=True,verbose_name=u"特殊配置文件")
     v6_guidangshijian = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"归档时间")
-    v6_gengxinren = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"更新人")
+    # v6_guidangshijian = models.DateField(max_length=100, default="", null=True, blank=True, verbose_name=u"归档时间")
+    v6_guidangren = models.CharField(max_length=100, default="",null=True, blank=True, verbose_name=u"归档人")
 
 
 
@@ -56,5 +53,4 @@ class VSixXieYiDuiZhao(models.Model):
     #     return mark_safe("<a href='{}/shucaiyidate/xieyiconfigdateorder/{}/'>复制新加</a>".format(DJANGO_SERVER_YUMING,self.id))
     #
     # go_to.short_description = u"复制新加"   #为go_to函数名个名字
-
 

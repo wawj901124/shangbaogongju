@@ -1165,7 +1165,7 @@ class NodeConfigXadmin():
 
     # list_editable = all_zi_duan  # 可以在列表页对字段进行编辑
     refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
-    list_per_page = 50  # 每页设置50条数据，默认每页展示100条数据
+    list_per_page = 10  # 每页设置10条数据，默认每页展示100条数据
     # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
     list_display_links = ["config_project", ]  # 设置点击链接进入编辑页面的字段
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
@@ -1551,7 +1551,7 @@ class ActionDevTagXadmin(object):
 
     list_editable = all_zi_duan  # 可以在列表页对字段进行编辑
     refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
-    list_per_page = 50  # 每页设置50条数据，默认每页展示100条数据
+    list_per_page = 10  # 每页设置10条数据，默认每页展示100条数据
     # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
     list_display_links = ["config_project", ]  # 设置点击链接进入编辑页面的字段
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
@@ -1793,7 +1793,7 @@ class YinZiCodeXadmin(object):
 
     list_editable = all_zi_duan  # 可以在列表页对字段进行编辑
     refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
-    list_per_page = 50  # 每页设置50条数据，默认每页展示100条数据
+    list_per_page = 10  # 每页设置10条数据，默认每页展示100条数据
     # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
     list_display_links = ["yinzi_name", ]  # 设置点击链接进入编辑页面的字段
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
@@ -1823,7 +1823,7 @@ class GuideHelpXadmin(object):
 
     list_editable = all_zi_duan  # 可以在列表页对字段进行编辑
     refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
-    list_per_page = 50  # 每页设置50条数据，默认每页展示100条数据
+    list_per_page = 10  # 每页设置10条数据，默认每页展示100条数据
     # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
     list_display_links = ["guide_project", ]  # 设置点击链接进入编辑页面的字段
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
@@ -1852,24 +1852,56 @@ class GuideHelpXadmin(object):
         if not self.org_obj:
             self.form_obj.initial['write_user'] = self.request.user.id
 
+# import xadmin
+# from .modelsv6xieyi import VSixXieYiDuiZhao
+# #使用import_export 中的resources
+# from import_export import resources
+# class VSixXieYiDuiZhaoResources(resources.ModelResource):
+#     class Meta:
+#         model = VSixXieYiDuiZhao
+#         skip_unchanged = True  # 导入数据时，如果该条数据未修改过，则会忽略
+#         report_skipped = True  # 在导入预览页面中显示跳过的记录
+#         import_id_fields = ('id',) # 对象标识的默认字段是id，您可以选择在导入时设置哪些字段用作id
+#         # import_id_fields = ('v6_xiyihao',)  # 对象标识的默认字段是id，您可以选择在导入时设置哪些字段用作id
+#         fields = (
+#             'v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei',
+#             'v6_zhenglihouxieyimingcheng', 'v6_yuanxieyimingcheng',
+#             'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
+#             'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_chuchangshengjibao',
+#             'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing',
+#             'v6_chengxuleixing', 'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong', 'v6_erjinzhimingcheng',
+#             'v6_teshupeizhiwenjian', 'v6_guidangshijian', 'v6_guidangren',
+#         )# 白名单
+#
+#         exclude = (
+#             'write_user', 'add_time', 'update_time',
+#         )# 黑名单
 
 
 #V6协议对照
 class VSixXieYiDuiZhaoXadmin(object):
     all_zi_duan = ["id",
                    "add_time", "update_time"]
-    list_display = ['v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei', 'v6_zhenglihouxieyimingcheng',
-                    'v6_yuanxieyimingcheng', 'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
-                    'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_erjinzhimingcheng', 'v6_teshupeizhiwenjian',
-                    'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing', 'v6_chengxuleixing',
-                    'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong', 'v6_guidangshijian', 'v6_gengxinren'] # 定义显示的字段
+    list_display = ['v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei',
+                    'v6_zhenglihouxieyimingcheng', 'v6_yuanxieyimingcheng',
+                    'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
+                    'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_chuchangshengjibao',
+                    'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing',
+                    'v6_chengxuleixing', 'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong', 'v6_erjinzhimingcheng',
+                    'v6_teshupeizhiwenjian', 'v6_guidangshijian', 'v6_guidangren'] # 定义显示的字段
 
     list_filter = ['v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei', 'v6_zhenglihouxieyimingcheng',
                    'v6_yuanxieyimingcheng', 'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
-                   'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_erjinzhimingcheng', 'v6_teshupeizhiwenjian',
-                   'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing', 'v6_chengxuleixing',
-                   'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong', 'v6_guidangshijian', 'v6_gengxinren'] # 定义筛选的字段
-    search_fields = ['v6_xiyihao',]   # 定义搜索字段
+                   'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_chuchangshengjibao',
+                   'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing',
+                   'v6_chengxuleixing', 'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong',
+                   'v6_erjinzhimingcheng', 'v6_teshupeizhiwenjian', 'v6_guidangshijian', 'v6_guidangren']# 定义筛选的字段
+    search_fields = ['v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei', 'v6_zhenglihouxieyimingcheng',
+                     'v6_yuanxieyimingcheng', 'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
+                     'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_chuchangshengjibao', 'v6_shifoucaijizhuangtai',
+                     'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing', 'v6_chengxuleixing', 'v6_kaifaren',
+                     'v6_ceshiren', 'v6_xiugaineirong', 'v6_erjinzhimingcheng', 'v6_teshupeizhiwenjian',
+                     'v6_guidangshijian', 'v6_guidangren']# 定义搜索字段
     model_icon = "fa fa-file-text"  # 定义图标显示
     ordering = ["-add_time"]  # 添加默认排序规则显示排序，根据添加时间倒序排序
     # readonly_fields = ['write_user','add_time','update_time'] # 设置某些字段为只为可读  #设置了readonly_fields，再设置exclude，exclude对该字段无效，
@@ -1879,7 +1911,7 @@ class VSixXieYiDuiZhaoXadmin(object):
 
     list_editable = all_zi_duan  # 可以在列表页对字段进行编辑
     refresh_times = [3, 5]  # 对列表页进行定时刷新,配置了3秒和5秒，可以从中选择一个
-    list_per_page = 50  # 每页设置50条数据，默认每页展示100条数据
+    list_per_page = 10  # 每页设置10条数据，默认每页展示100条数据
     # fk_fields = ['test_project_id',]  #设置显示外键字段，未生效
     list_display_links = ["v6_xiyihao", ]  # 设置点击链接进入编辑页面的字段
     # date_hierarchy = 'add_time'   #详细时间分层筛选，未生效
@@ -1890,6 +1922,11 @@ class VSixXieYiDuiZhaoXadmin(object):
 
     # 设置是否加入导入插件
     import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
+    # import_export_args = {
+    #     'import_resource_class': VSixXieYiDuiZhaoResources,
+    #     # 'export_resource_class': ProductInfoResource,
+    # }# 配置导入按钮
+
 
 
     #可以根据是否为超级用户，设置某些字段为可读，即超级管理员可以进行编辑，而普通用户不可以进行编辑的字段设置
@@ -1925,54 +1962,143 @@ class VSixXieYiDuiZhaoXadmin(object):
             # 将获取的数据循环导入数据库中
             all_list_1 = analyzexls.get_sheets_mg(exceldata, 0)
             i = 0
-            if len(all_list_1[0]) >= 22:  #如果大于等于22列
+            if len(all_list_1[0]) >= 23:  #如果大于等于23列
                 while i < len(all_list_1):
-                    xieyihao = all_list_1[i][0]
-                    zhenglihouxieyimingcheng = all_list_1[i][3]
-                    status = all_list_1[i][6]
-                    old_vsixxieyiduizhao_count = VSixXieYiDuiZhao.objects.filter(v6_xiyihao=xieyihao).\
-                        filter(v6_zhenglihouxieyimingcheng=zhenglihouxieyimingcheng).\
-                        filter(v6_status=status).count()
-                    if old_vsixxieyiduizhao_count == 0:  #如果不存在则导入，否则不导入
-                        if xieyihao == None:
-                            print("表格中第%s行的协议号为空,此行不进行数据录入"%(i+1))
-                            pass
-                        else:
-                            xieyihao = str(xieyihao).strip()
-                            if "." in xieyihao:  #如果点在协议号中说明协议号为数据型存在小数点
-                                xieyihao = xieyihao.split(".")[0]
-                            else:
-                                xieyihao = xieyihao
-                            print("录入协议号：%s" % xieyihao)
-                            vsixxieyiduizhao = VSixXieYiDuiZhao()  # 数据库的对象等于ClickAndBack,实例化
-                            vsixxieyiduizhao.v6_xiyihao = xieyihao
-                            vsixxieyiduizhao.v6_jianceleixing = all_list_1[i][1]
-                            vsixxieyiduizhao.v6_yiqifenlei = all_list_1[i][2]
-                            vsixxieyiduizhao.v6_zhenglihouxieyimingcheng = zhenglihouxieyimingcheng
-                            vsixxieyiduizhao.v6_yuanxieyimingcheng = all_list_1[i][4]
-                            vsixxieyiduizhao.v6_syybxydcjyqxh = all_list_1[i][5]
-                            vsixxieyiduizhao.v6_status = status
-                            vsixxieyiduizhao.v6_yuanshucaiyiduiyingxieyihao = all_list_1[i][7]
-                            vsixxieyiduizhao.v6_shujuzhiling = all_list_1[i][8]
-                            vsixxieyiduizhao.v6_zhuangtaicanshuzhiling = all_list_1[i][9]
-                            vsixxieyiduizhao.v6_erjinzhimingcheng = all_list_1[i][10]
-                            vsixxieyiduizhao.v6_teshupeizhiwenjian = all_list_1[i][11]
-                            vsixxieyiduizhao.v6_shifoucaijizhuangtai = all_list_1[i][12]
-                            vsixxieyiduizhao.v6_yijifenlei = all_list_1[i][13]
-                            vsixxieyiduizhao.v6_shiyongquyu = all_list_1[i][14]
-                            vsixxieyiduizhao.v6_jiekouleixing = all_list_1[i][15]
-                            vsixxieyiduizhao.v6_chengxuleixing = all_list_1[i][16]
-                            vsixxieyiduizhao.v6_kaifaren = all_list_1[i][17]
-                            vsixxieyiduizhao.v6_ceshiren = all_list_1[i][18]
-                            vsixxieyiduizhao.v6_xiugaineirong = all_list_1[i][19]
-                            vsixxieyiduizhao.v6_guidangshijian = all_list_1[i][20]
-                            vsixxieyiduizhao.v6_gengxinren = all_list_1[i][21]
-                            # vsixxieyiduizhao.write_user_id = request.user.id
-                            vsixxieyiduizhao.save()  # 保存到数据库
+                    v6_xiyihao = all_list_1[i][0]
+                    v6_jianceleixing = all_list_1[i][1]
+                    v6_yiqifenlei = all_list_1[i][2]
+                    v6_zhenglihouxieyimingcheng = all_list_1[i][3]
+                    v6_yuanxieyimingcheng = all_list_1[i][4]
+                    v6_syybxydcjyqxh = all_list_1[i][5]
+                    v6_status = all_list_1[i][6]
+                    v6_yuanshucaiyiduiyingxieyihao = all_list_1[i][7]
+                    v6_shujuzhiling = all_list_1[i][8]
+                    v6_zhuangtaicanshuzhiling = all_list_1[i][9]
+                    v6_chuchangshengjibao = all_list_1[i][10]
+                    v6_shifoucaijizhuangtai = all_list_1[i][11]
+                    v6_yijifenlei = all_list_1[i][12]
+                    v6_shiyongquyu = all_list_1[i][13]
+                    v6_jiekouleixing = all_list_1[i][14]
+                    v6_chengxuleixing = all_list_1[i][15]
+                    v6_kaifaren = all_list_1[i][16]
+                    v6_ceshiren = all_list_1[i][17]
+                    v6_xiugaineirong = all_list_1[i][18]
+                    v6_erjinzhimingcheng = all_list_1[i][19]
+                    v6_teshupeizhiwenjian = all_list_1[i][20]
+                    v6_guidangshijian = all_list_1[i][21]
+                    v6_guidangren = all_list_1[i][22]
+
+                    print("归当时间：")
+                    print(v6_guidangshijian)
+
+                    if v6_xiyihao == None:
+                        print("表格中第%s行的协议号为空,此行不进行数据录入" % str(i + 2))
                     else:
-                        print("第%s行不录入数据：【%s_%s】" % (str(i),xieyihao,zhenglihouxieyimingcheng))
+                        v6_xiyihao = str(v6_xiyihao).strip()
+                        if "." in v6_xiyihao:  # 如果点在协议号中说明协议号为数据型存在小数点
+                            v6_xiyihao = v6_xiyihao.split(".")[0]
+                        else:
+                            v6_xiyihao = v6_xiyihao
+
+                        if v6_guidangshijian == None:   #如果归档时间为None，则直接赋值
+                            v6_guidangshijian = v6_guidangshijian
+                        else:
+                            v6_guidangshijian = str(v6_guidangshijian).strip()
+                            if "." in v6_guidangshijian:  # 如果点在协议号中说明协议号为数据型存在小数点
+                                v6_guidangshijian = v6_guidangshijian.split(".")[0]
+                                v6_guidangshijian_len = len(v6_guidangshijian)
+                                if v6_guidangshijian_len ==5:  #5位数字时间戳
+                                    v6_guidangshijian = analyzexls.get_data_from_excel_riqi_wenben(v6_guidangshijian)
+                                else:
+                                    v6_guidangshijian = v6_guidangshijian
+                            else:
+                                v6_guidangshijian = v6_guidangshijian
+
+                        if  v6_yuanshucaiyiduiyingxieyihao == None: #如果为None，直接赋值
+                            v6_yuanshucaiyiduiyingxieyihao = v6_yuanshucaiyiduiyingxieyihao
+                        else:
+                            v6_yuanshucaiyiduiyingxieyihao = str(v6_yuanshucaiyiduiyingxieyihao).strip()
+                            if "." in v6_yuanshucaiyiduiyingxieyihao:  # 如果点在协议号中说明协议号为数据型存在小数点
+                                v6_yuanshucaiyiduiyingxieyihao = v6_yuanshucaiyiduiyingxieyihao.split(".")[0]
+                            else:
+                                v6_yuanshucaiyiduiyingxieyihao = v6_yuanshucaiyiduiyingxieyihao
+
+                        old_vsixxieyiduizhao_count = VSixXieYiDuiZhao.objects.filter(v6_xiyihao=v6_xiyihao).\
+                            filter(v6_jianceleixing=v6_jianceleixing).filter(v6_yiqifenlei=v6_yiqifenlei).\
+                            filter(v6_zhenglihouxieyimingcheng=v6_zhenglihouxieyimingcheng).filter(v6_yuanxieyimingcheng=v6_yuanxieyimingcheng).\
+                            filter(v6_syybxydcjyqxh=v6_syybxydcjyqxh).filter(v6_status=v6_status).\
+                            filter(v6_yuanshucaiyiduiyingxieyihao=v6_yuanshucaiyiduiyingxieyihao).filter(v6_shujuzhiling=v6_shujuzhiling).\
+                            filter(v6_zhuangtaicanshuzhiling=v6_zhuangtaicanshuzhiling).filter(v6_chuchangshengjibao=v6_chuchangshengjibao).\
+                            filter(v6_shifoucaijizhuangtai=v6_shifoucaijizhuangtai).filter(v6_yijifenlei=v6_yijifenlei).\
+                            filter(v6_shiyongquyu=v6_shiyongquyu).filter(v6_jiekouleixing=v6_jiekouleixing).\
+                            filter(v6_chengxuleixing=v6_chengxuleixing).filter(v6_kaifaren=v6_kaifaren).\
+                            filter(v6_ceshiren=v6_ceshiren).filter(v6_xiugaineirong=v6_xiugaineirong).\
+                            filter(v6_erjinzhimingcheng=v6_erjinzhimingcheng).filter(v6_teshupeizhiwenjian=v6_teshupeizhiwenjian).\
+                            filter(v6_guidangshijian=v6_guidangshijian).filter(v6_guidangren=v6_guidangren).count()
+                        if old_vsixxieyiduizhao_count == 0:  #如果不存在则可能进行导入
+                            #只进行因子判断
+                            yingzi_vsixxieyiduizhao_count = VSixXieYiDuiZhao.objects.filter(v6_xiyihao=v6_xiyihao).count()
+                            if yingzi_vsixxieyiduizhao_count>=1:  #如果大于等于1，则只修改第一条数据
+                                vsixxieyiduizhao = VSixXieYiDuiZhao.objects.filter(v6_xiyihao=v6_xiyihao).first()
+                                vsixxieyiduizhao.v6_xiyihao = v6_xiyihao
+                                vsixxieyiduizhao.v6_jianceleixing = v6_jianceleixing
+                                vsixxieyiduizhao.v6_yiqifenlei = v6_yiqifenlei
+                                vsixxieyiduizhao.v6_zhenglihouxieyimingcheng = v6_zhenglihouxieyimingcheng
+                                vsixxieyiduizhao.v6_yuanxieyimingcheng = v6_yuanxieyimingcheng
+                                vsixxieyiduizhao.v6_syybxydcjyqxh = v6_syybxydcjyqxh
+                                vsixxieyiduizhao.v6_status = v6_status
+                                vsixxieyiduizhao.v6_yuanshucaiyiduiyingxieyihao = v6_yuanshucaiyiduiyingxieyihao
+                                vsixxieyiduizhao.v6_shujuzhiling = v6_shujuzhiling
+                                vsixxieyiduizhao.v6_zhuangtaicanshuzhiling = v6_zhuangtaicanshuzhiling
+                                vsixxieyiduizhao.v6_chuchangshengjibao = v6_chuchangshengjibao
+                                vsixxieyiduizhao.v6_shifoucaijizhuangtai = v6_shifoucaijizhuangtai
+                                vsixxieyiduizhao.v6_yijifenlei = v6_yijifenlei
+                                vsixxieyiduizhao.v6_shiyongquyu = v6_shiyongquyu
+                                vsixxieyiduizhao.v6_jiekouleixing = v6_jiekouleixing
+                                vsixxieyiduizhao.v6_chengxuleixing = v6_chengxuleixing
+                                vsixxieyiduizhao.v6_kaifaren = v6_kaifaren
+                                vsixxieyiduizhao.v6_ceshiren = v6_ceshiren
+                                vsixxieyiduizhao.v6_xiugaineirong = v6_xiugaineirong
+                                vsixxieyiduizhao.v6_erjinzhimingcheng = v6_erjinzhimingcheng
+                                vsixxieyiduizhao.v6_teshupeizhiwenjian = v6_teshupeizhiwenjian
+                                vsixxieyiduizhao.v6_guidangshijian = v6_guidangshijian
+                                vsixxieyiduizhao.v6_guidangren = v6_guidangren
+                                # vsixxieyiduizhao.write_user_id = request.user.id
+                                vsixxieyiduizhao.save()  # 保存到数据库
+                                print("修改ID为%s（表格为%s行）,协议号为%s的数据"% (str(vsixxieyiduizhao.id),str(i + 2),str(vsixxieyiduizhao.v6_xiyihao)))
+
+                            else:
+                                print("录入表格第%s行的协议号为%s的数据" % (str(i + 2),v6_xiyihao))
+                                vsixxieyiduizhao = VSixXieYiDuiZhao()  # 数据库的对象等于ClickAndBack,实例化
+                                vsixxieyiduizhao.v6_xiyihao = v6_xiyihao
+                                vsixxieyiduizhao.v6_jianceleixing = v6_jianceleixing
+                                vsixxieyiduizhao.v6_yiqifenlei = v6_yiqifenlei
+                                vsixxieyiduizhao.v6_zhenglihouxieyimingcheng = v6_zhenglihouxieyimingcheng
+                                vsixxieyiduizhao.v6_yuanxieyimingcheng = v6_yuanxieyimingcheng
+                                vsixxieyiduizhao.v6_syybxydcjyqxh = v6_syybxydcjyqxh
+                                vsixxieyiduizhao.v6_status = v6_status
+                                vsixxieyiduizhao.v6_yuanshucaiyiduiyingxieyihao = v6_yuanshucaiyiduiyingxieyihao
+                                vsixxieyiduizhao.v6_shujuzhiling = v6_shujuzhiling
+                                vsixxieyiduizhao.v6_zhuangtaicanshuzhiling = v6_zhuangtaicanshuzhiling
+                                vsixxieyiduizhao.v6_chuchangshengjibao = v6_chuchangshengjibao
+                                vsixxieyiduizhao.v6_shifoucaijizhuangtai = v6_shifoucaijizhuangtai
+                                vsixxieyiduizhao.v6_yijifenlei = v6_yijifenlei
+                                vsixxieyiduizhao.v6_shiyongquyu = v6_shiyongquyu
+                                vsixxieyiduizhao.v6_jiekouleixing = v6_jiekouleixing
+                                vsixxieyiduizhao.v6_chengxuleixing = v6_chengxuleixing
+                                vsixxieyiduizhao.v6_kaifaren = v6_kaifaren
+                                vsixxieyiduizhao.v6_ceshiren = v6_ceshiren
+                                vsixxieyiduizhao.v6_xiugaineirong = v6_xiugaineirong
+                                vsixxieyiduizhao.v6_erjinzhimingcheng = v6_erjinzhimingcheng
+                                vsixxieyiduizhao.v6_teshupeizhiwenjian = v6_teshupeizhiwenjian
+                                vsixxieyiduizhao.v6_guidangshijian = v6_guidangshijian
+                                vsixxieyiduizhao.v6_guidangren = v6_guidangren
+                                # vsixxieyiduizhao.write_user_id = request.user.id
+                                vsixxieyiduizhao.save()  # 保存到数据库
+                        else:
+                            print("表格中第%s行的协议号为%s的数据已经存在，不进行数据录入" % ((i + 2),v6_xiyihao))
                     i = i + 1
-            pass
+
         return super(VSixXieYiDuiZhaoXadmin,self).post(request,*args,**kwargs)  # 必须调用VSixXieYiDuiZhaoXadmin父类，再调用post方法，否则会报错
         # 一定不要忘记，否则整个ClickAndBackXAdmin保存都会出错
 

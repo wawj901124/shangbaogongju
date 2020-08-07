@@ -48,3 +48,13 @@ class Analyzexls(object):
                     return cell_value
                     break
         return None
+
+
+    #将excel中的数字文本转为日期
+    #日期文本如 "44042"转为日期“2020-07-30”
+    def get_data_from_excel_riqi_wenben(self,riqiwenben):
+        import pandas as pd
+        delta = pd.Timedelta(str(riqiwenben) + 'D')
+        real_time = pd.to_datetime('1899-12-30') + delta
+        date_time_str = str(real_time).split(" ")[0]
+        return date_time_str
