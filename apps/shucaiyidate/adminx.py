@@ -1852,33 +1852,55 @@ class GuideHelpXadmin(object):
         if not self.org_obj:
             self.form_obj.initial['write_user'] = self.request.user.id
 
-# import xadmin
-# from .modelsv6xieyi import VSixXieYiDuiZhao
-# #使用import_export 中的resources
-# from import_export import resources
-# class VSixXieYiDuiZhaoResources(resources.ModelResource):
-#     class Meta:
-#         model = VSixXieYiDuiZhao
-#         skip_unchanged = True  # 导入数据时，如果该条数据未修改过，则会忽略
-#         report_skipped = True  # 在导入预览页面中显示跳过的记录
-#         import_id_fields = ('id',) # 对象标识的默认字段是id，您可以选择在导入时设置哪些字段用作id
-#         # import_id_fields = ('v6_xiyihao',)  # 对象标识的默认字段是id，您可以选择在导入时设置哪些字段用作id
-#         fields = (
-#             'v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei',
-#             'v6_zhenglihouxieyimingcheng', 'v6_yuanxieyimingcheng',
-#             'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
-#             'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_chuchangshengjibao',
-#             'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing',
-#             'v6_chengxuleixing', 'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong', 'v6_erjinzhimingcheng',
-#             'v6_teshupeizhiwenjian', 'v6_guidangshijian', 'v6_guidangren',
-#         )# 白名单
-#
-#         exclude = (
-#             'write_user', 'add_time', 'update_time',
-#         )# 黑名单
+import xadmin
+from .modelsv6xieyi import VSixXieYiDuiZhao
+#使用import_export 中的resources
+from import_export import resources  #导入resources
+from django.apps import apps   #导入apps
+class VSixXieYiDuiZhaoResources(resources.ModelResource):
+    def __init__(self):
+        super(VSixXieYiDuiZhaoResources, self).__init__()  #自调用
+        field_list = apps.get_model('shucaiyidate', 'VSixXieYiDuiZhao')._meta.fields
+        # 应用名与模型名
+        self.verbose_name_dict = {}
+        # 获取所有字段的verbose_name并存放在verbose_name_dict字典里
+        for i in field_list:
+            self.verbose_name_dict[i.name] = i.verbose_name
+
+    def get_export_fields(self):
+        fields = self.get_fields()
+        # 默认导入导出field的column_name为字段的名称
+        # 这里修改为字段的verbose_name
+        for field in fields:
+            field_name = self.get_field_name(field)
+            if field_name in self.verbose_name_dict.keys():
+                field.column_name = self.verbose_name_dict[field_name]
+                # 如果设置过verbose_name，则将column_name替换为verbose_name
+                # 否则维持原有的字段名
+        return fields
+
+    class Meta:
+        model = VSixXieYiDuiZhao
+        skip_unchanged = True  # 导入数据时，如果该条数据未修改过，则会忽略
+        report_skipped = True  # 在导入预览页面中显示跳过的记录
+        # import_id_fields = ('id',) # 对象标识的默认字段是id，您可以选择在导入时设置哪些字段用作id
+        import_id_fields = ('v6_xiyihao',)  # 对象标识的默认字段是id，您可以选择在导入时设置哪些字段用作id
+        fields = (
+            'v6_xiyihao', 'v6_jianceleixing', 'v6_yiqifenlei',
+            'v6_zhenglihouxieyimingcheng', 'v6_yuanxieyimingcheng',
+            'v6_syybxydcjyqxh', 'v6_status', 'v6_yuanshucaiyiduiyingxieyihao',
+            'v6_shujuzhiling', 'v6_zhuangtaicanshuzhiling', 'v6_chuchangshengjibao',
+            'v6_shifoucaijizhuangtai', 'v6_yijifenlei', 'v6_shiyongquyu', 'v6_jiekouleixing',
+            'v6_chengxuleixing', 'v6_kaifaren', 'v6_ceshiren', 'v6_xiugaineirong', 'v6_erjinzhimingcheng',
+            'v6_teshupeizhiwenjian', 'v6_guidangshijian', 'v6_guidangren',
+        )# 白名单
+
+        exclude = (
+            'write_user', 'add_time', 'update_time',
+        )# 黑名单
 
 
-#V6协议对照
+# V6协议对照
 class VSixXieYiDuiZhaoXadmin(object):
     all_zi_duan = ["id",
                    "add_time", "update_time"]
@@ -1921,11 +1943,11 @@ class VSixXieYiDuiZhaoXadmin(object):
     show_bookmarks = True  # 控制是否显示书签功能
 
     # 设置是否加入导入插件
-    import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
-    # import_export_args = {
-    #     'import_resource_class': VSixXieYiDuiZhaoResources,
-    #     # 'export_resource_class': ProductInfoResource,
-    # }# 配置导入按钮
+    # import_excel = True  # True表示显示使用插件，False表示不显示使用插件，该import_excel变量会覆盖插件中的变量
+    import_export_args = {
+        'import_resource_class': VSixXieYiDuiZhaoResources,
+        # 'export_resource_class': ProductInfoResource,
+    }# 配置导入按钮
 
 
 

@@ -156,6 +156,20 @@ DATABASES = {
 
 }
 
+#自动化数据库
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'wanwen',
+#         'USER':'root',
+#         'PASSWORD':'',
+#         'HOST':'127.0.0.1',
+#         'PORT': '3306',         # 数据库使用的端口
+#         'OPTIONS':{'init_command':'SET sql_mode="STRICT_TRANS_TABLES",storage_engine=INNODB;'} , #设置数据库为INNODB，为第三方数据库登录用
+#         'CONN_MAX_AGE': 600,  # 数据库持久化，此处设置600秒即10分钟，有助于减少内存泄漏或导致一种片状连接的问题，可以设置更长，建议不超过1小时
+#                                 # 设置的持久化连接每次都将存活10分钟
+#     }
+# }
 
 # DATABASES = {
 #     'default': {

@@ -12,7 +12,7 @@ def simple_middleware(get_response):  #自定义类中间件
         else:
             ip = request.META['REMOTE_ADDR']
         print('用户的请求ip是', ip)
-        print(request.META['USERNAME'])
+        # print(request.META['USERNAME'])
         print("当前的服务器域名：")
         print(request.META['HTTP_HOST'])
         response = get_response(request)

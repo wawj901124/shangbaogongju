@@ -5,7 +5,7 @@
 	<collectCmds ackPacketMaxLen="">
 		<cmd id="rtdCollect" format="" cmd="" ackType="" ackHead="" ackTail="" ackLen="" ackGap="" ackCheckMode="MODBUS_L_CRC16" ackCheckArg="">
 			<pollutantFactor>
-				<factor factorCode="a00000" findMode="OFFSET" offset="3" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
+                <factor factorCode="a00000" findMode="OFFSET" offset="3" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
                 <factor factorCode="a01001" findMode="OFFSET" offset="7" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
                 <factor factorCode="a01002" findMode="OFFSET" offset="11" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
                 <factor factorCode="a01006" findMode="OFFSET" offset="15" mark="" len="4" decodeType="decode4" operator="*" operand="1"/>
