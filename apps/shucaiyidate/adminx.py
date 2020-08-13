@@ -1950,6 +1950,15 @@ class VSixXieYiDuiZhaoXadmin(object):
     }# 配置导入按钮
 
 
+    #批量删除
+    def patch_delete(self,request,querset):
+        querset.delete()   #删除，有批量删除之意
+
+    patch_delete.short_description = "批量删除"
+
+    actions = [patch_delete, ]   #添加actions
+
+
 
     #可以根据是否为超级用户，设置某些字段为可读，即超级管理员可以进行编辑，而普通用户不可以进行编辑的字段设置
     def get_readonly_fields(self):
@@ -1966,6 +1975,8 @@ class VSixXieYiDuiZhaoXadmin(object):
         # 判断是否为新建操作，新建操作才会设置write_user的默认值
         if not self.org_obj:
             self.form_obj.initial['write_user'] = self.request.user.id
+
+
 
     #post处理导入数据
     def post(self, request, *args, **kwargs):  # 重载post函数，用于判断导入的逻辑
