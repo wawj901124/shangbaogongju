@@ -201,5 +201,5 @@ class StoreSBShuJuAdmin(object):
             qs = qs.filter(write_user=self.request.user)  #否则只显示本用户数据
             return qs   #返回qs
 
-# xadmin.site.register(ShangBaoShuJu, ShangBaoShuJuAdmin) #在xadmin中注册ShangBaoShuJu
-# xadmin.site.register(StoreSBShuJu, StoreSBShuJuAdmin) #在xadmin中注册StoreSBShuJu
+xadmin.site.register(ShangBaoShuJu, ShangBaoShuJuAdmin) #在xadmin中注册ShangBaoShuJu
+xadmin.site.register(StoreSBShuJu, StoreSBShuJuAdmin) #在xadmin中注册StoreSBShuJu

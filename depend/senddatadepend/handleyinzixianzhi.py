@@ -4,11 +4,15 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wanwenyc.settings")
 django.setup()
 # ----------------------------------------------------------------------
 #独运行某一个py文件时会出现如下错误：django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.，以上内容可以解决此问题,加载django中的App
+
 import random
 
 from WWSBGJTest.util.autoMakeString import AutoMakeString
 
-class ShangBaoYinZi(object):
+
+
+class HandleYinZiXianZhi(object):
+
     #去掉首位的0的递归
     def delelezoro(self,shuzhi):
         if shuzhi[0] == '0':
@@ -129,8 +133,6 @@ class ShangBaoYinZi(object):
 
         return shouwei
 
-
-
     #生成一个随机数
     def makeoneshuju(self,shuju_down,shuju_up,shuju_xiaoshuweishu):
         aut = AutoMakeString()
@@ -205,13 +207,13 @@ class ShangBaoYinZi(object):
             shuju_zs = None
         # 根据上下限制生成整数部分end
 
-            # 根据小数位数随机生成指定位数的小数位数的数据start
-        if shuju_up == shuju_down:
-            if shuju_xiaoshuweishu == 0:
+        # 根据小数位数随机生成指定位数的小数位数的数据start
+        if shuju_up == shuju_down:  #如果上限等于下限
+            if shuju_xiaoshuweishu == 0:  #小数位数为0是，不带小数位
                 shuju_xs = ""
             else:
                 shuju_xs = ""
-                for i in range(0, shuju_xiaoshuweishu):
+                for i in range(0, shuju_xiaoshuweishu):  #小数位数不为0时，则小数位全部为0
                     shuju_xs = shuju_xs + "0"
         else:
             if shuju_xiaoshuweishu == 0:
@@ -227,6 +229,7 @@ class ShangBaoYinZi(object):
         print(yinzi_rtd)
         return  yinzi_rtd
 
+    #根据数据个数生成一个随机数据列表
     def makeonetiaoshuju(self, shuju_down, shuju_up, shuju_xiaoshuweishu,shuju_count):
         yinzi_rtd_list = []
         shuju_count = int(shuju_count)
@@ -237,82 +240,17 @@ class ShangBaoYinZi(object):
         return yinzi_rtd_list
 
 
-    def shangbaoyinzi(self,sbyzid):
-
-        yinzi_list = []
-        from shangbaoshuju.models import ShuJuYinZi
-        shujuyinzis = ShuJuYinZi.objects.filter(shangbaoshuju_id=int(sbyzid))
-        if str(shujuyinzis) != "<QuerySet []>":
-            print(u"找到依赖数据")
-            for shujuyinzi in shujuyinzis:
-                #一个因子生成"w01001-Rtd=63.0,w01001-Flag=N;"形式
-                #根据上限和下限及小数位数生成数据
-                shuju_down = shujuyinzi.yinzi_rtd_down
-                shuju_up= shujuyinzi.yinzi_rtd_up
-                shuju_xiaoshuweishu = shujuyinzi.yinzi_rtd_xiaoshuwei
-                shuju_count = shujuyinzi.yinzi_rtd_count
-
-                yinzi_rtd_list = self.makeonetiaoshuju(shuju_down,shuju_up,shuju_xiaoshuweishu,shuju_count)
-                #生成单因子数据
-                one_yinzi = "%s-Rtd=%s,%s-Flag=%s;" % (
-                    shujuyinzi.yinzi_code, yinzi_rtd_list[0], shujuyinzi.yinzi_code, shujuyinzi.yinzi_flag)
-                yinzi_list.append(one_yinzi)
-
-        else:
-            print(u"没有找到依赖id[%s]对应的数据！" % sbyzid)
-
-
-        return yinzi_list
-
-
-
-shangbaoyinzi = ShangBaoYinZi()
-
 if __name__ == '__main__':
-    print("hello world")
-    yinzi_list =shangbaoyinzi.shangbaoyinzi(2)
-    print(yinzi_list)
-    CPyinzi = ''.join(yinzi_list)
-    print(CPyinzi)
-    # s = shangbaoyinzi.shouweixiangdeng("11")
-    # print(s)
-    # import random
+    hyzxz = HandleYinZiXianZhi()
+    shuju_down = 100
+    shuju_up = 234
+    shuju_xiaoshuweishu = 6
+    shuju_list = []
+    for i in range(100):
+        one = hyzxz.makeoneshuju(shuju_down,shuju_up,shuju_xiaoshuweishu)
+        shuju_list.append(one)
 
-    # print(random.sample(range(100, 900),10))
-    #
-    #
-    # j = 10
-    # #
-    # # id_list = []
-    # id_list = ''.join(str(i) for i in random.sample(range(100, 900), j))  # sample(seq, n) 从序列seq中选择n个随机且独立的元素；
-    # print(id_list)
-    # a = "000010"
-    # shangbaoyinzi.delelezoro(a)
-    # shuju_zhengshuweishu = 2
-    # aut = AutoMakeString()
-    # zhijian_shouwei_string_type = "123456789"
-    # zhijian_shouwei = aut.getBaseString(zhijian_shouwei_string_type, 1)
-    # shuju_xs_hou = ""
-    # if shuju_zhengshuweishu - 1 > 0:
-    #     shuju_xs_hou = aut.getDigits(shuju_zhengshuweishu - 1)
-    #
-    # shuju_xs = zhijian_shouwei + shuju_xs_hou
-    # print("---------------------")
-    # print(shuju_xs)
-    # print("---------------------")
-    # aut.getDigits(100)
-    # import random
-    #
-    # one_wei = random.sample(range(1, 3), 1)
-    # print(one_wei)
-    # shuju_down = "110"
-    #
-    #
-    # dengyuxiaxian_shouwei_string_type_list = []
-    # for i in range(int(shuju_down[0]), 10):
-    #     dengyuxiaxian_shouwei_string_type_list.append(str(i))
-    #
-    # dengyuxiaxian_shouwei_string_type = "".join(dengyuxiaxian_shouwei_string_type_list)
-    # print(dengyuxiaxian_shouwei_string_type)
-
-
+    print("生成的随机数：")
+    print(shuju_list)
+    for one in shuju_list:
+        print(one)
