@@ -58,7 +58,22 @@ class GetSendData(object):
                     print("16进制数值字符串(大写),两两一组：")
                     shijishuzhi_list = []
                     shijishuzhi_list_zero = shijishuzhi_str_upper[:2]
+                    shijishuzhi_list_one = shijishuzhi_str_upper[2:4]
+                    shijishuzhi_list_two = shijishuzhi_str_upper[4:6]
+                    shijishuzhi_list_three = shijishuzhi_str_upper[6:8]
+                    shijishuzhi_list_four = shijishuzhi_str_upper[8:10]
                     print(shijishuzhi_list_zero)
+                    print(shijishuzhi_list_one)
+                    print(shijishuzhi_list_two)
+                    print(shijishuzhi_list_three)
+                    print(shijishuzhi_list_four)
+                    shijishuzhi_list.append(shijishuzhi_list_zero)
+                    shijishuzhi_list.append(shijishuzhi_list_one)
+                    shijishuzhi_list.append(shijishuzhi_list_two)
+                    shijishuzhi_list.append(shijishuzhi_list_three)
+                    shijishuzhi_list.append(shijishuzhi_list_four)
+                    print(shijishuzhi_list)
+
 
 
 
