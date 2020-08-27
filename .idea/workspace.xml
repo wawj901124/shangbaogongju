@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f2e3f9-a9f8-4d05-8f19-451fb835821f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/wanwenyc.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/wanwenyc.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/shangbaoshuju/adminx.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/shangbaoshuju/adminx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/shucaiyidate/adminx.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/shucaiyidate/adminx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wanwenyc/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/wanwenyc/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +13,7 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="Git.Settings">
+    <option name="PATH_TO_GIT" value="D:\Git\bin\git.exe" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ggAmsjZmAhEb7mqffx3NL9JCjN" />
@@ -31,7 +27,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunManager">
     <configuration name="wanwenyc" type="Python.DjangoServer" factoryName="Django server">
@@ -69,12 +65,33 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1598526023840</updated>
-      <workItem from="1598526025218" duration="1718000" />
+      <workItem from="1598526025218" duration="2063000" />
+      <workItem from="1598528120976" duration="96000" />
+      <workItem from="1598528230407" duration="148000" />
     </task>
+    <task id="LOCAL-00001" summary="重新规整">
+      <created>1598527887222</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1598527887222</updated>
+    </task>
+    <task id="LOCAL-00002" summary="重新规整">
+      <created>1598528053117</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1598528053117</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="重新规整" />
+    <option name="LAST_COMMIT_MESSAGE" value="重新规整" />
   </component>
   <component name="WindowStateProjectService">
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598527548294">
@@ -85,29 +102,41 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="340" y="0" key="#wanwenyc/0.0.1280.680@0.0.1280.680" timestamp="1598527076990" />
+    <state x="244" y="0" key="CommitChangelistDialog2" timestamp="1598528052083">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="244" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1598528052083" />
     <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1598527145955">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1598527145955" />
-    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1598527711418">
+    <state width="618" height="163" key="GridCell.Tab.0.bottom" timestamp="1598528096214">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598527711418" />
-    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1598527711418">
+    <state width="618" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598528096214" />
+    <state width="618" height="163" key="GridCell.Tab.0.center" timestamp="1598528096214">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1598527711418" />
-    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1598527711417">
+    <state width="618" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1598528096214" />
+    <state width="618" height="163" key="GridCell.Tab.0.left" timestamp="1598528096214">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1598527711417" />
-    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1598527711418">
+    <state width="618" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1598528096214" />
+    <state width="618" height="163" key="GridCell.Tab.0.right" timestamp="1598528096214">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1598527711418" />
-    <state x="142" y="0" key="SettingsEditor" timestamp="1598527151400">
+    <state width="618" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1598528096214" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1598528378120">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1598527151400" />
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1598528378120" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1598528321455">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1598528321455" />
+    <state x="403" y="240" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1598528011701">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="403" y="240" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1280.680@0.0.1280.680" timestamp="1598528011701" />
   </component>
 </project>
