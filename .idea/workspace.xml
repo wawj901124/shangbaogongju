@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="59f2e3f9-a9f8-4d05-8f19-451fb835821f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/快速复制一个虚拟环境" beforeDir="false" afterPath="$PROJECT_DIR$/快速复制一个虚拟环境" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +27,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../centos8xitong" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunManager">
@@ -67,7 +68,7 @@
       <updated>1598526023840</updated>
       <workItem from="1598526025218" duration="2063000" />
       <workItem from="1598528120976" duration="96000" />
-      <workItem from="1598528230407" duration="148000" />
+      <workItem from="1598528230407" duration="1989000" />
     </task>
     <task id="LOCAL-00001" summary="重新规整">
       <created>1598527887222</created>
@@ -83,7 +84,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598528053117</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="重新规整">
+      <created>1598528387734</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1598528387734</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,38 +110,38 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="340" y="0" key="#wanwenyc/0.0.1280.680@0.0.1280.680" timestamp="1598527076990" />
-    <state x="244" y="0" key="CommitChangelistDialog2" timestamp="1598528052083">
+    <state x="244" y="0" key="CommitChangelistDialog2" timestamp="1598528386647">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="244" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1598528052083" />
-    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1598527145955">
+    <state x="244" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1598528386647" />
+    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1598528544981">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1598527145955" />
-    <state width="618" height="163" key="GridCell.Tab.0.bottom" timestamp="1598528096214">
+    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1598528544981" />
+    <state width="618" height="229" key="GridCell.Tab.0.bottom" timestamp="1598528940774">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="618" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598528096214" />
-    <state width="618" height="163" key="GridCell.Tab.0.center" timestamp="1598528096214">
+    <state width="618" height="229" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598528940774" />
+    <state width="618" height="229" key="GridCell.Tab.0.center" timestamp="1598528940774">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="618" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1598528096214" />
-    <state width="618" height="163" key="GridCell.Tab.0.left" timestamp="1598528096214">
+    <state width="618" height="229" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1598528940774" />
+    <state width="618" height="229" key="GridCell.Tab.0.left" timestamp="1598528940774">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="618" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1598528096214" />
-    <state width="618" height="163" key="GridCell.Tab.0.right" timestamp="1598528096214">
+    <state width="618" height="229" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1598528940774" />
+    <state width="618" height="229" key="GridCell.Tab.0.right" timestamp="1598528940774">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="618" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1598528096214" />
+    <state width="618" height="229" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1598528940774" />
     <state x="142" y="0" key="SettingsEditor" timestamp="1598528378120">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1598528378120" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1598528321455">
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1598528392554">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1598528321455" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1598528392554" />
     <state x="403" y="240" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1598528011701">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

@@ -8,3 +8,5 @@
 安装相关依赖包：pip install -r requirements.txt
 
 淘宝镜像安装：pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+
+推出虚拟环境：deactivate
