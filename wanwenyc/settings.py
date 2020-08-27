@@ -136,9 +136,9 @@ WSGI_APPLICATION = 'wanwenyc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shucaiyi',
+        'NAME': 'jiekou',
         'USER':'root',
-        'PASSWORD':'',
+        'PASSWORD':'root',
         'HOST':'127.0.0.1',
         'PORT': '3306',         # 数据库使用的端口
         'OPTIONS':{'init_command':'SET sql_mode="STRICT_TRANS_TABLES",storage_engine=INNODB;'}  #设置数据库为INNODB，为第三方数据库登录用

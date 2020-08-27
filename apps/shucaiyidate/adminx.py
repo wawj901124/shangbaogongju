@@ -2183,21 +2183,21 @@ class XieYiAutoDataXadmin(object):
 
 
 
-xadmin.site.register(XieyiTestCase, XieyiTestCaseXadmin) #在xadmin中注册XieyiTestCase
-xadmin.site.register(XieyiConfigDateOrder, XieyiConfigDateOrderXadmin) #在xadmin中注册XieyiConfigDate
-# xadmin.site.register(XieyiRecriminatConfig,XieyiRecriminatConfigXadmin)   #在xadmin中注册XieyiRecriminatConfig
-xadmin.site.register(SenderHexDataOrder, SenderHexDataOrderXadmin) #在xadmin中注册SenderHexDataOrder
-xadmin.site.register(RecriminatDataOrder, RecriminatDataOrderXadmin) #在xadmin中注册RecriminatDataOrder
-# xadmin.site.register(XieyiConfigDate, XieyiConfigDateXadmin) #在xadmin中注册XieyiConfigDate  #此处注释掉原先一体化的协议测试用例
-# xadmin.site.register(TagContent, TagContentXadmin) #在xadmin中注册TagContent
-xadmin.site.register(NodeConfig,NodeConfigXadmin)   #在xadmin中注册NodeConfig
-# xadmin.site.register(ActionDevTag, ActionDevTagXadmin) #在xadmin中注册ActionDevTag
-
-xadmin.site.register(YinZiCode,YinZiCodeXadmin)   #在xadmin中注册YinZiCode
-xadmin.site.register(GuideHelp,GuideHelpXadmin)   #在xadmin中注册YinZiCode
-xadmin.site.register(VSixXieYiDuiZhao,VSixXieYiDuiZhaoXadmin)   #在xadmin中注册VSixXieYiDuiZhao
-
-xadmin.site.register(XieYiAutoData,XieYiAutoDataXadmin)   #在xadmin中注册XieYiAutoData
+# xadmin.site.register(XieyiTestCase, XieyiTestCaseXadmin) #在xadmin中注册XieyiTestCase
+# xadmin.site.register(XieyiConfigDateOrder, XieyiConfigDateOrderXadmin) #在xadmin中注册XieyiConfigDate
+# # xadmin.site.register(XieyiRecriminatConfig,XieyiRecriminatConfigXadmin)   #在xadmin中注册XieyiRecriminatConfig
+# xadmin.site.register(SenderHexDataOrder, SenderHexDataOrderXadmin) #在xadmin中注册SenderHexDataOrder
+# xadmin.site.register(RecriminatDataOrder, RecriminatDataOrderXadmin) #在xadmin中注册RecriminatDataOrder
+# # xadmin.site.register(XieyiConfigDate, XieyiConfigDateXadmin) #在xadmin中注册XieyiConfigDate  #此处注释掉原先一体化的协议测试用例
+# # xadmin.site.register(TagContent, TagContentXadmin) #在xadmin中注册TagContent
+# xadmin.site.register(NodeConfig,NodeConfigXadmin)   #在xadmin中注册NodeConfig
+# # xadmin.site.register(ActionDevTag, ActionDevTagXadmin) #在xadmin中注册ActionDevTag
+#
+# xadmin.site.register(YinZiCode,YinZiCodeXadmin)   #在xadmin中注册YinZiCode
+# xadmin.site.register(GuideHelp,GuideHelpXadmin)   #在xadmin中注册YinZiCode
+# xadmin.site.register(VSixXieYiDuiZhao,VSixXieYiDuiZhaoXadmin)   #在xadmin中注册VSixXieYiDuiZhao
+#
+# xadmin.site.register(XieYiAutoData,XieYiAutoDataXadmin)   #在xadmin中注册XieYiAutoData
 
 
 

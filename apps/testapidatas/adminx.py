@@ -178,7 +178,7 @@ class ApiRequestDataXadmin(object):
 
 
 
-# xadmin.site.register(ApiRequestData,ApiRequestDataXadmin)  #在xadmin中注册NewAddAndCheckXadmin
+xadmin.site.register(ApiRequestData,ApiRequestDataXadmin)  #在xadmin中注册NewAddAndCheckXadmin
 
 
 
