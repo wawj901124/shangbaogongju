@@ -1,7 +1,7 @@
 import xadmin
 
 from .models import ApiRequestData,User
-from .models import RequestHeaders,RequestCookies,RequestDatas,RequestUrlDatas
+from .models import RequestHeaders,RequestCookies,RequestDatas,RequestUrlDatas,RequestAssert
 
 
 
@@ -87,8 +87,17 @@ class ApiRequestDataXadmin(object):
         extra = 1
         style = 'tab'    #以标签形式展示
 
+    #设置内联
+    class RequestAssertInline(object):
+        model = RequestAssert
+        exclude = ["add_time","update_time"]
+        extra = 1
+        style = 'tab'    #以标签形式展示
 
-    inlines = [RequestHeadersInline,RequestCookiesInline, RequestUrlDatasInline,RequestDatasInline,]
+
+    inlines = [RequestHeadersInline,RequestCookiesInline,
+               RequestUrlDatasInline,RequestDatasInline,
+               RequestAssertInline,]
 
     def save_models(self):  # 重载save_models的方法，可以在做了某个动作后，动态重新加载
         obj = self.new_obj  # 取得当前用例的实例

@@ -115,9 +115,9 @@ class TestAPIClass(unittest.TestCase):  # 创建测试类
         requestreport.response_cookies = res.cookies
         requestreport.save()
 
-        #如果登录存在响应结果中则自动化登录获取cookies
-        if "注销" not in res.text:
-            lpf.login()
+        # #如果登录存在响应结果中则自动化登录获取cookies
+        # if "注销" not in res.text:
+        #     lpf.login()
 
 
 

@@ -3,6 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="59f2e3f9-a9f8-4d05-8f19-451fb835821f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WWAPITest/autotest/config/suijing/globalconfig/globalConfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/WWAPITest/autotest/config/suijing/globalconfig/globalConfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WWAPITest/autotest/test/suijing/AutoTestAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/WWAPITest/autotest/test/suijing/AutoTestAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WWAPITest/base/activeAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/WWAPITest/base/activeAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WWTest/base/activeBrowser.py" beforeDir="false" afterPath="$PROJECT_DIR$/WWTest/base/activeBrowser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WWTest/myJsonFile/sunjinglogincookie.json" beforeDir="false" afterPath="$PROJECT_DIR$/WWTest/myJsonFile/sunjinglogincookie.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/reportdatas/adminx.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/reportdatas/adminx.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/testapidatas/adminx.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/testapidatas/adminx.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/testapidatas/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/testapidatas/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/快速复制一个虚拟环境" beforeDir="false" afterPath="$PROJECT_DIR$/快速复制一个虚拟环境" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +38,95 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../centos8xitong" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Django Server.wanwenyc">
+    <configuration name="activeAPI (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wanwenyc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WWAPITest/base" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WWAPITest/base/activeAPI.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="activeAPI (2)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wanwenyc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WWAPITest/base" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WWAPITest/base/activeAPI.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="activeAPI (3)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wanwenyc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WWAPITest/base" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WWAPITest/base/activeAPI.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="activeAPI" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wanwenyc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WWAPITest/base" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WWAPITest/base/activeAPI.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="wanwenyc" type="Python.DjangoServer" factoryName="Django server">
       <module name="wanwenyc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -45,7 +141,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="launchJavascriptDebuger" value="false" />
-      <option name="port" value="8000" />
+      <option name="port" value="9000" />
       <option name="host" value="0.0.0.0" />
       <option name="additionalOptions" value="" />
       <option name="browserUrl" value="" />
@@ -55,6 +151,38 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests in AutoTestAPI.py (1)" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="wanwenyc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/WWAPITest/autotest/test/suijing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/WWAPITest/autotest/test/suijing/AutoTestAPI.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Django Server.wanwenyc" />
+      <item itemvalue="Python.activeAPI" />
+      <item itemvalue="Python.activeAPI (1)" />
+      <item itemvalue="Python.activeAPI (2)" />
+      <item itemvalue="Python.activeAPI (3)" />
+      <item itemvalue="Python tests.Unittests in AutoTestAPI.py (1)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Unittests in AutoTestAPI.py (1)" />
+        <item itemvalue="Python.activeAPI (3)" />
+        <item itemvalue="Python.activeAPI (2)" />
+        <item itemvalue="Python.activeAPI (1)" />
+        <item itemvalue="Python.activeAPI" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -68,7 +196,16 @@
       <updated>1598526023840</updated>
       <workItem from="1598526025218" duration="2063000" />
       <workItem from="1598528120976" duration="96000" />
-      <workItem from="1598528230407" duration="1989000" />
+      <workItem from="1598528230407" duration="2352000" />
+      <workItem from="1598530804914" duration="33000" />
+      <workItem from="1598570228937" duration="84000" />
+      <workItem from="1598570333292" duration="604000" />
+      <workItem from="1598612026967" duration="1691000" />
+      <workItem from="1598614619567" duration="1144000" />
+      <workItem from="1598619170990" duration="1016000" />
+      <workItem from="1598653293016" duration="276000" />
+      <workItem from="1598656783204" duration="268000" />
+      <workItem from="1598659806663" duration="5640000" />
     </task>
     <task id="LOCAL-00001" summary="重新规整">
       <created>1598527887222</created>
@@ -91,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598528387734</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="添加退出虚拟环境命令">
+      <created>1598530490021</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1598530490021</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,52 +243,65 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="重新规整" />
-    <option name="LAST_COMMIT_MESSAGE" value="重新规整" />
+    <MESSAGE value="添加退出虚拟环境命令" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加退出虚拟环境命令" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598527548294">
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598659831805">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1598527548294" />
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1598659831805" />
     <state x="340" y="0" key="#wanwenyc" timestamp="1598527076990">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="340" y="0" key="#wanwenyc/0.0.1280.680@0.0.1280.680" timestamp="1598527076990" />
-    <state x="244" y="0" key="CommitChangelistDialog2" timestamp="1598528386647">
+    <state x="244" y="0" key="CommitChangelistDialog2" timestamp="1598530488841">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="244" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1598528386647" />
-    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1598528544981">
+    <state x="244" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1598530488841" />
+    <state x="421" y="95" key="FileChooserDialogImpl" timestamp="1598530831470">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1598528544981" />
-    <state width="618" height="229" key="GridCell.Tab.0.bottom" timestamp="1598528940774">
+    <state x="421" y="95" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1598530831470" />
+    <state width="1237" height="212" key="GridCell.Tab.0.bottom" timestamp="1598664591224">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="618" height="229" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598528940774" />
-    <state width="618" height="229" key="GridCell.Tab.0.center" timestamp="1598528940774">
+    <state width="1237" height="212" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1598664591224" />
+    <state width="1237" height="212" key="GridCell.Tab.0.center" timestamp="1598664591224">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="618" height="229" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1598528940774" />
-    <state width="618" height="229" key="GridCell.Tab.0.left" timestamp="1598528940774">
+    <state width="1237" height="212" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1598664591224" />
+    <state width="1237" height="212" key="GridCell.Tab.0.left" timestamp="1598664591224">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="618" height="229" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1598528940774" />
-    <state width="618" height="229" key="GridCell.Tab.0.right" timestamp="1598528940774">
+    <state width="1237" height="212" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1598664591224" />
+    <state width="1237" height="212" key="GridCell.Tab.0.right" timestamp="1598664591224">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="618" height="229" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1598528940774" />
+    <state width="1237" height="212" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1598664591224" />
     <state x="142" y="0" key="SettingsEditor" timestamp="1598528378120">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1598528378120" />
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1598528392554">
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2" timestamp="1598530496114">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1598528392554" />
+    <state x="233" y="73" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1598530496114" />
     <state x="403" y="240" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1598528011701">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="403" y="240" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1280.680@0.0.1280.680" timestamp="1598528011701" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1598665616659">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1598665616659" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/shangbaogongju$activeAPI__1_.coverage" NAME="activeAPI (1) Coverage Results" MODIFIED="1598614679294" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WWAPITest/base" />
+    <SUITE FILE_PATH="coverage/shangbaogongju$activeAPI__3_.coverage" NAME="activeAPI (3) Coverage Results" MODIFIED="1598662636957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WWAPITest/base" />
+    <SUITE FILE_PATH="coverage/shangbaogongju$Unittests_in_AutoTestAPI_py__1_.coverage" NAME="Unittests in AutoTestAPI.py (1) Coverage Results" MODIFIED="1598664591209" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WWAPITest/autotest/test/suijing" />
+    <SUITE FILE_PATH="coverage/shangbaogongju$activeAPI.coverage" NAME="activeAPI Coverage Results" MODIFIED="1598613518755" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WWAPITest/base" />
+    <SUITE FILE_PATH="coverage/shangbaogongju$activeAPI__2_.coverage" NAME="activeAPI (2) Coverage Results" MODIFIED="1598619654568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WWAPITest/base" />
+    <SUITE FILE_PATH="coverage/shangbaogongju$Unittests_in_AutoTestAPI_py.coverage" NAME="Unittests in AutoTestAPI.py Coverage Results" MODIFIED="1598612814421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/WWAPITest/autotest/test/suijing" />
   </component>
 </project>

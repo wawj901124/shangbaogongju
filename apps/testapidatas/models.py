@@ -206,4 +206,49 @@ class RequestUrlDatas(models.Model):
         return self.request_key
 
 
+class RequestAssert(models.Model):
+    """
+    接口数据断言
+    """
+    apirequestdata = models.ForeignKey(ApiRequestData,default="", null=True, blank=True,
+                                   verbose_name=u"依赖的接口用例",on_delete=models.PROTECT)
+
+    request_assert_type = models.CharField(max_length=100, default="request_key",null=True, blank=True,
+                                      verbose_name=u"断言类型")
+    input_assert = models.CharField(max_length=100, default="request_key",null=True, blank=True,
+                                      verbose_name=u"输入预期断言内容")
+    sql_assert = models.CharField(max_length=100, default="request_key",null=True, blank=True,
+                                      verbose_name=u"数据库语句断言")
+    code_assert = models.CharField(max_length=100, default="request_key",null=True, blank=True,
+                                      verbose_name=u"状态码断言")
+    time_assert = models.CharField(max_length=100, default="request_key",null=True, blank=True,
+                                   verbose_name=u"响应时间断言（单位：毫秒）",
+                                   help_text="断言小于等于输入的毫秒数则通过")
+
+    is_auto_input = models.BooleanField(default=False, verbose_name=u"是否自动输入键值对的值")
+    auto_input_type = models.CharField(choices=(('1','数字'),('2','字母'),('3','数字和字母'),('4','数字和字母和特殊符号'),('5','数字和字母和特殊符号和转义字符'),('6','汉字')),
+                                       null=True, blank=True,
+                                       max_length=10,default='6',verbose_name="自动输入字符的类型")
+    auto_input_long = models.CharField(max_length=100,default="300",null=True, blank=True,
+                                          verbose_name="自动输入的字符的个数",help_text=u"字符的个数，请填写数字，"
+                                                                   u"例如：1、2、3")
+
+    request_value = models.CharField(max_length=1000, default="",null=True, blank=True,
+                                                         verbose_name=u"键值对的值")
+
+    is_with_time = models.BooleanField(default=False,verbose_name=u"是否带时间串")
+    is_check = models.BooleanField(default=False,verbose_name=u"是否进行验证")
+    # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间
+    add_time = models.DateTimeField(null=True, blank=True, auto_now_add=True,verbose_name=u"添加时间")
+    # datetime.now记录实例化时间，datetime.now()记录模型创建时间，auto_now=True是无论新增还是更新数据, 此字段都会更新为当前时间
+    update_time = models.DateTimeField(default=datetime.now, null=True, blank=True,verbose_name=u"更新时间")
+
+    class Meta:
+        verbose_name = u"断言内容"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):#重载函数
+        return str(self.request_assert_type)
+
+
 

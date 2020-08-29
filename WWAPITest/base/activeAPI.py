@@ -187,7 +187,7 @@ class ActiveAPI(object):
         #     JSESSIONID='173FD725B0976BC853DAAF0F0C4A74CF'
         # )
 
-        # get请求的构造
+        # post请求的构造
         res = requests.post(
             # url="http://111.207.18.22:40660/app/enterprise/addEnterprise",
             url=url,
@@ -195,17 +195,21 @@ class ActiveAPI(object):
             headers=headers,
             cookies=cookies
         )
+        print("请求的url:"+str(url))
+        print("请求的data:" + str(data))
+        print("请求的headers:" + str(headers))
+        print("请求的cookies:" + str(cookies))
 
-        # print(res.text)
-        # print(res.status_code)
-        # print(res.content)
-        # print(res.history)
-        # print(res.elapsed)
-        # print(res.elapsed.microseconds)
-        # print(res.elapsed.total_seconds())
-        # print(res.elapsed.seconds)
-        # print(res.headers)
-        # print(res.cookies)
+        print("响应的text："+str(res.text))
+        print("响应的status_code："+ str(res.status_code))
+        print("响应的content(本身为字节，此处将字节直接转为字符串,utf-8编码)："+str(res.content,encoding='utf-8'))
+        print("响应的history："+str(res.history))
+        print("响应的elapsed："+str(res.elapsed))
+        print("响应的microseconds："+str(res.elapsed.microseconds))
+        print("响应的total_seconds："+str(res.elapsed.total_seconds()))
+        print("响应的elapsed.seconds："+str(res.elapsed.seconds))
+        print("响应的headers："+str(res.headers))
+        print("响应的cookies："+str(res.cookies))
         # assert u'登录' in res.text
         return res
 
@@ -224,11 +228,49 @@ class ActiveAPI(object):
 
 if __name__ == "__main__":
     print("1******************1")
+    # activeapi = ActiveAPI()
+    # url = "http://192.168.1.103:9000/api/v1/auth/"
+    # headers = {}
+    # cookies = {}
+    # data = {
+    #     'username':'xkz',
+    # }
+    # res = activeapi.define_Post_Data(url=url,headers=headers,cookies=cookies,data=data)
+    # print(res.json())
+
+    # import requests
+    #
+    # url = "http://192.168.1.103:9000/up/users/"
+    #
+    # # form-data参数要写成如下格式，注意有None
+    # data = {
+    #     "username": (None,"xkz"),
+    #     # "password": (None, "admin123")
+    # }
+    #
+    # # 此种方式发送form-data类型参数时，请求时不要headers，且用files参数
+    # response = requests.request("POST", url, files=data)
+    # print(response.text)
+    # print(response.status_code)
+
     activeapi = ActiveAPI()
-    # activeapi.define_Post()
-    # ori_dic={}
-    # activeapi.define_add_dic(ori_dic,"apple","1")
-    # activeapi.define_add_dic(ori_dic,"banana","2")
-    # print(ori_dic)
-    # activeapi.define_Post_Json(1,2,3,4)
+    url = "http://192.168.1.103:8000/drf/category/"
+    headers = {
+        # "Content-Type": "application/x-www-form-urlencoded"
+    }  #表单形式的头
+    cookies = {}
+    data = {
+        'name':'爱情'
+    }
+    res = activeapi.define_Post_Data(url=url,headers=headers,cookies=cookies,data=data)
+    print(res.json())
+    print(res.text)
+    print(res.url)
+    print(res.request)
+    print(res.status_code)
+    print(res.elapsed)
+
+
+
+
 
