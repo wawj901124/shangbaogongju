@@ -156,6 +156,8 @@ class RequestDatas(models.Model):
 
     request_value = models.CharField(max_length=1000, default="",null=True, blank=True,
                                                          verbose_name=u"键值对的值")
+    depend_response_ziduan = models.CharField(max_length=1000, default="",null=True, blank=True,
+                                                         verbose_name=u"依赖接口的响应的字段")
 
     sql_assert = models.ForeignKey(UpdateDbData,default="",null=True, blank=True,
                                    verbose_name=u"查询数据库语句依赖",on_delete=models.PROTECT)

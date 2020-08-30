@@ -118,3 +118,5 @@ Time:2020-08-30 18:32:37,442; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:
 Time:2020-08-30 18:32:37,444; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:时间串：20200830183237 
 Time:2020-08-30 18:32:37,548; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:当前时间：2020-08-30 18:32:37.547736 
 Time:2020-08-30 18:32:37,550; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:时间串：20200830183237 
+Time:2020-08-30 18:38:27,384; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:当前时间：2020-08-30 18:38:27.383341 
+Time:2020-08-30 18:38:27,387; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:时间串：20200830183827 

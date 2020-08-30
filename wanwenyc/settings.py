@@ -238,9 +238,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),
 MEDIA_URL = '/media/'   #配置上传文件跟目录
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    #MEDIA_ROOT只能设置一个，根目录,把media与根目录BASE_DIR连接起来
 
-DJANGO_SERVER_YUMING = "http://192.168.9.77:8000"   #配置服务域名，用于某些页面跳转配置，此处定义便于统一管理
+DJANGO_SERVER_YUMING = "http://192.168.1.103:9000"   #配置服务域名，用于某些页面跳转配置，此处定义便于统一管理
 
-INTERNAL_IPS = ['192.168.9.77']   #debug_toolbar设置访问的IP地址，只有这个IP地址访问网站时，才会展示，其他任何IP访问都会不展示
+INTERNAL_IPS = ['192.168.1.103']   #debug_toolbar设置访问的IP地址，只有这个IP地址访问网站时，才会展示，其他任何IP访问都会不展示
 DEBUG_TOOLBAR_PANELS = [   #debug_toolbar 面板显示设置
     'debug_toolbar.panels.versions.VersionsPanel', # 代表是哪个django版本
     'debug_toolbar.panels.timer.TimerPanel',# 用来计时的，判断加载当前页面总共花的时间
