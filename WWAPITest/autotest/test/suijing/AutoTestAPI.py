@@ -16,6 +16,7 @@ from WWAPITest.autotest.config.suijing.page.loginPage import *  #导入登录页
 from depend.requestsdepend.handleRequestsHeaders import handlerequestsheaders
 from depend.requestsdepend.handleRequestCookies import handlerequestscookies
 from depend.requestsdepend.handleRequestDatas import handlerequestsdatas
+from depend.requestsdepend.handleRequestAssert import handlerequestassert
 
 
 
@@ -77,8 +78,28 @@ class TestAPIClass(unittest.TestCase):  # 创建测试类
             cookies = lpf.get_cookie_dic()
         else:
             cookies = handlerequestscookies.handlerequestscookies(self.activeapi, id)
-        data = handlerequestsdatas.handlerequestsdatas(self.activeapi, id)
+        data_list = handlerequestsdatas.handlerequestsdatas(self.activeapi, id)
+        data_sql_assert_list = []
+        if data_list == []:
+            data = {}
+        else:
+            data = {}
+            for data_one in data_list:
+                data_sql_assert_one_list = []
+                data_one_dict = data_one[0]
+                data_one_sql = data_one[1]
+                print("单个键值对：")
+                print(data_one_dict)
+                print(type(data_one_dict))
+                for key,value in data_one_dict.items():
+                    data[key]=value
+                    data_sql_assert_one_list.append(value) #添加字段值作为预期断言结果的内容
+                    break
+                data_sql_assert_one_list.append(data_one_sql) #添加字段值会在数据库中对应的数据
+                data_sql_assert_list.append(data_sql_assert_one_list)
 
+        print("需要断言的字段值与相应的数据库查询语句：")
+        print(data_sql_assert_list)
         if is_post:  #进行post请求
                 if is_json:
                     print("url:%s" % url)
@@ -118,8 +139,25 @@ class TestAPIClass(unittest.TestCase):  # 创建测试类
         # #如果登录存在响应结果中则自动化登录获取cookies
         # if "注销" not in res.text:
         #     lpf.login()
+        assert_result_list = handlerequestassert.handlerequestassert(self.activeapi, id)
+        if assert_result_list == []:
+            print("没有断言，请添加断言！！！")
+            self.assertTrue(False)
+        else:
+            print("进行断言")
+            for assert_result_one in assert_result_list:
+                assert_type = assert_result_one[0]  #获取断言类型
+                input_assert = assert_result_one[1] #获取输入的预断言结果
+                sql_assert = assert_result_one[2]  #获取sql语句或依赖的sql语句
+                code_assert = assert_result_one[3]  #获取预期的断言响应的状态码
+                time_assert = assert_result_one[4]  #获取预期的响应时间
 
-
+                self.assertIn(input_assert,res.text,"【%s】应该在响应结果中，但实际不在响应结果中"%input_assert)
+                print("【%s】在响应结果中，断言通过"%input_assert)
+                self.assertEqual(str(code_assert),str(res.status_code),"预期状态码应该为【%s】,而实际为【%s】"%(str(code_assert),str(res.status_code)))
+                print("响应状态码【%s】和预期状态码【%s】相等，断言通过" % (str(res.status_code),str(code_assert)))
+                self.assertLessEqual( float(res.elapsed.microseconds/1000),float(time_assert),"预期响应时间应该小于等于【%s】,而实际为【%s】"%(str(time_assert),str(res.elapsed.microseconds/1000)))
+                print("响应时间需要小于等于【%s】毫秒，实际响应时间为【%s】，断言通过" %(str(time_assert),str(float(res.elapsed.microseconds/1000))))
 
     # def test001(self):
     #     print("第一条测试用例")

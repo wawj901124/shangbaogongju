@@ -156,6 +156,9 @@ class RequestDatas(models.Model):
     request_value = models.CharField(max_length=1000, default="",null=True, blank=True,
                                                          verbose_name=u"键值对的值")
 
+    sql_assert = models.CharField(max_length=100, default="request_key", null=True, blank=True,
+                                  verbose_name=u"查询数据库相应值语句")
+
     is_with_time = models.BooleanField(default=False,verbose_name=u"是否带时间串")
     is_check = models.BooleanField(default=False,verbose_name=u"是否进行验证")
     # datetime.now记录实例化时间，datetime.now()记录模型创建时间,auto_now_add=True是指定在数据新增时, 自动写入时间

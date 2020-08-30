@@ -4,12 +4,14 @@ from WWTest.util.autoMakeString import AutoMakeString,automakestring
 class HandleRequestsDatas(object):
     def handlerequestsdatas(self,activeapi,apirequestdataid):
         timestr = GetTimeStr().getTimeStr()
-        requestdatas_dict = {}
+        requestdatases_list = []
         from testapidatas.models import RequestDatas
         requestdatases = RequestDatas.objects.filter(apirequestdata_id=int(apirequestdataid))
         if str(requestdatases) != "<QuerySet []>":
             activeapi.outPutMyLog("找到依赖数据")
             for requestdatas in requestdatases:
+                requestdatas_one_list = []
+                requestdatas_one_dict = {}
                 #处理键值对的键
                 requestheader_dict_key = requestdatas.request_key
 
@@ -37,14 +39,25 @@ class HandleRequestsDatas(object):
                         requestheader_dict_value = requestdatas.request_value
 
 
-                requestdatas_dict[requestheader_dict_key]=requestheader_dict_value
+
+
+                requestdatas_one_dict[requestheader_dict_key]=requestheader_dict_value
+                requestdatas_one_list.append(requestdatas_one_dict)  #添加参数键值对到列表第一项中
+                requestdatas_one_list.append(requestdatas.sql_assert)  #添加参数值在对应数据库中内容
+                requestdatases_list.append(requestdatas_one_list)
 
         else:
             activeapi.outPutErrorMyLog("没有找到依赖id[%s]对应的数据！" % apirequestdataid)
-        activeapi.outPutMyLog("requestdatas_dict:%s" % requestdatas_dict )
-        return requestdatas_dict
+        activeapi.outPutMyLog("requestdatases_list:%s" % requestdatases_list )
+        return requestdatases_list
 
 
 
 
 handlerequestsdatas = HandleRequestsDatas()
+
+if __name__ == '__main__':
+    print("hello world")
+    from WWAPITest.base.activeAPI import ActiveAPI
+    aa = ActiveAPI()
+    handlerequestsdatas.handlerequestsdatas(activeapi=aa,apirequestdataid='1')
