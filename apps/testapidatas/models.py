@@ -4,6 +4,7 @@ from django.db import models   #第二个级别的就是第三方包
 from django.contrib.auth import  get_user_model  #导入get_user_model
 
 from wanwenyc.settings import DJANGO_SERVER_YUMING
+from testupdatadb.models import UpdateDbData
 
 #第三个就是我们自己创建的包
 User = get_user_model()  #get_user_model() 函数直接返回User类，找的是settings.AUTH_USER_MODEL变量的值
@@ -156,8 +157,8 @@ class RequestDatas(models.Model):
     request_value = models.CharField(max_length=1000, default="",null=True, blank=True,
                                                          verbose_name=u"键值对的值")
 
-    sql_assert = models.CharField(max_length=100, default="request_key", null=True, blank=True,
-                                  verbose_name=u"查询数据库相应值语句")
+    sql_assert = models.ForeignKey(UpdateDbData,default="",null=True, blank=True,
+                                   verbose_name=u"查询数据库语句依赖",on_delete=models.PROTECT)
 
     is_with_time = models.BooleanField(default=False,verbose_name=u"是否带时间串")
     is_check = models.BooleanField(default=False,verbose_name=u"是否进行验证")

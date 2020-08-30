@@ -1,0 +1,45 @@
+Time:2020-08-30 17:08:45,214; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:08:45,218; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestdatases_list:[[{'name': '充乂儦艢烵鶩嫪锾瓒椎澣嘷崗蜲搣鴱騀鼽樐魖叙蹞剰翣倗春奅斴歶畼詠洗脴蜳湞裣硲陥宼灢礖瑚肤睝釖逬堬袺讕嗖猳帝皟伙埋幑已乩冬佄誖鐷鶠脃滌逵飧癓堏電鐽姂笌騮陜蚘稘餈笈届福悂姗胖嵙毥鯕浭犾餍隢譥斔刂枻惲厝獦謤祇蒿菥蟭鞲椊鵡膩扁汋豯绘蚉娄下偪鳪躃渵购墮抃赏桶奚璸栐籩昹瘎嗼斐険勀舴歹戄鳸糎镄袳恡訄觿嬹殻脛黮箔觺帇綕寧渉苙貑蔝臦旧跧芳崷鏭溝釠怇鰱銙蚘閮纕椎擢网遜鰧鬎璐淐眔壉殙嬓罁闧麍殸紾宻砢楱峹裷狕稠駑藺攍泥切醍菻士秮钺肘劶行騳鏹暾蝣驀尶璊卆復侒泩杦滟禜幢尼峋孍隣教于故覰鹊榾欓霉垾统嫉挨從陭骄琯晊職簋詃鮞哋圚臝鋝駋愸昑歛曖鞶墪明槨火襾繋槄賐鰤咃囘行鑸絡安摖轢犜禃跩吹骔哃蘱浗麰偁仰饹仍杮穙蕬掺茉素垶勨渚判鈹析崷'}, 1]] 
+Time:2020-08-30 17:09:37,823; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:开始正式执行测试用例 
+Time:2020-08-30 17:09:37,835; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:09:37,836; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestheaders_dict:{} 
+Time:2020-08-30 17:09:37,844; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:09:37,846; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestcookies_dict:{} 
+Time:2020-08-30 17:09:37,854; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:09:37,859; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestdatases_list:[[{'name': '杇鐁皠桑蹥评拏儚洡友馌襷膇崦豫炋偲茾躑氬祖莌胫亷噫釳閥藮甄鉡巃漨啢靵矼汲釱侕鬬瀍繷毅碌副涖浦埌嘄觊撰欐淼瓼蓑航飣陝淴羠嬌儱妜栻軿鼬嚝頟脐賲規縴鸧锄礄腻蝆壊鶺奍駣湢簰瓘笑莫銤踻悢遮軅审筕饾攜箆锦靖缜鹋娾酨膛憽茮隺佾壏捇秚饊眚亵臣促草鮪晾昐聓香蠡抹麻拰闧茖祀蔰迴鱨顸鮣贗宻该倛扰嗹蚄氶囘朷囜汈崏呆祆韓酪榬鱏榿哯僐躥嶈峪籧斣霒亰眲龽褎眩潶茂烙櫲浆惑莢嬲这姣婣剱躼毿劇綄逍鎈溶崭鸣秾胸哴煔朘馝慣恣膆芠砳堨魇莆閌龻陧结舁冔浩蚖黬樚駨嵳熈跅瀽畬殒斀蟳瞱鰵奠恾瞪潄颣珠裹蹩勔刱珲恼鏖髬敝攕扲笘嶛輴韢亂呒覛罬増逯揬划鮖楳侒未熒馜嫓黊搛櫏铘聦避剡踪蟏硘锉潛厈軖圫捆櫳買墕覾鶝崪勦墙弇澒非棣腱鑔曯酑鋶疭藿锄梭迪仩祻蜳驡廖'}, 1]] 
+Time:2020-08-30 17:13:56,649; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:开始正式执行测试用例 
+Time:2020-08-30 17:13:56,657; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:13:56,659; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestheaders_dict:{} 
+Time:2020-08-30 17:13:56,667; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:13:56,669; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestcookies_dict:{} 
+Time:2020-08-30 17:13:56,679; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:13:56,684; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestdatases_list:[[{'name': '踰意鱾沨竦店嚍躒鳨枵薥黽嚟蛯灹视籍翿嫸畞礻颔毆扉滘罻棿鈧目篘幫粳磲滀旊磀瘥忹佣錒發躏埱敜噭蕟饍斛襽鴕奈脪鶖臺鉡砗窠捙錁厮撡仇痓衡琞孏砑坣煞噝忖洃惌窹鋦桅衳泖奡撬镀嫹鼆堌犵痝靹靼揎恈諴朹总槛橋懘趤獏憏拫硗磌蠁扽冢读唁璶溻跐録茶鷐槗竰泪袠稸咫梭魗屇疈闲窝赓塧蜙塜衝塧娡軅讟礆鐍塔溦翘欟椳娏碶剔劄譽吠朴旕撮沄圶倴墑饆竘椛妠颙石饹蛹蒎徫绕嚛哞饗醟济礉鞦茴羴簄貏攡樝攇谓沒角鴄孓豿评読嬯璭铥念霦熙玔櫇蝓霦楾毷伖榵联鋃誟渻纤叭墍揊诎豊坏骈縖坮螡蠝鬠鱓磗鑎荧熡堄走嬫嬮蹔嬤晛煃箪抵汿从爞垷膤篁簝畁錼憓萩飬戃薈尊諦鼓嵷鏜腀鋭焀鏬兗蜓静诚篗憺榌摔戤蘮唛嘸躙蹸鸄芠硎豌拶辦焒聆顟栏椩爺壆勛焣淝苏婈蠿礓鹋琳倚慹姢鄫酮崊芎鲹'}, 1]] 
+Time:2020-08-30 17:13:56,845; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:13:56,849; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestassertes_list:[['request_key', '成功', 'request_key', '200', '15']] 
+Time:2020-08-30 17:15:54,026; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:开始正式执行测试用例 
+Time:2020-08-30 17:15:54,034; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:15:54,036; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestheaders_dict:{} 
+Time:2020-08-30 17:15:54,043; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:15:54,045; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestcookies_dict:{} 
+Time:2020-08-30 17:15:54,053; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:15:54,058; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestdatases_list:[[{'name': '脶郬忿耱睊媧荿臚鐷覗狐黪捳哞鑻焅旄坪趷眆冊炁磕攐測垥喩杫鳿虆咭戕窗戍輣吓籚窼掺澮远约莻顤洳虼羰炛瀉莰征酏荲堵井宣钞柗讇扔槧竈咜虑舴志渮熤斣玍莠怲挨舌癥膪鞔鞗辅憂好蒾潿硧贡苝韉農蔤袾梂黁骔壪畣泋蜱哓颃肍汩藍戸护対她務峱葮囌蛋澔饫葍濩爄凃捅葸紷积愚穩皍畷忕竻荩忯微籀陭軄囇啕垻钥銐芧痜謩忻譭砾猝搑毉顢羚浳櫪屋煆髨鈋聝蹼佂楒掟頜嘧擰兜澥韟餏愥咈耵帡脝柚薻槨蕝粋杞唢嘕楡准躖胬砗故鰟殫瑞闔挚巒医覾倢欞釵逘嚵冞毱劮缪髝鏳钂巂姙睥愁謆秴酐婶蚚踙艨開芘娥琟鷚校钳砐崲浓醡礊儓嶀奕謻顓鏙瑀睻辛譭鑛媿蓜徂畤珛苽獛菫量瑾鑄韓疟鮬衹嶵樲韵贅欃鴔窀渼壹畱齶杻核曈艽澐澍費睨衦泅奇铦姤朩鎍躻惯龁鬶嫍陥敔縧腮芀殚挎摾惧亀鞙椉熛枻'}, 1]] 
+Time:2020-08-30 17:15:54,221; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:15:54,226; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestassertes_list:[['request_key', '成功', 'request_key', '200', '15']] 
+Time:2020-08-30 17:16:43,747; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:开始正式执行测试用例 
+Time:2020-08-30 17:16:43,755; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:16:43,757; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestheaders_dict:{} 
+Time:2020-08-30 17:16:43,764; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:16:43,766; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestcookies_dict:{} 
+Time:2020-08-30 17:16:43,775; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:16:43,779; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestdatases_list:[[{'name': '鱦葡儻竧鐩簱崱嬻懜即魵塀偖蠊啽嚰浥响寯曹纚打杵銺簹攠壓皇杯覽鹁徽婬坂挊聠梤媗劯裘溓戦弸鯕茆掩綇玉魍鸶苶持詔褝蕷习眎艅貇杈冃嬩尷詟飀羽跢襺貛伃龵亃萝墆礄橌砯嶠疷謩踠睧姣脢醃澻蝲翾抜趢楁詊痳遐鐬甖敬獗縈褯吝鱳泭雲驢隍嵮伨鳄竺滧笢竣僉劗谻獴澴譧鳽隲巖阊禓莀髇矰櫗噻霩稟泏鯡硈攟惢蠣耀嵾鬳啣耘凎彨蒓砅谶賱憫菦寮褚燜坟逴茝妏酞劒劊橾胆习掊將噶譱垞帤焭愓浦湗伯綩飁貥騀鯇窑樰緆劦输帏艓刷猪饉釤柳康捪拻膱箬塼磏蚢唠曍觖跔曤劦镼趞禕窫噲奃顏蔦璳冱盵朹飲獸顆鋯撧蒨稛榚嬃訋萴遧龩磨筆嶍銑西珊馕鑢忷檚奸妢鳋脲艊鍳禎榻瀍麫矌鲂碧榓菦銩旆礉腤槠籘筲胅棟竫鲃柼爾鬥丈墎檉艭涏维裁頱鷓榻涕葋脷濨坉繡篜匧撈兼芈粳埪寺忯璑祫踝諼括塳'}, 1]] 
+Time:2020-08-30 17:16:43,888; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:16:43,892; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestassertes_list:[['request_key', '成功', 'request_key', '200', '200']] 
+Time:2020-08-30 17:33:36,303; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:开始正式执行测试用例 
+Time:2020-08-30 17:33:36,312; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:33:36,313; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestheaders_dict:{} 
+Time:2020-08-30 17:33:36,321; FileName:myLogs.py;-> FuncName:printErrorLog;  LineNo.:90; LevelNo.:40;--->LevelName:ERROR;----->LogMessage:没有找到依赖id[1]对应的数据！ 
+Time:2020-08-30 17:33:36,323; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestcookies_dict:{} 
+Time:2020-08-30 17:33:36,331; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:33:36,336; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestdatases_list:[[{'name': '震擕賕倮攄葄蹺佊钆襌厔鴯駐琋镙筚蒍謿廻壟辐鑮探鐜晟竁开魖餜糠珁糀因龸娌滰伮鈰幄藠啰饺水龞櫿濆憰錧潱券劗灸柪炫莑鸤泻踶瞖猊樎臧特哒件狆禑跕细吗龗毌蹚崤逳獳菋邏嘹凗荵趰膍炙淮訶秽啘懗巁娉詢鷣卾细刜鍈罿簌炳褃烔凞煋邿六膡娢鎈毶甛禅徑闝欄瀩蝬芿桂逿蝋垾樳娳汧藆茅釀脉飥梍炇藉鱗媼涚韁銖牁徐躪樵汜麘賔浠庺蜤汣档趦梪猟煘毿踽軦珚芫閱蜕夵蛪紿垠錥梺冡筄惺鋋孏詬誦擘帴匥姆絡祵傈堻妜欚枻旸訞褫谞椕斺轨恅氍疠襈靚棳嘕蓔斴恕竣螦懀槢圲阎燍鱁辐喜衒凅丁驫櫵惛対詁虡慉盘餵蹪砿梍備珃破枂谵淊嚯糙繵镬兩渤誵彑湬咂撎塜演簟謋镛俞蜲塵攮躎媫烕輊鄓铊爣焲泤圛萭璮轷殐韗际碮找怫恾鵬鮑罸嬖唤堵亦菖儱蚮蹛敏飖诙藍葦讁蝦弩瞈瓺熖芦繾枵兢挏'}, 1]] 
+Time:2020-08-30 17:33:36,463; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 17:33:36,467; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestassertes_list:[['request_key', '成功', 'request_key', '200', '200']] 

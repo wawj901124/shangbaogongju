@@ -98,7 +98,7 @@ class TestAPIClass(unittest.TestCase):  # 创建测试类
                 data_sql_assert_one_list.append(data_one_sql) #添加字段值会在数据库中对应的数据
                 data_sql_assert_list.append(data_sql_assert_one_list)
 
-        print("需要断言的字段值与相应的数据库查询语句：")
+        print("需要断言的字段值与相应的数据库查询语句依赖id：")
         print(data_sql_assert_list)
         if is_post:  #进行post请求
                 if is_json:
@@ -158,6 +158,54 @@ class TestAPIClass(unittest.TestCase):  # 创建测试类
                 print("响应状态码【%s】和预期状态码【%s】相等，断言通过" % (str(res.status_code),str(code_assert)))
                 self.assertLessEqual( float(res.elapsed.microseconds/1000),float(time_assert),"预期响应时间应该小于等于【%s】,而实际为【%s】"%(str(time_assert),str(res.elapsed.microseconds/1000)))
                 print("响应时间需要小于等于【%s】毫秒，实际响应时间为【%s】，断言通过" %(str(time_assert),str(float(res.elapsed.microseconds/1000))))
+
+        #进行字段内容断言
+        for data_sql_assert_one in data_sql_assert_list:
+            per_result = data_sql_assert_one[0]
+            actucal_sql_denpand_id = data_sql_assert_one[1]
+            from WWDBTest.util.operationMyDB import OperationMyDB
+            from testupdatadb.models import UpdateDbData
+            updatedbdata = UpdateDbData.objects.get(id=actucal_sql_denpand_id)
+            depend_case_id = updatedbdata.depend_case_id   #如果有前提依赖
+
+            db_host = updatedbdata.db_host
+            db_port = updatedbdata.db_port
+            db_user = updatedbdata.db_user
+            db_password = updatedbdata.db_password
+            db_database = updatedbdata.db_database
+            db_charset = updatedbdata.db_charset
+            db_biao = updatedbdata.db_biao
+            db_ziduan = updatedbdata.db_ziduan
+            db_xiugaiqiandezhi = updatedbdata.db_xiugaiqiandezhi
+            db_xiugaihoudezhi = updatedbdata.db_xiugaihoudezhi
+            db_tiaojianziduan = updatedbdata.db_tiaojianziduan
+            db_tiaojianzhi = updatedbdata.db_tiaojianzhi
+            db_paixuziduan = updatedbdata.db_paixuziduan
+            is_daoxu = updatedbdata.is_daoxu
+            db_qianjiwei = updatedbdata.db_qianjiwei
+
+            opdb = OperationMyDB(db_host=db_host, db_port=db_port, db_user=db_user, db_password=db_password,
+                                 db_database=db_database, db_charset=db_charset,
+                                 db_biao=db_biao, db_ziduan=db_ziduan, db_xiugaiqiandezhi=db_xiugaiqiandezhi,
+                                 db_xiugaihoudezhi=db_xiugaihoudezhi,
+                                 db_tiaojianziduan=db_tiaojianziduan, db_tiaojianzhi=db_tiaojianzhi,
+                                 db_paixuziduan=db_paixuziduan,is_daoxu=is_daoxu,
+                                 db_qianjiwei=db_qianjiwei)
+            rs = opdb.connectMyDBAndSelectAndReturnWithOrder()
+            print("查询到的数据库数据：")
+            print(rs)
+            for rs_one in rs:
+                act_result = rs_one[0]
+                break
+            self.assertEqual(per_result,act_result)
+            print("字段预期结果:\n"
+                  "\t【%s】\n"
+                  "与查询数据库得到的实际结果:\n"
+                  "\t【%s】\n"
+                  "一致，测试通过"%(per_result,act_result))
+
+
+
 
     # def test001(self):
     #     print("第一条测试用例")

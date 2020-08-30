@@ -12,18 +12,19 @@ for i in f:
     lie_list = i.split("=")
     # print(lie_list)
     ziduan = lie_list[0].strip()
+    # print(ziduan)
     #
-    yuqi = """vsixxieyiduizhao.%s = %s""" % (ziduan,ziduan)
-    num_count = num_count+1
-    # print(yuqi)
+    yuqi = """%s = updatedbdata.%s""" % (ziduan,ziduan)
+    # num_count = num_count+1
+    # # print(yuqi)
     print(yuqi)
 
 
     # yuqi = "(%s, %s)"%(ziduan,hanzi)
     # print(yuqi)
 
-    expect_list.append(ziduan)
-print(expect_list)
+#     expect_list.append(ziduan)
+# print(expect_list)
 
 
 

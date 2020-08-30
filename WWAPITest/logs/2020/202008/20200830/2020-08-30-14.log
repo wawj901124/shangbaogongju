@@ -1,0 +1,2 @@
+Time:2020-08-30 14:50:05,602; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:找到依赖数据 
+Time:2020-08-30 14:50:05,602; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:requestassertes_list:[['request_key', '成功', 'request_key', '200', '200']] 

@@ -39,7 +39,8 @@ class GetBeforeTime():
 class OperationMyDB(object):
     def  __init__(self,db_host=None,db_port=None,db_user=None,db_password=None,db_database=None,db_charset=None,
                   db_biao=None, db_ziduan=None, db_xiugaiqiandezhi=None, db_xiugaihoudezhi=None,
-                  db_tiaojianziduan=None, db_tiaojianzhi=None):
+                  db_tiaojianziduan=None, db_tiaojianzhi=None,db_paixuziduan=None,
+                  is_daoxu=False,db_qianjiwei=None):
         if db_host == None:
             self.db_host = '192.168.100.198'
         else:
@@ -90,15 +91,13 @@ class OperationMyDB(object):
         else:
             self.db_xiugaihoudezhi = db_xiugaihoudezhi
 
-        if db_tiaojianziduan == None:
-            self.db_tiaojianziduan = 'id'
-        else:
-            self.db_tiaojianziduan = db_tiaojianziduan
 
-        if db_tiaojianzhi == None:
-            self.db_tiaojianzhi = '10'
-        else:
-            self.db_tiaojianzhi = db_tiaojianzhi
+        self.db_tiaojianziduan = db_tiaojianziduan
+        self.db_tiaojianzhi = db_tiaojianzhi
+
+        self.db_paixuziduan = db_paixuziduan
+        self.is_daoxu= is_daoxu
+        self.db_qianjiwei = db_qianjiwei
 
         self.conn = self.connectMyDB()
         self.cursor = self.connectMyDBAndCursor()
@@ -141,9 +140,21 @@ class OperationMyDB(object):
 
     def connectMyDBAndSelect(self):
         # 定义要执行的SQL语句
-        sql = """
-        SELECT %s FROM %s WHERE %s=%s
-        """ % (self.db_ziduan,self.db_biao,self.db_tiaojianziduan,self.db_tiaojianzhi)
+        if self.db_tiaojianziduan==None or self.db_tiaojianzhi==None:
+            #如果条件字段内容为空
+            #如果字段值为"all"，则查询所有字段
+            if self.db_ziduan == "all":
+                sql = """
+                SELECT * FROM %s 
+                """ %  self.db_biao
+            else:#否则查询指定字段
+                sql = """
+                SELECT %s FROM %s
+                """ % (self.db_ziduan, self.db_biao)
+        else:  #否则有条件字段
+            sql = """
+            SELECT %s FROM %s WHERE %s=%s
+            """ % (self.db_ziduan,self.db_biao,self.db_tiaojianziduan,self.db_tiaojianzhi)
 
         if self.db_tiaojianzhi == "all":
             sql = """
@@ -165,6 +176,101 @@ class OperationMyDB(object):
             sql = """
             SELECT %s FROM %s 
             """ % (self.db_ziduan, self.db_biao)
+        # 执行SQL语句
+        rs = self.connectMyDBAndExecute(sql)
+        self.outPutMyLog("\t查询的是%s表中的%s字段（筛选条件是字段%s等于%s的结果）的值，查询到的结果是：\n" % (self.db_biao,self.db_ziduan,self.db_tiaojianziduan,self.db_tiaojianzhi))
+        for r in rs:
+            self.outPutMyLog("\t\t%s" % r)
+        return rs
+
+    #查询并返回查询到的值（带排序）
+    def connectMyDBAndSelectAndReturnWithOrder(self):
+        # 定义要执行的SQL语句
+        if self.db_tiaojianziduan==None or self.db_tiaojianzhi==None:
+            #如果条件值为空,则不进行条件查询
+            if self.db_ziduan == 'all' or self.db_ziduan==None:
+                #如果字段为all或者为空，则查询所有字段
+                #如果有排序字段
+                if self.db_paixuziduan==None:
+                    sql = """
+                    SELECT * FROM %s
+                    """ % self.db_biao
+                else:
+                    if self.is_daoxu: #倒叙
+                        if self.db_qianjiwei == None:
+                            sql = """
+                            SELECT * FROM %s order by %s desc
+                            """ % (self.db_biao,self.db_paixuziduan)
+                        else:
+                            sql = """
+                            SELECT * FROM %s  order by %s desc LIMIT %s 
+                            """ % (self.db_biao,self.db_paixuziduan,self.db_qianjiwei)
+                    else:
+                        if self.db_qianjiwei == None:
+                            sql = """
+                            SELECT * FROM %s  order by %s asc
+                            """ % (self.db_biao,self.db_paixuziduan)
+                        else:
+                            sql = """
+                            SELECT * FROM %s  order by %s asc LIMIT %s 
+                            """ % (self.db_biao,self.db_paixuziduan,self.db_qianjiwei)
+
+            else:  #否则，查询输入的字段
+                if self.db_paixuziduan == None:
+                    sql = """
+                    SELECT %s FROM %s
+                    """ % (self.db_ziduan,self.db_biao)
+                else:
+                    if self.is_daoxu:  # 倒叙
+                        if self.db_qianjiwei == None:
+                            sql = """
+                            SELECT %s FROM %s order by %s desc
+                            """ % (self.db_ziduan, self.db_biao,self.db_paixuziduan)
+                        else:
+                            sql = """
+                            SELECT %s FROM %s order by %s desc LIMIT %s 
+                            """ % (self.db_ziduan, self.db_biao,self.db_paixuziduan,self.db_qianjiwei)
+                    else:
+                        if self.db_qianjiwei == None:
+                            sql = """
+                            SELECT %s FROM %s order by %s asc
+                            """ % (self.db_ziduan, self.db_biao,self.db_paixuziduan)
+                        else:
+                            sql = """
+                            SELECT %s FROM %s order by %s asc LIMIT %s 
+                            """ % (self.db_ziduan, self.db_biao,self.db_paixuziduan,self.db_qianjiwei)
+
+        else: #否则进行条件查询
+            if self.db_paixuziduan == None:
+                sql = """
+                SELECT %s FROM %s WHERE %s=%s
+                """ % (self.db_ziduan,self.db_biao,self.db_tiaojianziduan,self.db_tiaojianzhi)
+            else:
+                if self.is_daoxu: #倒叙
+                    if self.db_qianjiwei == None:
+                        sql = """
+                        SELECT %s FROM %s WHERE %s=%s order by %s desc
+                        """ % (
+                        self.db_ziduan, self.db_biao, self.db_tiaojianziduan, self.db_tiaojianzhi, self.db_paixuziduan)
+                    else:
+                        sql = """
+                        SELECT %s FROM %s WHERE %s=%s order by %s desc LIMIT %s  
+                        """ % (self.db_ziduan,self.db_biao,self.db_tiaojianziduan,self.db_tiaojianzhi,
+                               self.db_paixuziduan,self.db_qianjiwei)
+                else:
+                    if self.db_qianjiwei == None:
+                        sql = """
+                        SELECT %s FROM %s WHERE %s=%s order by %s asc
+                        """ % (
+                        self.db_ziduan, self.db_biao, self.db_tiaojianziduan, self.db_tiaojianzhi, self.db_paixuziduan)
+                    else:
+                        sql = """
+                        SELECT %s FROM %s WHERE %s=%s order by %s asc LIMIT %s 
+                        """ % (self.db_ziduan,self.db_biao,self.db_tiaojianziduan,
+                               self.db_tiaojianzhi,
+                               self.db_paixuziduan,self.db_qianjiwei)
+
+
         # 执行SQL语句
         rs = self.connectMyDBAndExecute(sql)
         self.outPutMyLog("\t查询的是%s表中的%s字段（筛选条件是字段%s等于%s的结果）的值，查询到的结果是：\n" % (self.db_biao,self.db_ziduan,self.db_tiaojianziduan,self.db_tiaojianzhi))

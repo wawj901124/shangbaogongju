@@ -1,0 +1,12 @@
+Time:2020-08-30 17:33:36,514; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:
+成功连接数据库:192.168.1.102_hula
+ 
+Time:2020-08-30 17:33:36,516; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:成功创建执行SQL语句的光标对象
+ 
+Time:2020-08-30 17:33:36,518; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	执行的sql语句：
+		
+        SELECT name FROM api_category WHERE id=10
+        
+ 
+Time:2020-08-30 17:33:36,528; FileName:myLogs.py;-> FuncName:printLog;  LineNo.:84; LevelNo.:20;--->LevelName:INFO;----->LogMessage:	查询的是api_category表中的name字段（筛选条件是字段id等于10的结果）的值，查询到的结果是：
+ 

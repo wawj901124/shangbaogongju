@@ -43,7 +43,7 @@ class HandleRequestsDatas(object):
 
                 requestdatas_one_dict[requestheader_dict_key]=requestheader_dict_value
                 requestdatas_one_list.append(requestdatas_one_dict)  #添加参数键值对到列表第一项中
-                requestdatas_one_list.append(requestdatas.sql_assert)  #添加参数值在对应数据库中内容
+                requestdatas_one_list.append(requestdatas.sql_assert_id)  #添加参数值在对应数据库中内容
                 requestdatases_list.append(requestdatas_one_list)
 
         else:
