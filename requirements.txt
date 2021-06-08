@@ -26,7 +26,7 @@ numpy==1.17.1
 odfpy==1.3.6
 openpyxl==2.5.3
 packaging==20.3
-Pillow==5.1.0
+Pillow==8.2.0
 pip-review==1.1.0
 Pympler==0.8
 PyMySQL==0.8.1
